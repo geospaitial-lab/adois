@@ -78,7 +78,7 @@ class ImageSizeError(Exception):
         :rtype: None
         """
         message = ('Invalid image_size in config file!\n' + ' ' * (4 if utils.DEBUG else 2) +
-                   f'Expected an even value in the range of 512 to 2560, got {image_size} instead.')
+                   f'Expected an even number in the range of 512 to 2560, got {image_size} instead.')
         super().__init__(message)
 
 
