@@ -10,7 +10,7 @@ def get_coordinates(bounding_box, image_size):
         the bottom left corner to the top right corner
     :param int image_size: image size in pixels
     :returns: coordinates
-    :rtype: list[(int, int)]
+    :rtype: list[(float, float)]
     """
     image_size_meters = image_size * utils.RESOLUTION
     coordinates = []
