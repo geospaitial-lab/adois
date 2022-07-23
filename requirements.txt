@@ -1,4 +1,5 @@
 natsort==8.1.0
 OWSLib==0.25.0
 pydantic==1.9.1
+pytest==7.1.2
 PyYAML==6.0
