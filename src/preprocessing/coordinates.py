@@ -15,11 +15,11 @@ def get_coordinates(bounding_box, image_size):
     image_size_meters = image_size * utils.RESOLUTION
     coordinates = []
 
-    columns = (bounding_box[2] - bounding_box[0]) // image_size_meters
+    columns = int((bounding_box[2] - bounding_box[0]) // image_size_meters)
     if (bounding_box[2] - bounding_box[0]) % image_size_meters:
         columns += 1
 
-    rows = (bounding_box[3] - bounding_box[1]) // image_size_meters
+    rows = int((bounding_box[3] - bounding_box[1]) // image_size_meters)
     if (bounding_box[3] - bounding_box[1]) % image_size_meters:
         rows += 1
 
