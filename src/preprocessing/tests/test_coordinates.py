@@ -21,10 +21,9 @@ def test_get_coordinates(test_input, expected):
     :returns: None
     :rtype: None
     """
-    test_coordinates = get_coordinates(bounding_box=test_input,
-                                       image_size=640)
-    coordinates = expected
-    assert test_coordinates == coordinates
+    coordinates = get_coordinates(bounding_box=test_input,
+                                  image_size=640)
+    assert coordinates == expected
 
 
 @pytest.mark.parametrize('test_input, expected',
@@ -43,7 +42,6 @@ def test_get_coordinates_remainder(test_input, expected):
     :returns: None
     :rtype: None
     """
-    test_coordinates = get_coordinates(bounding_box=test_input,
-                                       image_size=640)
-    coordinates = expected
-    assert test_coordinates == coordinates
+    coordinates = get_coordinates(bounding_box=test_input,
+                                  image_size=640)
+    assert coordinates == expected
