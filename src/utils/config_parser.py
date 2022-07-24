@@ -112,7 +112,7 @@ class Data(BaseModel):
         :param list[int] value: bounding_box (x_1, y_1, x_2, y_2)
         :returns: validated bounding_box
         :rtype: (int, int, int, int)
-        :raises BoundingBoxLengthError: if the length of the bounding_box is not equal to 4
+        :raises BoundingBoxLengthError: if the length of bounding_box is not equal to 4
         :raises BoundingBoxError: if x_1 >= x_2 or y_1 >= y_2
         """
         if len(value) != 4:

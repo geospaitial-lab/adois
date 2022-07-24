@@ -4,7 +4,7 @@ import src.utils as utils
 
 
 def get_coordinates(bounding_box, image_size):
-    """Returns the coordinates of the top left corner of each tile in the area of the bounding_box.
+    """Returns the coordinates of the top left corner of each tile in the area of the bounding box.
 
     :param (int, int, int, int) bounding_box: bounding box (x_1, y_1, x_2, y_2)
     :param int image_size: image size in pixels
