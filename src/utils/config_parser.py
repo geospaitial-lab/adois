@@ -162,7 +162,7 @@ class Postprocessing(BaseModel):
     def validate_sieve_size(cls, value):
         """Validates sieve_size defined in the config file.
 
-        :param int value: sieve_size
+        :param int or None value: sieve_size
         :returns: validated sieve_size
         :rtype: int
         :raises SieveSizeError: if sieve_size is not a number in the range of 0 to 1e4
