@@ -1,8 +1,12 @@
 # @author: Maryniak, Marius - Fachbereich Elektrotechnik, Westfälische Hochschule Gelsenkirchen
 
+import geopandas as gpd
 import numpy as np
 import rasterio as rio
 import rasterio.features
+import topojson as tp
+
+import src.utils as utils
 
 
 class Postprocessor:
@@ -41,3 +45,27 @@ class Postprocessor:
         features = [{'properties': {'class': int(value)}, 'geometry': shape}
                     for shape, value in vectorized_mask if int(value) != 0]
         return features
+
+    @staticmethod
+    def get_gdf(features):
+        """Returns a geodataframe.
+
+        :param dict features: features
+        :returns: gdf
+        :rtype: gpd.GeoDataFrame
+        """
+        gdf = gpd.GeoDataFrame.from_features(features)
+        gdf = gdf.set_crs(epsg=25832)
+        return gdf
+
+    @staticmethod
+    def simplify_gdf(gdf):
+        """Returns a geodataframe with simplified polygons (Douglas-Peucker algorithm is used).
+
+        :param gpd.GeoDataFrame gdf: gdf
+        :returns: simplified gdf
+        :rtype: gpd.GeoDataFrame
+        """
+        topo = tp.Topology(gdf, prequantize=False)
+        gdf = topo.toposimplify(utils.RESOLUTION + .05).to_gdf()
+        return gdf
