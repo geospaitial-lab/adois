@@ -1,6 +1,7 @@
 # @author: Maryniak, Marius - Fachbereich Elektrotechnik, Westfälische Hochschule Gelsenkirchen
 
 from pathlib import Path
+import re
 from typing import List
 
 import pydantic
@@ -123,8 +124,39 @@ class Data(BaseModel):
         return value
 
 
+class Preprocessing(BaseModel):
+    color_codes_ndsm: List[str]
+
+    @validator('color_codes_ndsm')
+    def validate_color_codes_ndsm(cls, value):
+        """Validates color_codes_ndsm defined in the config file.
+
+        :param list[str] value: color_codes_ndsm
+        :returns: validated color_codes_ndsm
+        :rtype: dict[tuple[int, int, int], int]
+        :raises ColorCodeNDSMError: if color_code in color_codes_ndsm is not a color code with the following schema:
+            '(r_value, g_value, b_value) - mapped_value'
+        """
+        color_codes_ndsm = {}
+        pattern = re.compile(r'^\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)\s*-\s*(\d+)\s*$')
+
+        for color_code in value:
+            match = pattern.search(color_code)
+            if match is None:
+                raise ColorCodeNDSMError(color_code=color_code)
+            else:
+                r_value = int(match.group(1))
+                g_value = int(match.group(2))
+                b_value = int(match.group(3))
+                mapped_value = int(match.group(4))
+                color_codes_ndsm[(r_value, g_value, b_value)] = int(mapped_value)
+        value = color_codes_ndsm
+        return value
+
+
 class Config(BaseModel):
     data: Data
+    preprocessing: Preprocessing
 
 
 class ConfigParser:
