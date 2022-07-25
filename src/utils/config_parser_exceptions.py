@@ -121,3 +121,16 @@ class ColorCodeNDSMError(Exception):
                    "Expected a color code with the following schema: '(r_value, g_value, b_value) - mapped_value', "
                    f"got '{color_code}' instead.")
         super().__init__(message)
+
+
+class SieveSizeError(Exception):
+    def __init__(self, sieve_size):
+        """Constructor method
+
+        :param int sieve_size: sieve size in pixels
+        :returns: None
+        :rtype: None
+        """
+        message = ('Invalid sieve_size in config file!\n' + ' ' * (4 if utils.DEBUG else 2) +
+                   f'Expected a number in the range of 0 to 1e4, got {sieve_size} instead.')
+        super().__init__(message)

@@ -2,7 +2,7 @@
 
 from pathlib import Path
 import re
-from typing import List
+from typing import List, Optional
 
 import pydantic
 import yaml
@@ -154,9 +154,30 @@ class Preprocessing(BaseModel):
         return value
 
 
+class Postprocessing(BaseModel):
+    sieve_size: Optional[int] = None
+
+    @validator('sieve_size')
+    def validate_sieve_size(cls, value):
+        """Validates sieve_size defined in the config file.
+
+        :param int value: sieve_size
+        :returns: validated sieve_size
+        :rtype: int
+        :raises SieveSizeError: if sieve_size is not a number in the range of 0 to 1e4
+        """
+        if value is not None:
+            if not 0 <= value <= 1e4:
+                raise SieveSizeError(sieve_size=value)
+            if value == 0:
+                value = None
+        return value
+
+
 class Config(BaseModel):
     data: Data
     preprocessing: Preprocessing
+    postprocessing: Postprocessing
 
 
 class ConfigParser:
