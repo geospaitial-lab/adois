@@ -156,6 +156,7 @@ class Preprocessing(BaseModel):
 
 class Postprocessing(BaseModel):
     sieve_size: Optional[int] = None
+    simplify: Optional[bool] = None
 
     @validator('sieve_size')
     def validate_sieve_size(cls, value):
@@ -171,6 +172,18 @@ class Postprocessing(BaseModel):
                 raise SieveSizeError(sieve_size=value)
             if value == 0:
                 value = None
+        return value
+
+    @validator('simplify')
+    def validate_simplify(cls, value):
+        """Validates simplify defined in the config file.
+
+        :param bool or None value: simplify
+        :returns: validated simplify
+        :rtype: bool
+        """
+        if value is None:
+            value = False
         return value
 
 
