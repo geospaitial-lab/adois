@@ -164,7 +164,7 @@ class Postprocessing(BaseModel):
 
         :param int or None value: sieve_size
         :returns: validated sieve_size
-        :rtype: int
+        :rtype: int or None
         :raises SieveSizeError: if sieve_size is not a number in the range of 0 to 1e4
         """
         if value is not None:
