@@ -120,8 +120,8 @@ class ColorCodeNDSMError(Exception):
         :rtype: None
         """
         message = ('Invalid color code in color_codes_ndsm in config file!\n' + ' ' * (4 if utils.DEBUG else 2) +
-                   "Expected a color code with the following schema: '(r_value, g_value, b_value) - mapped_value', "
-                   f"got '{color_code}' instead.")
+                   'Expected a color code with the following schema: (r_value, g_value, b_value) - mapped_value, '
+                   f'got {color_code} instead.')
         super().__init__(message)
 
 
