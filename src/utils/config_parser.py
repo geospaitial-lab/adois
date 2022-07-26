@@ -2,7 +2,7 @@
 
 from pathlib import Path
 import re
-from typing import List, Optional
+from typing import List, Optional, Union
 
 import pydantic
 import yaml
@@ -187,10 +187,67 @@ class Postprocessing(BaseModel):
         return value
 
 
+class Aggregation(BaseModel):
+    tile_size: Optional[Union[int, List[Union[int, None]]]] = None
+    shp_path: Optional[Union[str, List[Union[str, None]]]] = None
+
+    @validator('tile_size')
+    def validate_tile_size(cls, value):
+        """Validates tile_size defined in the config file.
+
+        :param int or list[int or None] or None value: tile_size
+        :returns: validated tile_size
+        :rtype: list[int or None]
+        :raises TileSizeError: if tile_size is not a number greater than 0
+        """
+        if value is not None:
+            if type(value) is int:
+                value = [value]
+            for index, tile_size in enumerate(value):
+                if tile_size is not None:
+                    if tile_size < 0:
+                        raise TileSizeError(tile_size=tile_size)
+                    if tile_size == 0:
+                        value[index] = None
+            value = [tile_size for tile_size in value if tile_size is not None]
+            if not value:
+                value = [None]
+        else:
+            value = [None]
+        return value
+
+    @validator('shp_path')
+    def validate_shp_path(cls, value):
+        """Validates shp_path defined in the config file.
+
+        :param str or list[str or None] or None value: shp_path
+        :returns: validated shp_path
+        :rtype: list[str or None]
+        :raises ShpFileNotFoundError: if shape file at shp_path does not exist
+        :raises ShpFileExtensionError: if file extension of shp_path is not .shp
+        """
+        if value is not None:
+            if type(value) is str:
+                value = [value]
+            for shp_path in value:
+                if shp_path is not None:
+                    if not Path(shp_path).is_file():
+                        raise ShpFileNotFoundError(shp_path=shp_path)
+                    elif Path(shp_path).suffix != '.shp':
+                        raise ShpFileExtensionError(shp_path=shp_path)
+            value = [shp_path for shp_path in value if shp_path is not None]
+            if not value:
+                value = [None]
+        else:
+            value = [None]
+        return value
+
+
 class Config(BaseModel):
     data: Data
     preprocessing: Preprocessing
     postprocessing: Postprocessing
+    aggregation: Aggregation
 
 
 class ConfigParser:

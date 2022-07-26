@@ -1,5 +1,7 @@
 # @author: Maryniak, Marius - Fachbereich Elektrotechnik, Westfälische Hochschule Gelsenkirchen
 
+from pathlib import Path
+
 from natsort import natsorted
 
 import src.utils as utils
@@ -133,4 +135,43 @@ class SieveSizeError(Exception):
         """
         message = ('Invalid sieve_size in config file!\n' + ' ' * (4 if utils.DEBUG else 2) +
                    f'Expected a number in the range of 0 to 1e4, got {sieve_size} instead.')
+        super().__init__(message)
+
+
+class TileSizeError(Exception):
+    def __init__(self, tile_size):
+        """Constructor method
+
+        :param int tile_size: tile size in meters
+        :returns: None
+        :rtype: None
+        """
+        message = ('Invalid tile size in tile_size in config file!\n' + ' ' * (4 if utils.DEBUG else 2) +
+                   f'Expected a number greater than 0, got {tile_size} instead.')
+        super().__init__(message)
+
+
+class ShpFileNotFoundError(Exception):
+    def __init__(self, shp_path):
+        """Constructor method
+
+        :param str shp_path: path to the shape file (.shp)
+        :returns: None
+        :rtype: None
+        """
+        message = ('Invalid path to the shape file in shp_path in config file!\n' + ' ' * (4 if utils.DEBUG else 2) +
+                   f'Shape file at {shp_path} does not exist.')
+        super().__init__(message)
+
+
+class ShpFileExtensionError(Exception):
+    def __init__(self, shp_path):
+        """Constructor method
+
+        :param str shp_path: path to the shape file (.shp)
+        :returns: None
+        :rtype: None
+        """
+        message = ('Invalid path to the shape file in shp_path in config file!\n' + ' ' * (4 if utils.DEBUG else 2) +
+                   f'Expected file extension .shp, got {Path(shp_path).suffix} instead.')
         super().__init__(message)
