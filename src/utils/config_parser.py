@@ -243,11 +243,42 @@ class Aggregation(BaseModel):
         return value
 
 
+class ExportSettings(BaseModel):
+    output_dir_path: str
+    export_raw_shp: Optional[bool] = None
+
+    @validator('output_dir_path')
+    def validate_output_dir_path(cls, value):
+        """Validates output_dir_path defined in the config file.
+
+        :param str value: output_dir_path
+        :returns: validated output_dir_path
+        :rtype: str
+        :raises OutputDirNotFoundError: if directory at output_dir_path does not exist
+        """
+        if not Path(value).is_dir():
+            raise OutputDirNotFoundError(output_dir_path=value)
+        return value
+
+    @validator('export_raw_shp')
+    def validate_export_raw_shp(cls, value):
+        """Validates export_raw_shp defined in the config file.
+
+        :param bool or None value: export_raw_shp
+        :returns: validated export_raw_shp
+        :rtype: bool
+        """
+        if value is None:
+            value = False
+        return value
+
+
 class Config(BaseModel):
     data: Data
     preprocessing: Preprocessing
     postprocessing: Postprocessing
     aggregation: Aggregation
+    export_settings: ExportSettings
 
 
 class ConfigParser:

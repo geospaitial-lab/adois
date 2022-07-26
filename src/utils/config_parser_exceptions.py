@@ -175,3 +175,16 @@ class ShpFileExtensionError(Exception):
         message = ('Invalid path to the shape file in shp_path in config file!\n' + ' ' * (4 if utils.DEBUG else 2) +
                    f'Expected file extension .shp, got {Path(shp_path).suffix} instead.')
         super().__init__(message)
+
+
+class OutputDirNotFoundError(Exception):
+    def __init__(self, output_dir_path):
+        """Constructor method
+
+        :param str output_dir_path: path to the output directory
+        :returns: None
+        :rtype: None
+        """
+        message = ('Invalid output_dir_path in config file!\n' + ' ' * (4 if utils.DEBUG else 2) +
+                   f'Directory at {output_dir_path} does not exist.')
+        super().__init__(message)
