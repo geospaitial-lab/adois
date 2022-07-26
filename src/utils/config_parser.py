@@ -245,6 +245,7 @@ class Aggregation(BaseModel):
 
 class ExportSettings(BaseModel):
     output_dir_path: str
+    shp_prefix: str
     export_raw_shp: Optional[bool] = None
 
     @validator('output_dir_path')
@@ -258,6 +259,20 @@ class ExportSettings(BaseModel):
         """
         if not Path(value).is_dir():
             raise OutputDirNotFoundError(output_dir_path=value)
+        return value
+
+    @validator('shp_prefix')
+    def validate_shp_prefix(cls, value):
+        """Validates shp_prefix defined in the config file.
+
+        :param str value: shp_prefix
+        :returns: validated shp_prefix
+        :rtype: str
+        :raises ShpPrefixError: if shp_prefix contains only whitespaces or underscores
+        """
+        value = value.replace(' ', '').rstrip('_')
+        if not value:
+            raise ShpPrefixError()
         return value
 
     @validator('export_raw_shp')

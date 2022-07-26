@@ -188,3 +188,15 @@ class OutputDirNotFoundError(Exception):
         message = ('Invalid output_dir_path in config file!\n' + ' ' * (4 if utils.DEBUG else 2) +
                    f'Directory at {output_dir_path} does not exist.')
         super().__init__(message)
+
+
+class ShpPrefixError(Exception):
+    def __init__(self):
+        """Constructor method
+
+        :returns: None
+        :rtype: None
+        """
+        message = ('Invalid shp_prefix in config file!\n' + ' ' * (4 if utils.DEBUG else 2) +
+                   'String contains only whitespaces or underscores.')
+        super().__init__(message)
