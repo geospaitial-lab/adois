@@ -94,9 +94,9 @@ class Data(BaseModel):
         :param int value: image_size
         :returns: validated image_size
         :rtype: int
-        :raises ImageSizeError: if image_size is not an even number in the range of 512 to 2560
+        :raises ImageSizeError: if image_size is not a number divisible by 32 in the range of 512 to 2560
         """
-        if not 512 <= value <= 2560 or value % 2:
+        if not 512 <= value <= 2560 or value % 32:
             raise ImageSizeError(image_size=value)
         return value
 
