@@ -210,10 +210,8 @@ class Aggregation(BaseModel):
                     if tile_size == 0:
                         value[index] = None
             value = [tile_size for tile_size in value if tile_size is not None]
-            if not value:
-                value = [None]
         else:
-            value = [None]
+            value = []
         return value
 
     @validator('shp_path')
@@ -236,10 +234,8 @@ class Aggregation(BaseModel):
                     elif Path(shp_path).suffix != '.shp':
                         raise ShpFileExtensionError(shp_path=shp_path)
             value = [shp_path for shp_path in value if shp_path is not None]
-            if not value:
-                value = [None]
         else:
-            value = [None]
+            value = []
         return value
 
 
