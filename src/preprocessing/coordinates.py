@@ -5,6 +5,7 @@ import src.utils as utils
 
 def get_coordinates(bounding_box, image_size):
     """Returns the coordinates of the top left corner of each tile in the area of the bounding box.
+    The bounding box is quantized to the image size in meters.
 
     :param (int, int, int, int) bounding_box: bounding box (x_1, y_1, x_2, y_2)
     :param int image_size: image size in pixels
@@ -13,6 +14,11 @@ def get_coordinates(bounding_box, image_size):
     """
     image_size_meters = image_size * utils.RESOLUTION
     coordinates = []
+
+    bounding_box = (bounding_box[0] - (bounding_box[0] % image_size_meters),
+                    bounding_box[1] - (bounding_box[1] % image_size_meters),
+                    bounding_box[2],
+                    bounding_box[3])
 
     columns = int((bounding_box[2] - bounding_box[0]) // image_size_meters)
     if (bounding_box[2] - bounding_box[0]) % image_size_meters:
