@@ -259,6 +259,10 @@ class ExportSettings(BaseModel):
         """
         if not Path(value).is_dir():
             raise OutputDirNotFoundError(output_dir_path=value)
+        if any(Path(value).iterdir()):
+            for path in Path(value).iterdir():
+                if path.name != 'processed.json':
+                    raise OutputDirNotEmptyError(output_dir_path=value)
         return value
 
     @validator('shp_prefix')

@@ -190,6 +190,19 @@ class OutputDirNotFoundError(Exception):
         super().__init__(message)
 
 
+class OutputDirNotEmptyError(Exception):
+    def __init__(self, output_dir_path):
+        """Constructor method
+
+        :param str output_dir_path: path to the output directory
+        :returns: None
+        :rtype: None
+        """
+        message = ('Invalid output_dir_path in config file!\n' + ' ' * (4 if utils.DEBUG else 2) +
+                   f'Directory at {output_dir_path} is not empty.')
+        super().__init__(message)
+
+
 class ShpPrefixError(Exception):
     def __init__(self):
         """Constructor method
