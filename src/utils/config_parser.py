@@ -1,7 +1,7 @@
 # @author: Maryniak, Marius - Fachbereich Elektrotechnik, Westfälische Hochschule Gelsenkirchen
 
-from pathlib import Path
 import re
+from pathlib import Path
 from typing import List, Optional, Union
 
 import yaml
