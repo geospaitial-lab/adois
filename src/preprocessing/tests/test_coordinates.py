@@ -25,6 +25,10 @@ def test_get_coordinates(test_input, expected):
                                   image_size=640)
     assert coordinates == expected
 
+    for coordinates_element in coordinates:
+        assert type(coordinates_element[0]) is float
+        assert type(coordinates_element[1]) is float
+
 
 @pytest.mark.parametrize('test_input, expected',
                          [((256, 256, 480, 480), [(256., 384.), (384., 384.), (256., 512.), (384., 512.)]),
@@ -45,3 +49,7 @@ def test_get_coordinates_remainder(test_input, expected):
     coordinates = get_coordinates(bounding_box=test_input,
                                   image_size=640)
     assert coordinates == expected
+
+    for coordinates_element in coordinates:
+        assert type(coordinates_element[0]) is float
+        assert type(coordinates_element[1]) is float
