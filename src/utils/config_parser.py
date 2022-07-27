@@ -4,17 +4,11 @@ from pathlib import Path
 import re
 from typing import List, Optional, Union
 
-import pydantic
 import yaml
 from owslib.wms import WebMapService
-from pydantic import validator
+from pydantic import BaseModel, root_validator, validator
 
 from src.utils.config_parser_exceptions import *
-
-
-class BaseModel(pydantic.BaseModel):
-    class Config:
-        allow_mutation = False
 
 
 class Wms(BaseModel):
@@ -296,6 +290,18 @@ class Config(BaseModel):
     postprocessing: Postprocessing
     aggregation: Aggregation
     export_settings: ExportSettings
+
+    @root_validator
+    def validate_export_raw_shp(cls, values):
+        """Validates export_raw_shp defined in the config file.
+
+        :param dict[str, Any] values: config
+        :returns: validated config
+        :rtype: dict[str, Any]
+        """
+        if values['postprocessing'].sieve_size is None and values['postprocessing'].simplify is False:
+            values['export_settings'].export_raw_shp = False
+        return values
 
 
 class ConfigParser:
