@@ -38,7 +38,7 @@ def get_coordinates(bounding_box, output_dir_path):
                                 bounding_box[1] + (row + 1) * utils.IMAGE_SIZE_METERS))
 
     features_dir_path = Path(output_dir_path) / '.features'
-    pattern = re.compile(r'^(\d+)_(\d+)\.json$')
+    pattern = re.compile(r'^(-?\d+)_(-?\d+)\.json$')
 
     for path in features_dir_path.iterdir():
         match = pattern.search(path.name)
