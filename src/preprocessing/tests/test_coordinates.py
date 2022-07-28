@@ -17,7 +17,7 @@ from src.preprocessing.coordinates import get_coordinates
                           ((-256, -256, 256, 256),
                            [(-256., 0.), (0., 0.), (-256., 256.), (0., 256.)])])
 def test_get_coordinates(test_input, expected):
-    """Tests get_coordinates() with different bounding boxes and an image_size of 640.
+    """Tests get_coordinates() with different bounding boxes and an image_size of 1280.
     The tiles fit in the bounding boxes without remainder.
 
     :param (int, int, int, int) test_input: bounding box (x_1, y_1, x_2, y_2) of the area from
@@ -47,7 +47,7 @@ def test_get_coordinates(test_input, expected):
                           ((-256, -256, 128, 128),
                            [(-256., 0.), (0., 0.), (-256., 256.), (0., 256.)])])
 def test_get_coordinates_remainder(test_input, expected):
-    """Tests get_coordinates() with different bounding boxes and an image_size of 640.
+    """Tests get_coordinates() with different bounding boxes and an image_size of 1280.
     The tiles do not fit in the bounding boxes without remainder.
 
     :param (int, int, int, int) test_input: bounding box (x_1, y_1, x_2, y_2) of the area from
