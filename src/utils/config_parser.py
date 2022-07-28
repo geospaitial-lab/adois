@@ -253,7 +253,7 @@ class ExportSettings(BaseModel):
             raise OutputDirNotFoundError(output_dir_path=value)
         if any(Path(value).iterdir()):
             for path in Path(value).iterdir():
-                if path.name != '.processed.json':
+                if path.name != '.features':
                     raise OutputDirNotEmptyError(output_dir_path=value)
         return value
 
