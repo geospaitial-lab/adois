@@ -1,13 +1,19 @@
 # @author: Maryniak, Marius - Fachbereich Elektrotechnik, Westfälische Hochschule Gelsenkirchen
 
+import re
+from pathlib import Path
+
 import src.utils as utils
 
 
-def get_coordinates(bounding_box):
+def get_coordinates(bounding_box, output_dir_path):
     """Returns the coordinates of the top left corner of each tile in the area of the bounding box.
     The bounding box is quantized to the image size in meters.
+    If a tile is already being processed (its features file (.json) in .features directory exists),
+    its coordinates are removed.
 
     :param (int, int, int, int) bounding_box: bounding box (x_1, y_1, x_2, y_2)
+    :param str or Path output_dir_path: path to the output directory
     :returns: coordinates (x, y) of each tile
     :rtype: list[(int, int)]
     """
@@ -30,4 +36,15 @@ def get_coordinates(bounding_box):
         for column in range(columns):
             coordinates.append((bounding_box[0] + column * utils.IMAGE_SIZE_METERS,
                                 bounding_box[1] + (row + 1) * utils.IMAGE_SIZE_METERS))
+
+    features_dir_path = Path(output_dir_path) / '.features'
+    pattern = re.compile(r'^(\d+)_(\d+)\.json$')
+
+    for path in features_dir_path.iterdir():
+        match = pattern.search(path.name)
+        if match:
+            processed_coordinates = (int(match.group(1)), int(match.group(2)))
+            if processed_coordinates in coordinates:
+                coordinates.remove(processed_coordinates)
+
     return coordinates
