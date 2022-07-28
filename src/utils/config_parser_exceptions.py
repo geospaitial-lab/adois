@@ -71,19 +71,6 @@ class EPSGCodeError(Exception):
         super().__init__(message)
 
 
-class ImageSizeError(Exception):
-    def __init__(self, image_size):
-        """Constructor method
-
-        :param int image_size: image size in pixels
-        :returns: None
-        :rtype: None
-        """
-        message = ('Invalid image_size in config file!\n' + ' ' * (4 if utils.DEBUG else 2) +
-                   f'Expected a number divisible by 32 in the range of 512 to 2560, got {image_size} instead.')
-        super().__init__(message)
-
-
 class BoundingBoxLengthError(Exception):
     def __init__(self, bounding_box):
         """Constructor method

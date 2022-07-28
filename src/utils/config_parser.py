@@ -59,7 +59,6 @@ class Data(BaseModel):
     nir: Wms
     ndsm: Wms
     epsg_code: int
-    image_size: int
     bounding_box: List[int]
 
     @validator('epsg_code')
@@ -85,19 +84,6 @@ class Data(BaseModel):
         if value not in valid_epsg_codes:
             raise EPSGCodeError(epsg_code=value,
                                 valid_epsg_codes=valid_epsg_codes)
-        return value
-
-    @validator('image_size')
-    def validate_image_size(cls, value):
-        """Validates image_size defined in the config file.
-
-        :param int value: image_size
-        :returns: validated image_size
-        :rtype: int
-        :raises ImageSizeError: if image_size is not a number divisible by 32 in the range of 512 to 2560
-        """
-        if not 512 <= value <= 2560 or value % 32:
-            raise ImageSizeError(image_size=value)
         return value
 
     @validator('bounding_box')

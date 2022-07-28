@@ -3,22 +3,20 @@
 import numpy as np
 from PIL import Image
 
+import src.utils as utils
+
 
 class Preprocessor:
-    def __init__(self,
-                 color_codes,
-                 image_size):
+    def __init__(self, color_codes):
         """Constructor method
 
         :param dict[tuple[int, int, int], int] color_codes: color codes for the color mapping to reduce the
             dimensions of an image from 3 dimensions to 2 dimensions (the key of the dictionary is the rgb value
             and the value of the dictionary is the corresponding mapped value)
-        :param image_size: image size in pixels to resize the ndsm image to
         :returns: None
         :rtype: None
         """
         self.color_map = self.get_color_map(color_codes)
-        self.image_size = image_size
 
     @staticmethod
     def get_color_map(color_codes):
@@ -39,7 +37,8 @@ class Preprocessor:
             color_map[rgb] = index
         return color_map
 
-    def resize_image(self, image):
+    @staticmethod
+    def resize_image(image):
         """Returns a resized image. Used for manually upsampling or downsampling images to an image size without
         interpolation artefacts (nearest-neighbor interpolation is used).
 
@@ -47,7 +46,7 @@ class Preprocessor:
         :returns: resized image
         :rtype: np.ndarray[np.uint8]
         """
-        resized_image = Image.fromarray(image).resize(size=(self.image_size, self.image_size))
+        resized_image = Image.fromarray(image).resize(size=(utils.IMAGE_SIZE, utils.IMAGE_SIZE))
         # noinspection PyTypeChecker
         resized_image = np.array(resized_image, dtype=np.uint8)
         return resized_image
