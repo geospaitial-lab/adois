@@ -29,12 +29,12 @@ class Preprocessor:
         :returns: color map
         :rtype: np.ndarray[np.uint8]
         """
-        color_map = np.full(shape=(256 * 256 * 256),
+        color_map = np.full(shape=(256 ** 3),
                             fill_value=0,
                             dtype=np.int32)
-        for rgb, index in color_codes.items():
-            rgb = rgb[0] * 65536 + rgb[1] * 256 + rgb[2]
-            color_map[rgb] = index
+        for rgb_value, mapped_value in color_codes.items():
+            rgb = rgb_value[0] * 65536 + rgb_value[1] * 256 + rgb_value[2]
+            color_map[rgb] = mapped_value
         return color_map
 
     @staticmethod
