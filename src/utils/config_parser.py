@@ -177,7 +177,7 @@ class Aggregation(BaseModel):
 
         :param int or list[int or None] or None value: tile_size
         :returns: validated tile_size
-        :rtype: list[int or None]
+        :rtype: list[int]
         :raises TileSizeError: if tile_size is not a number greater than 0
         """
         if value is not None:
@@ -201,7 +201,7 @@ class Aggregation(BaseModel):
 
         :param str or list[str or None] or None value: shp_path
         :returns: validated shp_path
-        :rtype: list[str or None]
+        :rtype: list[str]
         :raises ShpFileNotFoundError: if shape file at shp_path does not exist
         :raises ShpFileExtensionError: if file extension of shp_path is not .shp
         """
