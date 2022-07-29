@@ -31,7 +31,7 @@ class Preprocessor:
         """
         color_map = np.full(shape=(256 ** 3),
                             fill_value=0,
-                            dtype=np.int32)
+                            dtype=np.uint8)
         for rgb_value, mapped_value in color_codes.items():
             rgb = rgb_value[0] * 65536 + rgb_value[1] * 256 + rgb_value[2]
             color_map[rgb] = mapped_value
