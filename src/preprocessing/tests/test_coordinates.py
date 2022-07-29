@@ -1,129 +1,136 @@
 # @author: Maryniak, Marius - Fachbereich Elektrotechnik, Westfälische Hochschule Gelsenkirchen
 
+from pathlib import Path
+
 import pytest
 
 from src.preprocessing.coordinates import get_coordinates
 
 
-@pytest.mark.parametrize('test_input, expected',
-                         [((512, 512, 1024, 1024),
-                           [(512., 768.), (768., 768.), (512., 1024.), (768., 1024.)]),
-                          ((512, -1024, 1024, -512),
-                           [(512., -768.), (768., -768.), (512., -512.), (768., -512.)]),
-                          ((-1024, -1024, -512, -512),
-                           [(-1024., -768.), (-768., -768.), (-1024., -512.), (-768., -512.)]),
-                          ((-1024, 512, -512, 1024),
-                           [(-1024., 768.), (-768., 768.), (-1024., 1024.), (-768., 1024.)]),
-                          ((-256, -256, 256, 256),
-                           [(-256., 0.), (0., 0.), (-256., 256.), (0., 256.)])])
-def test_get_coordinates(test_input, expected):
-    """Tests get_coordinates() with different bounding boxes and an image_size of 1280.
-    The bounding boxes are not quantized.
-    The tiles fit in the bounding boxes without remainder.
+parameters_empty_features_dir = [((512, 512, 1024, 1024),  # no quantization, no remainder
+                                  [(512, 768), (768, 768), (512, 1024), (768, 1024)]),
+                                 ((512, -1024, 1024, -512),
+                                  [(512, -768), (768, -768), (512, -512), (768, -512)]),
+                                 ((-1024, -1024, -512, -512),
+                                  [(-1024, -768), (-768, -768), (-1024, -512), (-768, -512)]),
+                                 ((-1024, 512, -512, 1024),
+                                  [(-1024, 768), (-768, 768), (-1024, 1024), (-768, 1024)]),
+                                 ((-256, -256, 256, 256),
+                                  [(-256, 0), (0, 0), (-256, 256), (0, 256)]),
+                                 ((640, 640, 1024, 1024),  # quantization, no remainder
+                                  [(512, 768), (768, 768), (512, 1024), (768, 1024)]),
+                                 ((640, -896, 1024, -512),
+                                  [(512, -768), (768, -768), (512, -512), (768, -512)]),
+                                 ((-896, -896, -512, -512),
+                                  [(-1024, -768), (-768, -768), (-1024, -512), (-768, -512)]),
+                                 ((-896, 640, -512, 1024),
+                                  [(-1024, 768), (-768, 768), (-1024, 1024), (-768, 1024)]),
+                                 ((-128, -128, 256, 256),
+                                  [(-256, 0), (0, 0), (-256, 256), (0, 256)]),
+                                 ((512, 512, 896, 896),  # no quantization, remainder
+                                  [(512, 768), (768, 768), (512, 1024), (768, 1024)]),
+                                 ((512, -1024, 896, -640),
+                                  [(512, -768), (768, -768), (512, -512), (768, -512)]),
+                                 ((-1024, -1024, -640, -640),
+                                  [(-1024, -768), (-768, -768), (-1024, -512), (-768, -512)]),
+                                 ((-1024, 512, -640, 896),
+                                  [(-1024, 768), (-768, 768), (-1024, 1024), (-768, 1024)]),
+                                 ((-256, -256, 128, 128),
+                                  [(-256, 0), (0, 0), (-256, 256), (0, 256)]),
+                                 ((640, 640, 896, 896),  # quantization, remainder
+                                  [(512, 768), (768, 768), (512, 1024), (768, 1024)]),
+                                 ((640, -896, 896, -640),
+                                  [(512, -768), (768, -768), (512, -512), (768, -512)]),
+                                 ((-896, -896, -640, -640),
+                                  [(-1024, -768), (-768, -768), (-1024, -512), (-768, -512)]),
+                                 ((-896, 640, -640, 896),
+                                  [(-1024, 768), (-768, 768), (-1024, 1024), (-768, 1024)]),
+                                 ((-128, -128, 128, 128),
+                                  [(-256, 0), (0, 0), (-256, 256), (0, 256)])]
+
+parameters_not_empty_features_dir = [((512, 512, 1024, 1024),  # no quantization, no remainder
+                                      [(512, 768), (768, 768)]),
+                                     ((512, -1024, 1024, -512),
+                                      [(512, -768), (768, -768)]),
+                                     ((-1024, -1024, -512, -512),
+                                      [(-1024, -768), (-768, -768)]),
+                                     ((-1024, 512, -512, 1024),
+                                      [(-1024, 768), (-768, 768)]),
+                                     ((-256, -256, 256, 256),
+                                      [(-256, 0), (0, 0)]),
+                                     ((640, 640, 1024, 1024),  # quantization, no remainder
+                                      [(512, 768), (768, 768)]),
+                                     ((640, -896, 1024, -512),
+                                      [(512, -768), (768, -768)]),
+                                     ((-896, -896, -512, -512),
+                                      [(-1024, -768), (-768, -768)]),
+                                     ((-896, 640, -512, 1024),
+                                      [(-1024, 768), (-768, 768)]),
+                                     ((-128, -128, 256, 256),
+                                      [(-256, 0), (0, 0)]),
+                                     ((512, 512, 896, 896),  # no quantization, remainder
+                                      [(512, 768), (768, 768)]),
+                                     ((512, -1024, 896, -640),
+                                      [(512, -768), (768, -768)]),
+                                     ((-1024, -1024, -640, -640),
+                                      [(-1024, -768), (-768, -768)]),
+                                     ((-1024, 512, -640, 896),
+                                      [(-1024, 768), (-768, 768)]),
+                                     ((-256, -256, 128, 128),
+                                      [(-256, 0), (0, 0)]),
+                                     ((640, 640, 896, 896),  # quantization, remainder
+                                      [(512, 768), (768, 768)]),
+                                     ((640, -896, 896, -640),
+                                      [(512, -768), (768, -768)]),
+                                     ((-896, -896, -640, -640),
+                                      [(-1024, -768), (-768, -768)]),
+                                     ((-896, 640, -640, 896),
+                                      [(-1024, 768), (-768, 768)]),
+                                     ((-128, -128, 128, 128),
+                                      [(-256, 0), (0, 0)])]
+
+
+@pytest.mark.parametrize('test_input, expected', parameters_empty_features_dir)
+def test_get_coordinates_empty_features_dir(test_input,
+                                            expected,
+                                            output_dir_path_empty_features_dir):
+    """Tests get_coordinates() with different bounding boxes.
+    The .features directory is empty.
 
     :param (int, int, int, int) test_input: bounding box (x_1, y_1, x_2, y_2) of the area from
         the bottom left corner to the top right corner
-    :param list[(float, float)] expected: coordinates
+    :param list[(int, int)] expected: coordinates (x, y) of each tile
+    :param Path output_dir_path_empty_features_dir: path to the output directory
     :returns: None
     :rtype: None
     """
     coordinates = get_coordinates(bounding_box=test_input,
-                                  image_size=1280)
+                                  output_dir_path=output_dir_path_empty_features_dir)
     assert coordinates == expected
 
     for coordinates_element in coordinates:
-        assert type(coordinates_element[0]) is float
-        assert type(coordinates_element[1]) is float
+        assert type(coordinates_element[0]) is int
+        assert type(coordinates_element[1]) is int
 
 
-@pytest.mark.parametrize('test_input, expected',
-                         [((640, 640, 1024, 1024),
-                           [(512., 768.), (768., 768.), (512., 1024.), (768., 1024.)]),
-                          ((640, -896, 1024, -512),
-                           [(512., -768.), (768., -768.), (512., -512.), (768., -512.)]),
-                          ((-896, -896, -512, -512),
-                           [(-1024., -768.), (-768., -768.), (-1024., -512.), (-768., -512.)]),
-                          ((-896, 640, -512, 1024),
-                           [(-1024., 768.), (-768., 768.), (-1024., 1024.), (-768., 1024.)]),
-                          ((-128, -128, 256, 256),
-                           [(-256., 0.), (0., 0.), (-256., 256.), (0., 256.)])])
-def test_get_coordinates_not_quantized(test_input, expected):
-    """Tests get_coordinates() with different bounding boxes and an image_size of 1280.
-    The bounding boxes are quantized.
-    The tiles fit in the bounding boxes without remainder.
+@pytest.mark.parametrize('test_input, expected', parameters_not_empty_features_dir)
+def test_get_coordinates_not_empty_features_dir(test_input,
+                                                expected,
+                                                output_dir_path_not_empty_features_dir):
+    """Tests get_coordinates() with different bounding boxes.
+    The .features directory is not empty.
 
     :param (int, int, int, int) test_input: bounding box (x_1, y_1, x_2, y_2) of the area from
         the bottom left corner to the top right corner
-    :param list[(float, float)] expected: coordinates
+    :param list[(int, int)] expected: coordinates (x, y) of each tile
+    :param Path output_dir_path_not_empty_features_dir: path to the output directory
     :returns: None
     :rtype: None
     """
     coordinates = get_coordinates(bounding_box=test_input,
-                                  image_size=1280)
+                                  output_dir_path=output_dir_path_not_empty_features_dir)
     assert coordinates == expected
 
     for coordinates_element in coordinates:
-        assert type(coordinates_element[0]) is float
-        assert type(coordinates_element[1]) is float
-
-
-@pytest.mark.parametrize('test_input, expected',
-                         [((512, 512, 896, 896),
-                           [(512., 768.), (768., 768.), (512., 1024.), (768., 1024.)]),
-                          ((512, -1024, 896, -640),
-                           [(512., -768.), (768., -768.), (512., -512.), (768., -512.)]),
-                          ((-1024, -1024, -640, -640),
-                           [(-1024., -768.), (-768., -768.), (-1024., -512.), (-768., -512.)]),
-                          ((-1024, 512, -640, 896),
-                           [(-1024., 768.), (-768., 768.), (-1024., 1024.), (-768., 1024.)]),
-                          ((-256, -256, 128, 128),
-                           [(-256., 0.), (0., 0.), (-256., 256.), (0., 256.)])])
-def test_get_coordinates_remainder(test_input, expected):
-    """Tests get_coordinates() with different bounding boxes and an image_size of 1280.
-    The bounding boxes are not quantized.
-    The tiles do not fit in the bounding boxes without remainder.
-
-    :param (int, int, int, int) test_input: bounding box (x_1, y_1, x_2, y_2) of the area from
-        the bottom left corner to the top right corner
-    :param list[(float, float)] expected: coordinates
-    :returns: None
-    :rtype: None
-    """
-    coordinates = get_coordinates(bounding_box=test_input,
-                                  image_size=1280)
-    assert coordinates == expected
-
-    for coordinates_element in coordinates:
-        assert type(coordinates_element[0]) is float
-        assert type(coordinates_element[1]) is float
-
-
-@pytest.mark.parametrize('test_input, expected',
-                         [((640, 640, 896, 896),
-                           [(512., 768.), (768., 768.), (512., 1024.), (768., 1024.)]),
-                          ((640, -896, 896, -640),
-                           [(512., -768.), (768., -768.), (512., -512.), (768., -512.)]),
-                          ((-896, -896, -640, -640),
-                           [(-1024., -768.), (-768., -768.), (-1024., -512.), (-768., -512.)]),
-                          ((-896, 640, -640, 896),
-                           [(-1024., 768.), (-768., 768.), (-1024., 1024.), (-768., 1024.)]),
-                          ((-128, -128, 128, 128),
-                           [(-256., 0.), (0., 0.), (-256., 256.), (0., 256.)])])
-def test_get_coordinates_not_quantized_remainder(test_input, expected):
-    """Tests get_coordinates() with different bounding boxes and an image_size of 1280.
-    The bounding boxes are quantized.
-    The tiles do not fit in the bounding boxes without remainder.
-
-    :param (int, int, int, int) test_input: bounding box (x_1, y_1, x_2, y_2) of the area from
-        the bottom left corner to the top right corner
-    :param list[(float, float)] expected: coordinates
-    :returns: None
-    :rtype: None
-    """
-    coordinates = get_coordinates(bounding_box=test_input,
-                                  image_size=1280)
-    assert coordinates == expected
-
-    for coordinates_element in coordinates:
-        assert type(coordinates_element[0]) is float
-        assert type(coordinates_element[1]) is float
+        assert type(coordinates_element[0]) is int
+        assert type(coordinates_element[1]) is int
