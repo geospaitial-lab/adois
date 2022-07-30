@@ -47,7 +47,7 @@ class Preprocessor:
         :rtype: np.ndarray[np.uint8]
         """
         resized_image = Image.fromarray(image).resize(size=(utils.IMAGE_SIZE, utils.IMAGE_SIZE),
-                                                      resample=Image.NEAREST)
+                                                      resample=Image.Resampling.NEAREST)
         # noinspection PyTypeChecker
         resized_image = np.array(resized_image, dtype=np.uint8)
         return resized_image
