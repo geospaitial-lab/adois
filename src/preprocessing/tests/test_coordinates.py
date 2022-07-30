@@ -106,6 +106,7 @@ def test_get_coordinates_empty_features_dir(test_input,
     """
     coordinates = get_coordinates(bounding_box=test_input,
                                   output_dir_path=output_dir_path_empty_features_dir)
+
     assert coordinates == expected
 
     for coordinates_element in coordinates:
@@ -129,6 +130,7 @@ def test_get_coordinates_not_empty_features_dir(test_input,
     """
     coordinates = get_coordinates(bounding_box=test_input,
                                   output_dir_path=output_dir_path_not_empty_features_dir)
+
     assert coordinates == expected
 
     for coordinates_element in coordinates:
