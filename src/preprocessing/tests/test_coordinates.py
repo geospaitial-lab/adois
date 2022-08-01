@@ -49,7 +49,7 @@ parameters_get_coordinates = \
      ((-128, -128, 128, 128),
       [(-256, 0), (0, 0), (-256, 256), (0, 256)])]
 
-parameters_filter_coordinates_empty_features_dir = \
+parameters_filter_coordinates_empty_tiles_dir = \
     [([(512, 768), (768, 768), (512, 1024), (768, 1024)],
       [(512, 768), (768, 768), (512, 1024), (768, 1024)]),
      ([(512, -768), (768, -768), (512, -512), (768, -512)],
@@ -61,7 +61,7 @@ parameters_filter_coordinates_empty_features_dir = \
      ([(-256, 0), (0, 0), (-256, 256), (0, 256)],
       [(-256, 0), (0, 0), (-256, 256), (0, 256)])]
 
-parameters_filter_coordinates_not_empty_features_dir = \
+parameters_filter_coordinates_not_empty_tiles_dir = \
     [([(512, 768), (768, 768), (512, 1024), (768, 1024)],  # some tiles are already being processed
       [(512, 768), (768, 768)]),
      ([(512, -768), (768, -768), (512, -512), (768, -512)],
@@ -103,21 +103,21 @@ def test_get_coordinates(test_input, expected):
         assert type(coordinates_element[1]) is int
 
 
-@pytest.mark.parametrize('test_input, expected', parameters_filter_coordinates_empty_features_dir)
-def test_filter_coordinates_empty_features_dir(test_input,
-                                               expected,
-                                               output_dir_path_empty_features_dir):
+@pytest.mark.parametrize('test_input, expected', parameters_filter_coordinates_empty_tiles_dir)
+def test_filter_coordinates_empty_tiles_dir(test_input,
+                                            expected,
+                                            output_dir_path_empty_tiles_dir):
     """Tests filter_coordinates() with different coordinates.
-    The .features directory is empty.
+    The .tiles directory is empty.
 
     :param list[(int, int)] test_input: coordinates (x, y) of each tile
     :param list[(int, int)] expected: filtered coordinates (x, y) of each tile
-    :param Path output_dir_path_empty_features_dir: path to the output directory
+    :param Path output_dir_path_empty_tiles_dir: path to the output directory
     :returns: None
     :rtype: None
     """
     filtered_coordinates = filter_coordinates(coordinates=test_input,
-                                              output_dir_path=output_dir_path_empty_features_dir)
+                                              output_dir_path=output_dir_path_empty_tiles_dir)
 
     assert filtered_coordinates == expected
 
@@ -126,21 +126,21 @@ def test_filter_coordinates_empty_features_dir(test_input,
         assert type(filtered_coordinates_element[1]) is int
 
 
-@pytest.mark.parametrize('test_input, expected', parameters_filter_coordinates_not_empty_features_dir)
-def test_filter_coordinates_not_empty_features_dir(test_input,
-                                                   expected,
-                                                   output_dir_path_not_empty_features_dir):
+@pytest.mark.parametrize('test_input, expected', parameters_filter_coordinates_not_empty_tiles_dir)
+def test_filter_coordinates_not_empty_tiles_dir(test_input,
+                                                expected,
+                                                output_dir_path_not_empty_tiles_dir):
     """Tests filter_coordinates() with different coordinates.
-    The .features directory is not empty.
+    The .tiles directory is not empty.
 
     :param list[(int, int)] test_input: coordinates (x, y) of each tile
     :param list[(int, int)] expected: filtered coordinates (x, y) of each tile
-    :param Path output_dir_path_not_empty_features_dir: path to the output directory
+    :param Path output_dir_path_not_empty_tiles_dir: path to the output directory
     :returns: None
     :rtype: None
     """
     filtered_coordinates = filter_coordinates(coordinates=test_input,
-                                              output_dir_path=output_dir_path_not_empty_features_dir)
+                                              output_dir_path=output_dir_path_not_empty_tiles_dir)
 
     assert filtered_coordinates == expected
 
