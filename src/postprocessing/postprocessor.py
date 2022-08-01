@@ -1,6 +1,5 @@
 # @author: Maryniak, Marius - Fachbereich Elektrotechnik, Westfälische Hochschule Gelsenkirchen
 
-import json
 from pathlib import Path
 
 import geopandas as gpd
@@ -15,37 +14,41 @@ import src.utils as utils
 class Postprocessor:
     def __init__(self,
                  sieve_size,
-                 output_dir_path):
+                 output_dir_path,
+                 epsg_code):
         """Constructor method
 
         :param int or None sieve_size: sieve size in pixels (minimum number of pixels to retain)
         :param str or Path output_dir_path: path to the output directory
+        :param int epsg_code: epsg code of the coordinate reference system
         :returns: None
         :rtype: None
         """
         self.sieve_size = sieve_size
-        self.features_dir_path = Path(output_dir_path) / '.features'
+        self.tiles_dir_path = Path(output_dir_path) / '.tiles'
+        self.epsg_code = epsg_code
 
     def export_features(self,
                         features,
                         coordinates):
-        """Exports features as a features file (.json) to the .features directory.
-        Each features file name is in the following schema: x_y.json
+        """Exports features of a tile as a shape file (.shp) in a subdirectory to the .tiles directory.
+        Each subdirectory name is in the following schema: x_y
 
         :param list[dict[str, dict[str, Any]]] features: features
         :param (int, int) coordinates: coordinates (x, y)
         :returns: None
         :rtype: None
         """
-        path = self.features_dir_path / f'{coordinates[0]}_{coordinates[1]}.json'
-        with open(path, mode='w') as file:
-            json.dump(features, file, indent=4)
+        (self.tiles_dir_path / f'{coordinates[0]}_{coordinates[1]}').mkdir()
+        path = self.tiles_dir_path / f'{coordinates[0]}_{coordinates[1]}' / f'{coordinates[0]}_{coordinates[1]}.shp'
+        gdf = gpd.GeoDataFrame.from_features(features, crs=f'EPSG:{self.epsg_code}')
+        gdf.to_file(str(path))
 
     def vectorize_mask(self,
                        mask,
                        coordinates):
-        """Exports georeferenced features of the polygons in the vectorized mask given its coordinates
-        of the top left corner as a features file (.json) to the .features directory.
+        """Exports a shape file (.shp) of the polygons in the vectorized mask given its coordinates
+        of the top left corner in a subdirectory to the .tiles directory.
 
         :param np.ndarray[np.uint8] mask: mask
         :param (int, int) coordinates: coordinates (x, y)
@@ -66,16 +69,14 @@ class Postprocessor:
         self.export_features(features=features,
                              coordinates=coordinates)
 
-    @staticmethod
-    def get_gdf(features):
+    def get_gdf(self, features):
         """Returns a geodataframe.
 
         :param dict features: features
         :returns: gdf
         :rtype: gpd.GeoDataFrame
         """
-        gdf = gpd.GeoDataFrame.from_features(features)
-        gdf = gdf.set_crs(epsg=25832)
+        gdf = gpd.GeoDataFrame.from_features(features, crs=f'EPSG:{self.epsg_code}')
         return gdf
 
     @staticmethod
