@@ -1,9 +1,11 @@
 # @author: Maryniak, Marius - Fachbereich Elektrotechnik, Westfälische Hochschule Gelsenkirchen
 
+import re
 from pathlib import Path
 
 import geopandas as gpd
 import numpy as np
+import pandas as pd
 import rasterio as rio
 import rasterio.features
 import topojson as tp
@@ -69,15 +71,29 @@ class Postprocessor:
         self.export_features(features=features,
                              coordinates=coordinates)
 
-    def get_gdf(self, features):
-        """Returns a geodataframe.
+    def concatenate_gdfs(self, coordinates):
+        """Returns a concatenated geodataframe.
 
-        :param dict features: features
-        :returns: geodataframe
+        :param list[(int, int)] coordinates: coordinates (x, y) of each tile
+        :returns: concatenated geodataframe
         :rtype: gpd.GeoDataFrame
         """
-        gdf = gpd.GeoDataFrame.from_features(features, crs=f'EPSG:{self.epsg_code}')
-        return gdf
+        gdfs = []
+
+        pattern = re.compile(r'^(-?\d+)_(-?\d+)$')
+
+        for path in self.tiles_dir_path.iterdir():
+            match = pattern.search(path.name)
+            if match:
+                processed_coordinates = (int(match.group(1)), int(match.group(2)))
+                if processed_coordinates in coordinates:
+                    gdf_path = (self.tiles_dir_path / f'{processed_coordinates[0]}_{processed_coordinates[1]}' /
+                                f'{processed_coordinates[0]}_{processed_coordinates[1]}.shp')
+                    gdf = gpd.read_file(gdf_path)
+                    gdfs.append(gdf)
+
+        concatenated_gdf = gpd.GeoDataFrame(pd.concat(gdfs, ignore_index=True), crs=f'EPSG:{self.epsg_code}')
+        return concatenated_gdf
 
     @staticmethod
     def simplify_gdf(gdf):
