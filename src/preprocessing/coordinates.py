@@ -38,18 +38,18 @@ def get_coordinates(bounding_box):
 
 
 def filter_coordinates(coordinates, output_dir_path):
-    """Returns the filtered coordinates. If a tile is already being processed (its features file (.json) in
-    .features directory exists), its coordinates are removed.
+    """Returns the filtered coordinates. If a tile is already being processed (its shape file directory in
+    .tiles directory exists), its coordinates are removed.
 
     :param list[(int, int)] coordinates: coordinates (x, y) of each tile
     :param str or Path output_dir_path: path to the output directory
     :returns: filtered coordinates (x, y) of each tile
     :rtype: list[(int, int)]
     """
-    features_dir_path = Path(output_dir_path) / '.features'
-    pattern = re.compile(r'^(-?\d+)_(-?\d+)\.json$')
+    tiles_dir_path = Path(output_dir_path) / '.tiles'
+    pattern = re.compile(r'^(-?\d+)_(-?\d+)$')
 
-    for path in features_dir_path.iterdir():
+    for path in tiles_dir_path.iterdir():
         match = pattern.search(path.name)
         if match:
             processed_coordinates = (int(match.group(1)), int(match.group(2)))
