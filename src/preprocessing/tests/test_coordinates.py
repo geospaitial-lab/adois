@@ -62,7 +62,7 @@ parameters_filter_coordinates_empty_features_dir = \
       [(-256, 0), (0, 0), (-256, 256), (0, 256)])]
 
 parameters_filter_coordinates_not_empty_features_dir = \
-    [([(512, 768), (768, 768), (512, 1024), (768, 1024)],
+    [([(512, 768), (768, 768), (512, 1024), (768, 1024)],  # some tiles are already being processed
       [(512, 768), (768, 768)]),
      ([(512, -768), (768, -768), (512, -512), (768, -512)],
       [(512, -768), (768, -768)]),
@@ -71,7 +71,17 @@ parameters_filter_coordinates_not_empty_features_dir = \
      ([(-1024, 768), (-768, 768), (-1024, 1024), (-768, 1024)],
       [(-1024, 768), (-768, 768)]),
      ([(-256, 0), (0, 0), (-256, 256), (0, 256)],
-      [(-256, 0), (0, 0)])]
+      [(-256, 0), (0, 0)]),
+     ([(512, 1024), (768, 1024)],  # all tiles are already being processed
+      []),
+     ([(512, -512), (768, -512)],
+      []),
+     ([(-1024, -512), (-768, -512)],
+      []),
+     ([(-1024, 1024), (-768, 1024)],
+      []),
+     ([(-256, 256), (0, 256)],
+      [])]
 
 
 @pytest.mark.parametrize('test_input, expected', parameters_get_coordinates)
