@@ -98,5 +98,5 @@ class Postprocessor:
         :rtype: gpd.GeoDataFrame
         """
         topo = tp.Topology(gdf, prequantize=False)
-        gdf = topo.toposimplify(utils.RESOLUTION + .05).to_gdf()
-        return gdf
+        simplified_gdf = topo.toposimplify(utils.RESOLUTION + .05).to_gdf()
+        return simplified_gdf
