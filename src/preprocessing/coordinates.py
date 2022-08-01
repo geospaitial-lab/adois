@@ -41,8 +41,8 @@ def filter_coordinates(coordinates, output_dir_path):
     """Returns the filtered coordinates. If a tile is already being processed (its features file (.json) in
     .features directory exists), its coordinates are removed.
 
-    :param coordinates: coordinates (x, y) of each tile
-    :param output_dir_path: path to the output directory
+    :param list[(int, int)] coordinates: coordinates (x, y) of each tile
+    :param str or Path output_dir_path: path to the output directory
     :returns: filtered coordinates (x, y) of each tile
     :rtype: list[(int, int)]
     """
