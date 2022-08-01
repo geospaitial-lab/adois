@@ -237,10 +237,9 @@ class ExportSettings(BaseModel):
         """
         if not Path(value).is_dir():
             raise OutputDirNotFoundError(output_dir_path=value)
-        if any(Path(value).iterdir()):
-            for path in Path(value).iterdir():
-                if path.name != '.features':
-                    raise OutputDirNotEmptyError(output_dir_path=value)
+        for path in Path(value).iterdir():
+            if not path.name.startswith('.'):
+                raise OutputDirNotEmptyError(output_dir_path=value)
         return value
 
     @validator('shp_prefix')
