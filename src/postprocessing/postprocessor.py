@@ -90,6 +90,19 @@ class Postprocessor:
         return concatenated_gdf
 
     @staticmethod
+    def sieve_gdf(gdf, sieve_size):
+        """Returns a sieved geodataframe.
+
+        :param gpd.GeoDataFrame gdf: geodataframe
+        :param int sieve_size: sieve size in square meters (minimum area of polygons to retain)
+        :returns: sieved geodataframe
+        :rtype: gpd.GeoDataFrame
+        """
+        mask = gdf.area > sieve_size
+        sieved_gdf = gdf.loc[mask]
+        return sieved_gdf
+
+    @staticmethod
     def simplify_gdf(gdf):
         """Returns a geodataframe with simplified polygons (Douglas-Peucker algorithm is used).
 
