@@ -73,7 +73,7 @@ class Postprocessor:
         """Returns a geodataframe.
 
         :param dict features: features
-        :returns: gdf
+        :returns: geodataframe
         :rtype: gpd.GeoDataFrame
         """
         gdf = gpd.GeoDataFrame.from_features(features, crs=f'EPSG:{self.epsg_code}')
@@ -83,8 +83,8 @@ class Postprocessor:
     def simplify_gdf(gdf):
         """Returns a geodataframe with simplified polygons (Douglas-Peucker algorithm is used).
 
-        :param gpd.GeoDataFrame gdf: gdf
-        :returns: simplified gdf
+        :param gpd.GeoDataFrame gdf: geodataframe
+        :returns: simplified geodataframe
         :rtype: gpd.GeoDataFrame
         """
         topo = tp.Topology(gdf, prequantize=False)
