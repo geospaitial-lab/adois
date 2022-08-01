@@ -6,14 +6,11 @@ from pathlib import Path
 import src.utils as utils
 
 
-def get_coordinates(bounding_box, output_dir_path):
+def get_coordinates(bounding_box):
     """Returns the coordinates of the top left corner of each tile in the area of the bounding box.
     The bounding box is quantized to the image size in meters.
-    If a tile is already being processed (its features file (.json) in .features directory exists),
-    its coordinates are removed.
 
     :param (int, int, int, int) bounding_box: bounding box (x_1, y_1, x_2, y_2)
-    :param str or Path output_dir_path: path to the output directory
     :returns: coordinates (x, y) of each tile
     :rtype: list[(int, int)]
     """
@@ -37,6 +34,18 @@ def get_coordinates(bounding_box, output_dir_path):
             coordinates.append((bounding_box[0] + column * utils.IMAGE_SIZE_METERS,
                                 bounding_box[1] + (row + 1) * utils.IMAGE_SIZE_METERS))
 
+    return coordinates
+
+
+def filter_coordinates(coordinates, output_dir_path):
+    """Returns the filtered coordinates. If a tile is already being processed (its features file (.json) in
+    .features directory exists), its coordinates are removed.
+
+    :param coordinates: coordinates (x, y) of each tile
+    :param output_dir_path: path to the output directory
+    :returns: filtered coordinates (x, y) of each tile
+    :rtype: list[(int, int)]
+    """
     features_dir_path = Path(output_dir_path) / '.features'
     pattern = re.compile(r'^(-?\d+)_(-?\d+)\.json$')
 
