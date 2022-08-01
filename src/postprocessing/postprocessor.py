@@ -15,18 +15,15 @@ import src.utils as utils
 
 class Postprocessor:
     def __init__(self,
-                 sieve_size,
                  output_dir_path,
                  epsg_code):
         """Constructor method
 
-        :param int or None sieve_size: sieve size in pixels (minimum number of pixels to retain)
         :param str or Path output_dir_path: path to the output directory
         :param int epsg_code: epsg code of the coordinate reference system
         :returns: None
         :rtype: None
         """
-        self.sieve_size = sieve_size
         self.tiles_dir_path = Path(output_dir_path) / '.tiles'
         self.epsg_code = epsg_code
 
@@ -57,9 +54,6 @@ class Postprocessor:
         :returns: None
         :rtype: None
         """
-        if self.sieve_size is not None:
-            mask = rio.features.sieve(mask, size=self.sieve_size)
-
         transform = rio.transform.from_origin(west=coordinates[0],
                                               north=coordinates[1],
                                               xsize=utils.RESOLUTION,

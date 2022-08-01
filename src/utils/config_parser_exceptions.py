@@ -116,12 +116,12 @@ class SieveSizeError(Exception):
     def __init__(self, sieve_size):
         """Constructor method
 
-        :param int sieve_size: sieve size in pixels
+        :param int sieve_size: sieve size in square meters
         :returns: None
         :rtype: None
         """
         message = ('Invalid sieve_size in config file!\n' + ' ' * (4 if utils.DEBUG else 2) +
-                   f'Expected a number in the range of 0 to 1e4, got {sieve_size} instead.')
+                   f'Expected a number in the range of 0 to 10, got {sieve_size} instead.')
         super().__init__(message)
 
 
