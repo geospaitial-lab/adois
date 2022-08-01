@@ -46,6 +46,8 @@ def filter_coordinates(coordinates, output_dir_path):
     :returns: filtered coordinates (x, y) of each tile
     :rtype: list[(int, int)]
     """
+    filtered_coordinates = coordinates[:]
+
     tiles_dir_path = Path(output_dir_path) / '.tiles'
     pattern = re.compile(r'^(-?\d+)_(-?\d+)$')
 
@@ -54,6 +56,6 @@ def filter_coordinates(coordinates, output_dir_path):
         if match:
             processed_coordinates = (int(match.group(1)), int(match.group(2)))
             if processed_coordinates in coordinates:
-                coordinates.remove(processed_coordinates)
+                filtered_coordinates.remove(processed_coordinates)
 
-    return coordinates
+    return filtered_coordinates
