@@ -265,6 +265,7 @@ class ExportSettings(BaseModel):
         :returns: validated output_dir_path
         :rtype: str
         :raises OutputDirNotFoundError: if directory at output_dir_path does not exist
+        :raises OutputDirNotEmptyError: if directory at output_dir_path is not empty
         """
         if not Path(value).is_dir():
             raise OutputDirNotFoundError(output_dir_path=value)
