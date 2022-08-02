@@ -9,6 +9,7 @@ import pandas as pd
 import rasterio as rio
 import rasterio.features
 import topojson as tp
+from shapely.geometry import Polygon
 
 import src.utils as utils
 
@@ -101,6 +102,39 @@ class Postprocessor:
         mask = gdf.area > sieve_size
         sieved_gdf = gdf.loc[mask]
         return sieved_gdf
+
+    @staticmethod
+    def fill_polygon(polygon, hole_size):
+        """Returns a polygon without holes.
+        Based on: https://gis.stackexchange.com/a/409398
+
+        :param Polygon polygon: polygon
+        :param int hole_size: hole size in square meters (maximum area of holes in the polygons to retain)
+        :returns: filled polygon
+        :rtype: Polygon
+        """
+        if polygon.interiors:
+            interiors = []
+            for interior in polygon.interiors:
+                polygon_interior = Polygon(interior)
+                if polygon_interior.area > hole_size:
+                    interiors.append(interior)
+            return Polygon(polygon.exterior.coords, holes=interiors)
+        else:
+            return polygon
+
+    @staticmethod
+    def fill_gdf(gdf, hole_size):
+        """Returns a geodataframe without holes in the polygons.
+        Based on: https://gis.stackexchange.com/a/409398 and https://stackoverflow.com/a/61466689
+
+        :param gpd.GeoDataFrame gdf: geodataframe
+        :param int hole_size: hole size in square meters (maximum area of holes in the polygons to retain)
+        :returns: filled geodataframe
+        :rtype: gpd.GeoDataFrame
+        """
+        filled_gdf = gdf.geometry.apply(lambda polygon: Postprocessor.fill_polygon(polygon, hole_size=hole_size))
+        return filled_gdf
 
     @staticmethod
     def simplify_gdf(gdf):
