@@ -114,8 +114,10 @@ class Preprocessing(BaseModel):
         :param list[str] value: color_codes_ndsm
         :returns: validated color_codes_ndsm
         :rtype: dict[tuple[int, int, int], int]
-        :raises ColorCodeNDSMError: if color_code in color_codes_ndsm is not a color code with the following schema:
-            '(r_value, g_value, b_value) - mapped_value'
+        :raises ColorCodeNDSMSchemaError: if color_code in color_codes_ndsm is not a color code with the following
+            schema: '(r_value, g_value, b_value) - mapped_value'
+        :raises ColorCodeNDSMValueError: if the value in color_code in color_codes_ndsm is not a number in the range
+            of 0 to 255
         """
         color_codes_ndsm = {}
         pattern = re.compile(r'^\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)\s*-\s*(\d+)\s*$')
@@ -123,12 +125,24 @@ class Preprocessing(BaseModel):
         for color_code in value:
             match = pattern.search(color_code)
             if match is None:
-                raise ColorCodeNDSMError(color_code=color_code)
+                raise ColorCodeNDSMSchemaError(color_code=color_code)
             else:
-                r_value = int(match.group(1))
-                g_value = int(match.group(2))
-                b_value = int(match.group(3))
-                mapped_value = int(match.group(4))
+                if int(match.group(1)) <= 255:
+                    r_value = int(match.group(1))
+                else:
+                    raise ColorCodeNDSMValueError(value=int(match.group(1)))
+                if int(match.group(2)) <= 255:
+                    g_value = int(match.group(2))
+                else:
+                    raise ColorCodeNDSMValueError(value=int(match.group(2)))
+                if int(match.group(3)) <= 255:
+                    b_value = int(match.group(3))
+                else:
+                    raise ColorCodeNDSMValueError(value=int(match.group(3)))
+                if int(match.group(4)) <= 255:
+                    mapped_value = int(match.group(4))
+                else:
+                    raise ColorCodeNDSMValueError(value=int(match.group(4)))
                 color_codes_ndsm[(r_value, g_value, b_value)] = int(mapped_value)
         value = color_codes_ndsm
         return value
