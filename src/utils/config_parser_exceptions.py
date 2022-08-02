@@ -125,6 +125,19 @@ class SieveSizeError(Exception):
         super().__init__(message)
 
 
+class HoleSizeError(Exception):
+    def __init__(self, hole_size):
+        """Constructor method
+
+        :param int hole_size: hole size in square meters
+        :returns: None
+        :rtype: None
+        """
+        message = ('Invalid hole_size in config file!\n' + ' ' * (4 if utils.DEBUG else 2) +
+                   f'Expected a number in the range of 0 to 10, got {hole_size} instead.')
+        super().__init__(message)
+
+
 class TileSizeError(Exception):
     def __init__(self, tile_size):
         """Constructor method

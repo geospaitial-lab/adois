@@ -136,6 +136,7 @@ class Preprocessing(BaseModel):
 
 class Postprocessing(BaseModel):
     sieve_size: Optional[int] = None
+    hole_size: Optional[int] = None
     simplify: Optional[bool] = None
 
     @validator('sieve_size')
@@ -150,6 +151,22 @@ class Postprocessing(BaseModel):
         if value is not None:
             if not 0 <= value <= 10:
                 raise SieveSizeError(sieve_size=value)
+            if value == 0:
+                value = None
+        return value
+
+    @validator('hole_size')
+    def validate_hole_size(cls, value):
+        """Validates hole_size defined in the config file.
+
+        :param int or None value: hole_size
+        :returns: validated hole_size
+        :rtype: int or None
+        :raises HoleSizeError: if hole_size is not a number in the range of 0 to 10
+        """
+        if value is not None:
+            if not 0 <= value <= 10:
+                raise HoleSizeError(hole_size=value)
             if value == 0:
                 value = None
         return value
@@ -284,7 +301,9 @@ class Config(BaseModel):
         :returns: validated config
         :rtype: dict[str, Any]
         """
-        if values['postprocessing'].sieve_size is None and values['postprocessing'].simplify is False:
+        if (values['postprocessing'].sieve_size is None and
+                values['postprocessing'].hole_size is None and
+                values['postprocessing'].simplify is False):
             values['export_settings'].export_raw_shp = False
         return values
 
