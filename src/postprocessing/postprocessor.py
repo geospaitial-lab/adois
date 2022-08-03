@@ -64,7 +64,7 @@ class Postprocessor:
                                               ysize=utils.RESOLUTION)
         vectorized_mask = rio.features.shapes(mask, transform=transform)
 
-        features = [{'properties': {'geometry': shape, 'class': int(value)}}
+        features = [{'properties': {'class': int(value)}, 'geometry': shape}
                     for shape, value in vectorized_mask if int(value) != 0]
         self.export_features(features=features,
                              coordinates=coordinates)
