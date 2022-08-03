@@ -238,7 +238,7 @@ class Aggregation(BaseModel):
 class ExportSettings(BaseModel):
     output_dir_path: str
     prefix: str
-    export_raw_shp: Optional[bool] = None
+    export_raw_shape_file: Optional[bool] = None
 
     @validator('output_dir_path')
     def validate_output_dir_path(cls, value):
@@ -271,12 +271,12 @@ class ExportSettings(BaseModel):
             raise PrefixError()
         return value
 
-    @validator('export_raw_shp')
-    def validate_export_raw_shp(cls, value):
-        """Validates export_raw_shp defined in the config file.
+    @validator('export_raw_shape_file')
+    def validate_export_raw_shape_file(cls, value):
+        """Validates export_raw_shape_file defined in the config file.
 
-        :param bool or None value: export_raw_shp
-        :returns: validated export_raw_shp
+        :param bool or None value: export_raw_shape_file
+        :returns: validated export_raw_shape_file
         :rtype: bool
         """
         if value is None:
@@ -292,15 +292,15 @@ class Config(BaseModel):
     export_settings: ExportSettings
 
     @root_validator
-    def validate_export_raw_shp(cls, values):
-        """Validates export_raw_shp defined in the config file.
+    def validate_export_raw_shape_file(cls, values):
+        """Validates export_raw_shape_file defined in the config file.
 
         :param dict[str, Any] values: config
         :returns: validated config
         :rtype: dict[str, Any]
         """
         if values['postprocessing'].sieve_size is None and values['postprocessing'].simplify is False:
-            values['export_settings'].export_raw_shp = False
+            values['export_settings'].export_raw_shape_file = False
         return values
 
 

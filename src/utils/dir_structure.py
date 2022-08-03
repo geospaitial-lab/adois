@@ -15,13 +15,13 @@ def create_tiles_dir(output_dir_path):
 
 
 def create_dir_structure(output_dir_path,
-                         export_raw_shp,
+                         export_raw_shape_file,
                          tile_sizes,
                          shp_paths):
     """Creates the directory structure in the output directory.
 
     :param str or Path output_dir_path: path to the output directory
-    :param bool export_raw_shp: if True, a shape file without postprocessing is exported
+    :param bool export_raw_shape_file: if True, a shape file without postprocessing is exported
     :param list[int] tile_sizes: tile sizes of the grid in meters for aggregation
     :param list[str] shp_paths: paths to the shape files for aggregation
     :returns: None
@@ -30,7 +30,7 @@ def create_dir_structure(output_dir_path,
     output_dir_path = Path(output_dir_path)
     (output_dir_path / 'impervious_surfaces').mkdir()
 
-    if export_raw_shp:
+    if export_raw_shape_file:
         (output_dir_path / 'impervious_surfaces_raw').mkdir()
 
     if tile_sizes or shp_paths:

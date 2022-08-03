@@ -43,4 +43,4 @@ aggregation:
 export_settings:
   output_dir_path: /Users/mrsmrynk/PycharmProjects/adois_app/output_dir
   prefix: example
-  export_raw_shp: true
+  export_raw_shape_file: true
