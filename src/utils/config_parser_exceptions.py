@@ -153,28 +153,30 @@ class TileSizeError(Exception):
 
 
 class ShpFileNotFoundError(Exception):
-    def __init__(self, shp_path):
+    def __init__(self, shape_file_path):
         """Constructor method
 
-        :param str shp_path: path to the shape file (.shp)
+        :param str shape_file_path: path to the shape file (.shp)
         :returns: None
         :rtype: None
         """
-        message = ('Invalid path to the shape file in shp_path in config file!\n' + ' ' * (4 if utils.DEBUG else 2) +
-                   f'Shape file at {shp_path} does not exist.')
+        message = ('Invalid path to the shape file in shape_file_path in config file!\n' +
+                   ' ' * (4 if utils.DEBUG else 2) +
+                   f'Shape file at {shape_file_path} does not exist.')
         super().__init__(message)
 
 
 class ShpFileExtensionError(Exception):
-    def __init__(self, shp_path):
+    def __init__(self, shape_file_path):
         """Constructor method
 
-        :param str shp_path: path to the shape file (.shp)
+        :param str shape_file_path: path to the shape file (.shp)
         :returns: None
         :rtype: None
         """
-        message = ('Invalid path to the shape file in shp_path in config file!\n' + ' ' * (4 if utils.DEBUG else 2) +
-                   f'Expected file extension .shp, got {Path(shp_path).suffix} instead.')
+        message = ('Invalid path to the shape file in shape_file_path in config file!\n' +
+                   ' ' * (4 if utils.DEBUG else 2) +
+                   f'Expected file extension .shp, got {Path(shape_file_path).suffix} instead.')
         super().__init__(message)
 
 

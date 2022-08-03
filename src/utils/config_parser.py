@@ -183,7 +183,7 @@ class Postprocessing(BaseModel):
 
 class Aggregation(BaseModel):
     tile_size: Optional[Union[int, List[Union[int, None]]]] = None
-    shp_path: Optional[Union[str, List[Union[str, None]]]] = None
+    shape_file_path: Optional[Union[str, List[Union[str, None]]]] = None
 
     @validator('tile_size')
     def validate_tile_size(cls, value):
@@ -209,26 +209,27 @@ class Aggregation(BaseModel):
             value = []
         return value
 
-    @validator('shp_path')
-    def validate_shp_path(cls, value):
-        """Validates shp_path defined in the config file.
+    @validator('shape_file_path')
+    def validate_shape_file_path(cls, value):
+        """Validates shape_file_path defined in the config file.
 
-        :param str or list[str or None] or None value: shp_path
-        :returns: validated shp_path
+        :param str or list[str or None] or None value: shape_file_path
+        :returns: validated shape_file_path
         :rtype: list[str]
-        :raises ShpFileNotFoundError: if shape file at shp_path does not exist
-        :raises ShpFileExtensionError: if file extension of shp_path is not .shp
+        :raises ShpFileNotFoundError: if shape file at shape_file_path does not exist
+        :raises ShpFileExtensionError: if file extension of shape_file_path is not .shp
         """
         if value is not None:
             if type(value) is str:
                 value = [value]
-            for shp_path in value:
-                if shp_path is not None:
-                    if not Path(shp_path).is_file():
-                        raise ShpFileNotFoundError(shp_path=shp_path)
-                    elif Path(shp_path).suffix != '.shp':
-                        raise ShpFileExtensionError(shp_path=shp_path)
-            value = [shp_path for shp_path in value if shp_path is not None]
+            for shape_file_path in value:
+                if shape_file_path is not None:
+                    if not Path(shape_file_path).is_file():
+                        raise ShpFileNotFoundError(shape_file_path=shape_file_path)
+                    elif Path(shape_file_path).suffix != '.shp':
+                        raise ShpFileExtensionError(shape_file_path=shape_file_path)
+            value = [shape_file_path_element for shape_file_path_element in value
+                     if shape_file_path_element is not None]
             value = list(set(value))
         else:
             value = []

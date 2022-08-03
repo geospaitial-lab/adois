@@ -38,7 +38,7 @@ aggregation:
   tile_size:
     - 50
     - 100
-  shp_path:
+  shape_file_path:
 
 export_settings:
   output_dir_path: /Users/mrsmrynk/PycharmProjects/adois_app/output_dir
