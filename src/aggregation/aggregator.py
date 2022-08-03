@@ -28,14 +28,14 @@ class Aggregator:
         :returns: geodataframe with statistical values of the aggregated geodataframe and its shape file schema
         :rtype: (gpd.GeoDataFrame, dict[str, OrderedDict[str, str] or str])
         """
-        for index in gdf_aggregation['FID']:
-            area = float(gdf_aggregation.loc[gdf_aggregation['FID'] == index].area)
-            imp_area = float(gdf_aggregated.loc[gdf_aggregated['FID'] == index].area.sum())
+        for index in gdf_aggregation['aggregation_id']:
+            area = float(gdf_aggregation.loc[gdf_aggregation['aggregation_id'] == index].area)
+            imp_area = float(gdf_aggregated.loc[gdf_aggregated['aggregation_id'] == index].area.sum())
             imp_density = imp_area / area
-            bui_area = float(gdf_aggregated.loc[(gdf_aggregated['FID'] == index) &
+            bui_area = float(gdf_aggregated.loc[(gdf_aggregated['aggregation_id'] == index) &
                                                 (gdf_aggregated['class'] == 1)].area.sum())
             bui_density = bui_area / area
-            sur_area = float(gdf_aggregated.loc[(gdf_aggregated['FID'] == index) &
+            sur_area = float(gdf_aggregated.loc[(gdf_aggregated['aggregation_id'] == index) &
                                                 (gdf_aggregated['class'] == 2)].area.sum())
             sur_density = sur_area / area
 
@@ -56,8 +56,9 @@ class Aggregator:
             gdf_aggregation.at[index, 'bui_imp_r'] = bui_imp_ratio
             gdf_aggregation.at[index, 'sur_imp_r'] = sur_imp_ratio
 
+        gdf_aggregation = gdf_aggregation.drop(columns='aggregation_id')
+
         attributes = OrderedDict()
-        attributes['FID'] = 'int:10'
         attributes['area'] = f'float:10.{Aggregator.DECIMAL_PLACES}'
         attributes['imp_area'] = f'float:10.{Aggregator.DECIMAL_PLACES}'
         attributes['imp_dens'] = f'float:10.{Aggregator.DECIMAL_PLACES}'
@@ -81,6 +82,7 @@ class Aggregator:
         :returns: geodataframe with statistical values of the aggregated geodataframe and its shape file schema
         :rtype: (gpd.GeoDataFrame, dict[str, OrderedDict[str, str] or str])
         """
+        gdf_aggregation['aggregation_id'] = gdf_aggregation.index
         gdf_aggregated = gpd.overlay(df1=self.gdf,
                                      df2=gdf_aggregation,
                                      how='intersection',
