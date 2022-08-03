@@ -152,7 +152,7 @@ class TileSizeError(Exception):
         super().__init__(message)
 
 
-class ShpFileNotFoundError(Exception):
+class ShapeFileNotFoundError(Exception):
     def __init__(self, shape_file_path):
         """Constructor method
 
@@ -166,7 +166,7 @@ class ShpFileNotFoundError(Exception):
         super().__init__(message)
 
 
-class ShpFileExtensionError(Exception):
+class ShapeFileExtensionError(Exception):
     def __init__(self, shape_file_path):
         """Constructor method
 

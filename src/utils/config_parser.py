@@ -225,9 +225,9 @@ class Aggregation(BaseModel):
             for shape_file_path in value:
                 if shape_file_path is not None:
                     if not Path(shape_file_path).is_file():
-                        raise ShpFileNotFoundError(shape_file_path=shape_file_path)
+                        raise ShapeFileNotFoundError(shape_file_path=shape_file_path)
                     elif Path(shape_file_path).suffix != '.shp':
-                        raise ShpFileExtensionError(shape_file_path=shape_file_path)
+                        raise ShapeFileExtensionError(shape_file_path=shape_file_path)
             value = [shape_file_path_element for shape_file_path_element in value
                      if shape_file_path_element is not None]
             value = list(set(value))
