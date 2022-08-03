@@ -216,8 +216,8 @@ class Aggregation(BaseModel):
         :param str or list[str or None] or None value: shape_file_path
         :returns: validated shape_file_path
         :rtype: list[str]
-        :raises ShpFileNotFoundError: if shape file at shape_file_path does not exist
-        :raises ShpFileExtensionError: if file extension of shape_file_path is not .shp
+        :raises ShapeFileNotFoundError: if shape file at shape_file_path does not exist
+        :raises ShapeFileExtensionError: if file extension of shape_file_path is not .shp
         """
         if value is not None:
             if type(value) is str:
