@@ -140,8 +140,7 @@ class Postprocessor:
                                                 Postprocessor.fill_polygon(polygon, hole_size=hole_size))
         return gdf
 
-    @staticmethod
-    def simplify_gdf(gdf):
+    def simplify_gdf(self, gdf):
         """Returns a geodataframe with simplified polygons (Douglas-Peucker algorithm is used).
 
         :param gpd.GeoDataFrame gdf: geodataframe
@@ -149,5 +148,5 @@ class Postprocessor:
         :rtype: gpd.GeoDataFrame
         """
         topo = tp.Topology(gdf, prequantize=False)
-        simplified_gdf = topo.toposimplify(utils.RESOLUTION + .05).to_gdf()
+        simplified_gdf = topo.toposimplify(utils.RESOLUTION + .05).to_gdf(crs=f'EPSG:{self.epsg_code}')
         return simplified_gdf
