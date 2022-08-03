@@ -39,10 +39,10 @@ class Aggregator:
                                                 (gdf_aggregated['class'] == 2)].area.sum())
             sur_density = sur_area / area
 
-            if round(imp_area, 4) != 0:
+            try:
                 bui_imp_ratio = bui_area / imp_area
                 sur_imp_ratio = sur_area / imp_area
-            else:
+            except ZeroDivisionError:
                 bui_imp_ratio = 1.
                 sur_imp_ratio = 1.
 
