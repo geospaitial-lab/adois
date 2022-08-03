@@ -204,13 +204,13 @@ class OutputDirNotEmptyError(Exception):
         super().__init__(message)
 
 
-class ShpPrefixError(Exception):
+class PrefixError(Exception):
     def __init__(self):
         """Constructor method
 
         :returns: None
         :rtype: None
         """
-        message = ('Invalid shp_prefix in config file!\n' + ' ' * (4 if utils.DEBUG else 2) +
+        message = ('Invalid prefix in config file!\n' + ' ' * (4 if utils.DEBUG else 2) +
                    'String contains only whitespaces or underscores.')
         super().__init__(message)

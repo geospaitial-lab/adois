@@ -42,5 +42,5 @@ aggregation:
 
 export_settings:
   output_dir_path: /Users/mrsmrynk/PycharmProjects/adois_app/output_dir
-  shp_prefix: example
+  prefix: example
   export_raw_shp: true
