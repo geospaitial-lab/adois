@@ -136,7 +136,8 @@ class Postprocessor:
         :returns: filled geodataframe
         :rtype: gpd.GeoDataFrame
         """
-        gdf['geometry'] = gdf['geometry'].apply(lambda polygon: Postprocessor.fill_polygon(polygon, hole_size=hole_size))
+        gdf['geometry'] = gdf['geometry'].apply(lambda polygon:
+                                                Postprocessor.fill_polygon(polygon, hole_size=hole_size))
         return gdf
 
     @staticmethod
