@@ -14,6 +14,9 @@ from shapely.geometry import Polygon
 import src.utils as utils
 
 
+pd.options.mode.chained_assignment = None
+
+
 class Postprocessor:
     def __init__(self,
                  output_dir_path,
@@ -133,8 +136,8 @@ class Postprocessor:
         :returns: filled geodataframe
         :rtype: gpd.GeoDataFrame
         """
-        filled_gdf = gdf.geometry.apply(lambda polygon: Postprocessor.fill_polygon(polygon, hole_size=hole_size))
-        return filled_gdf
+        gdf['geometry'] = gdf['geometry'].apply(lambda polygon: Postprocessor.fill_polygon(polygon, hole_size=hole_size))
+        return gdf
 
     @staticmethod
     def simplify_gdf(gdf):
