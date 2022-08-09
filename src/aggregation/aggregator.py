@@ -82,6 +82,7 @@ class Aggregator:
         :returns: geodataframe with statistical values of the aggregated geodataframe and its shape file schema
         :rtype: (gpd.GeoDataFrame, dict[str, OrderedDict[str, str] or str])
         """
+        aggregation_gdf = aggregation_gdf[['geometry']]
         aggregation_gdf['aggregation_id'] = aggregation_gdf.index
         aggregated_gdf = gpd.overlay(df1=self.gdf,
                                      df2=aggregation_gdf,
