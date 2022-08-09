@@ -18,25 +18,25 @@ class Aggregator:
         self.gdf = gdf
 
     @staticmethod
-    def evaluate_stats(gdf_aggregation, gdf_aggregated):
+    def evaluate_stats(aggregation_gdf, aggregated_gdf):
         """Returns an geodataframe with statistical values of the aggregated geodataframe and its shape file schema.
         Each polygon has the following attributes:
         area, imp_area, imp_dens, bui_area, bui_dens, sur_area, sur_dens, bui_imp_r, sur_imp_r
 
-        :param gpd.GeoDataFrame gdf_aggregation: geodataframe for aggregation
-        :param gpd.GeoDataFrame gdf_aggregated: aggregated geodataframe
+        :param gpd.GeoDataFrame aggregation_gdf: geodataframe for aggregation
+        :param gpd.GeoDataFrame aggregated_gdf: aggregated geodataframe
         :returns: geodataframe with statistical values of the aggregated geodataframe and its shape file schema
         :rtype: (gpd.GeoDataFrame, dict[str, OrderedDict[str, str] or str])
         """
-        for index in gdf_aggregation['aggregation_id']:
-            area = float(gdf_aggregation.loc[gdf_aggregation['aggregation_id'] == index].area)
-            imp_area = float(gdf_aggregated.loc[gdf_aggregated['aggregation_id'] == index].area.sum())
+        for index in aggregation_gdf['aggregation_id']:
+            area = float(aggregation_gdf.loc[aggregation_gdf['aggregation_id'] == index].area)
+            imp_area = float(aggregated_gdf.loc[aggregated_gdf['aggregation_id'] == index].area.sum())
             imp_density = imp_area / area
-            bui_area = float(gdf_aggregated.loc[(gdf_aggregated['aggregation_id'] == index) &
-                                                (gdf_aggregated['class'] == 1)].area.sum())
+            bui_area = float(aggregated_gdf.loc[(aggregated_gdf['aggregation_id'] == index) &
+                                                (aggregated_gdf['class'] == 1)].area.sum())
             bui_density = bui_area / area
-            sur_area = float(gdf_aggregated.loc[(gdf_aggregated['aggregation_id'] == index) &
-                                                (gdf_aggregated['class'] == 2)].area.sum())
+            sur_area = float(aggregated_gdf.loc[(aggregated_gdf['aggregation_id'] == index) &
+                                                (aggregated_gdf['class'] == 2)].area.sum())
             sur_density = sur_area / area
 
             try:
@@ -46,17 +46,17 @@ class Aggregator:
                 bui_imp_ratio = 1.
                 sur_imp_ratio = 1.
 
-            gdf_aggregation.at[index, 'area'] = area
-            gdf_aggregation.at[index, 'imp_area'] = imp_area
-            gdf_aggregation.at[index, 'imp_dens'] = imp_density
-            gdf_aggregation.at[index, 'bui_area'] = bui_area
-            gdf_aggregation.at[index, 'bui_dens'] = bui_density
-            gdf_aggregation.at[index, 'sur_area'] = sur_area
-            gdf_aggregation.at[index, 'sur_dens'] = sur_density
-            gdf_aggregation.at[index, 'bui_imp_r'] = bui_imp_ratio
-            gdf_aggregation.at[index, 'sur_imp_r'] = sur_imp_ratio
+            aggregation_gdf.at[index, 'area'] = area
+            aggregation_gdf.at[index, 'imp_area'] = imp_area
+            aggregation_gdf.at[index, 'imp_dens'] = imp_density
+            aggregation_gdf.at[index, 'bui_area'] = bui_area
+            aggregation_gdf.at[index, 'bui_dens'] = bui_density
+            aggregation_gdf.at[index, 'sur_area'] = sur_area
+            aggregation_gdf.at[index, 'sur_dens'] = sur_density
+            aggregation_gdf.at[index, 'bui_imp_r'] = bui_imp_ratio
+            aggregation_gdf.at[index, 'sur_imp_r'] = sur_imp_ratio
 
-        gdf_aggregation = gdf_aggregation.drop(columns='aggregation_id')
+        aggregation_gdf = aggregation_gdf.drop(columns='aggregation_id')
 
         attributes = OrderedDict()
         attributes['area'] = f'float:10.{Aggregator.DECIMAL_PLACES}'
@@ -71,24 +71,24 @@ class Aggregator:
         schema = {'properties': attributes,
                   'geometry': 'Polygon'}
 
-        return gdf_aggregation, schema
+        return aggregation_gdf, schema
 
-    def aggregate_gdf(self, gdf_aggregation):
+    def aggregate_gdf(self, aggregation_gdf):
         """Returns an geodataframe with statistical values of the aggregated geodataframe and its shape file schema.
         Each polygon has the following attributes:
         area, imp_area, imp_dens, bui_area, bui_dens, sur_area, sur_dens, bui_imp_r, sur_imp_r
 
-        :param gpd.GeoDataFrame gdf_aggregation: geodataframe for aggregation
+        :param gpd.GeoDataFrame aggregation_gdf: geodataframe for aggregation
         :returns: geodataframe with statistical values of the aggregated geodataframe and its shape file schema
         :rtype: (gpd.GeoDataFrame, dict[str, OrderedDict[str, str] or str])
         """
-        gdf_aggregation['aggregation_id'] = gdf_aggregation.index
-        gdf_aggregated = gpd.overlay(df1=self.gdf,
-                                     df2=gdf_aggregation,
+        aggregation_gdf['aggregation_id'] = aggregation_gdf.index
+        aggregated_gdf = gpd.overlay(df1=self.gdf,
+                                     df2=aggregation_gdf,
                                      how='intersection',
                                      keep_geom_type=False)
 
-        gdf_aggregation, schema = self.evaluate_stats(gdf_aggregation=gdf_aggregation,
-                                                      gdf_aggregated=gdf_aggregated)
+        aggregation_gdf, schema = self.evaluate_stats(aggregation_gdf=aggregation_gdf,
+                                                      aggregated_gdf=aggregated_gdf)
 
-        return gdf_aggregation, schema
+        return aggregation_gdf, schema
