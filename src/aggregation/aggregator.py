@@ -3,19 +3,24 @@
 from collections import OrderedDict
 
 import geopandas as gpd
+from shapely.geometry import Polygon
 
 
 class Aggregator:
     DECIMAL_PLACES = 4
 
-    def __init__(self, gdf):
+    def __init__(self,
+                 gdf,
+                 bounding_box):
         """Constructor method
 
         :param gpd.GeoDataFrame gdf: geodataframe
+        :param (int, int, int, int) bounding_box: bounding box (x_1, y_1, x_2, y_2)
         :returns: None
         :rtype: None
         """
         self.gdf = gdf
+        self.bounding_box = bounding_box
 
     @staticmethod
     def evaluate_stats(aggregation_gdf, aggregated_gdf):
@@ -73,6 +78,22 @@ class Aggregator:
 
         return aggregation_gdf, schema
 
+    def mask_gdf(self, gdf):
+        """Returns a masked geodataframe.
+
+        :param gpd.GeoDataFrame gdf: geodataframe
+        :returns: masked geodataframe
+        :rtype: gpd.GeoDataFrame
+        """
+        polygon_bounding_box = Polygon([[self.bounding_box[0], self.bounding_box[1]],
+                                        [self.bounding_box[0], self.bounding_box[3]],
+                                        [self.bounding_box[2], self.bounding_box[3]],
+                                        [self.bounding_box[2], self.bounding_box[1]]])
+        masked_gdf = gpd.clip(gdf,
+                              mask=polygon_bounding_box,
+                              keep_geom_type=True)
+        return masked_gdf
+
     def aggregate_gdf(self, aggregation_gdf):
         """Returns an geodataframe with statistical values of the aggregated geodataframe and its shape file schema.
         Each polygon has the following attributes:
@@ -84,6 +105,7 @@ class Aggregator:
         """
         aggregation_gdf = aggregation_gdf[['geometry']]
         aggregation_gdf['aggregation_id'] = aggregation_gdf.index
+        aggregation_gdf = self.mask_gdf(aggregation_gdf)
         aggregated_gdf = gpd.overlay(df1=self.gdf,
                                      df2=aggregation_gdf,
                                      how='intersection',
