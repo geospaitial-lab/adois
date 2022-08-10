@@ -71,6 +71,45 @@ class EPSGCodeError(Exception):
         super().__init__(message)
 
 
+class ShapeFileNotFoundError(Exception):
+    def __init__(self, shape_file_path):
+        """Constructor method
+
+        :param str shape_file_path: path to the shape file (.shp)
+        :returns: None
+        :rtype: None
+        """
+        message = ('Invalid path to the shape file in shape_file_path in config file!\n' +
+                   ' ' * (4 if utils.DEBUG else 2) +
+                   f'Shape file at {shape_file_path} does not exist.')
+        super().__init__(message)
+
+
+class ShapeFileExtensionError(Exception):
+    def __init__(self, shape_file_path):
+        """Constructor method
+
+        :param str shape_file_path: path to the shape file (.shp)
+        :returns: None
+        :rtype: None
+        """
+        message = ('Invalid path to the shape file in shape_file_path in config file!\n' +
+                   ' ' * (4 if utils.DEBUG else 2) +
+                   f'Expected file extension .shp, got {Path(shape_file_path).suffix} instead.')
+        super().__init__(message)
+
+
+class BoundingBoxNotDefinedError(Exception):
+    def __init__(self):
+        """Constructor method
+
+        :returns: None
+        :rtype: None
+        """
+        message = 'Neither boundary_shape_file_path nor bounding_box are defined in config file!'
+        super().__init__(message)
+
+
 class BoundingBoxLengthError(Exception):
     def __init__(self, bounding_box):
         """Constructor method
@@ -149,34 +188,6 @@ class TileSizeError(Exception):
         """
         message = ('Invalid tile size in tile_size in config file!\n' + ' ' * (4 if utils.DEBUG else 2) +
                    f'Expected a number greater than 0, got {tile_size} instead.')
-        super().__init__(message)
-
-
-class ShapeFileNotFoundError(Exception):
-    def __init__(self, shape_file_path):
-        """Constructor method
-
-        :param str shape_file_path: path to the shape file (.shp)
-        :returns: None
-        :rtype: None
-        """
-        message = ('Invalid path to the shape file in shape_file_path in config file!\n' +
-                   ' ' * (4 if utils.DEBUG else 2) +
-                   f'Shape file at {shape_file_path} does not exist.')
-        super().__init__(message)
-
-
-class ShapeFileExtensionError(Exception):
-    def __init__(self, shape_file_path):
-        """Constructor method
-
-        :param str shape_file_path: path to the shape file (.shp)
-        :returns: None
-        :rtype: None
-        """
-        message = ('Invalid path to the shape file in shape_file_path in config file!\n' +
-                   ' ' * (4 if utils.DEBUG else 2) +
-                   f'Expected file extension .shp, got {Path(shape_file_path).suffix} instead.')
         super().__init__(message)
 
 

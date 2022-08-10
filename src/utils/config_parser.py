@@ -4,6 +4,8 @@ import re
 from pathlib import Path
 from typing import List, Optional, Union
 
+import geopandas as gpd
+import numpy as np
 import yaml
 from owslib.wms import WebMapService
 from pydantic import BaseModel, root_validator, validator
@@ -59,7 +61,8 @@ class Data(BaseModel):
     nir: Wms
     ndsm: Wms
     epsg_code: int
-    bounding_box: List[int]
+    boundary_shape_file_path: Optional[str]
+    bounding_box: Optional[List[int]]
 
     @validator('epsg_code')
     def validate_epsg_code(cls,
@@ -86,20 +89,48 @@ class Data(BaseModel):
                                 valid_epsg_codes=valid_epsg_codes)
         return value
 
+    @validator('boundary_shape_file_path')
+    def validate_boundary_shape_file_path(cls, value):
+        """Validates boundary_shape_file_path defined in the config file.
+
+        :param str or None value: boundary_shape_file_path
+        :returns: validated boundary_shape_file_path
+        :rtype: str or None
+        :raises ShapeFileNotFoundError: if shape file at boundary_shape_file_path does not exist
+        :raises ShapeFileExtensionError: if file extension of boundary_shape_file_path is not .shp
+        """
+        if value is not None:
+            if not Path(value).is_file():
+                raise ShapeFileNotFoundError(shape_file_path=value)
+            elif Path(value).suffix != '.shp':
+                raise ShapeFileExtensionError(shape_file_path=value)
+        return value
+
     @validator('bounding_box')
-    def validate_bounding_box(cls, value):
+    def validate_bounding_box(cls,
+                              value,
+                              values):
         """Validates bounding_box defined in the config file.
 
-        :param list[int] value: bounding_box (x_1, y_1, x_2, y_2)
+        :param list[int] or None value: bounding_box (x_1, y_1, x_2, y_2)
+        :param dict[str, Any] values: config
         :returns: validated bounding_box
-        :rtype: (int, int, int, int)
+        :rtype: (int, int, int, int) or None
+        :raises BoundingBoxNotDefinedError: if neither boundary_shape_file_path nor bounding_box are defined
+            in the config file
         :raises BoundingBoxLengthError: if the length of bounding_box is not equal to 4
         :raises BoundingBoxError: if x_1 >= x_2 or y_1 >= y_2
         """
-        if len(value) != 4:
-            raise BoundingBoxLengthError(bounding_box=value)
-        if value[0] >= value[2] or value[1] >= value[3]:
-            raise BoundingBoxError(bounding_box=value)
+        if value is None and values['boundary_shape_file_path'] is None:
+            raise BoundingBoxNotDefinedError()
+        if value is not None and values['boundary_shape_file_path'] is None:
+            if len(value) != 4:
+                raise BoundingBoxLengthError(bounding_box=value)
+            if value[0] >= value[2] or value[1] >= value[3]:
+                raise BoundingBoxError(bounding_box=value)
+        else:
+            boundary_gdf = gpd.read_file(values['boundary_shape_file_path'])
+            value = boundary_gdf.total_bounds.astype(np.int32)
         value = tuple(value)
         return value
 
