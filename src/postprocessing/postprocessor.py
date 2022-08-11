@@ -46,7 +46,8 @@ class Postprocessor:
         """
         (self.tiles_dir_path / f'{coordinates[0]}_{coordinates[1]}').mkdir()
         if features:
-            gdf_path = self.tiles_dir_path / f'{coordinates[0]}_{coordinates[1]}' / f'{coordinates[0]}_{coordinates[1]}.shp'
+            gdf_path = (self.tiles_dir_path / f'{coordinates[0]}_{coordinates[1]}' /
+                        f'{coordinates[0]}_{coordinates[1]}.shp')
             gdf = gpd.GeoDataFrame.from_features(features, crs=f'EPSG:{self.epsg_code}')
             gdf.to_file(str(gdf_path))
 
