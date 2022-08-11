@@ -104,10 +104,11 @@ class Postprocessor:
             if match:
                 processed_coordinates = (int(match.group(1)), int(match.group(2)))
                 if processed_coordinates in coordinates:
-                    gdf_path = (self.tiles_dir_path / f'{processed_coordinates[0]}_{processed_coordinates[1]}' /
-                                f'{processed_coordinates[0]}_{processed_coordinates[1]}.shp')
-                    gdf = gpd.read_file(gdf_path)
-                    gdfs.append(gdf)
+                    if any(path.iterdir()):
+                        gdf_path = (self.tiles_dir_path / f'{processed_coordinates[0]}_{processed_coordinates[1]}' /
+                                    f'{processed_coordinates[0]}_{processed_coordinates[1]}.shp')
+                        gdf = gpd.read_file(gdf_path)
+                        gdfs.append(gdf)
 
         concatenated_gdf = gpd.GeoDataFrame(pd.concat(gdfs, ignore_index=True), crs=f'EPSG:{self.epsg_code}')
         concatenated_gdf = self.mask_gdf(concatenated_gdf)
