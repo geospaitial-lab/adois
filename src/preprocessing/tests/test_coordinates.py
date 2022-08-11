@@ -4,8 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from src.preprocessing.coordinates import filter_coordinates, get_coordinates
-
+from src.preprocessing.coordinates import filter_downloaded_coordinates, get_coordinates
 
 parameters_get_coordinates = \
     [((512, 512, 1024, 1024),  # no quantization, no remainder
@@ -49,7 +48,7 @@ parameters_get_coordinates = \
      ((-128, -128, 128, 128),
       [(-256, 0), (0, 0), (-256, 256), (0, 256)])]
 
-parameters_filter_coordinates_empty_tiles_dir = \
+parameters_filter_downloaded_coordinates_empty_tiles_dir = \
     [([(512, 768), (768, 768), (512, 1024), (768, 1024)],
       [(512, 768), (768, 768), (512, 1024), (768, 1024)]),
      ([(512, -768), (768, -768), (512, -512), (768, -512)],
@@ -61,7 +60,7 @@ parameters_filter_coordinates_empty_tiles_dir = \
      ([(-256, 0), (0, 0), (-256, 256), (0, 256)],
       [(-256, 0), (0, 0), (-256, 256), (0, 256)])]
 
-parameters_filter_coordinates_not_empty_tiles_dir = \
+parameters_filter_downloaded_coordinates_not_empty_tiles_dir = \
     [([(512, 768), (768, 768), (512, 1024), (768, 1024)],  # some tiles are already being processed
       [(512, 768), (768, 768)]),
      ([(512, -768), (768, -768), (512, -512), (768, -512)],
@@ -103,11 +102,11 @@ def test_get_coordinates(test_input, expected):
         assert type(coordinates_element[1]) is int
 
 
-@pytest.mark.parametrize('test_input, expected', parameters_filter_coordinates_empty_tiles_dir)
-def test_filter_coordinates_empty_tiles_dir(test_input,
-                                            expected,
-                                            output_dir_path_empty_tiles_dir):
-    """Tests filter_coordinates() with different coordinates.
+@pytest.mark.parametrize('test_input, expected', parameters_filter_downloaded_coordinates_empty_tiles_dir)
+def test_filter_downloaded_coordinates_empty_tiles_dir(test_input,
+                                                       expected,
+                                                       output_dir_path_empty_tiles_dir):
+    """Tests filter_downloaded_coordinates() with different coordinates.
     The .tiles directory is empty.
 
     :param list[(int, int)] test_input: coordinates (x, y) of each tile
@@ -116,8 +115,8 @@ def test_filter_coordinates_empty_tiles_dir(test_input,
     :returns: None
     :rtype: None
     """
-    filtered_coordinates = filter_coordinates(coordinates=test_input,
-                                              output_dir_path=output_dir_path_empty_tiles_dir)
+    filtered_coordinates = filter_downloaded_coordinates(coordinates=test_input,
+                                                         output_dir_path=output_dir_path_empty_tiles_dir)
 
     assert filtered_coordinates == expected
 
@@ -126,11 +125,11 @@ def test_filter_coordinates_empty_tiles_dir(test_input,
         assert type(filtered_coordinates_element[1]) is int
 
 
-@pytest.mark.parametrize('test_input, expected', parameters_filter_coordinates_not_empty_tiles_dir)
-def test_filter_coordinates_not_empty_tiles_dir(test_input,
-                                                expected,
-                                                output_dir_path_not_empty_tiles_dir):
-    """Tests filter_coordinates() with different coordinates.
+@pytest.mark.parametrize('test_input, expected', parameters_filter_downloaded_coordinates_not_empty_tiles_dir)
+def test_filter_downloaded_coordinates_not_empty_tiles_dir(test_input,
+                                                           expected,
+                                                           output_dir_path_not_empty_tiles_dir):
+    """Tests filter_downloaded_coordinates() with different coordinates.
     The .tiles directory is not empty.
 
     :param list[(int, int)] test_input: coordinates (x, y) of each tile
@@ -139,8 +138,8 @@ def test_filter_coordinates_not_empty_tiles_dir(test_input,
     :returns: None
     :rtype: None
     """
-    filtered_coordinates = filter_coordinates(coordinates=test_input,
-                                              output_dir_path=output_dir_path_not_empty_tiles_dir)
+    filtered_coordinates = filter_downloaded_coordinates(coordinates=test_input,
+                                                         output_dir_path=output_dir_path_not_empty_tiles_dir)
 
     assert filtered_coordinates == expected
 
