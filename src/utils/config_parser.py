@@ -126,7 +126,7 @@ class Data(BaseModel):
         if value is not None and values['boundary_shape_file_path'] is None:
             if len(value) != 4:
                 raise BoundingBoxLengthError(bounding_box=value)
-            if value[0] >= value[2] or value[1] >= value[3]:
+            elif value[0] >= value[2] or value[1] >= value[3]:
                 raise BoundingBoxError(bounding_box=value)
         else:
             boundary_gdf = gpd.read_file(values['boundary_shape_file_path'])
