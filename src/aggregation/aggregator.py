@@ -94,18 +94,27 @@ class Aggregator:
                               keep_geom_type=True)
         return masked_gdf
 
-    def aggregate_gdf(self, aggregation_gdf):
+    def aggregate_gdf(self,
+                      aggregation_gdf,
+                      boundary_gdf):
         """Returns an geodataframe with statistical values of the aggregated geodataframe and its shape file schema.
         Each polygon has the following attributes:
         area, imp_area, imp_dens, bui_area, bui_dens, sur_area, sur_dens, bui_imp_r, sur_imp_r
 
         :param gpd.GeoDataFrame aggregation_gdf: geodataframe for aggregation
+        :param gpd.GeoDataFrame boundary_gdf: boundary geodataframe
         :returns: geodataframe with statistical values of the aggregated geodataframe and its shape file schema
         :rtype: (gpd.GeoDataFrame, dict[str, OrderedDict[str, str] or str])
         """
         aggregation_gdf = aggregation_gdf[['geometry']]
         aggregation_gdf['aggregation_id'] = aggregation_gdf.index
         aggregation_gdf = self.mask_gdf(aggregation_gdf)
+
+        if boundary_gdf is not None:
+            aggregation_gdf = gpd.clip(aggregation_gdf,
+                                       mask=boundary_gdf,
+                                       keep_geom_type=True)
+
         aggregated_gdf = gpd.overlay(df1=self.gdf,
                                      df2=aggregation_gdf,
                                      how='intersection',
