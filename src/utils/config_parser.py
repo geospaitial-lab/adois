@@ -104,6 +104,9 @@ class Data(BaseModel):
                 raise ShapeFileNotFoundError(shape_file_path=value)
             elif Path(value).suffix != '.shp':
                 raise ShapeFileExtensionError(shape_file_path=value)
+            boundary_gdf = gpd.read_file(value)
+            if boundary_gdf.shape[0] != 1:
+                raise ShapeFileLengthError(gdf=boundary_gdf)
         return value
 
     @validator('bounding_box')

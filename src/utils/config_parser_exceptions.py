@@ -2,6 +2,7 @@
 
 from pathlib import Path
 
+import geopandas as gpd
 from natsort import natsorted
 
 import src.utils as utils
@@ -96,6 +97,20 @@ class ShapeFileExtensionError(Exception):
         message = ('Invalid path to the shape file in shape_file_path in config file!\n' +
                    ' ' * (4 if utils.DEBUG else 2) +
                    f'Expected file extension .shp, got {Path(shape_file_path).suffix} instead.')
+        super().__init__(message)
+
+
+class ShapeFileLengthError(Exception):
+    def __init__(self, gdf):
+        """Constructor method
+
+        :param gpd.GeoDataFrame gdf: geodataframe
+        :returns: None
+        :rtype: None
+        """
+        message = ('Invalid shape file in shape_file_path in config file!\n' +
+                   ' ' * (4 if utils.DEBUG else 2) +
+                   f'Expected shape file with 1 polygon, got {gdf.shape[0]} polygons instead.')
         super().__init__(message)
 
 
