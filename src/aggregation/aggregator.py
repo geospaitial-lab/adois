@@ -102,7 +102,7 @@ class Aggregator:
         area, imp_area, imp_dens, bui_area, bui_dens, sur_area, sur_dens, bui_imp_r, sur_imp_r
 
         :param gpd.GeoDataFrame aggregation_gdf: geodataframe for aggregation
-        :param gpd.GeoDataFrame boundary_gdf: boundary geodataframe
+        :param gpd.GeoDataFrame or None boundary_gdf: boundary geodataframe
         :returns: geodataframe with statistical values of the aggregated geodataframe and its shape file schema
         :rtype: (gpd.GeoDataFrame, dict[str, OrderedDict[str, str] or str])
         """
