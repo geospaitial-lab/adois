@@ -20,18 +20,21 @@ class Postprocessor:
     def __init__(self,
                  output_dir_path,
                  bounding_box,
-                 epsg_code):
+                 epsg_code,
+                 boundary_gdf):
         """Constructor method
 
         :param str or Path output_dir_path: path to the output directory
         :param (int, int, int, int) bounding_box: bounding box (x_1, y_1, x_2, y_2)
         :param int epsg_code: epsg code of the coordinate reference system
+        :param gpd.GeoDataFrame or None boundary_gdf: boundary geodataframe
         :returns: None
         :rtype: None
         """
         self.tiles_dir_path = Path(output_dir_path) / '.tiles'
         self.bounding_box = bounding_box
         self.epsg_code = epsg_code
+        self.boundary_gdf = boundary_gdf
 
     def export_features(self,
                         features,
@@ -73,22 +76,6 @@ class Postprocessor:
         self.export_features(features=features,
                              coordinates=coordinates)
 
-    def mask_gdf(self, gdf):
-        """Returns a masked geodataframe.
-
-        :param gpd.GeoDataFrame gdf: geodataframe
-        :returns: masked geodataframe
-        :rtype: gpd.GeoDataFrame
-        """
-        polygon_bounding_box = Polygon([[self.bounding_box[0], self.bounding_box[1]],
-                                        [self.bounding_box[0], self.bounding_box[3]],
-                                        [self.bounding_box[2], self.bounding_box[3]],
-                                        [self.bounding_box[2], self.bounding_box[1]]])
-        masked_gdf = gpd.clip(gdf,
-                              mask=polygon_bounding_box,
-                              keep_geom_type=True)
-        return masked_gdf
-
     def concatenate_gdfs(self, coordinates):
         """Returns a concatenated geodataframe.
 
@@ -112,7 +99,6 @@ class Postprocessor:
                         gdfs.append(gdf)
 
         concatenated_gdf = gpd.GeoDataFrame(pd.concat(gdfs, ignore_index=True), crs=f'EPSG:{self.epsg_code}')
-        concatenated_gdf = self.mask_gdf(concatenated_gdf)
         return concatenated_gdf
 
     @staticmethod
@@ -172,3 +158,24 @@ class Postprocessor:
         topo = tp.Topology(gdf, prequantize=False)
         simplified_gdf = topo.toposimplify(utils.RESOLUTION + .05).to_gdf(crs=f'EPSG:{self.epsg_code}')
         return simplified_gdf
+
+    def clip_gdf(self, gdf):
+        """Returns a clipped geodataframe.
+
+        :param gpd.GeoDataFrame gdf: geodataframe
+        :returns: clipped geodataframe
+        :rtype: gpd.GeoDataFrame
+        """
+        if self.boundary_gdf is not None:
+            clipped_gdf = gpd.clip(gdf,
+                                   mask=self.boundary_gdf,
+                                   keep_geom_type=True)
+        else:
+            polygon_bounding_box = Polygon([[self.bounding_box[0], self.bounding_box[1]],
+                                            [self.bounding_box[0], self.bounding_box[3]],
+                                            [self.bounding_box[2], self.bounding_box[3]],
+                                            [self.bounding_box[2], self.bounding_box[1]]])
+            clipped_gdf = gpd.clip(gdf,
+                                   mask=polygon_bounding_box,
+                                   keep_geom_type=True)
+        return clipped_gdf
