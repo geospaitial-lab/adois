@@ -7,7 +7,7 @@ from shapely.geometry import Polygon
 
 
 class Aggregator:
-    DECIMAL_PLACES = 4
+    DECIMAL_PLACES = 2
 
     def __init__(self,
                  gdf,
@@ -64,15 +64,15 @@ class Aggregator:
         aggregation_gdf = aggregation_gdf.drop(columns='aggregation_id')
 
         attributes = OrderedDict()
-        attributes['area'] = f'float:10.{Aggregator.DECIMAL_PLACES}'
-        attributes['imp_area'] = f'float:10.{Aggregator.DECIMAL_PLACES}'
-        attributes['imp_dens'] = f'float:10.{Aggregator.DECIMAL_PLACES}'
-        attributes['bui_area'] = f'float:10.{Aggregator.DECIMAL_PLACES}'
-        attributes['bui_dens'] = f'float:10.{Aggregator.DECIMAL_PLACES}'
-        attributes['sur_area'] = f'float:10.{Aggregator.DECIMAL_PLACES}'
-        attributes['sur_dens'] = f'float:10.{Aggregator.DECIMAL_PLACES}'
-        attributes['bui_imp_r'] = f'float:10.{Aggregator.DECIMAL_PLACES}'
-        attributes['sur_imp_r'] = f'float:10.{Aggregator.DECIMAL_PLACES}'
+        attributes['area'] = f'float:13.{Aggregator.DECIMAL_PLACES}'
+        attributes['imp_area'] = f'float:13.{Aggregator.DECIMAL_PLACES}'
+        attributes['imp_dens'] = f'float:13.{Aggregator.DECIMAL_PLACES}'
+        attributes['bui_area'] = f'float:13.{Aggregator.DECIMAL_PLACES}'
+        attributes['bui_dens'] = f'float:13.{Aggregator.DECIMAL_PLACES}'
+        attributes['sur_area'] = f'float:13.{Aggregator.DECIMAL_PLACES}'
+        attributes['sur_dens'] = f'float:13.{Aggregator.DECIMAL_PLACES}'
+        attributes['bui_imp_r'] = f'float:13.{Aggregator.DECIMAL_PLACES}'
+        attributes['sur_imp_r'] = f'float:13.{Aggregator.DECIMAL_PLACES}'
         schema = {'properties': attributes,
                   'geometry': 'Polygon'}
 
