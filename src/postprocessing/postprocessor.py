@@ -47,12 +47,16 @@ class Postprocessor:
         :returns: None
         :rtype: None
         """
-        (self.tiles_dir_path / f'{coordinates[0]}_{coordinates[1]}').mkdir()
+        sub_dir_path = self.tiles_dir_path / f'{coordinates[0]}_{coordinates[1]}'
+        sub_dir_path.mkdir(exist_ok=True)
+
+        for path in sub_dir_path.iterdir():
+            path.unlink()
+
         if features:
-            gdf_path = (self.tiles_dir_path / f'{coordinates[0]}_{coordinates[1]}' /
-                        f'{coordinates[0]}_{coordinates[1]}.shp')
+            shape_file_path = sub_dir_path / f'{coordinates[0]}_{coordinates[1]}.shp'
             gdf = gpd.GeoDataFrame.from_features(features, crs=f'EPSG:{self.epsg_code}')
-            gdf.to_file(str(gdf_path))
+            gdf.to_file(str(shape_file_path))
 
     def vectorize_mask(self,
                        mask,
