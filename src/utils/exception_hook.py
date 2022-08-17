@@ -6,7 +6,7 @@ import traceback as tb
 
 import src.utils as utils
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('main_logger')
 
 
 def exception_handler_production(exception_type, exception_message, _traceback):
@@ -18,7 +18,7 @@ def exception_handler_production(exception_type, exception_message, _traceback):
     :returns: None
     :rtype: None
     """
-    logger.error(f'{exception_type.__name__}: {exception_message}')
+    logger.critical(f'{exception_type.__name__}: {exception_message}')
 
 
 def exception_handler_debug(exception_type, exception_message, traceback):
@@ -30,9 +30,9 @@ def exception_handler_debug(exception_type, exception_message, traceback):
     :returns: None
     :rtype: None
     """
-    logger.error(f'{exception_type.__name__}\n  '
-                 f"Traceback (most recent call last):\n{''.join(tb.format_tb(traceback))}\n  "
-                 f'{exception_type.__name__}: {exception_message}')
+    logger.critical(f'{exception_type.__name__}\n  '
+                    f"Traceback (most recent call last):\n{''.join(tb.format_tb(traceback))}\n  "
+                    f'{exception_type.__name__}: {exception_message}')
 
 
 def set_exception_hook():
