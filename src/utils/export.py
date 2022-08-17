@@ -1,5 +1,6 @@
 # @author: Maryniak, Marius - Fachbereich Elektrotechnik, Westfälische Hochschule Gelsenkirchen
 
+import yaml
 from pathlib import Path
 
 import geopandas as gpd
@@ -45,6 +46,19 @@ def create_dir_structure(output_dir_path,
             (output_dir_path / 'impervious_surfaces_aggregated' / Path(shape_file_path).stem).mkdir()
 
 
+class CustomDumper(yaml.Dumper):
+    def increase_indent(self,
+                        flow=False,
+                        indentless=False):
+        """Fixes the indentation of lists.
+        Based on: https://stackoverflow.com/a/39681672
+
+        :returns: None
+        :rtype: None
+        """
+        return super(CustomDumper, self).increase_indent(flow, False)
+
+
 def export(output_dir_path,
            export_raw_shape_file,
            raw_gdf,
@@ -53,7 +67,8 @@ def export(output_dir_path,
            tile_sizes,
            aggregation_gdfs_grid,
            shape_file_paths,
-           aggregation_gdfs_shape_file):
+           aggregation_gdfs_shape_file,
+           metadata):
     """Exports the shape files to their corresponding directories in the output directory.
 
     :param str or Path output_dir_path: path to the output directory
@@ -67,6 +82,7 @@ def export(output_dir_path,
     :param list[str] shape_file_paths: paths to the shape files for aggregation
     :param list[(gpd.GeoDataFrame, dict[str, OrderedDict[str, str] or str])] aggregation_gdfs_shape_file: geodataframes
         with statistical values of the aggregated geodataframe and its shape file schema
+    :param dict[str, Any] metadata: metadata
     :returns: None
     :rtype: None
     """
@@ -91,3 +107,10 @@ def export(output_dir_path,
         path = (output_dir_path / 'impervious_surfaces_aggregated' / Path(shape_file_path).stem /
                 f'{prefix}_impervious_surfaces_aggregated_{Path(shape_file_path).stem}.shp')
         aggregation_gdfs_shape_file[index][0].to_file(str(path), schema=aggregation_gdfs_shape_file[index][1])
+
+    with open(output_dir_path / 'metadata.yaml', 'w') as yaml_file:
+        yaml.dump(data=metadata,
+                  stream=yaml_file,
+                  Dumper=CustomDumper,
+                  default_flow_style=False,
+                  sort_keys=False)
