@@ -290,7 +290,8 @@ class ExportSettings(BaseModel):
             raise OutputDirNotFoundError(output_dir_path=value)
         for path in Path(value).iterdir():
             if not path.name.startswith('.'):
-                raise OutputDirNotEmptyError(output_dir_path=value)
+                if path.suffix != '.log':
+                    raise OutputDirNotEmptyError(output_dir_path=value)
         return value
 
     @validator('prefix')
