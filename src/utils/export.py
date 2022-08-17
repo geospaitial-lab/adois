@@ -56,7 +56,19 @@ class CustomDumper(yaml.Dumper):
         :returns: None
         :rtype: None
         """
-        return super(CustomDumper, self).increase_indent(flow, False)
+        super(CustomDumper, self).increase_indent(flow, False)
+
+    def write_line_break(self, data=None):
+        """Adds a blank line between top level keys.
+        Based on: https://github.com/yaml/pyyaml/issues/127#issuecomment-525800484
+
+        :returns: None
+        :rtype: None
+        """
+        super(CustomDumper, self).write_line_break(data)
+
+        if len(self.indents) == 1:
+            super().write_line_break()
 
 
 def export(output_dir_path,
