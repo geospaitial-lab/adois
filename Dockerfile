@@ -1,5 +1,15 @@
 FROM python:3.8
 
-COPY requirements.txt .
+RUN mkdir /adois
 
-RUN python -m pip install -r requirements.txt --ignore-installed --no-warn-script-location --upgrade
+COPY requirements.txt /adois
+
+RUN python -m pip install -r /adois/requirements.txt --ignore-installed --no-warn-script-location --upgrade
+
+COPY . /adois
+WORKDIR /adois
+
+ENV PYTHONPATH "${PYTHONPATH}:/adois"
+ENV PYTHONUNBUFFERED=1
+
+ENTRYPOINT ["python", "/adois/src/main.py", "/config.yaml"]

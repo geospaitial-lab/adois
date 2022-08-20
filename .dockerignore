@@ -1,2 +1,6 @@
 *
+!data/model/model.onnx
 !requirements.txt
+!src
+**.pytest_cache
+**tests
