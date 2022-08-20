@@ -1,3 +1,5 @@
+<!-- @author: Maryniak, Marius - Fachbereich Elektrotechnik, Westfälische Hochschule Gelsenkirchen -->
+
 # Dokumentation: Config File (.yaml)
 
 Im Folgenden werden die Parameter des Config Files erläutert.  
