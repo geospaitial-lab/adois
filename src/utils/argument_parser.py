@@ -2,7 +2,7 @@
 
 import argparse
 from argparse import ArgumentParser
-from typing import List, Optional, Union
+from typing import List, Union
 
 
 def get_argument_parser():
@@ -53,11 +53,15 @@ def get_argument_parser():
                                  default=argparse.SUPPRESS,
                                  help='epsg code of the coordinate reference system')
     argument_parser.add_argument('--boundary_shape_file_path',
-                                 type=Optional[str],
+                                 type=str,
+                                 nargs='?',
+                                 const=None,
                                  default=argparse.SUPPRESS,
                                  help='path to the boundary shape file (.shp)')
     argument_parser.add_argument('--bounding_box',
-                                 type=Optional[List[int]],
+                                 type=List[int],
+                                 nargs='?',
+                                 const=None,
                                  default=argparse.SUPPRESS,
                                  help='bounding box (x_1, y_1, x_2, y_2)')
 
@@ -67,20 +71,28 @@ def get_argument_parser():
                                  help='color codes for the color mapping')
 
     argument_parser.add_argument('--sieve_size',
-                                 type=Optional[int],
+                                 type=int,
+                                 nargs='?',
+                                 const=None,
                                  default=argparse.SUPPRESS,
                                  help='sieve size in square meters')
     argument_parser.add_argument('--simplify',
-                                 type=Optional[bool],
+                                 type=bool,
+                                 nargs='?',
+                                 const=None,
                                  default=argparse.SUPPRESS,
                                  help='if True, the shape file is simplified using the Douglas-Peucker algorithm')
 
     argument_parser.add_argument('--tile_size',
-                                 type=Optional[Union[int, List[Union[int, None]]]],
+                                 type=Union[int, List[Union[int, None]]],
+                                 nargs='?',
+                                 const=None,
                                  default=argparse.SUPPRESS,
                                  help='tile size in meters')
     argument_parser.add_argument('--shape_file_path',
-                                 type=Optional[Union[str, List[Union[str, None]]]],
+                                 type=Union[str, List[Union[str, None]]],
+                                 nargs='?',
+                                 const=None,
                                  default=argparse.SUPPRESS,
                                  help='path to the boundary shape file (.shp)')
 
@@ -93,7 +105,9 @@ def get_argument_parser():
                                  default=argparse.SUPPRESS,
                                  help='prefix of the shape file names')
     argument_parser.add_argument('--export_raw_shape_file',
-                                 type=Optional[bool],
+                                 type=bool,
+                                 nargs='?',
+                                 const=None,
                                  default=argparse.SUPPRESS,
                                  help='if True, a shape file without postprocessing is exported')
     return argument_parser
