@@ -56,7 +56,7 @@ class CustomDumper(yaml.Dumper):
         :returns: None
         :rtype: None
         """
-        super(CustomDumper, self).increase_indent(flow, False)
+        super().increase_indent(flow, False)
 
     def write_line_break(self, data=None):
         """Adds a blank line between top level keys.
@@ -65,7 +65,7 @@ class CustomDumper(yaml.Dumper):
         :returns: None
         :rtype: None
         """
-        super(CustomDumper, self).write_line_break(data)
+        super().write_line_break(data)
 
         if len(self.indents) == 1:
             super().write_line_break()
