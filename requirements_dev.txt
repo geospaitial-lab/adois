@@ -1,4 +1,5 @@
 enlighten==1.10.2
+flake8==4.0.1
 geopandas==0.11.1
 natsort==8.1.0
 numpy==1.23.1
@@ -7,6 +8,8 @@ OWSLib==0.25.0
 pandas==1.4.3
 Pillow==9.2.0
 pydantic==1.9.1
+pytest==7.1.2
+pytest-cov==3.0.0
 PyYAML==6.0
 rasterio==1.3.0
 rtree==1.0.0
