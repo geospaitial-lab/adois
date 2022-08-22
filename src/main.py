@@ -12,13 +12,14 @@ from src.aggregation import Aggregator, GridGenerator
 from src.data import RemoteSensingDataDownloader
 from src.inference import Inference
 from src.postprocessing import Postprocessor
-from src.preprocessing import filter_downloaded_coordinates, get_coordinates, Preprocessor, \
-    get_internal_coordinates
-from src.utils import ConfigParser, create_dir_structure, create_tiles_dir, export, get_argument_parser
+from src.preprocessing import filter_downloaded_coordinates, get_coordinates, Preprocessor, get_internal_coordinates
+from src.utils import ConfigParser, create_dir_structure, create_tiles_dir, export, get_argument_parser, get_metadata
 
 
 def main():
     # region Argument parsing
+    start_time = DateTime.now()
+
     argument_parser = get_argument_parser()
     args = argument_parser.parse_args()
     # endregion
@@ -248,6 +249,8 @@ def main():
     # endregion
 
     # region Export
+    end_time = DateTime.now()
+
     # noinspection PyTypeChecker
     status_bar.update(stage='Export',
                       force=True)
@@ -258,7 +261,10 @@ def main():
                          shape_file_paths=config.aggregation.shape_file_path)
     logger.debug('Directory structure in output directory created')
 
-    metadata = {'to': 'do'}
+    metadata = get_metadata(config=config_parser.config_dict,
+                            start_time=start_time,
+                            end_time=end_time)
+    logger.debug('Metadata created')
 
     export(output_dir_path=config.export_settings.output_dir_path,
            export_raw_shape_file=config.export_settings.export_raw_shape_file,
@@ -270,7 +276,7 @@ def main():
            shape_file_paths=config.aggregation.shape_file_path,
            aggregation_gdfs_shape_file=aggregation_gdfs_shape_file,
            metadata=metadata)
-    logger.info('Shape files exported')
+    logger.info('Shape files and metadata exported')
     # endregion
 
 
