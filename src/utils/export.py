@@ -1,9 +1,11 @@
 # @author: Maryniak, Marius - Fachbereich Elektrotechnik, Westfälische Hochschule Gelsenkirchen
 
-import yaml
+from datetime import datetime as DateTime  # PEP8 compliant
+from datetime import timedelta as TimeDelta  # PEP8 compliant
 from pathlib import Path
 
 import geopandas as gpd
+import yaml
 
 
 def create_tiles_dir(output_dir_path):
@@ -44,6 +46,35 @@ def create_dir_structure(output_dir_path,
 
         for shape_file_path in shape_file_paths:
             (output_dir_path / 'impervious_surfaces_aggregated' / Path(shape_file_path).stem).mkdir()
+
+
+def chop(time_delta):
+    """Returns a time delta with chopped microseconds.
+
+    :param TimeDelta time_delta: time delta
+    :return: chopped time delta
+    :rtype: TimeDelta
+    """
+    return time_delta - TimeDelta(microseconds=time_delta.microseconds)
+
+
+def get_metadata(config,
+                 start_time,
+                 end_time):
+    """Returns metadata.
+
+    :param dict config: config
+    :param DateTime start_time: start time
+    :param DateTime end_time: end time
+    :returns: metadata
+    :rtype dict
+    """
+    time_delta = chop(end_time - start_time)
+
+    metadata = {'general': {'time stamp': str(start_time.isoformat(sep='_', timespec='seconds')),
+                            'execution time': str(time_delta)},
+                'config': config}
+    return metadata
 
 
 class CustomDumper(yaml.Dumper):
