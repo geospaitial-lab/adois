@@ -4,9 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       additional_tag:
-        description: tag
-        required: true
-        default: latest
+        description: additional tag
+        required: false
 
 env:
   REGISTRY: ghcr.io
@@ -35,6 +34,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
+            type=raw,value=latest,priority=2
             type=raw,value=${{ github.event.inputs.additional_tag }},priority=1
             type=sha,priority=0
 
