@@ -35,8 +35,8 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value=${{ github.event.inputs.additional_tag }}
-            type=sha
+            type=raw,value=${{ github.event.inputs.additional_tag }},priority=1
+            type=sha,priority=0
 
       - name: Build and deploy Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
