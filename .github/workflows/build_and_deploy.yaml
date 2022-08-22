@@ -10,7 +10,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: adois  # ${{ github.repository }}
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build_and_deploy:
