@@ -251,6 +251,7 @@ def main():
     # noinspection PyTypeChecker
     status_bar.update(stage='Export',
                       force=True)
+
     create_dir_structure(output_dir_path=config.export_settings.output_dir_path,
                          export_raw_shape_file=config.export_settings.export_raw_shape_file,
                          tile_sizes=config.aggregation.tile_size,
