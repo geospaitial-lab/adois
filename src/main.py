@@ -63,7 +63,7 @@ def main():
     logger.debug('Exception hook set up')
     # endregion
 
-    # region Config Parsing
+    # region Config parsing
     config_parser = ConfigParser(args.config_file_path)
     config_parser.update_config_dict(args=args)
     config = config_parser.parse_config()
@@ -193,7 +193,7 @@ def main():
         logger.info('Geodataframe postprocessed (simplified)')
     # endregion
 
-    # region Create Grids
+    # region Create grids
     if config.aggregation.tile_size or config.aggregation.shape_file_path:
         # noinspection PyTypeChecker
         status_bar.update(stage='Aggregation',
@@ -207,7 +207,7 @@ def main():
         logger.info(f'Grid {index + 1} / {grid_iterations} created')
     # endregion
 
-    # region Create Shape Files
+    # region Create Shape files
     gdfs_shape_file = []
     shape_file_iterations = len(config.aggregation.shape_file_path)
 
@@ -270,7 +270,7 @@ def main():
            shape_file_paths=config.aggregation.shape_file_path,
            aggregation_gdfs_shape_file=aggregation_gdfs_shape_file,
            metadata=metadata)
-    logger.info('Shape Files exported')
+    logger.info('Shape files exported')
     # endregion
 
 
