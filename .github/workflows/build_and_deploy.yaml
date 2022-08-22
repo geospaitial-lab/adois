@@ -35,7 +35,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value=${{ github.event.inputs.addional_tag }}
+            type=raw,value=${{ github.event.inputs.additional_tag }}
             type=sha
 
       - name: Build and deploy Docker image
