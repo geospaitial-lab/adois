@@ -114,7 +114,7 @@ Werden beide Parameter definiert, wird das Gebiet des Shape Files genutzt.
 ## export_settings
 
 ```yaml
-  output_dir_path: /Users/mrsmrynk/PycharmProjects/adois_app/output_dir
+  output_dir_path: /Users/mrsmrynk/PycharmProjects/adois/output_dir
   prefix: example
   export_raw_shape_file: true
 ```
