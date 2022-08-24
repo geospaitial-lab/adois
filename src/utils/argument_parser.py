@@ -2,7 +2,6 @@
 
 import argparse
 from argparse import ArgumentParser
-from typing import List, Union
 
 
 def get_argument_parser():
@@ -59,14 +58,15 @@ def get_argument_parser():
                                  default=argparse.SUPPRESS,
                                  help='path to the boundary shape file (.shp)')
     argument_parser.add_argument('--bounding_box',
-                                 type=List[int],
-                                 nargs='?',
+                                 type=int,
+                                 nargs=4,
                                  const=None,
                                  default=argparse.SUPPRESS,
                                  help='bounding box (x_1, y_1, x_2, y_2)')
 
     argument_parser.add_argument('--color_codes_ndsm',
-                                 type=List[str],
+                                 type=str,
+                                 nargs='+',
                                  default=argparse.SUPPRESS,
                                  help='color codes for the color mapping')
 
@@ -84,15 +84,13 @@ def get_argument_parser():
                                  help='if True, the shape file is simplified using the Douglas-Peucker algorithm')
 
     argument_parser.add_argument('--tile_size',
-                                 type=Union[int, List[Union[int, None]]],
-                                 nargs='?',
-                                 const=None,
+                                 type=int,
+                                 nargs='*',
                                  default=argparse.SUPPRESS,
                                  help='tile size in meters')
     argument_parser.add_argument('--shape_file_path',
-                                 type=Union[str, List[Union[str, None]]],
-                                 nargs='?',
-                                 const=None,
+                                 type=str,
+                                 nargs='*',
                                  default=argparse.SUPPRESS,
                                  help='path to the boundary shape file (.shp)')
 
