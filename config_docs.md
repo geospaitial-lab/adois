@@ -72,7 +72,13 @@ Werden beide Parameter definiert, wird das Gebiet des Shape Files genutzt.
 - ### color_codes_ndsm
   - **type:** list of str
   - Mapping von RGB-Werten auf einen 1-Kanal-Wert, um die Datenmenge der NDSM-Fernerkundungsdaten zu reduzieren
-    (jedes Listenelement enthält ein RGB-Wert Tupel und einen dazugehörigen Wert zwischen 0 und 255)
+    (jedes Listenelement enthält ein RGB-Wert Tupel und einen dazugehörigen 1-Kanal-Wert zwischen 0 und 255)  
+    *Hinweis:* Die Color Codes erstellen Sie wie folgt:
+    - Ermitteln Sie aus der Beschreibung des WMS (Web Map Service) Layers des normalisierten digitalen
+      Oberflächenmodells die möglichen Höhenstufen (untere Grenzen der Höhenbereiche) und die dazugehörigen
+      RGB-Wert Tupel
+    - Berechnen Sie die 1-Kanal-Werte mit folgender Formel:
+      $value = \mathrm{round}(height \times {255 \over 50 \mathrm m}) = \mathrm{round}(height \times 5.1 m^{-1})$
 
 
 ## postprocessing
