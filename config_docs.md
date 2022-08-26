@@ -72,7 +72,7 @@ Werden beide Parameter definiert, wird das Gebiet des Shape Files genutzt.
 - ### color_codes_ndsm
   - **type:** list of str
   - Mapping von RGB-Werten auf einen 1-Kanal-Wert, um die Datenmenge der NDSM-Fernerkundungsdaten zu reduzieren
-    (jedes Listenelement enthält ein RGB-Wert Tupel und einen dazugehörigen Wert zwischen 0 und 255.
+    (jedes Listenelement enthält ein RGB-Wert Tupel und einen dazugehörigen Wert zwischen 0 und 255)
 
 
 ## postprocessing
