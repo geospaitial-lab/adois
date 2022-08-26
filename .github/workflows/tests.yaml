@@ -23,9 +23,11 @@ jobs:
           pip install -r requirements_dev.txt
 
       - name: Test with pytest
+        if: !contains(github.event.head_commit.message, '[skip tests]')
         run: |
           pytest --cov
 
       - name: Lint with flake8
+        if: !contains(github.event.head_commit.message, '[skip linting]')
         run: |
           flake8 src
