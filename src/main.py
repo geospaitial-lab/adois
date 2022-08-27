@@ -84,9 +84,12 @@ def main():
         coordinates = get_coordinates(bounding_box=config.data.bounding_box)
     logger.debug('Coordinates calculated')
 
-    filtered_coordinates = filter_downloaded_coordinates(coordinates=coordinates,
-                                                         output_dir_path=config.export_settings.output_dir_path)
-    logger.debug('Coordinates filtered')
+    if not args.ignore_cached_tiles:
+        filtered_coordinates = filter_downloaded_coordinates(coordinates=coordinates,
+                                                             output_dir_path=config.export_settings.output_dir_path)
+        logger.debug('Coordinates filtered')
+    else:
+        filtered_coordinates = coordinates
 
     # noinspection PyTypeChecker
     preprocessor = Preprocessor(color_codes=config.preprocessing.color_codes_ndsm)

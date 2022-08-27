@@ -18,6 +18,9 @@ def get_argument_parser():
     argument_parser.add_argument('-d', '--debug',
                                  action='store_true',
                                  help='debug mode')
+    argument_parser.add_argument('-ict', '--ignore_cached_tiles',
+                                 action='store_true',
+                                 help='ignore cached tiles')
 
     argument_parser.add_argument('--wms_url_rgb',
                                  type=str,
