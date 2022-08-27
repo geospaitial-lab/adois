@@ -18,24 +18,25 @@ from src.utils import ConfigParser, create_dir_structure, create_tiles_dir, expo
 
 def main():
     # region Argument parsing
-    start_time = DateTime.now()
-
-    argument_parser = get_argument_parser()
-    args = argument_parser.parse_args()
-    # endregion
-
-    # region Logging
     manager = enlighten.get_manager()
     status_bar = manager.status_bar(status_format=u'adois{fill}Stage: {stage}{fill}{elapsed}',
                                     justify=enlighten.Justify.CENTER,
                                     autorefresh=True,
                                     stage='Initializing')
 
-    if hasattr(args, 'log_dir_path'):
-        log_dir_path = Path(args.log_dir_path)
-    else:
-        log_dir_path = None
+    start_time = DateTime.now()
 
+    argument_parser = get_argument_parser()
+    args = argument_parser.parse_args()
+    # endregion
+
+    # region Config parsing
+    config_parser = ConfigParser(args.config_file_path)
+    config_parser.update_config_dict(args=args)
+    config = config_parser.parse_config()
+    # endregion
+
+    # region Logging
     utils.DEBUG = args.debug
 
     logger_formatter = logging.Formatter(fmt='%(asctime)s - %(levelname)s: %(message)s',
@@ -50,25 +51,16 @@ def main():
     console_handler.setFormatter(logger_formatter)
     logger.addHandler(console_handler)
 
-    if log_dir_path:
+    if utils.DEBUG:
         date_time = str(DateTime.now().isoformat(sep='_', timespec='seconds')).replace(':', '-')
-        file_handler = logging.FileHandler(log_dir_path / f"{date_time}.log", mode='w')
+        file_handler = logging.FileHandler(Path(config.export_settings.output_dir_path) / f"{date_time}.log", mode='w')
         file_handler.setLevel(logging.DEBUG)
         file_handler.setFormatter(logger_formatter)
         logger.addHandler(file_handler)
 
     logger.setLevel(logging.DEBUG)
-    logger.debug('Logger set up')
 
     utils.set_exception_hook()
-    logger.debug('Exception hook set up')
-    # endregion
-
-    # region Config parsing
-    config_parser = ConfigParser(args.config_file_path)
-    config_parser.update_config_dict(args=args)
-    config = config_parser.parse_config()
-    logger.debug('Config file parsed')
     # endregion
 
     # region Initializing

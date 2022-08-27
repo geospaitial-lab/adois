@@ -18,10 +18,6 @@ def get_argument_parser():
     argument_parser.add_argument('-d', '--debug',
                                  action='store_true',
                                  help='debug mode')
-    argument_parser.add_argument('-ldp', '--log_dir_path',
-                                 type=str,
-                                 default=argparse.SUPPRESS,
-                                 help='path to the log directory')
 
     argument_parser.add_argument('--wms_url_rgb',
                                  type=str,
