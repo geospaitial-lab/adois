@@ -10,7 +10,8 @@ logger = logging.getLogger('main_logger')
 
 
 def exception_handler_production(exception_type, exception_message, _traceback):
-    """Logs exceptions without the traceback for production purposes.
+    """
+    | Logs exceptions without the traceback for production purposes.
 
     :param Exception exception_type: exception type
     :param Exception exception_message: exception message
@@ -22,7 +23,8 @@ def exception_handler_production(exception_type, exception_message, _traceback):
 
 
 def exception_handler_debug(exception_type, exception_message, traceback):
-    """Logs exceptions with the traceback for debugging purposes.
+    """
+    | Logs exceptions with the traceback for debugging purposes.
 
     :param Exception exception_type: exception type
     :param Exception exception_message: exception message
@@ -36,7 +38,8 @@ def exception_handler_debug(exception_type, exception_message, traceback):
 
 
 def set_exception_hook():
-    """Sets the exception hook to an exception handler (either for production or debugging purposes).
+    """
+    | Sets the exception hook to an exception handler (either for production or debugging purposes).
 
     :returns: None
     :rtype: None
