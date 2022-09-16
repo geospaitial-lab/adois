@@ -9,8 +9,9 @@ from src.preprocessing.preprocessor import Preprocessor
 
 @pytest.fixture(scope='session')
 def output_dir_path_empty_tiles_dir(tmp_path_factory):
-    """Returns the path to the temporary output directory.
-    The .tiles directory is empty.
+    """
+    | Returns the path to the temporary output directory.
+    | The .tiles directory is empty.
 
     :param pytest.TempPathFactory tmp_path_factory: temporary path
     :returns: path to the output directory
@@ -23,8 +24,9 @@ def output_dir_path_empty_tiles_dir(tmp_path_factory):
 
 @pytest.fixture(scope='session')
 def output_dir_path_not_empty_tiles_dir(tmp_path_factory):
-    """Returns the path to the temporary output directory.
-    The .tiles directory is not empty.
+    """
+    | Returns the path to the temporary output directory.
+    | The .tiles directory is not empty.
 
     :param pytest.TempPathFactory tmp_path_factory: temporary path
     :returns: path to the output directory
@@ -47,7 +49,8 @@ def output_dir_path_not_empty_tiles_dir(tmp_path_factory):
 
 @pytest.fixture(scope='session')
 def color_codes():
-    """Returns color codes.
+    """
+    | Returns color codes.
 
     :returns: color codes
     :rtype: dict[tuple[int, int, int], int]
@@ -62,7 +65,8 @@ def color_codes():
 
 @pytest.fixture(scope='session')
 def preprocessor(color_codes):
-    """Returns a preprocessor instance.
+    """
+    | Returns a preprocessor instance.
 
     :param dict[tuple[int, int, int], int] color_codes: color codes
     :returns: preprocessor
