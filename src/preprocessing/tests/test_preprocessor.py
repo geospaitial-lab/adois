@@ -26,7 +26,8 @@ parameters_get_image = [(test_get_image_test_input_ndsm_large, test_get_image_ex
 
 
 def test_init(color_codes):
-    """Tests __init__().
+    """
+    | Tests __init__().
 
     :param dict[tuple[int, int, int], int] color_codes: color codes
     :returns: None
@@ -40,7 +41,8 @@ def test_init(color_codes):
 
 
 def test_get_color_map(color_codes):
-    """Tests get_color_map().
+    """
+    | Tests get_color_map().
 
     :param dict[tuple[int, int, int], int] color_codes: color codes
     :returns: None
@@ -55,7 +57,8 @@ def test_get_color_map(color_codes):
 
 @pytest.mark.parametrize('test_input, expected', parameters_resize_image)
 def test_resize_image(test_input, expected):
-    """Tests resize_image() with different image sizes for downsampling and upsampling.
+    """
+    | Tests resize_image() with different image sizes for downsampling and upsampling.
 
     :param np.ndarray[np.uint8] test_input: image
     :param np.ndarray[np.uint8] expected: resized image
@@ -69,7 +72,8 @@ def test_resize_image(test_input, expected):
 
 
 def test_reduce_dimensions(preprocessor):
-    """Tests reduce_dimensions().
+    """
+    | Tests reduce_dimensions().
 
     :param Preprocessor preprocessor: preprocessor
     :returns: None
@@ -84,7 +88,8 @@ def test_reduce_dimensions(preprocessor):
 
 
 def test_normalize_image():
-    """Tests normalize_image().
+    """
+    | Tests normalize_image().
 
     :returns: None
     :rtype: None
@@ -101,7 +106,8 @@ def test_normalize_image():
 def test_get_image(test_input,
                    expected,
                    preprocessor):
-    """Tests get_image() with different ndsm image sizes for downsampling and upsampling.
+    """
+    | Tests get_image() with different ndsm image sizes for downsampling and upsampling.
 
     :param np.ndarray[np.uint8] test_input: ndsm image
     :param np.ndarray[np.float32] expected: image
