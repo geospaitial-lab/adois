@@ -10,8 +10,9 @@ from src.aggregation.grid_generator import GridGenerator
 
 
 def get_coordinates(bounding_box):
-    """Returns the coordinates of the top left corner of each tile in the area of the bounding box.
-    The bounding box is quantized to the image size in meters.
+    """
+    | Returns the coordinates of the top left corner of each tile in the area of the bounding box.
+        The bounding box is quantized to the image size in meters.
 
     :param (int, int, int, int) bounding_box: bounding box (x_1, y_1, x_2, y_2)
     :returns: coordinates (x, y) of each tile
@@ -43,7 +44,8 @@ def get_coordinates(bounding_box):
 def get_internal_coordinates(bounding_box,
                              epsg_code,
                              boundary_gdf):
-    """Returns the coordinates of the top left corner of each tile in the area of the boundary geodataframe.
+    """
+    | Returns the coordinates of the top left corner of each tile in the area of the boundary geodataframe.
 
     :param (int, int, int, int) bounding_box: bounding box (x_1, y_1, x_2, y_2)
     :param int epsg_code: epsg code of the coordinate reference system
@@ -65,8 +67,9 @@ def get_internal_coordinates(bounding_box,
 
 
 def filter_downloaded_coordinates(coordinates, output_dir_path):
-    """Returns the filtered coordinates. If a tile is already being downloaded (its shape file directory in
-    .tiles directory exists), its coordinates are removed.
+    """
+    | Returns the filtered coordinates. If a tile is already being downloaded (its shape file directory in
+        .tiles directory exists), its coordinates are removed.
 
     :param list[(int, int)] coordinates: coordinates (x, y) of each tile
     :param str or Path output_dir_path: path to the output directory
