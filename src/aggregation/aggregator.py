@@ -12,7 +12,8 @@ class Aggregator:
     def __init__(self,
                  gdf,
                  bounding_box):
-        """Constructor method
+        """
+        | Constructor method
 
         :param gpd.GeoDataFrame gdf: geodataframe
         :param (int, int, int, int) bounding_box: bounding box (x_1, y_1, x_2, y_2)
@@ -24,9 +25,13 @@ class Aggregator:
 
     @staticmethod
     def evaluate_stats(aggregation_gdf, aggregated_gdf):
-        """Returns an geodataframe with statistical values of the aggregated geodataframe and its shape file schema.
-        Each polygon has the following attributes:
-        area, imp_area, imp_dens, bui_area, bui_dens, sur_area, sur_dens, bui_imp_r, sur_imp_r
+        """
+        | Returns an geodataframe with statistical values of the aggregated geodataframe and its shape file schema.
+        | Each polygon has the following attributes:
+        | - area, imp_area, imp_dens
+        | - bui_area, bui_dens
+        | - sur_area, sur_dens
+        | - bui_imp_r, sur_imp_r
 
         :param gpd.GeoDataFrame aggregation_gdf: geodataframe for aggregation
         :param gpd.GeoDataFrame aggregated_gdf: aggregated geodataframe
@@ -79,7 +84,8 @@ class Aggregator:
         return aggregation_gdf, schema
 
     def mask_gdf(self, gdf):
-        """Returns a masked geodataframe.
+        """
+        | Returns a masked geodataframe.
 
         :param gpd.GeoDataFrame gdf: geodataframe
         :returns: masked geodataframe
@@ -97,9 +103,13 @@ class Aggregator:
     def aggregate_gdf(self,
                       aggregation_gdf,
                       boundary_gdf):
-        """Returns an geodataframe with statistical values of the aggregated geodataframe and its shape file schema.
-        Each polygon has the following attributes:
-        area, imp_area, imp_dens, bui_area, bui_dens, sur_area, sur_dens, bui_imp_r, sur_imp_r
+        """
+        | Returns an geodataframe with statistical values of the aggregated geodataframe and its shape file schema.
+        | Each polygon has the following attributes:
+        | - area, imp_area, imp_dens
+        | - bui_area, bui_dens
+        | - sur_area, sur_dens
+        | - bui_imp_r, sur_imp_r
 
         :param gpd.GeoDataFrame aggregation_gdf: geodataframe for aggregation
         :param gpd.GeoDataFrame or None boundary_gdf: boundary geodataframe
