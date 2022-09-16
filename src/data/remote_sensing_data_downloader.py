@@ -14,7 +14,8 @@ class RemoteSensingDataDownloader:
                  wms_url,
                  wms_layer,
                  epsg_code):
-        """Constructor method
+        """
+        | Constructor method
 
         :param str wms_url: url of the web map service
         :param str wms_layer: layer of the web map service
@@ -28,7 +29,8 @@ class RemoteSensingDataDownloader:
 
     @staticmethod
     def get_bounding_box(coordinates):
-        """Returns the bounding box of a tile given its coordinates of the top left corner.
+        """
+        | Returns the bounding box of a tile given its coordinates of the top left corner.
 
         :param (int, int) coordinates: coordinates (x, y)
         :returns: bounding_box
@@ -41,7 +43,8 @@ class RemoteSensingDataDownloader:
         return bounding_box
 
     def get_image(self, coordinates):
-        """Returns an image given its coordinates of the top left corner.
+        """
+        | Returns an image given its coordinates of the top left corner.
 
         :param (int, int) coordinates: coordinates (x, y)
         :returns: image
