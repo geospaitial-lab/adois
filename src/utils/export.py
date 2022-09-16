@@ -9,7 +9,8 @@ import yaml
 
 
 def create_tiles_dir(output_dir_path):
-    """Creates a hidden .tiles directory in the output directory.
+    """
+    | Creates a hidden .tiles directory in the output directory.
 
     :param str or Path output_dir_path: path to the output directory
     :returns: None
@@ -23,7 +24,8 @@ def create_dir_structure(output_dir_path,
                          export_raw_shape_file,
                          tile_sizes,
                          shape_file_paths):
-    """Creates the directory structure in the output directory.
+    """
+    | Creates the directory structure in the output directory.
 
     :param str or Path output_dir_path: path to the output directory
     :param bool export_raw_shape_file: if True, a shape file without postprocessing is exported
@@ -49,7 +51,8 @@ def create_dir_structure(output_dir_path,
 
 
 def chop(time_delta):
-    """Returns a time delta with chopped microseconds.
+    """
+    | Returns a time delta with chopped microseconds.
 
     :param TimeDelta time_delta: time delta
     :return: chopped time delta
@@ -61,7 +64,8 @@ def chop(time_delta):
 def get_metadata(config,
                  start_time,
                  end_time):
-    """Returns metadata.
+    """
+    | Returns metadata.
 
     :param dict config: config
     :param DateTime start_time: start time
@@ -81,8 +85,11 @@ class CustomDumper(yaml.Dumper):
     def increase_indent(self,
                         flow=False,
                         indentless=False):
-        """Fixes the indentation of lists.
-        Based on: https://stackoverflow.com/a/39681672
+        """
+        | Fixes the indentation of lists.
+        |
+        | Based on:
+        | https://stackoverflow.com/a/39681672
 
         :returns: None
         :rtype: None
@@ -90,8 +97,11 @@ class CustomDumper(yaml.Dumper):
         super().increase_indent(flow, False)
 
     def write_line_break(self, data=None):
-        """Adds a blank line between top level keys.
-        Based on: https://github.com/yaml/pyyaml/issues/127#issuecomment-525800484
+        """
+        | Adds a blank line between top level keys.
+        |
+        | Based on:
+        | https://github.com/yaml/pyyaml/issues/127#issuecomment-525800484
 
         :returns: None
         :rtype: None
@@ -112,7 +122,8 @@ def export(output_dir_path,
            shape_file_paths,
            aggregation_gdfs_shape_file,
            metadata):
-    """Exports the shape files to their corresponding directories in the output directory.
+    """
+    | Exports the shape files to their corresponding directories in the output directory.
 
     :param str or Path output_dir_path: path to the output directory
     :param bool export_raw_shape_file: if True, a shape file without postprocessing is exported
