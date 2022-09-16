@@ -8,7 +8,8 @@ import src.utils as utils
 
 class Preprocessor:
     def __init__(self, color_codes):
-        """Constructor method
+        """
+        | Constructor method
 
         :param dict[tuple[int, int, int], int] color_codes: color codes for the color mapping to reduce the
             dimensions of an image from 3 dimensions to 2 dimensions (the key of the dictionary is the rgb value
@@ -20,8 +21,11 @@ class Preprocessor:
 
     @staticmethod
     def get_color_map(color_codes):
-        """Returns a color map.
-        Based on: https://stackoverflow.com/a/33196320
+        """
+        | Returns a color map.
+        |
+        | Based on:
+        | https://stackoverflow.com/a/33196320
 
         :param dict[tuple[int, int, int], int] color_codes: color codes for the color mapping to reduce the
             dimensions of an image from 3 dimensions to 2 dimensions (the key of the dictionary is the rgb value
@@ -39,8 +43,9 @@ class Preprocessor:
 
     @staticmethod
     def resize_image(image):
-        """Returns a resized image. Used for manually upsampling or downsampling images to an image size without
-        interpolation artefacts (nearest-neighbor interpolation is used).
+        """
+        | Returns a resized image. Used for manually upsampling or downsampling images to an image size without
+            interpolation artefacts (nearest-neighbor interpolation is used).
 
         :param np.ndarray[np.uint8] image: image
         :returns: resized image
@@ -53,8 +58,11 @@ class Preprocessor:
         return resized_image
 
     def reduce_dimensions(self, image):
-        """Returns a color mapped image with reduced dimensions (2 dimensions instead of 3 dimensions).
-        Based on: https://stackoverflow.com/a/33196320
+        """
+        | Returns a color mapped image with reduced dimensions (2 dimensions instead of 3 dimensions).
+        |
+        | Based on:
+        | https://stackoverflow.com/a/33196320
 
         :param np.ndarray[np.uint8] image: image
         :returns: color mapped image
@@ -66,7 +74,8 @@ class Preprocessor:
 
     @staticmethod
     def normalize_image(image):
-        """Returns a normalized image.
+        """
+        | Returns a normalized image.
 
         :param np.ndarray[np.uint8] image: image
         :returns: normalized image
@@ -79,7 +88,8 @@ class Preprocessor:
                   rgb_image,
                   nir_image,
                   ndsm_image):
-        """Returns a normalized 5 channel image (r, g, b, nir, ndsm).
+        """
+        | Returns a normalized 5 channel image (r, g, b, nir, ndsm).
 
         :param np.ndarray[np.uint8] rgb_image: rgb image
         :param np.ndarray[np.uint8] nir_image: nir image
