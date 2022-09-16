@@ -6,7 +6,8 @@ import onnxruntime
 
 class Inference:
     def __init__(self, model_path):
-        """Constructor method
+        """
+        | Constructor method
 
         :param str model_path: path to the model (.onnx)
         :returns: None
@@ -16,10 +17,11 @@ class Inference:
         self.model_input_name = self.model.get_inputs()[0].name
 
     def get_mask(self, image):
-        """Returns a mask with 2 dimensions and the following pixel values:
-        0 - pervious surfaces
-        1 - buildings
-        2 - impervious surfaces
+        """
+        | Returns a mask with 2 dimensions and the following pixel values:
+        | - 0: pervious surfaces
+        | - 1: buildings
+        | - 2: impervious surfaces
 
         :param np.ndarray[np.float32] image: image
         :returns: mask
