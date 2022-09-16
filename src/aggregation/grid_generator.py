@@ -10,7 +10,8 @@ class GridGenerator:
     def __init__(self,
                  bounding_box,
                  epsg_code):
-        """Constructor method
+        """
+        | Constructor method
 
         :param (int, int, int, int) bounding_box: bounding box (x_1, y_1, x_2, y_2)
         :param int epsg_code: epsg code of the coordinate reference system
@@ -21,8 +22,9 @@ class GridGenerator:
         self.epsg_code = epsg_code
 
     def get_coordinates(self, tile_size_meters):
-        """Returns the coordinates of the top left corner of each tile in the area of the bounding box.
-        The bounding box is quantized to the image size in meters.
+        """
+        | Returns the coordinates of the top left corner of each tile in the area of the bounding box.
+            The bounding box is quantized to the image size in meters.
 
         :param int tile_size_meters: tile size in meters
         :returns: coordinates (x, y) of each tile
@@ -52,7 +54,8 @@ class GridGenerator:
 
     @staticmethod
     def get_bounding_box(coordinates, tile_size_meters):
-        """Returns the bounding box of a tile given its coordinates of the top left corner.
+        """
+        | Returns the bounding box of a tile given its coordinates of the top left corner.
 
         :param (int, int) coordinates: coordinates (x, y)
         :param int tile_size_meters: tile size in meters
@@ -67,7 +70,8 @@ class GridGenerator:
 
     @staticmethod
     def get_polygon(coordinates, tile_size_meters):
-        """Returns the polygon of a tile given its coordinates of the top left corner.
+        """
+        | Returns the polygon of a tile given its coordinates of the top left corner.
 
         :param (int, int) coordinates: coordinates (x, y)
         :param int tile_size_meters: tile size in meters
@@ -83,7 +87,8 @@ class GridGenerator:
         return polygon
 
     def get_grid(self, tile_size_meters):
-        """Returns a geodataframe of the grid.
+        """
+        | Returns a geodataframe of the grid.
 
         :param int tile_size_meters: tile size in meters
         :returns: geodataframe
