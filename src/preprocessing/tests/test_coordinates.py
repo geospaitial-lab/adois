@@ -85,7 +85,8 @@ parameters_filter_downloaded_coordinates_not_empty_tiles_dir = \
 
 @pytest.mark.parametrize('test_input, expected', parameters_get_coordinates)
 def test_get_coordinates(test_input, expected):
-    """Tests get_coordinates() with different bounding boxes.
+    """
+    | Tests get_coordinates() with different bounding boxes.
 
     :param (int, int, int, int) test_input: bounding box (x_1, y_1, x_2, y_2) of the area from
         the bottom left corner to the top right corner
@@ -106,8 +107,9 @@ def test_get_coordinates(test_input, expected):
 def test_filter_downloaded_coordinates_empty_tiles_dir(test_input,
                                                        expected,
                                                        output_dir_path_empty_tiles_dir):
-    """Tests filter_downloaded_coordinates() with different coordinates.
-    The .tiles directory is empty.
+    """
+    | Tests filter_downloaded_coordinates() with different coordinates.
+    | The .tiles directory is empty.
 
     :param list[(int, int)] test_input: coordinates (x, y) of each tile
     :param list[(int, int)] expected: filtered coordinates (x, y) of each tile
@@ -129,8 +131,9 @@ def test_filter_downloaded_coordinates_empty_tiles_dir(test_input,
 def test_filter_downloaded_coordinates_not_empty_tiles_dir(test_input,
                                                            expected,
                                                            output_dir_path_not_empty_tiles_dir):
-    """Tests filter_downloaded_coordinates() with different coordinates.
-    The .tiles directory is not empty.
+    """
+    | Tests filter_downloaded_coordinates() with different coordinates.
+    | The .tiles directory is not empty.
 
     :param list[(int, int)] test_input: coordinates (x, y) of each tile
     :param list[(int, int)] expected: filtered coordinates (x, y) of each tile
