@@ -5,7 +5,8 @@ from argparse import ArgumentParser
 
 
 def get_argument_parser():
-    """Returns the argument parser.
+    """
+    | Returns the argument parser.
 
     :returns: argument parser
     :rtype: ArgumentParser
