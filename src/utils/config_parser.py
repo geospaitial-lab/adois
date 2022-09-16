@@ -20,7 +20,8 @@ class Wms(BaseModel):
 
     @validator('wms_url')
     def validate_wms_url(cls, value):
-        """Validates wms_url defined in the config file.
+        """
+        | Validates wms_url defined in the config file.
 
         :param str value: wms_url
         :returns: validated wms_url
@@ -39,7 +40,8 @@ class Wms(BaseModel):
     def validate_wms_layer(cls,
                            value,
                            values):
-        """Validates wms_layer defined in the config file.
+        """
+        | Validates wms_layer defined in the config file.
 
         :param str value: wms_layer
         :param dict[str, Any] values: config
@@ -69,7 +71,8 @@ class Data(BaseModel):
     def validate_epsg_code(cls,
                            value,
                            values):
-        """Validates epsg_code defined in the config file.
+        """
+        | Validates epsg_code defined in the config file.
 
         :param int value: epsg_code
         :param dict[str, Any] values: config
@@ -92,7 +95,8 @@ class Data(BaseModel):
 
     @validator('boundary_shape_file_path')
     def validate_boundary_shape_file_path(cls, value):
-        """Validates boundary_shape_file_path defined in the config file.
+        """
+        | Validates boundary_shape_file_path defined in the config file.
 
         :param str or None value: boundary_shape_file_path
         :returns: validated boundary_shape_file_path
@@ -114,7 +118,8 @@ class Data(BaseModel):
     def validate_bounding_box(cls,
                               value,
                               values):
-        """Validates bounding_box defined in the config file.
+        """
+        | Validates bounding_box defined in the config file.
 
         :param list[int] or None value: bounding_box (x_1, y_1, x_2, y_2)
         :param dict[str, Any] values: config
@@ -144,7 +149,8 @@ class Preprocessing(BaseModel):
 
     @validator('color_codes_ndsm')
     def validate_color_codes_ndsm(cls, value):
-        """Validates color_codes_ndsm defined in the config file.
+        """
+        | Validates color_codes_ndsm defined in the config file.
 
         :param list[str] value: color_codes_ndsm
         :returns: validated color_codes_ndsm
@@ -189,7 +195,8 @@ class Postprocessing(BaseModel):
 
     @validator('sieve_size')
     def validate_sieve_size(cls, value):
-        """Validates sieve_size defined in the config file.
+        """
+        | Validates sieve_size defined in the config file.
 
         :param int or None value: sieve_size
         :returns: validated sieve_size
@@ -205,7 +212,8 @@ class Postprocessing(BaseModel):
 
     @validator('simplify')
     def validate_simplify(cls, value):
-        """Validates simplify defined in the config file.
+        """
+        | Validates simplify defined in the config file.
 
         :param bool or None value: simplify
         :returns: validated simplify
@@ -222,7 +230,8 @@ class Aggregation(BaseModel):
 
     @validator('tile_size')
     def validate_tile_size(cls, value):
-        """Validates tile_size defined in the config file.
+        """
+        | Validates tile_size defined in the config file.
 
         :param int or list[int or None] or None value: tile_size
         :returns: validated tile_size
@@ -246,7 +255,8 @@ class Aggregation(BaseModel):
 
     @validator('shape_file_path')
     def validate_shape_file_path(cls, value):
-        """Validates shape_file_path defined in the config file.
+        """
+        | Validates shape_file_path defined in the config file.
 
         :param str or list[str or None] or None value: shape_file_path
         :returns: validated shape_file_path
@@ -278,7 +288,8 @@ class ExportSettings(BaseModel):
 
     @validator('output_dir_path')
     def validate_output_dir_path(cls, value):
-        """Validates output_dir_path defined in the config file.
+        """
+        | Validates output_dir_path defined in the config file.
 
         :param str value: output_dir_path
         :returns: validated output_dir_path
@@ -296,7 +307,8 @@ class ExportSettings(BaseModel):
 
     @validator('prefix')
     def validate_prefix(cls, value):
-        """Validates prefix defined in the config file.
+        """
+        | Validates prefix defined in the config file.
 
         :param str value: prefix
         :returns: validated prefix
@@ -310,7 +322,8 @@ class ExportSettings(BaseModel):
 
     @validator('export_raw_shape_file')
     def validate_export_raw_shape_file(cls, value):
-        """Validates export_raw_shape_file defined in the config file.
+        """
+        | Validates export_raw_shape_file defined in the config file.
 
         :param bool or None value: export_raw_shape_file
         :returns: validated export_raw_shape_file
@@ -330,7 +343,8 @@ class Config(BaseModel):
 
     @root_validator
     def validate_export_raw_shape_file(cls, values):
-        """Validates export_raw_shape_file defined in the config file.
+        """
+        | Validates export_raw_shape_file defined in the config file.
 
         :param dict[str, Any] values: config
         :returns: validated config
@@ -343,7 +357,8 @@ class Config(BaseModel):
 
 class ConfigParser:
     def __init__(self, config_file_path):
-        """Constructor method
+        """
+        | Constructor method
 
         :param str or Path config_file_path: path to the config file (.yaml)
         :returns: None
@@ -354,7 +369,8 @@ class ConfigParser:
             self.config_dict = yaml.safe_load(file)
 
     def update_config_dict(self, args):
-        """Updates the config dict with the optional parsed arguments.
+        """
+        | Updates the config dict with the optional parsed arguments.
 
         :param args: parsed arguments
         :returns: None
@@ -400,7 +416,8 @@ class ConfigParser:
             self.config_dict['aggregation']['export_raw_shape_file'] = args.export_raw_shape_file
 
     def parse_config(self):
-        """Returns the parsed config.
+        """
+        | Returns the parsed config.
 
         :returns: parsed config
         :rtype: Config
