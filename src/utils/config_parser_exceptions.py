@@ -12,7 +12,8 @@ class WMSConnectionError(Exception):
     def __init__(self,
                  wms_url,
                  passed_exception):
-        """Constructor method
+        """
+        | Constructor method
 
         :param str wms_url: url of the web map service
         :param Exception passed_exception: passed exception
@@ -29,7 +30,8 @@ class WMSLayerError(Exception):
                  wms_layer,
                  wms_url,
                  valid_wms_layers):
-        """Constructor method
+        """
+        | Constructor method
 
         :param str wms_layer: layer of the web map service
         :param str wms_url: url of the web map service
@@ -53,7 +55,8 @@ class EPSGCodeError(Exception):
     def __init__(self,
                  epsg_code,
                  valid_epsg_codes):
-        """Constructor method
+        """
+        | Constructor method
 
         :param int epsg_code: epsg code of the coordinate reference system
         :param list[int] valid_epsg_codes: valid epsg codes
@@ -74,7 +77,8 @@ class EPSGCodeError(Exception):
 
 class ShapeFileNotFoundError(Exception):
     def __init__(self, shape_file_path):
-        """Constructor method
+        """
+        | Constructor method
 
         :param str shape_file_path: path to the shape file (.shp)
         :returns: None
@@ -88,7 +92,8 @@ class ShapeFileNotFoundError(Exception):
 
 class ShapeFileExtensionError(Exception):
     def __init__(self, shape_file_path):
-        """Constructor method
+        """
+        | Constructor method
 
         :param str shape_file_path: path to the shape file (.shp)
         :returns: None
@@ -102,7 +107,8 @@ class ShapeFileExtensionError(Exception):
 
 class ShapeFileLengthError(Exception):
     def __init__(self, gdf):
-        """Constructor method
+        """
+        | Constructor method
 
         :param gpd.GeoDataFrame gdf: geodataframe
         :returns: None
@@ -116,7 +122,8 @@ class ShapeFileLengthError(Exception):
 
 class BoundingBoxNotDefinedError(Exception):
     def __init__(self):
-        """Constructor method
+        """
+        | Constructor method
 
         :returns: None
         :rtype: None
@@ -127,7 +134,8 @@ class BoundingBoxNotDefinedError(Exception):
 
 class BoundingBoxLengthError(Exception):
     def __init__(self, bounding_box):
-        """Constructor method
+        """
+        | Constructor method
 
         :param list[int] bounding_box: bounding box (x_1, y_1, x_2, y_2)
         :returns: None
@@ -140,7 +148,8 @@ class BoundingBoxLengthError(Exception):
 
 class BoundingBoxError(Exception):
     def __init__(self, bounding_box):
-        """Constructor method
+        """
+        | Constructor method
 
         :param list[int] bounding_box: bounding box (x_1, y_1, x_2, y_2)
         :returns: None
@@ -154,7 +163,8 @@ class BoundingBoxError(Exception):
 
 class ColorCodeNDSMSchemaError(Exception):
     def __init__(self, color_code):
-        """Constructor method
+        """
+        | Constructor method
 
         :param str color_code: color code ('(r_value, g_value, b_value) - mapped_value')
         :returns: None
@@ -168,7 +178,8 @@ class ColorCodeNDSMSchemaError(Exception):
 
 class ColorCodeNDSMValueError(Exception):
     def __init__(self, value):
-        """Constructor method
+        """
+        | Constructor method
 
         :param int value: value
         :returns: None
@@ -182,7 +193,8 @@ class ColorCodeNDSMValueError(Exception):
 
 class SieveSizeError(Exception):
     def __init__(self, sieve_size):
-        """Constructor method
+        """
+        | Constructor method
 
         :param int sieve_size: sieve size in square meters
         :returns: None
@@ -195,7 +207,8 @@ class SieveSizeError(Exception):
 
 class TileSizeError(Exception):
     def __init__(self, tile_size):
-        """Constructor method
+        """
+        | Constructor method
 
         :param int tile_size: tile size in meters
         :returns: None
@@ -208,7 +221,8 @@ class TileSizeError(Exception):
 
 class OutputDirNotFoundError(Exception):
     def __init__(self, output_dir_path):
-        """Constructor method
+        """
+        | Constructor method
 
         :param str output_dir_path: path to the output directory
         :returns: None
@@ -221,7 +235,8 @@ class OutputDirNotFoundError(Exception):
 
 class OutputDirNotEmptyError(Exception):
     def __init__(self, output_dir_path):
-        """Constructor method
+        """
+        | Constructor method
 
         :param str output_dir_path: path to the output directory
         :returns: None
@@ -234,7 +249,8 @@ class OutputDirNotEmptyError(Exception):
 
 class PrefixError(Exception):
     def __init__(self):
-        """Constructor method
+        """
+        | Constructor method
 
         :returns: None
         :rtype: None
