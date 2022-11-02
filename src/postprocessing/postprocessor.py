@@ -150,6 +150,7 @@ class Postprocessor:
     def fill_gdf(gdf, hole_size):
         """
         | Returns a geodataframe without holes in the polygons.
+        | The hole size of buildings is doubled.
         |
         | Based on:
         | https://gis.stackexchange.com/a/409398
@@ -160,8 +161,12 @@ class Postprocessor:
         :returns: filled geodataframe
         :rtype: gpd.GeoDataFrame
         """
-        gdf['geometry'] = gdf['geometry'].apply(lambda polygon:
-                                                Postprocessor.fill_polygon(polygon, hole_size=hole_size))
+        gdf['geometry'] = gdf[['class', 'geometry']].apply(lambda x:
+                                                           Postprocessor.fill_polygon(x['geometry'],
+                                                                                      hole_size=2 * hole_size)
+                                                           if x['class'] == 1
+                                                           else Postprocessor.fill_polygon(x['geometry'],
+                                                                                           hole_size=hole_size))
         return gdf
 
     def simplify_gdf(self, gdf):
