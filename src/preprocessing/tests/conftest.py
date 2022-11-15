@@ -48,29 +48,12 @@ def output_dir_path_not_empty_tiles_dir(tmp_path_factory):
 
 
 @pytest.fixture(scope='session')
-def color_codes():
-    """
-    | Returns color codes.
-
-    :returns: color codes
-    :rtype: dict[tuple[int, int, int], int]
-    """
-    color_codes = {(0, 0, 0): 0,
-                   (0, 128, 255): 51,
-                   (255, 128, 0): 102,
-                   (255, 128, 255): 153,
-                   (255, 255, 255): 255}
-    return color_codes
-
-
-@pytest.fixture(scope='session')
-def preprocessor(color_codes):
+def preprocessor():
     """
     | Returns a preprocessor instance.
 
-    :param dict[tuple[int, int, int], int] color_codes: color codes
     :returns: preprocessor
     :rtype: Preprocessor
     """
-    preprocessor = Preprocessor(color_codes=color_codes)
+    preprocessor = Preprocessor()
     return preprocessor
