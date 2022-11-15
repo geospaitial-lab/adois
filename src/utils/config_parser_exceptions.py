@@ -161,36 +161,6 @@ class BoundingBoxError(Exception):
         super().__init__(message)
 
 
-class ColorCodeNDSMSchemaError(Exception):
-    def __init__(self, color_code):
-        """
-        | Constructor method
-
-        :param str color_code: color code ('(r_value, g_value, b_value) - mapped_value')
-        :returns: None
-        :rtype: None
-        """
-        message = ('Invalid color code in color_codes_ndsm in config file!\n' + ' ' * (4 if utils.DEBUG else 2) +
-                   'Expected a color code with the following schema: (r_value, g_value, b_value) - mapped_value, '
-                   f'got {color_code} instead.')
-        super().__init__(message)
-
-
-class ColorCodeNDSMValueError(Exception):
-    def __init__(self, value):
-        """
-        | Constructor method
-
-        :param int value: value
-        :returns: None
-        :rtype: None
-        """
-        message = ('Invalid value in color code in color_codes_ndsm in config file!\n' +
-                   ' ' * (4 if utils.DEBUG else 2) +
-                   f'Expected a number in the range of 0 to 255, got {value} instead.')
-        super().__init__(message)
-
-
 class SieveSizeError(Exception):
     def __init__(self, sieve_size):
         """
