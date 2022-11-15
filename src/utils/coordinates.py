@@ -68,7 +68,7 @@ def get_internal_coordinates(bounding_box,
 
 def filter_downloaded_coordinates(coordinates, output_dir_path):
     """
-    | Returns the filtered coordinates. If a tile is already being downloaded (its shape file directory in
+    | Returns the filtered coordinates. If a tile has already been downloaded (its shape file directory in
         .tiles directory exists), its coordinates are removed.
 
     :param list[(int, int)] coordinates: coordinates (x, y) of each tile
