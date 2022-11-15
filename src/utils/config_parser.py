@@ -1,6 +1,5 @@
 # @author: Maryniak, Marius - Fachbereich Elektrotechnik, Westfälische Hochschule Gelsenkirchen
 
-import re
 from pathlib import Path
 from typing import List, Optional, Union
 
@@ -62,7 +61,6 @@ class Wms(BaseModel):
 class Data(BaseModel):
     rgb: Wms
     nir: Wms
-    ndsm: Wms
     epsg_code: int
     boundary_shape_file_path: Optional[str]
     bounding_box: Optional[List[int]]
@@ -82,11 +80,9 @@ class Data(BaseModel):
         """
         wms_rgb = WebMapService(values['rgb'].wms_url)
         wms_nir = WebMapService(values['nir'].wms_url)
-        wms_ndsm = WebMapService(values['ndsm'].wms_url)
         valid_epsg_codes_rgb = [int(epsg_code[5:]) for epsg_code in wms_rgb[values['rgb'].wms_layer].crsOptions]
         valid_epsg_codes_nir = [int(epsg_code[5:]) for epsg_code in wms_nir[values['nir'].wms_layer].crsOptions]
-        valid_epsg_codes_ndsm = [int(epsg_code[5:]) for epsg_code in wms_ndsm[values['ndsm'].wms_layer].crsOptions]
-        valid_epsg_codes = list(set(valid_epsg_codes_rgb) & set(valid_epsg_codes_nir) & set(valid_epsg_codes_ndsm))
+        valid_epsg_codes = list(set(valid_epsg_codes_rgb) & set(valid_epsg_codes_nir))
 
         if value not in valid_epsg_codes:
             raise EPSGCodeError(epsg_code=value,
@@ -141,51 +137,6 @@ class Data(BaseModel):
             boundary_gdf = gpd.read_file(values['boundary_shape_file_path'])
             value = boundary_gdf.total_bounds.astype(np.int32)
         value = tuple(value)
-        return value
-
-
-class Preprocessing(BaseModel):
-    color_codes_ndsm: List[str]
-
-    @validator('color_codes_ndsm')
-    def validate_color_codes_ndsm(cls, value):
-        """
-        | Validates color_codes_ndsm defined in the config file.
-
-        :param list[str] value: color_codes_ndsm
-        :returns: validated color_codes_ndsm
-        :rtype: dict[tuple[int, int, int], int]
-        :raises ColorCodeNDSMSchemaError: if color_code in color_codes_ndsm is not a color code with the following
-            schema: '(r_value, g_value, b_value) - mapped_value'
-        :raises ColorCodeNDSMValueError: if the value in color_code in color_codes_ndsm is not a number in the range
-            of 0 to 255
-        """
-        color_codes_ndsm = {}
-        pattern = re.compile(r'^\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)\s*-\s*(\d+)\s*$')
-
-        for color_code in value:
-            match = pattern.search(color_code)
-            if match is None:
-                raise ColorCodeNDSMSchemaError(color_code=color_code)
-            else:
-                if int(match.group(1)) <= 255:
-                    r_value = int(match.group(1))
-                else:
-                    raise ColorCodeNDSMValueError(value=int(match.group(1)))
-                if int(match.group(2)) <= 255:
-                    g_value = int(match.group(2))
-                else:
-                    raise ColorCodeNDSMValueError(value=int(match.group(2)))
-                if int(match.group(3)) <= 255:
-                    b_value = int(match.group(3))
-                else:
-                    raise ColorCodeNDSMValueError(value=int(match.group(3)))
-                if int(match.group(4)) <= 255:
-                    mapped_value = int(match.group(4))
-                else:
-                    raise ColorCodeNDSMValueError(value=int(match.group(4)))
-                color_codes_ndsm[(r_value, g_value, b_value)] = int(mapped_value)
-        value = color_codes_ndsm
         return value
 
 
@@ -336,7 +287,6 @@ class ExportSettings(BaseModel):
 
 class Config(BaseModel):
     data: Data
-    preprocessing: Preprocessing
     postprocessing: Postprocessing
     aggregation: Aggregation
     export_settings: ExportSettings
@@ -384,19 +334,12 @@ class ConfigParser:
             self.config_dict['data']['nir']['wms_url'] = args.wms_url_nir
         if hasattr(args, 'wms_layer_nir'):
             self.config_dict['data']['nir']['wms_layer'] = args.wms_layer_nir
-        if hasattr(args, 'wms_url_ndsm'):
-            self.config_dict['data']['ndsm']['wms_url'] = args.wms_url_ndsm
-        if hasattr(args, 'wms_layer_ndsm'):
-            self.config_dict['data']['ndsm']['wms_layer'] = args.wms_layer_ndsm
         if hasattr(args, 'epsg_code'):
             self.config_dict['data']['epsg_code'] = args.epsg_code
         if hasattr(args, 'boundary_shape_file_path'):
             self.config_dict['data']['boundary_shape_file_path'] = args.boundary_shape_file_path
         if hasattr(args, 'bounding_box'):
             self.config_dict['data']['bounding_box'] = args.bounding_box
-
-        if hasattr(args, 'color_codes_ndsm'):
-            self.config_dict['preprocessing']['color_codes_ndsm'] = args.color_codes_ndsm
 
         if hasattr(args, 'sieve_size'):
             self.config_dict['postprocessing']['sieve_size'] = args.sieve_size
