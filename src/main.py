@@ -92,7 +92,7 @@ def main():
         filtered_coordinates = coordinates
 
     # noinspection PyTypeChecker
-    preprocessor = Preprocessor(color_codes=config.preprocessing.color_codes_ndsm)
+    preprocessor = Preprocessor()
     logger.debug('Preprocessor initialized')
 
     rsdd_rgb = RemoteSensingDataDownloader(wms_url=config.data.rgb.wms_url,
@@ -104,11 +104,6 @@ def main():
                                            wms_layer=config.data.nir.wms_layer,
                                            epsg_code=config.data.epsg_code)
     logger.debug('RemoteSensingDataDownloader (nir) initialized')
-
-    rsdd_ndsm = RemoteSensingDataDownloader(wms_url=config.data.ndsm.wms_url,
-                                            wms_layer=config.data.ndsm.wms_layer,
-                                            epsg_code=config.data.epsg_code)
-    logger.debug('RemoteSensingDataDownloader (ndsm) initialized')
 
     inference = Inference('data/model/model.onnx')
     logger.debug('Inference initialized')
@@ -148,12 +143,9 @@ def main():
         logger.debug(f'Iteration {index + 1} / {iterations} ->  rgb image downloaded')
         nir_image = rsdd_nir.get_image(coordinates_element)
         logger.debug(f'Iteration {index + 1} / {iterations} ->  nir image downloaded')
-        ndsm_image = rsdd_ndsm.get_image(coordinates_element)
-        logger.debug(f'Iteration {index + 1} / {iterations} -> ndsm image downloaded')
 
         image = preprocessor.get_image(rgb_image=rgb_image,
-                                       nir_image=nir_image,
-                                       ndsm_image=ndsm_image)
+                                       nir_image=nir_image)
 
         mask = inference.get_mask(image)
         logger.debug(f'Iteration {index + 1} / {iterations} -> mask created')
