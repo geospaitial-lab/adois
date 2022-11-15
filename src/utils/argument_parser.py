@@ -39,14 +39,6 @@ def get_argument_parser():
                                  type=str,
                                  default=argparse.SUPPRESS,
                                  help='layer of the web map service (nir)')
-    argument_parser.add_argument('--wms_url_ndsm',
-                                 type=str,
-                                 default=argparse.SUPPRESS,
-                                 help='url of the web map service (ndsm)')
-    argument_parser.add_argument('--wms_layer_ndsm',
-                                 type=str,
-                                 default=argparse.SUPPRESS,
-                                 help='layer of the web map service (ndsm)')
     argument_parser.add_argument('--epsg_code',
                                  type=int,
                                  default=argparse.SUPPRESS,
@@ -63,12 +55,6 @@ def get_argument_parser():
                                  const=None,
                                  default=argparse.SUPPRESS,
                                  help='bounding box (x_1, y_1, x_2, y_2)')
-
-    argument_parser.add_argument('--color_codes_ndsm',
-                                 type=str,
-                                 nargs='+',
-                                 default=argparse.SUPPRESS,
-                                 help='color codes for the color mapping')
 
     argument_parser.add_argument('--sieve_size',
                                  type=int,
