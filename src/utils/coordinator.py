@@ -5,7 +5,7 @@ from pathlib import Path
 
 import geopandas as gpd
 
-import src.utils as utils
+import src.utils.settings as settings
 from src.aggregation.grid_generator import GridGenerator
 
 
@@ -22,23 +22,23 @@ class Coordinator:
         """
         coordinates = []
 
-        bounding_box = (bounding_box[0] - (bounding_box[0] % utils.IMAGE_SIZE_METERS),
-                        bounding_box[1] - (bounding_box[1] % utils.IMAGE_SIZE_METERS),
+        bounding_box = (bounding_box[0] - (bounding_box[0] % settings.IMAGE_SIZE_METERS),
+                        bounding_box[1] - (bounding_box[1] % settings.IMAGE_SIZE_METERS),
                         bounding_box[2],
                         bounding_box[3])
 
-        columns = (bounding_box[2] - bounding_box[0]) // utils.IMAGE_SIZE_METERS
-        if (bounding_box[2] - bounding_box[0]) % utils.IMAGE_SIZE_METERS:
+        columns = (bounding_box[2] - bounding_box[0]) // settings.IMAGE_SIZE_METERS
+        if (bounding_box[2] - bounding_box[0]) % settings.IMAGE_SIZE_METERS:
             columns += 1
 
-        rows = (bounding_box[3] - bounding_box[1]) // utils.IMAGE_SIZE_METERS
-        if (bounding_box[3] - bounding_box[1]) % utils.IMAGE_SIZE_METERS:
+        rows = (bounding_box[3] - bounding_box[1]) // settings.IMAGE_SIZE_METERS
+        if (bounding_box[3] - bounding_box[1]) % settings.IMAGE_SIZE_METERS:
             rows += 1
 
         for row in range(rows):
             for column in range(columns):
-                coordinates.append((bounding_box[0] + column * utils.IMAGE_SIZE_METERS,
-                                    bounding_box[1] + (row + 1) * utils.IMAGE_SIZE_METERS))
+                coordinates.append((bounding_box[0] + column * settings.IMAGE_SIZE_METERS,
+                                    bounding_box[1] + (row + 1) * settings.IMAGE_SIZE_METERS))
 
         return coordinates
 
@@ -59,7 +59,7 @@ class Coordinator:
 
         grid_generator = GridGenerator(bounding_box=bounding_box,
                                        epsg_code=epsg_code)
-        grid_gdf = grid_generator.get_grid(tile_size_meters=utils.IMAGE_SIZE_METERS)
+        grid_gdf = grid_generator.get_grid(tile_size_meters=settings.IMAGE_SIZE_METERS)
 
         valid_coordinates = list(grid_gdf['geometry'].intersects(boundary_gdf['geometry'][0]))
         coordinates = [coordinates_element for (coordinates_element, valid) in zip(coordinates, valid_coordinates)
