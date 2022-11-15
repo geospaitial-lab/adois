@@ -16,9 +16,6 @@ data:
   nir:
     wms_url: https://www.wms.nrw.de/geobasis/wms_nw_dop
     wms_layer: nw_dop_nir
-  ndsm:
-    wms_url: https://www.wms.nrw.de/geobasis/wms_nw_ndom
-    wms_layer: nw_ndom
   epsg_code: 25832
   boundary_shape_file_path:
   bounding_box:
@@ -30,11 +27,11 @@ data:
 
 - ### wms_url
   - **type:** str
-  - URL des WMS (Web Map Service) der RGB-, NIR- und NDSM-Fernerkundungsdaten
+  - URL des WMS (Web Map Service) der RGB- und NIR-Fernerkundungsdaten
 
 - ### wms_layer
   - **type:** str
-  - Layer des WMS (Web Map Service) der RGB-, NIR- und NDSM-Fernerkundungsdaten
+  - Layer des WMS (Web Map Service) der RGB- und NIR-Fernerkundungsdaten
 
 - ### epsg_code
   - **type:** int
@@ -51,34 +48,6 @@ data:
 
 ***Hinweis:*** Es muss entweder `boundary_shape_file_path` oder `bounding_box` definiert werden.
 Werden beide Parameter definiert, wird das Gebiet des Shape Files genutzt.
-
-
-## preprocessing
-
-```yaml
-  color_codes_ndsm:
-    - (0, 0, 0) - 0        # 0.0m  - 1.0m
-    - (255, 255, 255) - 5  # 1.0m  - 1.5m
-    - (31, 120, 180) - 8   # 1.5m  - 3.0m
-    - (54, 214, 209) - 15  # 3.0m  - 5.0m
-    - (64, 207, 39) - 26   # 5.0m  - 10.0m
-    - (255, 255, 71) - 51  # 10.0m - 15.0m
-    - (255, 206, 71) - 76  # 15.0m - 20.0m
-    - (255, 127, 0) - 102  # 20.0m - 25.0m
-    - (215, 25, 28) - 127  # 25.0m - 50.0m
-    - (114, 0, 11) - 255   # > 50.0m
-```
-
-- ### color_codes_ndsm
-  - **type:** list of str
-  - Mapping von RGB-Werten auf einen 1-Kanal-Wert, um die Datenmenge der NDSM-Fernerkundungsdaten zu reduzieren
-    (jedes Listenelement enthält ein RGB-Wert Tupel und einen dazugehörigen 1-Kanal-Wert zwischen 0 und 255)  
-    *Hinweis:* Die Color Codes erstellen Sie wie folgt:
-    - Ermitteln Sie aus der Beschreibung des WMS (Web Map Service) Layers des normalisierten digitalen
-      Oberflächenmodells die möglichen Höhenstufen $height$ (untere Grenzen der Höhenbereiche) und die dazugehörigen
-      RGB-Wert Tupel
-    - Berechnen Sie die 1-Kanal-Werte mit folgender Formel:
-      $value = \mathrm{round}(height \times {255 \over 50 \mathrm m}) = \mathrm{round}(height \times 5.1 m^{-1})$
 
 
 ## postprocessing
