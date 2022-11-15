@@ -68,7 +68,7 @@ class Coordinator:
         return coordinates
 
     @staticmethod
-    def filter_downloaded_coordinates(coordinates, output_dir_path):
+    def filter_cached_coordinates(coordinates, output_dir_path):
         """
         | Returns the filtered coordinates. If a tile has already been downloaded (its shape file directory in
             .tiles directory exists), its coordinates are removed.
@@ -86,8 +86,8 @@ class Coordinator:
         for path in tiles_dir_path.iterdir():
             match = pattern.search(path.name)
             if match:
-                processed_coordinates = (int(match.group(1)), int(match.group(2)))
-                if processed_coordinates in coordinates:
-                    filtered_coordinates.remove(processed_coordinates)
+                cached_coordinates = (int(match.group(1)), int(match.group(2)))
+                if cached_coordinates in coordinates:
+                    filtered_coordinates.remove(cached_coordinates)
 
         return filtered_coordinates
