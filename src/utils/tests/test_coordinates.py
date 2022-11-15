@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from src.preprocessing.coordinates import filter_downloaded_coordinates, get_coordinates
+from src.utils.coordinates import filter_downloaded_coordinates, get_coordinates
 
 parameters_get_coordinates = \
     [((512, 512, 1024, 1024),  # no quantization, no remainder
