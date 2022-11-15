@@ -42,17 +42,17 @@ class Coordinator:
 
         return coordinates
 
-    def get_internal_coordinates(self,
-                                 bounding_box,
-                                 epsg_code,
-                                 boundary_gdf):
+    def get_valid_coordinates(self,
+                              bounding_box,
+                              epsg_code,
+                              boundary_gdf):
         """
         | Returns the coordinates of the top left corner of each tile in the area of the boundary geodataframe.
 
         :param (int, int, int, int) bounding_box: bounding box (x_1, y_1, x_2, y_2)
         :param int epsg_code: epsg code of the coordinate reference system
         :param gpd.GeoDataFrame boundary_gdf: boundary geodataframe
-        :returns: internal coordinates (x, y) of each tile
+        :returns: valid coordinates (x, y) of each tile
         :rtype: list[(int, int)]
         """
         coordinates = self.get_coordinates(bounding_box)
@@ -61,11 +61,11 @@ class Coordinator:
                                        epsg_code=epsg_code)
         grid_gdf = grid_generator.get_grid(tile_size_meters=settings.IMAGE_SIZE_METERS)
 
-        valid_coordinates = list(grid_gdf['geometry'].intersects(boundary_gdf['geometry'][0]))
-        coordinates = [coordinates_element for (coordinates_element, valid) in zip(coordinates, valid_coordinates)
-                       if valid]
+        intersections = list(grid_gdf['geometry'].intersects(boundary_gdf['geometry'][0]))
+        valid_coordinates = [coordinates_element for (coordinates_element, valid) in zip(coordinates, intersections)
+                             if valid]
 
-        return coordinates
+        return valid_coordinates
 
     @staticmethod
     def filter_cached_coordinates(coordinates, output_dir_path):
