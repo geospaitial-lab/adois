@@ -73,5 +73,5 @@ def boundary_gdf():
                        [512, -512],
                        [512, 512],
                        [-512, 512]])
-    boundary_gdf = gpd.GeoDataFrame(geometry=[polygon], crs=f'EPSG:25832')
+    boundary_gdf = gpd.GeoDataFrame(geometry=[polygon], crs='EPSG:25832')
     return boundary_gdf
