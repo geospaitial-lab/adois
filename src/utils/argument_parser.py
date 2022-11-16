@@ -16,6 +16,7 @@ def get_argument_parser():
                                  type=str,
                                  help='path to the config file (.yaml)')
 
+    # region data
     argument_parser.add_argument('-d', '--debug',
                                  action='store_true',
                                  help='debug mode')
@@ -65,7 +66,9 @@ def get_argument_parser():
                                  dest='bounding_box',
                                  default=argparse.SUPPRESS,
                                  help='set the bounding box (x_1, y_1, x_2, y_2) to None')
+    # endregion
 
+    # region postprocessing
     argument_parser.add_argument('--sieve_size',
                                  type=int,
                                  nargs='?',
@@ -88,7 +91,9 @@ def get_argument_parser():
                                  default=argparse.SUPPRESS,
                                  help='set simplify (the shape file is simplified using the Douglas-Peucker algorithm) '
                                       'to False')
+    # endregion
 
+    # region aggregation
     argument_parser.add_argument('--tile_size',
                                  type=int,
                                  nargs='*',
@@ -111,7 +116,9 @@ def get_argument_parser():
                                  dest='shape_file_path',
                                  default=argparse.SUPPRESS,
                                  help='set the path to the boundary shape file (.shp) to None')
+    # endregion
 
+    # region export settings
     argument_parser.add_argument('--output_dir_path',
                                  type=str,
                                  default=argparse.SUPPRESS,
@@ -129,4 +136,5 @@ def get_argument_parser():
                                  dest='export_raw_shape_file',
                                  default=argparse.SUPPRESS,
                                  help='set the export of the raw shape file to False')
+    # endregion
     return argument_parser
