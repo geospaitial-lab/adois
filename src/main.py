@@ -91,7 +91,6 @@ def main():
     else:
         filtered_coordinates = coordinates
 
-    # noinspection PyTypeChecker
     preprocessor = Preprocessor()
     logger.debug('Preprocessor initialized')
 
