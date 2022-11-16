@@ -29,6 +29,7 @@ def test_get_coordinates(test_input,
     :param (int, int, int, int) test_input: bounding box (x_1, y_1, x_2, y_2) of the area from
         the bottom left corner to the top right corner
     :param list[(int, int)] expected: coordinates (x, y) of each tile
+    :param Coordinator coordinator: coordinator
     :returns: None
     :rtype: None
     """
@@ -52,6 +53,7 @@ def test_filter_cached_coordinates_empty_tiles_dir(test_input,
 
     :param list[(int, int)] test_input: coordinates (x, y) of each tile
     :param list[(int, int)] expected: filtered coordinates (x, y) of each tile
+    :param Coordinator coordinator: coordinator
     :param Path output_dir_path_empty_tiles_dir: path to the output directory
     :returns: None
     :rtype: None
@@ -77,6 +79,7 @@ def test_filter_cached_coordinates_not_empty_tiles_dir(test_input,
 
     :param list[(int, int)] test_input: coordinates (x, y) of each tile
     :param list[(int, int)] expected: filtered coordinates (x, y) of each tile
+    :param Coordinator coordinator: coordinator
     :param Path output_dir_path_not_empty_tiles_dir: path to the output directory
     :returns: None
     :rtype: None
