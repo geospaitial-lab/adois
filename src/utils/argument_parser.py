@@ -46,39 +46,71 @@ def get_argument_parser():
     argument_parser.add_argument('--boundary_shape_file_path',
                                  type=str,
                                  nargs='?',
-                                 const=None,
                                  default=argparse.SUPPRESS,
                                  help='path to the boundary shape file (.shp)')
+    argument_parser.add_argument('--no-boundary_shape_file_path',
+                                 action='store_const',
+                                 const=None,
+                                 dest='boundary_shape_file_path',
+                                 default=argparse.SUPPRESS,
+                                 help='set the path to the boundary shape file (.shp) to None')
     argument_parser.add_argument('--bounding_box',
                                  type=int,
                                  nargs=4,
-                                 const=None,
                                  default=argparse.SUPPRESS,
                                  help='bounding box (x_1, y_1, x_2, y_2)')
+    argument_parser.add_argument('--no-bounding_box',
+                                 action='store_const',
+                                 const=None,
+                                 dest='bounding_box',
+                                 default=argparse.SUPPRESS,
+                                 help='set the bounding box (x_1, y_1, x_2, y_2) to None')
 
     argument_parser.add_argument('--sieve_size',
                                  type=int,
                                  nargs='?',
-                                 const=None,
                                  default=argparse.SUPPRESS,
                                  help='sieve size in square meters')
-    argument_parser.add_argument('--simplify',
-                                 type=bool,
-                                 nargs='?',
+    argument_parser.add_argument('--no-sieve_size',
+                                 action='store_const',
                                  const=None,
+                                 dest='sieve_size',
                                  default=argparse.SUPPRESS,
-                                 help='if True, the shape file is simplified using the Douglas-Peucker algorithm')
+                                 help='set the sieve size in square meters to None')
+    argument_parser.add_argument('--simplify',
+                                 action='store_true',
+                                 default=argparse.SUPPRESS,
+                                 help='set simplify (the shape file is simplified using the Douglas-Peucker algorithm) '
+                                      'to True')
+    argument_parser.add_argument('--no-simplify',
+                                 action='store_false',
+                                 dest='simplify',
+                                 default=argparse.SUPPRESS,
+                                 help='set simplify (the shape file is simplified using the Douglas-Peucker algorithm) '
+                                      'to False')
 
     argument_parser.add_argument('--tile_size',
                                  type=int,
                                  nargs='*',
                                  default=argparse.SUPPRESS,
                                  help='tile size in meters')
+    argument_parser.add_argument('--no-tile_size',
+                                 action='store_const',
+                                 const=None,
+                                 dest='tile_size',
+                                 default=argparse.SUPPRESS,
+                                 help='set the tile size in meters to None')
     argument_parser.add_argument('--shape_file_path',
                                  type=str,
                                  nargs='*',
                                  default=argparse.SUPPRESS,
                                  help='path to the boundary shape file (.shp)')
+    argument_parser.add_argument('--no-shape_file_path',
+                                 action='store_const',
+                                 const=None,
+                                 dest='shape_file_path',
+                                 default=argparse.SUPPRESS,
+                                 help='set the path to the boundary shape file (.shp) to None')
 
     argument_parser.add_argument('--output_dir_path',
                                  type=str,
@@ -89,9 +121,12 @@ def get_argument_parser():
                                  default=argparse.SUPPRESS,
                                  help='prefix of the shape file names')
     argument_parser.add_argument('--export_raw_shape_file',
-                                 type=bool,
-                                 nargs='?',
-                                 const=None,
+                                 action='store_true',
                                  default=argparse.SUPPRESS,
-                                 help='if True, a shape file without postprocessing is exported')
+                                 help='set the export of the raw shape file to True')
+    argument_parser.add_argument('--no-export_raw_shape_file',
+                                 action='store_false',
+                                 dest='export_raw_shape_file',
+                                 default=argparse.SUPPRESS,
+                                 help='set the export of the raw shape file to False')
     return argument_parser
