@@ -14,6 +14,7 @@ parameters_get_coordinates = \
         ((-256, -256, 256, 256),
          [(-256, 0), (0, 0), (-256, 256), (0, 256)]),
         # endregion
+
         # region quantization, no remainder
         ((640, 640, 1024, 1024),
          [(512, 768), (768, 768), (512, 1024), (768, 1024)]),
@@ -26,6 +27,7 @@ parameters_get_coordinates = \
         ((-128, -128, 256, 256),
          [(-256, 0), (0, 0), (-256, 256), (0, 256)]),
         # endregion
+
         # region no quantization, remainder
         ((512, 512, 896, 896),
          [(512, 768), (768, 768), (512, 1024), (768, 1024)]),
@@ -38,6 +40,7 @@ parameters_get_coordinates = \
         ((-256, -256, 128, 128),
          [(-256, 0), (0, 0), (-256, 256), (0, 256)]),
         # endregion
+
         # region quantization, remainder
         ((640, 640, 896, 896),
          [(512, 768), (768, 768), (512, 1024), (768, 1024)]),
@@ -78,6 +81,7 @@ parameters_filter_cached_coordinates_not_empty_tiles_dir = \
         ([(-256, 0), (0, 0), (-256, 256), (0, 256)],
          [(-256, 0), (0, 0)]),
         # endregion
+
         # region all tiles have already been downloaded
         ([(512, 1024), (768, 1024)],
          []),
@@ -98,6 +102,7 @@ parameters_get_valid_coordinates = \
         ((-256, -256, 256, 256),
          [(-256, 0), (0, 0), (-256, 256), (0, 256)]),
         # endregion
+
         # region bounding box is equal to boundary polygon
         ((-512, -512, 512, 512),
          [(-512, -256), (-256, -256), (0, -256), (256, -256),
@@ -105,6 +110,7 @@ parameters_get_valid_coordinates = \
           (-512, 256), (-256, 256), (0, 256), (256, 256),
           (-512, 512), (-256, 512), (0, 512), (256, 512)]),
         # endregion
+
         # region bounding box is larger than boundary polygon
         ((-768, -768, 768, 768),
          [(-768, -512), (-512, -512), (-256, -512), (0, -512), (256, -512), (512, -512),
@@ -121,6 +127,7 @@ parameters_get_valid_coordinates = \
           (-768, 512), (-512, 512), (-256, 512), (0, 512), (256, 512), (512, 512),
           (-768, 768), (-512, 768), (-256, 768), (0, 768), (256, 768), (512, 768)]),
         # endregion
+
         # region bounding box is not inside the boundary polygon
         ((768, 768, 1024, 1024),
          []),
