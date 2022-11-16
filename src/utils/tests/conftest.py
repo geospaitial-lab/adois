@@ -4,6 +4,20 @@ from pathlib import Path
 
 import pytest
 
+from src.utils.coordinator import Coordinator
+
+
+@pytest.fixture(scope='session')
+def coordinator():
+    """
+    | Returns a coordinator instance.
+
+    :returns: preprocessor
+    :rtype: Preprocessor
+    """
+    coordinator = Coordinator()
+    return coordinator
+
 
 @pytest.fixture(scope='session')
 def output_dir_path_empty_tiles_dir(tmp_path_factory):
