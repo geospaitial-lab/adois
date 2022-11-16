@@ -2,7 +2,9 @@
 
 from pathlib import Path
 
+import geopandas as gpd
 import pytest
+from shapely.geometry import Polygon
 
 from src.utils.coordinator import Coordinator
 
@@ -57,3 +59,19 @@ def output_dir_path_not_empty_tiles_dir(tmp_path_factory):
     (output_dir_path / '.tiles' / '-256_256').mkdir()
     (output_dir_path / '.tiles' / '0_256').mkdir()
     return output_dir_path
+
+
+@pytest.fixture(scope='session')
+def boundary_gdf():
+    """
+    | Returns a boundary geodataframe.
+
+    :returns: boundary geodataframe
+    :rtype: gpd.GeoDataFrame
+    """
+    polygon = Polygon([[-512, -512],
+                       [512, -512],
+                       [512, 512],
+                       [-512, 512]])
+    boundary_gdf = gpd.GeoDataFrame(geometry=[polygon], crs=f'EPSG:25832')
+    return boundary_gdf
