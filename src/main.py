@@ -12,8 +12,9 @@ from src.aggregation import Aggregator, GridGenerator
 from src.data import RemoteSensingDataDownloader
 from src.inference import Inference
 from src.postprocessing import Postprocessor
-from src.preprocessing import filter_downloaded_coordinates, get_coordinates, Preprocessor, get_internal_coordinates
-from src.utils import ConfigParser, create_dir_structure, create_tiles_dir, export, get_argument_parser, get_metadata
+from src.preprocessing import Preprocessor
+from src.utils import (ConfigParser, Coordinator, create_dir_structure, create_tiles_dir, export, get_argument_parser,
+                       get_metadata)
 
 
 def main():
@@ -67,6 +68,9 @@ def main():
     create_tiles_dir(output_dir_path=config.export_settings.output_dir_path)
     logger.debug('.features directory created')
 
+    coordinator = Coordinator()
+    logger.debug('Coordinator initialized')
+
     if config.data.boundary_shape_file_path:
         boundary_gdf = gpd.read_file(config.data.boundary_shape_file_path)
         if boundary_gdf.crs is None:
@@ -75,18 +79,19 @@ def main():
             boundary_gdf = boundary_gdf.to_crs(f'EPSG:{config.data.epsg_code}')
         boundary_gdf = boundary_gdf[['geometry']]
         # noinspection PyTypeChecker
-        coordinates = get_internal_coordinates(bounding_box=config.data.bounding_box,
-                                               epsg_code=config.data.epsg_code,
-                                               boundary_gdf=boundary_gdf)
+        coordinates = coordinator.get_valid_coordinates(bounding_box=config.data.bounding_box,
+                                                        epsg_code=config.data.epsg_code,
+                                                        boundary_gdf=boundary_gdf)
     else:
         boundary_gdf = None
         # noinspection PyTypeChecker
-        coordinates = get_coordinates(bounding_box=config.data.bounding_box)
+        coordinates = coordinator.get_coordinates(bounding_box=config.data.bounding_box)
     logger.debug('Coordinates calculated')
 
     if not args.ignore_cached_tiles:
-        filtered_coordinates = filter_downloaded_coordinates(coordinates=coordinates,
-                                                             output_dir_path=config.export_settings.output_dir_path)
+        filtered_coordinates = \
+            coordinator.filter_cached_coordinates(coordinates=coordinates,
+                                                  output_dir_path=config.export_settings.output_dir_path)
         logger.debug('Coordinates filtered')
     else:
         filtered_coordinates = coordinates
