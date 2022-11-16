@@ -37,8 +37,8 @@ def test_get_coordinates(test_input,
     assert coordinates == expected
 
     for coordinates_element in coordinates:
-        assert type(coordinates_element[0]) is int
-        assert type(coordinates_element[1]) is int
+        assert isinstance(coordinates_element[0], int)
+        assert isinstance(coordinates_element[1], int)
 
 
 @pytest.mark.parametrize('test_input, expected', tests_data.parameters_filter_cached_coordinates_empty_tiles_dir)
@@ -62,8 +62,8 @@ def test_filter_cached_coordinates_empty_tiles_dir(test_input,
     assert filtered_coordinates == expected
 
     for filtered_coordinates_element in filtered_coordinates:
-        assert type(filtered_coordinates_element[0]) is int
-        assert type(filtered_coordinates_element[1]) is int
+        assert isinstance(filtered_coordinates_element[0], int)
+        assert isinstance(filtered_coordinates_element[1], int)
 
 
 @pytest.mark.parametrize('test_input, expected', tests_data.parameters_filter_cached_coordinates_not_empty_tiles_dir)
@@ -87,5 +87,5 @@ def test_filter_cached_coordinates_not_empty_tiles_dir(test_input,
     assert filtered_coordinates == expected
 
     for filtered_coordinates_element in filtered_coordinates:
-        assert type(filtered_coordinates_element[0]) is int
-        assert type(filtered_coordinates_element[1]) is int
+        assert isinstance(filtered_coordinates_element[0], int)
+        assert isinstance(filtered_coordinates_element[1], int)
