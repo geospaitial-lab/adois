@@ -19,9 +19,9 @@ class Inference:
     def get_mask(self, image):
         """
         | Returns a mask with 2 dimensions and the following pixel values:
-        | - 0: pervious surfaces
-        | - 1: buildings
-        | - 2: impervious surfaces
+        | 0: pervious surfaces
+        | 1: buildings
+        | 2: impervious surfaces
 
         :param np.ndarray[np.float32] image: image
         :returns: mask
