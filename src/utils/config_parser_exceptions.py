@@ -39,10 +39,10 @@ class WMSLayerError(Exception):
         :returns: None
         :rtype: None
         """
-        valid_wms_layers = natsorted(valid_wms_layers)
         if len(valid_wms_layers) == 1:
             valid_wms_layers = valid_wms_layers[0]
         else:
+            valid_wms_layers = natsorted(valid_wms_layers)
             valid_wms_layers = (f"{', '.join(map(str, valid_wms_layers[:-1]))} "
                                 f'or {valid_wms_layers[-1]}')
         message = (f'Invalid wms_layer of WMS ({wms_url}) in config file!\n' + ' ' * (4 if utils.DEBUG else 2) +
@@ -63,10 +63,10 @@ class EPSGCodeError(Exception):
         :returns: None
         :rtype: None
         """
-        valid_epsg_codes = natsorted(valid_epsg_codes)
         if len(valid_epsg_codes) == 1:
             valid_epsg_codes = valid_epsg_codes[0]
         else:
+            valid_epsg_codes = natsorted(valid_epsg_codes)
             valid_epsg_codes = (f"{', '.join(map(str, valid_epsg_codes[:-1]))} "
                                 f'or {valid_epsg_codes[-1]}')
         message = ('Invalid epsg_code in config file!\n' + ' ' * (4 if utils.DEBUG else 2) +
