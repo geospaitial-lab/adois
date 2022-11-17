@@ -190,7 +190,7 @@ class Aggregation(BaseModel):
         :raises TileSizeError: if tile_size is not a number greater than 0
         """
         if value is not None:
-            if type(value) is int:
+            if isinstance(value, int):
                 value = [value]
             for index, tile_size in enumerate(value):
                 if tile_size is not None:
@@ -216,7 +216,7 @@ class Aggregation(BaseModel):
         :raises ShapeFileExtensionError: if file extension of shape_file_path is not .shp
         """
         if value is not None:
-            if type(value) is str:
+            if isinstance(value, str):
                 value = [value]
             for shape_file_path in value:
                 if shape_file_path is not None:
