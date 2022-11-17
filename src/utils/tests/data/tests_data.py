@@ -293,3 +293,22 @@ parameters_get_argument_parser = \
           'export_raw_shape_file': False}),
         # endregion
     ]
+
+parameters_WMSLayerError = \
+    [
+        (['valid_wms_layer'],
+         r'Invalid wms_layer of WMS \(https://www.wms.de/wms_url\) in config file!'
+         r'\n  Expected valid_wms_layer, got invalid_wms_layer instead\.'),
+        (['valid_wms_layer_4', 'valid_wms_layer_3', 'valid_wms_layer_2', 'valid_wms_layer_1'],
+         r'Invalid wms_layer of WMS \(https://www.wms.de/wms_url\) in config file!'
+         r'\n  Expected valid_wms_layer_1, valid_wms_layer_2, valid_wms_layer_3 or valid_wms_layer_4, '
+         r'got invalid_wms_layer instead\.')
+    ]
+
+parameters_EPSGCodeError = \
+    [
+        ([1],
+         r'Invalid epsg_code in config file!\n  Expected 1, got 0 instead\.'),
+        ([1, 2, 3, 4],
+         r'Invalid epsg_code in config file!\n  Expected 1, 2, 3 or 4, got 0 instead\.')
+    ]

@@ -75,3 +75,32 @@ def boundary_gdf():
                        [-512, 512]])
     boundary_gdf = gpd.GeoDataFrame(geometry=[polygon], crs='EPSG:25832')
     return boundary_gdf
+
+
+@pytest.fixture(scope='session')
+def invalid_boundary_gdf():
+    """
+    | Returns an invalid boundary geodataframe (more than 1 polygon).
+
+    :returns: invalid boundary geodataframe
+    :rtype: gpd.GeoDataFrame
+    """
+    polygon_1 = Polygon([[-512, -512],
+                         [0, -512],
+                         [0, 0],
+                         [-512, 0]])
+    polygon_2 = Polygon([[0, -512],
+                         [512, -512],
+                         [512, 0],
+                         [0, 0]])
+    polygon_3 = Polygon([[0, 0],
+                         [512, 0],
+                         [512, 512],
+                         [0, 512]])
+    polygon_4 = Polygon([[-512, 0],
+                         [0, 0],
+                         [0, 512],
+                         [-512, 512]])
+    polygons = [polygon_1, polygon_2, polygon_3, polygon_4]
+    invalid_boundary_gdf = gpd.GeoDataFrame(geometry=polygons, crs='EPSG:25832')
+    return invalid_boundary_gdf
