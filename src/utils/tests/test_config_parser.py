@@ -4,7 +4,6 @@ import pytest
 
 from src.utils.config_parser import Postprocessing
 from src.utils.config_parser_exceptions import *
-
 from src.utils.tests.data import tests_data
 
 
