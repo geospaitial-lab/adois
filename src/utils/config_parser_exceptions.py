@@ -184,7 +184,7 @@ class TileSizeError(Exception):
         :returns: None
         :rtype: None
         """
-        message = ('Invalid tile size in tile_size in config file!\n' + ' ' * (4 if utils.DEBUG else 2) +
+        message = ('Invalid tile_size in config file!\n' + ' ' * (4 if utils.DEBUG else 2) +
                    f'Expected a number greater than 0, got {tile_size} instead.')
         super().__init__(message)
 
