@@ -312,3 +312,16 @@ parameters_EPSGCodeError = \
         ([1, 2, 3, 4],
          r'Invalid epsg_code in config file!\n  Expected 1, 2, 3 or 4, got 0 instead\.')
     ]
+
+parameters_validate_sieve_size = [(None, None), (0, None), (1, 1), (10, 10)]
+
+parameters_validate_sieve_size_exception = [-1, 11]
+
+parameters_validate_simplify = [(None, False), (True, True), (False, False)]
+
+parameters_Postprocessing = [([None, None], [None, False]),
+                             ([0, True], [None, True]),
+                             ([1, False], [1, False]),
+                             ([10, None], [10, False])]
+
+parameters_Postprocessing_exception = [-1, 11]
