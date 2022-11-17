@@ -34,7 +34,7 @@ def test_validate_sieve_size_exception(test_input):
     :rtype: None
     """
     with pytest.raises(SieveSizeError):
-        _validated_sieve_size = Postprocessing.validate_sieve_size(value=test_input)
+        _validated_sieve_size = Postprocessing.validate_sieve_size(value=test_input)  # noqa: F841
 
 
 @pytest.mark.parametrize('test_input, expected', tests_data.parameters_validate_simplify)
@@ -82,5 +82,5 @@ def test_Postprocessing_exception(test_input):
     :rtype: None
     """
     with pytest.raises(SieveSizeError):
-        _postprocessing = Postprocessing(sieve_size=test_input,
+        _postprocessing = Postprocessing(sieve_size=test_input,  # noqa: F841
                                          simplify=None)
