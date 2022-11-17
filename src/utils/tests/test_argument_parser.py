@@ -7,8 +7,7 @@ from src.utils.tests.data import tests_data
 
 
 @pytest.mark.parametrize('test_input, expected', tests_data.parameters_get_argument_parser)
-def test_get_argument_parser(test_input,
-                             expected):
+def test_get_argument_parser(test_input, expected):
     """
     | Tests get_argument_parser() with different arguments.
 
