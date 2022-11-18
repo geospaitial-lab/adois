@@ -57,8 +57,8 @@ def test_Postprocessing(test_input, expected):
     """
     | Tests Postprocessing with different values.
 
-    :param list[int or bool or None] test_input: value
-    :param list[int or bool or None] expected: validated value
+    :param list[int or bool or None] test_input: values
+    :param list[int or bool or None] expected: validated values
     :returns: None
     :rtype: None
     """
