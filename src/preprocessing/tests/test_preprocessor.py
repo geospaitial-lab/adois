@@ -18,6 +18,7 @@ def test_init():
     :rtype: None
     """
     preprocessor = Preprocessor()
+
     assert isinstance(preprocessor, Preprocessor)
 
 

@@ -17,6 +17,7 @@ def test_init():
     :rtype: None
     """
     coordinator = Coordinator()
+
     assert isinstance(coordinator, Coordinator)
 
 
