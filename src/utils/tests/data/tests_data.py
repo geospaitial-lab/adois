@@ -323,3 +323,87 @@ parameters_Postprocessing = [([None, None], [None, False]),
                              ([0, True], [None, True]),
                              ([1, False], [1, False]),
                              ([10, None], [10, False])]
+
+parameters_validate_tile_size = \
+    [
+        (None, []),
+        (0, []),
+        (1, [1]),
+        ([1, 2, 3, 4], [1, 2, 3, 4]),
+        ([0, 1, 2, 3, 4], [1, 2, 3, 4]),
+        ([0, 1, None, 2, None, 3, None, 4], [1, 2, 3, 4]),
+        ([0, 3, 1, None, 4, 2, None, 1, 3, None, 2, 4], [1, 2, 3, 4])
+    ]
+
+parameters_validate_tile_size_exception = \
+    [
+        -1,
+        [-1, 2, 3, 4],
+        [0, -1, 2, 3, 4],
+        [0, -1, None, 2, None, 3, None, 4],
+        [0, 3, -1, None, 4, 2, None, 1, 3, None, 2, 4]
+    ]
+
+parameters_validate_shape_file_path = \
+    [
+        (None, []),
+        ('shape_file.shp', ['shape_file.shp']),
+        (['shape_file_1.shp', 'shape_file_2.shp',
+          'shape_file_3.shp', 'shape_file_4.shp'],
+         ['shape_file_1.shp', 'shape_file_2.shp',
+          'shape_file_3.shp', 'shape_file_4.shp']),
+        (['shape_file_1.shp', None, 'shape_file_2.shp', None,
+          'shape_file_3.shp', None, 'shape_file_4.shp'],
+         ['shape_file_1.shp', 'shape_file_2.shp',
+          'shape_file_3.shp', 'shape_file_4.shp']),
+        (['shape_file_3.shp', 'shape_file_1.shp', None,
+          'shape_file_4.shp', 'shape_file_2.shp', None,
+          'shape_file_1.shp', 'shape_file_3.shp', None,
+          'shape_file_2.shp', 'shape_file_4.shp', None],
+         ['shape_file_1.shp', 'shape_file_2.shp',
+          'shape_file_3.shp', 'shape_file_4.shp'])
+    ]
+
+parameters_validate_shape_file_path_exception_1 = \
+    [
+        'invalid_shape_file.shp',
+        ['invalid_shape_file.shp', 'shape_file_2.shp',
+         'shape_file_3.shp', 'shape_file_4.shp'],
+        ['invalid_shape_file.shp', None, 'shape_file_2.shp', None,
+         'shape_file_3.shp', None, 'shape_file_4.shp'],
+        ['shape_file_3.shp', 'invalid_shape_file.shp', None,
+         'shape_file_4.shp', 'shape_file_2.shp', None,
+         'invalid_shape_file.shp', 'shape_file_3.shp', None,
+         'shape_file_2.shp', 'shape_file_4.shp', None]
+    ]
+
+parameters_validate_shape_file_path_exception_2 = \
+    [
+        'invalid_shape_file.py',
+        ['invalid_shape_file.py', 'shape_file_2.shp',
+         'shape_file_3.shp', 'shape_file_4.shp'],
+        ['invalid_shape_file.py', None, 'shape_file_2.shp', None,
+         'shape_file_3.shp', None, 'shape_file_4.shp'],
+        ['shape_file_3.shp', 'invalid_shape_file.py', None,
+         'shape_file_4.shp', 'shape_file_2.shp', None,
+         'invalid_shape_file.py', 'shape_file_3.shp', None,
+         'shape_file_2.shp', 'shape_file_4.shp', None]
+    ]
+
+parameters_Aggregation = \
+    [
+        ([None, None], [[], []]),
+        ([0, 'shape_file.shp'], [[], ['shape_file.shp']]),
+        ([1, ['shape_file_1.shp', 'shape_file_2.shp', 'shape_file_3.shp', 'shape_file_4.shp']],
+         [[1], ['shape_file_1.shp', 'shape_file_2.shp', 'shape_file_3.shp', 'shape_file_4.shp']]),
+        ([[1, 2, 3, 4], ['shape_file_1.shp', None, 'shape_file_2.shp', None,
+                         'shape_file_3.shp', None, 'shape_file_4.shp']],
+         [[1, 2, 3, 4], ['shape_file_1.shp', 'shape_file_2.shp', 'shape_file_3.shp', 'shape_file_4.shp']]),
+        ([[0, 1, 2, 3, 4], ['shape_file_3.shp', 'shape_file_1.shp', None,
+                            'shape_file_4.shp', 'shape_file_2.shp', None,
+                            'shape_file_1.shp', 'shape_file_3.shp', None,
+                            'shape_file_2.shp', 'shape_file_4.shp', None]],
+         [[1, 2, 3, 4], ['shape_file_1.shp', 'shape_file_2.shp', 'shape_file_3.shp', 'shape_file_4.shp']]),
+        ([[0, 1, None, 2, None, 3, None, 4], None], [[1, 2, 3, 4], []]),
+        ([[0, 3, 1, None, 4, 2, None, 1, 3, None, 2, 4], None], [[1, 2, 3, 4], []])
+    ]

@@ -104,3 +104,22 @@ def invalid_boundary_gdf():
     polygons = [polygon_1, polygon_2, polygon_3, polygon_4]
     invalid_boundary_gdf = gpd.GeoDataFrame(geometry=polygons, crs='EPSG:25832')
     return invalid_boundary_gdf
+
+
+@pytest.fixture(scope='session')
+def shape_file_dir_path(tmp_path_factory):
+    """
+    | Returns the path to the temporary shape file directory.
+
+    :param pytest.TempPathFactory tmp_path_factory: temporary path
+    :returns: path to the shape file directory
+    :rtype: Path
+    """
+    shape_file_dir_path = tmp_path_factory.mktemp('shape_file_dir')
+    (shape_file_dir_path / 'shape_file.shp').touch()
+    (shape_file_dir_path / 'shape_file_1.shp').touch()
+    (shape_file_dir_path / 'shape_file_2.shp').touch()
+    (shape_file_dir_path / 'shape_file_3.shp').touch()
+    (shape_file_dir_path / 'shape_file_4.shp').touch()
+    (shape_file_dir_path / 'invalid_shape_file.py').touch()
+    return shape_file_dir_path
