@@ -20,6 +20,7 @@ def test_init():
     preprocessor = Preprocessor()
 
     assert isinstance(preprocessor, Preprocessor)
+    assert list(preprocessor.__dict__.keys()) == []
 
 
 def test_normalize_image():

@@ -19,6 +19,7 @@ def test_init():
     coordinator = Coordinator()
 
     assert isinstance(coordinator, Coordinator)
+    assert list(coordinator.__dict__.keys()) == []
 
 
 @pytest.mark.parametrize('test_input, expected', tests_data.parameters_get_coordinates)
