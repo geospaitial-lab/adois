@@ -323,5 +323,3 @@ parameters_Postprocessing = [([None, None], [None, False]),
                              ([0, True], [None, True]),
                              ([1, False], [1, False]),
                              ([10, None], [10, False])]
-
-parameters_Postprocessing_exception = [-1, 11]

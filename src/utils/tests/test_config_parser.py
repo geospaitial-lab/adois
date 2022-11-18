@@ -71,7 +71,7 @@ def test_Postprocessing(test_input, expected):
     assert isinstance(postprocessing.simplify, type(expected[1]))
 
 
-@pytest.mark.parametrize('test_input', tests_data.parameters_Postprocessing_exception)
+@pytest.mark.parametrize('test_input', tests_data.parameters_validate_sieve_size_exception)
 def test_Postprocessing_exception(test_input):
     """
     | Tests the exception in Postprocessing with different invalid values.
