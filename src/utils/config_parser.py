@@ -226,7 +226,7 @@ class Aggregation(BaseModel):
                         raise ShapeFileExtensionError(shape_file_path=shape_file_path)
             value = [shape_file_path_element for shape_file_path_element in value
                      if shape_file_path_element is not None]
-            value = list(set(value))
+            value = natsorted(list(set(value)))
         else:
             value = []
         return value
