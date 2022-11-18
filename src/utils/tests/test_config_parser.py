@@ -83,3 +83,16 @@ def test_Postprocessing_exception(test_input):
     with pytest.raises(SieveSizeError):
         _postprocessing = Postprocessing(sieve_size=test_input,  # noqa: F841
                                          simplify=None)
+
+
+def test_Postprocessing_default():
+    """
+    | Tests the default values in Postprocessing.
+
+    :returns: None
+    :rtype: None
+    """
+    postprocessing = Postprocessing()
+
+    assert postprocessing.sieve_size is None
+    assert postprocessing.simplify is None
