@@ -33,7 +33,7 @@ class RemoteSensingDataDownloader:
         | Returns the bounding box of a tile given its coordinates of the top left corner.
 
         :param (int, int) coordinates: coordinates (x, y)
-        :returns: bounding_box
+        :returns: bounding_box (x_1, y_1, x_2, y_2)
         :rtype: (int, int, int, int)
         """
         bounding_box = (coordinates[0],
