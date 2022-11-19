@@ -38,11 +38,11 @@ def test_get_coordinates(test_input,
     """
     coordinates = coordinator.get_coordinates(bounding_box=test_input)
 
-    assert coordinates == expected
-
     for coordinates_element in coordinates:
         assert isinstance(coordinates_element[0], int)
         assert isinstance(coordinates_element[1], int)
+
+    assert coordinates == expected
 
 
 @pytest.mark.parametrize('test_input, expected', tests_data.parameters_filter_cached_coordinates_empty_tiles_dir)
@@ -64,11 +64,11 @@ def test_filter_cached_coordinates_empty_tiles_dir(test_input,
     filtered_coordinates = coordinator.filter_cached_coordinates(coordinates=test_input,
                                                                  output_dir_path=output_dir_path_empty_tiles_dir)
 
-    assert filtered_coordinates == expected
-
     for filtered_coordinates_element in filtered_coordinates:
         assert isinstance(filtered_coordinates_element[0], int)
         assert isinstance(filtered_coordinates_element[1], int)
+
+    assert filtered_coordinates == expected
 
 
 @pytest.mark.parametrize('test_input, expected', tests_data.parameters_filter_cached_coordinates_not_empty_tiles_dir)
@@ -90,11 +90,11 @@ def test_filter_cached_coordinates_not_empty_tiles_dir(test_input,
     filtered_coordinates = coordinator.filter_cached_coordinates(coordinates=test_input,
                                                                  output_dir_path=output_dir_path_not_empty_tiles_dir)
 
-    assert filtered_coordinates == expected
-
     for filtered_coordinates_element in filtered_coordinates:
         assert isinstance(filtered_coordinates_element[0], int)
         assert isinstance(filtered_coordinates_element[1], int)
+
+    assert filtered_coordinates == expected
 
 
 @pytest.mark.parametrize('test_input, expected', tests_data.parameters_get_valid_coordinates)
@@ -117,8 +117,8 @@ def test_get_valid_coordinates(test_input,
                                                           epsg_code=25832,
                                                           boundary_gdf=boundary_gdf)
 
-    assert valid_coordinates == expected
-
     for valid_coordinates_element in valid_coordinates:
         assert isinstance(valid_coordinates_element[0], int)
         assert isinstance(valid_coordinates_element[1], int)
+
+    assert valid_coordinates == expected

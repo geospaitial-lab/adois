@@ -21,8 +21,8 @@ def test_validate_sieve_size(test_input, expected):
     """
     validated_sieve_size = Postprocessing.validate_sieve_size(value=test_input)
 
-    assert validated_sieve_size == expected
     assert isinstance(validated_sieve_size, type(expected))
+    assert validated_sieve_size == expected
 
 
 @pytest.mark.parametrize('test_input', tests_data.parameters_validate_sieve_size_exception)
@@ -50,8 +50,8 @@ def test_validate_simplify(test_input, expected):
     """
     validated_simplify = Postprocessing.validate_simplify(value=test_input)
 
-    assert validated_simplify == expected
     assert isinstance(validated_simplify, bool)
+    assert validated_simplify == expected
 
 
 @pytest.mark.parametrize('test_input, expected', tests_data.parameters_Postprocessing)
@@ -67,10 +67,10 @@ def test_Postprocessing(test_input, expected):
     postprocessing = Postprocessing(sieve_size=test_input[0],
                                     simplify=test_input[1])
 
-    assert postprocessing.sieve_size == expected[0]
-    assert postprocessing.simplify == expected[1]
     assert isinstance(postprocessing.sieve_size, type(expected[0]))
     assert isinstance(postprocessing.simplify, type(expected[1]))
+    assert postprocessing.sieve_size == expected[0]
+    assert postprocessing.simplify == expected[1]
 
 
 @pytest.mark.parametrize('test_input', tests_data.parameters_validate_sieve_size_exception)
@@ -112,10 +112,10 @@ def test_validate_tile_size(test_input, expected):
     """
     validated_tile_size = Aggregation.validate_tile_size(value=test_input)
 
-    assert validated_tile_size == expected
-
     for validated_tile_size_element in validated_tile_size:
         assert isinstance(validated_tile_size_element, int)
+
+    assert validated_tile_size == expected
 
 
 @pytest.mark.parametrize('test_input', tests_data.parameters_validate_tile_size_exception)
@@ -155,10 +155,10 @@ def test_validate_shape_file_path(test_input,
 
     validated_shape_file_path = Aggregation.validate_shape_file_path(value=test_input)
 
-    assert validated_shape_file_path == expected
-
     for validated_shape_file_path_element in validated_shape_file_path:
         assert isinstance(validated_shape_file_path_element, str)
+
+    assert validated_shape_file_path == expected
 
 
 @pytest.mark.parametrize('test_input', tests_data.parameters_validate_shape_file_path_exception_1)
@@ -228,10 +228,10 @@ def test_Aggregation(test_input,
     aggregation = Aggregation(tile_size=test_input[0],
                               shape_file_path=test_input[1])
 
-    assert aggregation.tile_size == expected[0]
-    assert aggregation.shape_file_path == expected[1]
     assert isinstance(aggregation.tile_size, type(expected[0]))
     assert isinstance(aggregation.shape_file_path, type(expected[1]))
+    assert aggregation.tile_size == expected[0]
+    assert aggregation.shape_file_path == expected[1]
 
 
 @pytest.mark.parametrize('test_input', tests_data.parameters_validate_tile_size_exception)

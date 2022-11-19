@@ -34,8 +34,8 @@ def test_normalize_image():
     normalized_image = Preprocessor.normalize_image(image=test_input)
     expected = np.load(DATA_DIR_PATH / 'test_normalize_image_expected.npy')
 
-    np.testing.assert_array_equal(normalized_image, expected)
     assert normalized_image.dtype == expected.dtype
+    np.testing.assert_array_equal(normalized_image, expected)
 
 
 def test_get_image(preprocessor):
@@ -52,5 +52,5 @@ def test_get_image(preprocessor):
                                    nir_image=test_input_nir)
     expected = np.load(DATA_DIR_PATH / 'test_get_image_expected.npy')
 
-    np.testing.assert_array_equal(image, expected)
     assert image.dtype == expected.dtype
+    np.testing.assert_array_equal(image, expected)
