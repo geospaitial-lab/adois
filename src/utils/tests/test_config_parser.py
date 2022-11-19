@@ -96,6 +96,8 @@ def test_Postprocessing_default():
     """
     postprocessing = Postprocessing()
 
+    assert isinstance(postprocessing, Postprocessing)
+    assert list(postprocessing.__dict__.keys()) == ['sieve_size', 'simplify']
     assert postprocessing.sieve_size is None
     assert postprocessing.simplify is None
 
@@ -297,5 +299,7 @@ def test_Aggregation_default():
     """
     aggregation = Aggregation()
 
+    assert isinstance(aggregation, Aggregation)
+    assert list(aggregation.__dict__.keys()) == ['tile_size', 'shape_file_path']
     assert aggregation.tile_size is None
     assert aggregation.shape_file_path is None
