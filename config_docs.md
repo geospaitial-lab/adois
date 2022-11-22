@@ -44,7 +44,7 @@ data:
 
 - ### bounding_box
   - **type:** list of int (*optional*, ***default:*** null)
-  - 4 Koordinaten $(x_\mathrm{min}, y_\mathrm{min}, x_\mathrm{max}, y_\mathrm{max})$ des Gebiets
+  - 4 Koordinaten (x_min, y_min, x_max, y_max) des Gebiets
 
 ***Hinweis:*** Es muss entweder `boundary_shape_file_path` oder `bounding_box` definiert werden.
 Werden beide Parameter definiert, wird das Gebiet des Shape Files genutzt.
