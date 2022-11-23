@@ -119,7 +119,7 @@ class Postprocessor:
         :returns: sieved geodataframe
         :rtype: gpd.GeoDataFrame
         """
-        mask = gdf.area > sieve_size
+        mask = gdf.area >= sieve_size
         sieved_gdf = gdf.loc[mask]
         return sieved_gdf
 
