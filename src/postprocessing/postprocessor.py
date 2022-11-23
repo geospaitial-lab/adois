@@ -121,8 +121,11 @@ class Postprocessor:
         """
         mask = gdf.area >= sieve_size
         sieved_gdf = gdf.loc[mask]
-        sieved_gdf.reset_index(drop=True,
-                               inplace=True)
+
+        if sieved_gdf.shape[0] > 0:
+            sieved_gdf.reset_index(drop=True,
+                                   inplace=True)
+
         return sieved_gdf
 
     @staticmethod
