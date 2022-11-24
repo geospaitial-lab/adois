@@ -83,36 +83,3 @@ parameters_sieve_gdf = \
         ((empty_gdf, 1), empty_gdf),
         ((empty_gdf, 10), empty_gdf)
     ]
-
-polygon_coordinates = [[-6.5, -6.5],
-                       [6.5, -6.5],
-                       [6.5, 6.5],
-                       [-6.5, 6.5]]
-
-fill_polygon_polygon = Polygon(polygon_coordinates,
-                               holes=[polygon_coordinates_0,
-                                      polygon_coordinates_1,
-                                      polygon_coordinates_2,
-                                      polygon_coordinates_3,
-                                      polygon_coordinates_4,
-                                      polygon_coordinates_5,
-                                      polygon_coordinates_6,
-                                      polygon_coordinates_7,
-                                      polygon_coordinates_8])
-filled_polygon_1 = Polygon(polygon_coordinates,
-                           holes=[polygon_coordinates_1,
-                                  polygon_coordinates_2,
-                                  polygon_coordinates_3,
-                                  polygon_coordinates_4,
-                                  polygon_coordinates_5,
-                                  polygon_coordinates_6,
-                                  polygon_coordinates_7,
-                                  polygon_coordinates_8])
-filled_polygon_10 = Polygon(polygon_coordinates)
-
-parameters_fill_polygon = \
-    [
-        ((fill_polygon_polygon, 0), fill_polygon_polygon),
-        ((fill_polygon_polygon, 1), filled_polygon_1),
-        ((fill_polygon_polygon, 10), filled_polygon_10)
-    ]

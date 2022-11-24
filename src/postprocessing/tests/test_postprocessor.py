@@ -6,10 +6,10 @@ import pytest
 from shapely.geometry import Polygon
 
 from src.postprocessing.postprocessor import Postprocessor
-from src.postprocessing.tests.data import tests_data
+from src.postprocessing.tests.data import *
 
 
-@pytest.mark.parametrize('test_input, expected', tests_data.parameters_sieve_gdf)
+@pytest.mark.parametrize('test_input, expected', parameters_sieve_gdf)
 def test_sieve_gdf(test_input, expected):
     """
     | Tests sieve_gdf() with different geodataframes and sieve sizes.
@@ -27,7 +27,7 @@ def test_sieve_gdf(test_input, expected):
                                           check_index_type=False)
 
 
-@pytest.mark.parametrize('test_input, expected', tests_data.parameters_fill_polygon)
+@pytest.mark.parametrize('test_input, expected', parameters_fill_polygon)
 def test_fill_polygon(test_input, expected):
     """
     | Tests fill_polygon() with different polygons and hole sizes.
