@@ -145,7 +145,7 @@ class Postprocessor:
             interiors = []
             for interior in polygon.interiors:
                 polygon_interior = Polygon(interior)
-                if polygon_interior.area > hole_size:
+                if polygon_interior.area >= hole_size:
                     interiors.append(interior)
             return Polygon(polygon.exterior.coords, holes=interiors)
         else:
