@@ -166,13 +166,13 @@ class Postprocessor:
         :returns: filled geodataframe
         :rtype: gpd.GeoDataFrame
         """
-        gdf['geometry'] = gdf[['class', 'geometry']].apply(lambda x:
-                                                           Postprocessor.fill_polygon(x['geometry'],
-                                                                                      hole_size=2 * hole_size)
-                                                           if x['class'] == 1
-                                                           else Postprocessor.fill_polygon(x['geometry'],
-                                                                                           hole_size=hole_size),
-                                                           axis=1)
+        gdf['geometry'] = gdf.apply(lambda x:
+                                    Postprocessor.fill_polygon(x['geometry'],
+                                                               hole_size=2 * hole_size)
+                                    if x['class'] == 1
+                                    else Postprocessor.fill_polygon(x['geometry'],
+                                                                    hole_size=hole_size),
+                                    axis=1)
         return gdf
 
     def simplify_gdf(self, gdf):
