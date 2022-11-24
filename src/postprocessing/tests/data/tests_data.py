@@ -51,16 +51,16 @@ polygon_6 = Polygon(polygon_coordinates_6)
 polygon_7 = Polygon(polygon_coordinates_7)
 polygon_8 = Polygon(polygon_coordinates_8)
 
-sieved_gdf_polygons = [polygon_0,
-                       polygon_1,
-                       polygon_2,
-                       polygon_3,
-                       polygon_4,
-                       polygon_5,
-                       polygon_6,
-                       polygon_7,
-                       polygon_8]
-sieved_gdf = gpd.GeoDataFrame(geometry=sieved_gdf_polygons, crs='EPSG:25832')
+sieve_gdf_polygons = [polygon_0,
+                      polygon_1,
+                      polygon_2,
+                      polygon_3,
+                      polygon_4,
+                      polygon_5,
+                      polygon_6,
+                      polygon_7,
+                      polygon_8]
+sieve_gdf_gdf = gpd.GeoDataFrame(geometry=sieve_gdf_polygons, crs='EPSG:25832')
 
 sieved_gdf_1_polygons = [polygon_1,
                          polygon_2,
@@ -76,9 +76,9 @@ empty_gdf = gpd.GeoDataFrame(geometry=[], crs='EPSG:25832')
 
 parameters_sieve_gdf = \
     [
-        ((sieved_gdf, 0), sieved_gdf),
-        ((sieved_gdf, 1), sieved_gdf_1),
-        ((sieved_gdf, 10), empty_gdf),
+        ((sieve_gdf_gdf, 0), sieve_gdf_gdf),
+        ((sieve_gdf_gdf, 1), sieved_gdf_1),
+        ((sieve_gdf_gdf, 10), empty_gdf),
         ((empty_gdf, 0), empty_gdf),
         ((empty_gdf, 1), empty_gdf),
         ((empty_gdf, 10), empty_gdf)
@@ -89,16 +89,16 @@ polygon_coordinates = [[-6.5, -6.5],
                        [6.5, 6.5],
                        [-6.5, 6.5]]
 
-fill_polygon = Polygon(polygon_coordinates,
-                       holes=[polygon_coordinates_0,
-                              polygon_coordinates_1,
-                              polygon_coordinates_2,
-                              polygon_coordinates_3,
-                              polygon_coordinates_4,
-                              polygon_coordinates_5,
-                              polygon_coordinates_6,
-                              polygon_coordinates_7,
-                              polygon_coordinates_8])
+fill_polygon_polygon = Polygon(polygon_coordinates,
+                               holes=[polygon_coordinates_0,
+                                      polygon_coordinates_1,
+                                      polygon_coordinates_2,
+                                      polygon_coordinates_3,
+                                      polygon_coordinates_4,
+                                      polygon_coordinates_5,
+                                      polygon_coordinates_6,
+                                      polygon_coordinates_7,
+                                      polygon_coordinates_8])
 filled_polygon_1 = Polygon(polygon_coordinates,
                            holes=[polygon_coordinates_1,
                                   polygon_coordinates_2,
@@ -112,7 +112,7 @@ filled_polygon_10 = Polygon(polygon_coordinates)
 
 parameters_fill_polygon = \
     [
-        ((fill_polygon, 0), fill_polygon),
-        ((fill_polygon, 1), filled_polygon_1),
-        ((fill_polygon, 10), filled_polygon_10)
+        ((fill_polygon_polygon, 0), fill_polygon_polygon),
+        ((fill_polygon_polygon, 1), filled_polygon_1),
+        ((fill_polygon_polygon, 10), filled_polygon_10)
     ]
