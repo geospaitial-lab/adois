@@ -3,6 +3,7 @@
 import geopandas as gpd
 import geopandas.testing
 import pytest
+from shapely.geometry import Polygon
 
 from src.postprocessing.postprocessor import Postprocessor
 from src.postprocessing.tests.data import tests_data
@@ -24,3 +25,19 @@ def test_sieve_gdf(test_input, expected):
     gpd.testing.assert_geodataframe_equal(sieved_gdf,
                                           expected,
                                           check_index_type=False)
+
+
+@pytest.mark.parametrize('test_input, expected', tests_data.parameters_fill_polygon)
+def test_fill_polygon(test_input, expected):
+    """
+    | Tests fill_polygon() with different polygons and hole sizes.
+
+    :param (Polygon, int) test_input: polygon and hole size
+    :param Polygon expected: filled polygon
+    :returns: None
+    :rtype: None
+    """
+    filled_polygon = Postprocessor.fill_polygon(polygon=test_input[0],
+                                                hole_size=test_input[1])
+
+    assert filled_polygon == expected
