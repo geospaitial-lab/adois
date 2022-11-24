@@ -5,34 +5,34 @@ import shapely.affinity
 from shapely.geometry import Polygon
 
 
-polygon = Polygon([[0., 0.], [1., 0.], [1., 1.], [0., 1.]])
+unit_polygon = Polygon([[0., 0.], [1., 0.], [1., 1.], [0., 1.]])
 
-polygons = [polygon,
-            shapely.affinity.affine_transform(polygon, matrix=[1., 0., 0., 1., -.5, -.5]),
+polygons = [unit_polygon,
+            shapely.affinity.affine_transform(unit_polygon, matrix=[1., 0., 0., 1., -.5, -.5]),
 
-            shapely.affinity.affine_transform(polygon, matrix=[.5, 0., 0., .5, -1.5, -1.5]),
-            shapely.affinity.affine_transform(polygon, matrix=[1., 0., 0., 1., -3., -3.]),
-            shapely.affinity.affine_transform(polygon, matrix=[2., 0., 0., 2., -5.5, -5.5]),
-            shapely.affinity.affine_transform(polygon, matrix=[3., 0., 0., 3., -9., -9.]),
-            shapely.affinity.affine_transform(polygon, matrix=[4., 0., 0., 4., -13.5, -13.5]),
+            shapely.affinity.affine_transform(unit_polygon, matrix=[.5, 0., 0., .5, -1.5, -1.5]),
+            shapely.affinity.affine_transform(unit_polygon, matrix=[1., 0., 0., 1., -3., -3.]),
+            shapely.affinity.affine_transform(unit_polygon, matrix=[2., 0., 0., 2., -5.5, -5.5]),
+            shapely.affinity.affine_transform(unit_polygon, matrix=[3., 0., 0., 3., -9., -9.]),
+            shapely.affinity.affine_transform(unit_polygon, matrix=[4., 0., 0., 4., -13.5, -13.5]),
 
-            shapely.affinity.affine_transform(polygon, matrix=[.5, 0., 0., .5, 1., -1.5]),
-            shapely.affinity.affine_transform(polygon, matrix=[1., 0., 0., 1., 2., -3.]),
-            shapely.affinity.affine_transform(polygon, matrix=[2., 0., 0., 2., 3.5, -5.5]),
-            shapely.affinity.affine_transform(polygon, matrix=[3., 0., 0., 3., 6., -9.]),
-            shapely.affinity.affine_transform(polygon, matrix=[4., 0., 0., 4., 9.5, -13.5]),
+            shapely.affinity.affine_transform(unit_polygon, matrix=[.5, 0., 0., .5, 1., -1.5]),
+            shapely.affinity.affine_transform(unit_polygon, matrix=[1., 0., 0., 1., 2., -3.]),
+            shapely.affinity.affine_transform(unit_polygon, matrix=[2., 0., 0., 2., 3.5, -5.5]),
+            shapely.affinity.affine_transform(unit_polygon, matrix=[3., 0., 0., 3., 6., -9.]),
+            shapely.affinity.affine_transform(unit_polygon, matrix=[4., 0., 0., 4., 9.5, -13.5]),
 
-            shapely.affinity.affine_transform(polygon, matrix=[.5, 0., 0., .5, 1., 1.]),
-            shapely.affinity.affine_transform(polygon, matrix=[1., 0., 0., 1., 2., 2.]),
-            shapely.affinity.affine_transform(polygon, matrix=[2., 0., 0., 2., 3.5, 3.5]),
-            shapely.affinity.affine_transform(polygon, matrix=[3., 0., 0., 3., 6., 6.]),
-            shapely.affinity.affine_transform(polygon, matrix=[4., 0., 0., 4., 9.5, 9.5]),
+            shapely.affinity.affine_transform(unit_polygon, matrix=[.5, 0., 0., .5, 1., 1.]),
+            shapely.affinity.affine_transform(unit_polygon, matrix=[1., 0., 0., 1., 2., 2.]),
+            shapely.affinity.affine_transform(unit_polygon, matrix=[2., 0., 0., 2., 3.5, 3.5]),
+            shapely.affinity.affine_transform(unit_polygon, matrix=[3., 0., 0., 3., 6., 6.]),
+            shapely.affinity.affine_transform(unit_polygon, matrix=[4., 0., 0., 4., 9.5, 9.5]),
 
-            shapely.affinity.affine_transform(polygon, matrix=[.5, 0., 0., .5, -1.5, 1.]),
-            shapely.affinity.affine_transform(polygon, matrix=[1., 0., 0., 1., -3., 2.]),
-            shapely.affinity.affine_transform(polygon, matrix=[2., 0., 0., 2., -5.5, 3.5]),
-            shapely.affinity.affine_transform(polygon, matrix=[3., 0., 0., 3., -9., 6.]),
-            shapely.affinity.affine_transform(polygon, matrix=[4., 0., 0., 4., -13.5, 9.5])]
+            shapely.affinity.affine_transform(unit_polygon, matrix=[.5, 0., 0., .5, -1.5, 1.]),
+            shapely.affinity.affine_transform(unit_polygon, matrix=[1., 0., 0., 1., -3., 2.]),
+            shapely.affinity.affine_transform(unit_polygon, matrix=[2., 0., 0., 2., -5.5, 3.5]),
+            shapely.affinity.affine_transform(unit_polygon, matrix=[3., 0., 0., 3., -9., 6.]),
+            shapely.affinity.affine_transform(unit_polygon, matrix=[4., 0., 0., 4., -13.5, 9.5])]
 
 gdf = gpd.GeoDataFrame(geometry=polygons, crs='EPSG:25832')
 
