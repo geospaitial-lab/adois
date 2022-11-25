@@ -41,3 +41,21 @@ def test_fill_polygon(test_input, expected):
                                                 hole_size=test_input[1])
 
     assert filled_polygon == expected
+
+
+@pytest.mark.parametrize('test_input, expected', parameters_fill_gdf)
+def test_fill_gdf(test_input, expected):
+    """
+    | Tests fill_gdf() with different geodataframes and hole sizes.
+
+    :param (gpd.GeoDataFrame, int) test_input: geodataframe and hole size
+    :param gpd.GeoDataFrame: filled geodataframe
+    :returns: None
+    :rtype: None
+    """
+    filled_gdf = Postprocessor.fill_gdf(gdf=test_input[0],
+                                        hole_size=test_input[1])
+
+    gpd.testing.assert_geodataframe_equal(filled_gdf,
+                                          expected,
+                                          check_index_type=False)
