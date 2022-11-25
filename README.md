@@ -13,7 +13,7 @@
 Installieren Sie zunächst [Docker](https://www.docker.com/products/docker-desktop "Get Docker").  
 Laden Sie anschließend das *adois* Image herunter.
 
-```shell
+```
 docker pull ghcr.io/klima-wh/adois
 ```
 
@@ -27,13 +27,13 @@ Die entsprechenden Lizenzbedingungen sind [hier](https://hub.docker.com/_/python
 
 Laden Sie zunächst das *adois* Repository in ein beliebiges Arbeitsverzeichnis herunter.
 
-```shell
+```
 git clone https://github.com/klima-wh/adois
 ```
 
 Wechseln Sie in das Verzeichnis und erstellen Sie anschließend das *adois* Image.
 
-```shell
+```
 docker build -t adois .
 ```
 
@@ -42,32 +42,32 @@ docker build -t adois .
 Installieren Sie zunächst [Python 3.8](https://www.python.org/downloads "Get Python").  
 Laden Sie anschließend das adois Repository in ein beliebiges Arbeitsverzeichnis herunter.
 
-```shell
+```
 git clone https://github.com/klima-wh/adois
 ```
 
 Wechseln Sie in das Verzeichnis und erstellen Sie nun eine Virtual Environment.
 
-```shell
+```
 python3 -m venv venv
 ```
 
 Aktivieren Sie die Virtual Environment.  
 **Mac/ Linux:**
 
-```shell
+```
 source venv/bin/activate
 ```
 
 **Windows:**
 
-```shell
+```
 venv\Scripts\activate.bat
 ```
 
 Installieren Sie die Packages.
 
-```shell
+```
 pip install -r requirements.txt
 ```
 
