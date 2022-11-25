@@ -10,7 +10,7 @@
 
 # Installation
 
-Installieren Sie zunächst [Docker](https://www.docker.com/products/docker-desktop/ "Get Docker").  
+Installieren Sie zunächst [Docker](https://www.docker.com/products/docker-desktop "Get Docker").  
 Laden Sie anschließend das *adois* Image herunter.
 
 ```shell
