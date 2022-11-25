@@ -5,8 +5,7 @@ from unittest import mock
 import pytest
 
 from src.data.remote_sensing_data_downloader import RemoteSensingDataDownloader
-from src.data.tests.data import tests_data
-
+from src.data.tests.data import *
 
 mocked_wms = mock.MagicMock
 
@@ -32,7 +31,7 @@ def test_init(_mocked_wms):
     assert remote_sensing_data_downloader.epsg_code == 25832
 
 
-@pytest.mark.parametrize('test_input, expected', tests_data.parameters_get_bounding_box)
+@pytest.mark.parametrize('test_input, expected', parameters_get_bounding_box)
 def test_get_bounding_box(test_input, expected):
     """
     | Tests get_bounding_box() with different coordinates.
