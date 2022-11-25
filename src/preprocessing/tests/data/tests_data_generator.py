@@ -38,9 +38,9 @@ normalized_image_top = np.concatenate((normalized_image_top_left, normalized_ima
 normalized_image_bottom = np.concatenate((normalized_image_bottom_left, normalized_image_bottom_right), axis=1)
 expected = np.concatenate((normalized_image_top, normalized_image_bottom), axis=0)
 
-np.save('test_normalize_image_test_input',
+np.save('data_test_normalize_image_test_input',
         test_input)
-np.save('test_normalize_image_expected',
+np.save('data_test_normalize_image_expected',
         expected)
 # endregion
 
@@ -96,10 +96,10 @@ image_top = np.concatenate((image_top_left, image_top_right), axis=1)
 image_bottom = np.concatenate((image_bottom_left, image_bottom_right), axis=1)
 expected = np.concatenate((image_top, image_bottom), axis=0)
 
-np.save('test_get_image_test_input_rgb',
+np.save('data_test_get_image_test_input_rgb',
         test_input_rgb)
-np.save('test_get_image_test_input_nir',
+np.save('data_test_get_image_test_input_nir',
         test_input_nir)
-np.save('test_get_image_expected',
+np.save('data_test_get_image_expected',
         expected)
 # endregion
