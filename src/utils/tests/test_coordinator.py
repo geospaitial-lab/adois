@@ -6,7 +6,7 @@ import geopandas as gpd
 import pytest
 
 from src.utils.coordinator import Coordinator
-from src.utils.tests.data import tests_data
+from src.utils.tests.data import *
 
 
 def test_init():
@@ -22,7 +22,7 @@ def test_init():
     assert list(coordinator.__dict__.keys()) == []
 
 
-@pytest.mark.parametrize('test_input, expected', tests_data.parameters_get_coordinates)
+@pytest.mark.parametrize('test_input, expected', parameters_get_coordinates)
 def test_get_coordinates(test_input,
                          expected,
                          coordinator):
@@ -45,7 +45,7 @@ def test_get_coordinates(test_input,
     assert coordinates == expected
 
 
-@pytest.mark.parametrize('test_input, expected', tests_data.parameters_filter_cached_coordinates_empty_tiles_dir)
+@pytest.mark.parametrize('test_input, expected', parameters_filter_cached_coordinates_empty_tiles_dir)
 def test_filter_cached_coordinates_empty_tiles_dir(test_input,
                                                    expected,
                                                    coordinator,
@@ -71,7 +71,7 @@ def test_filter_cached_coordinates_empty_tiles_dir(test_input,
     assert filtered_coordinates == expected
 
 
-@pytest.mark.parametrize('test_input, expected', tests_data.parameters_filter_cached_coordinates_not_empty_tiles_dir)
+@pytest.mark.parametrize('test_input, expected', parameters_filter_cached_coordinates_not_empty_tiles_dir)
 def test_filter_cached_coordinates_not_empty_tiles_dir(test_input,
                                                        expected,
                                                        coordinator,
@@ -97,7 +97,7 @@ def test_filter_cached_coordinates_not_empty_tiles_dir(test_input,
     assert filtered_coordinates == expected
 
 
-@pytest.mark.parametrize('test_input, expected', tests_data.parameters_get_valid_coordinates)
+@pytest.mark.parametrize('test_input, expected', parameters_get_valid_coordinates)
 def test_get_valid_coordinates(test_input,
                                expected,
                                coordinator,

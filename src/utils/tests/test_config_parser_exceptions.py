@@ -3,7 +3,7 @@
 import pytest
 
 from src.utils.config_parser_exceptions import *
-from src.utils.tests.data import tests_data
+from src.utils.tests.data import *
 
 
 def test_WMSConnectionError():
@@ -19,7 +19,7 @@ def test_WMSConnectionError():
                                  passed_exception=Exception('Passed exception.'))
 
 
-@pytest.mark.parametrize('test_input, expected', tests_data.parameters_WMSLayerError)
+@pytest.mark.parametrize('test_input, expected', parameters_WMSLayerError)
 def test_WMSLayerError(test_input, expected):
     """
     | Tests WMSLayerError exception with a different number of layers.
@@ -35,7 +35,7 @@ def test_WMSLayerError(test_input, expected):
                             valid_wms_layers=test_input)
 
 
-@pytest.mark.parametrize('test_input, expected', tests_data.parameters_EPSGCodeError)
+@pytest.mark.parametrize('test_input, expected', parameters_EPSGCodeError)
 def test_EPSGCodeError(test_input, expected):
     """
     | Tests EPSGCodeError exception with a different number of epsg codes.

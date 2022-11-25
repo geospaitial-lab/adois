@@ -6,10 +6,10 @@ import pytest
 
 from src.utils.config_parser import Postprocessing, Aggregation
 from src.utils.config_parser_exceptions import *
-from src.utils.tests.data import tests_data
+from src.utils.tests.data import *
 
 
-@pytest.mark.parametrize('test_input, expected', tests_data.parameters_validate_sieve_size)
+@pytest.mark.parametrize('test_input, expected', parameters_validate_sieve_size)
 def test_validate_sieve_size(test_input, expected):
     """
     | Tests validate_sieve_size() with different sieve sizes.
@@ -25,7 +25,7 @@ def test_validate_sieve_size(test_input, expected):
     assert validated_sieve_size == expected
 
 
-@pytest.mark.parametrize('test_input', tests_data.parameters_validate_sieve_size_exception)
+@pytest.mark.parametrize('test_input', parameters_validate_sieve_size_exception)
 def test_validate_sieve_size_exception(test_input):
     """
     | Tests the exception in validate_sieve_size() with different invalid sieve sizes.
@@ -38,7 +38,7 @@ def test_validate_sieve_size_exception(test_input):
         _validated_sieve_size = Postprocessing.validate_sieve_size(value=test_input)  # noqa: F841
 
 
-@pytest.mark.parametrize('test_input, expected', tests_data.parameters_validate_simplify)
+@pytest.mark.parametrize('test_input, expected', parameters_validate_simplify)
 def test_validate_simplify(test_input, expected):
     """
     | Tests validate_simplify() with different simplify values.
@@ -54,7 +54,7 @@ def test_validate_simplify(test_input, expected):
     assert validated_simplify == expected
 
 
-@pytest.mark.parametrize('test_input, expected', tests_data.parameters_Postprocessing)
+@pytest.mark.parametrize('test_input, expected', parameters_Postprocessing)
 def test_Postprocessing(test_input, expected):
     """
     | Tests Postprocessing with different values.
@@ -73,7 +73,7 @@ def test_Postprocessing(test_input, expected):
     assert postprocessing.simplify == expected[1]
 
 
-@pytest.mark.parametrize('test_input', tests_data.parameters_validate_sieve_size_exception)
+@pytest.mark.parametrize('test_input', parameters_validate_sieve_size_exception)
 def test_Postprocessing_exception(test_input):
     """
     | Tests the exception in Postprocessing with different invalid values.
@@ -102,7 +102,7 @@ def test_Postprocessing_default():
     assert postprocessing.simplify is None
 
 
-@pytest.mark.parametrize('test_input, expected', tests_data.parameters_validate_tile_size)
+@pytest.mark.parametrize('test_input, expected', parameters_validate_tile_size)
 def test_validate_tile_size(test_input, expected):
     """
     | Tests validate_tile_size() with different tile sizes.
@@ -120,7 +120,7 @@ def test_validate_tile_size(test_input, expected):
     assert validated_tile_size == expected
 
 
-@pytest.mark.parametrize('test_input', tests_data.parameters_validate_tile_size_exception)
+@pytest.mark.parametrize('test_input', parameters_validate_tile_size_exception)
 def test_validate_tile_size_exception(test_input):
     """
     | Tests the exception in validate_tile_size() with different invalid tile sizes.
@@ -133,7 +133,7 @@ def test_validate_tile_size_exception(test_input):
         _validated_tile_size = Aggregation.validate_tile_size(value=test_input)  # noqa: F841
 
 
-@pytest.mark.parametrize('test_input, expected', tests_data.parameters_validate_shape_file_path)
+@pytest.mark.parametrize('test_input, expected', parameters_validate_shape_file_path)
 def test_validate_shape_file_path(test_input,
                                   expected,
                                   shape_file_dir_path):
@@ -163,7 +163,7 @@ def test_validate_shape_file_path(test_input,
     assert validated_shape_file_path == expected
 
 
-@pytest.mark.parametrize('test_input', tests_data.parameters_validate_shape_file_path_exception_1)
+@pytest.mark.parametrize('test_input', parameters_validate_shape_file_path_exception_1)
 def test_validate_shape_file_path_exception_1(test_input, shape_file_dir_path):
     """
     | Tests the exception in validate_shape_file_path() with different invalid shape file paths.
@@ -184,7 +184,7 @@ def test_validate_shape_file_path_exception_1(test_input, shape_file_dir_path):
         _shape_file_path = Aggregation.validate_shape_file_path(value=test_input)  # noqa: F841
 
 
-@pytest.mark.parametrize('test_input', tests_data.parameters_validate_shape_file_path_exception_2)
+@pytest.mark.parametrize('test_input', parameters_validate_shape_file_path_exception_2)
 def test_validate_shape_file_path_exception_2(test_input, shape_file_dir_path):
     """
     | Tests the exception in validate_shape_file_path() with different invalid shape file paths.
@@ -205,7 +205,7 @@ def test_validate_shape_file_path_exception_2(test_input, shape_file_dir_path):
         _shape_file_path = Aggregation.validate_shape_file_path(value=test_input)  # noqa: F841
 
 
-@pytest.mark.parametrize('test_input, expected', tests_data.parameters_Aggregation)
+@pytest.mark.parametrize('test_input, expected', parameters_Aggregation)
 def test_Aggregation(test_input,
                      expected,
                      shape_file_dir_path):
@@ -236,7 +236,7 @@ def test_Aggregation(test_input,
     assert aggregation.shape_file_path == expected[1]
 
 
-@pytest.mark.parametrize('test_input', tests_data.parameters_validate_tile_size_exception)
+@pytest.mark.parametrize('test_input', parameters_validate_tile_size_exception)
 def test_Aggregation_exception_1(test_input):
     """
     | Tests the exception in Aggregation with different invalid values.
@@ -250,7 +250,7 @@ def test_Aggregation_exception_1(test_input):
                                    shape_file_path=None)
 
 
-@pytest.mark.parametrize('test_input', tests_data.parameters_validate_shape_file_path_exception_1)
+@pytest.mark.parametrize('test_input', parameters_validate_shape_file_path_exception_1)
 def test_Aggregation_exception_2(test_input, shape_file_dir_path):
     """
     | Tests the exception in Aggregation with different invalid values.
@@ -270,7 +270,7 @@ def test_Aggregation_exception_2(test_input, shape_file_dir_path):
                                    shape_file_path=test_input)
 
 
-@pytest.mark.parametrize('test_input', tests_data.parameters_validate_shape_file_path_exception_2)
+@pytest.mark.parametrize('test_input', parameters_validate_shape_file_path_exception_2)
 def test_Aggregation_exception_3(test_input, shape_file_dir_path):
     """
     | Tests the exception in Aggregation with different invalid values.

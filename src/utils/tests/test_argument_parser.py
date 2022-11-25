@@ -3,10 +3,10 @@
 import pytest
 
 from src.utils.argument_parser import get_argument_parser
-from src.utils.tests.data import tests_data
+from src.utils.tests.data import *
 
 
-@pytest.mark.parametrize('test_input, expected', tests_data.parameters_get_argument_parser)
+@pytest.mark.parametrize('test_input, expected', parameters_get_argument_parser)
 def test_get_argument_parser(test_input, expected):
     """
     | Tests get_argument_parser() with different arguments.
