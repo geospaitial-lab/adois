@@ -11,8 +11,7 @@ polygon_exterior_coordinates = [[-14., -14.],
 
 unit_polygon = Polygon([[0., 0.], [1., 0.], [1., 1.], [0., 1.]])
 
-polygons_interior = [unit_polygon,
-                     shapely.affinity.affine_transform(unit_polygon, matrix=[1., 0., 0., 1., -.5, -.5]),
+polygons_interior = [shapely.affinity.affine_transform(unit_polygon, matrix=[1., 0., 0., 1., -.5, -.5]),
 
                      shapely.affinity.affine_transform(unit_polygon, matrix=[.5, 0., 0., .5, -1.5, -1.5]),
                      shapely.affinity.affine_transform(unit_polygon, matrix=[1., 0., 0., 1., -3., -3.]),
