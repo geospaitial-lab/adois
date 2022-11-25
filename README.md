@@ -21,7 +21,7 @@ docker pull ghcr.io/klima-wh/adois
 Die entsprechenden Lizenzbedingungen sind [hier](https://hub.docker.com/_/python "Docker Hub - Python") zu entnehmen.
 
 <details>
-<summary>Alternative Installationsmöglichkeiten</summary>
+<summary><b>Alternative Installationsmöglichkeiten</b></summary>
 
 ## Docker Build From Source
 
