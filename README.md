@@ -25,13 +25,14 @@ Die entsprechenden Lizenzbedingungen sind [hier](https://hub.docker.com/_/python
 
 ## Docker Build From Source
 
-Laden Sie zunächst das *adois* Repository in ein beliebiges Arbeitsverzeichnis herunter.
+Installieren Sie zunächst [Docker](https://www.docker.com/products/docker-desktop "Get Docker").  
+Laden Sie anschließend das *adois* Repository in ein beliebiges Arbeitsverzeichnis herunter.
 
 ```
 git clone https://github.com/klima-wh/adois
 ```
 
-Wechseln Sie in das Verzeichnis und erstellen Sie anschließend das *adois* Image.
+Wechseln Sie in das Verzeichnis und erstellen Sie nun das *adois* Image.
 
 ```
 docker build -t adois .
