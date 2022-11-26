@@ -10,6 +10,8 @@
 
 # Installation
 
+**Hardwarevoraussetzungen:** 16GB RAM
+
 Installieren Sie zunächst [Docker](https://www.docker.com/products/docker-desktop "Get Docker").  
 Laden Sie anschließend das *adois* Image herunter.
 
