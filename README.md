@@ -72,3 +72,12 @@ pip install -r requirements.txt
 ```
 
 </details>
+
+# Ausführen
+
+Um die Software auszuführen, müssen Sie lokale Pfade in den *adois* Container mounten.  
+Verwenden Sie dazu die `-v` Flag und `</lokaler/Pfad>:</Pfad/im/Container>`.
+
+```
+docker run -t -v </Pfad/zu/config.yaml>:/config.yaml -v </Pfad/zu/Basisverzeichnis>:</Pfad/zu/Basisverzeichnis> adois
+```
