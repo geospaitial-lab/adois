@@ -84,7 +84,7 @@ pip install -r requirements.txt
 
 # Ausführen
 
-*adois* wird durch ein Config File (.yaml) parametrisiert. Die Parameter werden in der [Dokumentation](config_docs.md "Config File Dokumentation") erläutert.
+*adois* wird durch ein Config File (.yaml) parametrisiert. Die Parameter werden in der [Dokumentation](docs/docs_config.md "Config File Dokumentation") erläutert.
 
 Um die Software auszuführen, müssen Sie die lokalen Pfade Ihres Systems in den *adois* Container mounten.  
 Verwenden Sie dazu die `-v` Flag und `</lokaler/Pfad>:</Pfad/im/Container>`.  
@@ -112,4 +112,4 @@ python3 src/main.py </Pfad/zu/config.yaml>
 - `--debug`, `-d`: Debug Mode
 - `--ignore_cached_tiles`, `-ict`: Überschreiben bereits verarbeiteter Gebiete
 - zudem können alle Parameter des Config Files mit der entsprechenden Flag überschrieben werden.
-  Die Options werden in der [Dokumentation](options_docs.md "Options Dokumentation") erläutert.
+  Die Options werden in der [Dokumentation](docs/docs_options.md "Options Dokumentation") erläutert.
