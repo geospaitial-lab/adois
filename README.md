@@ -95,6 +95,19 @@ Nutzen Sie idealerweise das Basisverzeichnis Ihres Systems als Binding.
 docker run -t -v </Pfad/zu/config.yaml>:/config.yaml -v </Pfad/zu/Basisverzeichnis>:</Pfad/zu/Basisverzeichnis> adois
 ```
 
+<details>
+<summary><b>Alternative Ausführungsmöglichkeiten</b></summary>
+
+## Virtual Environment
+
+Wechseln Sie in das *adois* Verzeichnis und führen Sie die Software aus.
+
+```
+python3 src/main.py </Pfad/zu/config.yaml>
+```
+
+</details>
+
 **Options:**
 - `--debug`, `-d`: Debug Mode
 - `--ignore_cached_tiles`, `-ict`: Überschreiben bereits verarbeiteter Gebiete
