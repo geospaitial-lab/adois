@@ -2,7 +2,6 @@
 
 # Dokumentation: Config File (.yaml)
 
-Im Folgenden werden die Parameter des Config Files erläutert.  
 Die Beispielwerte der Parameter entsprechen denen des [Example Config Files](example_config.yaml).
 
 
