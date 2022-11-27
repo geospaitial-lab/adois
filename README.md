@@ -84,7 +84,7 @@ pip install -r requirements.txt
 
 # Ausführen
 
-Um die Software auszuführen, müssen Sie lokale Pfade in den *adois* Container mounten.  
+Um die Software auszuführen, müssen Sie die lokalen Pfade Ihres Systems in den *adois* Container mounten.  
 Verwenden Sie dazu die `-v` Flag und `</lokaler/Pfad>:</Pfad/im/Container>`.
 
 ```
