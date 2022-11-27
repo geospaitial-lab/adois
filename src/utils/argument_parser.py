@@ -46,7 +46,6 @@ def get_argument_parser():
                                  help='epsg code of the coordinate reference system')
     argument_parser.add_argument('--boundary_shape_file_path',
                                  type=str,
-                                 nargs='?',
                                  default=argparse.SUPPRESS,
                                  help='path to the boundary shape file (.shp)')
     argument_parser.add_argument('--no-boundary_shape_file_path',
@@ -71,7 +70,6 @@ def get_argument_parser():
     # region postprocessing
     argument_parser.add_argument('--sieve_size',
                                  type=int,
-                                 nargs='?',
                                  default=argparse.SUPPRESS,
                                  help='sieve size in square meters')
     argument_parser.add_argument('--no-sieve_size',
