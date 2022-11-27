@@ -4,7 +4,6 @@
 
 Die Beispielwerte der Parameter entsprechen denen des [Example Config Files](example_config.yaml).
 
-
 ## data
 
 ```yaml
@@ -48,7 +47,6 @@ data:
 ***Hinweis:*** Es muss entweder `boundary_shape_file_path` oder `bounding_box` definiert werden.
 Werden beide Parameter definiert, wird das Gebiet des Shape Files genutzt.
 
-
 ## postprocessing
 
 ```yaml
@@ -66,7 +64,6 @@ Werden beide Parameter definiert, wird das Gebiet des Shape Files genutzt.
   - Anwendung des Douglas Peucker Algorithmus, um die Datenmenge des Shape Files zu reduzieren und die Polygone
     zu glätten
 
-
 ## aggregation
 
 ```yaml
@@ -83,7 +80,6 @@ Werden beide Parameter definiert, wird das Gebiet des Shape Files genutzt.
 - ### shape_file_path
   - **type:** string, list of string (*optional*, ***default:*** null)
   - Pfad zum Shape File zur Aggregation
-
 
 ## export_settings
 
