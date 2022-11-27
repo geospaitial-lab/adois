@@ -15,7 +15,7 @@ data:
     wms_url: https://www.wms.nrw.de/geobasis/wms_nw_dop
     wms_layer: nw_dop_nir
   epsg_code: 25832
-  boundary_shape_file_path:
+  boundary_shape_file_path: /Pfad/zu/boundary_shape_file.shp
   bounding_box:
     - 363210
     - 5715455
@@ -71,6 +71,8 @@ Werden beide Parameter definiert, wird das Gebiet des Shape Files genutzt.
     - 50
     - 100
   shape_file_path:
+    - /Pfad/zu/aggregation_shape_file_1.shp
+    - /Pfad/zu/aggregation_shape_file_2.shp
 ```
 
 - ### tile_size
@@ -84,7 +86,7 @@ Werden beide Parameter definiert, wird das Gebiet des Shape Files genutzt.
 ## export_settings
 
 ```yaml
-  output_dir_path: /Users/mrsmrynk/PycharmProjects/adois/output_dir
+  output_dir_path: /Pfad/zu/Ausgabeverzeichnis
   prefix: example
   export_raw_shape_file: true
 ```
