@@ -9,8 +9,8 @@
 [![Build and deploy](https://github.com/KLIMA-WH/adois_app/actions/workflows/build_and_deploy.yaml/badge.svg)](https://github.com/KLIMA-WH/adois_app/actions/workflows/build_and_deploy.yaml)
 
 *adois* – automatic detection of impervious surfaces – ist eine Auftragsforschung des [Kreises Recklinghausen](https://www.kreis-re.de "Kreis Recklinghausen")
-in Kooperation mit der [Westfälischen Hochschule Gelsenkirchen](https://www.w-hs.de "Westfälische Hochschule").  
-Ziel ist die automatisierte Erkennung versiegelter Flächen aus Fernerkundungsdaten mit Methoden des Deep Learnings.  
+in Kooperation mit der [Westfälischen Hochschule Gelsenkirchen](https://www.w-hs.de "Westfälische Hochschule")
+mit dem Ziel der automatisierten Erkennung versiegelter Flächen aus Fernerkundungsdaten mit Methoden des Deep Learnings.  
 *adois* ermittelt aus RGB- und NIR-DOPs hochauflösende Versiegelungskarten inklusive einer Aggregation auf nutzungsspezifische Flächen.
 Die DOPs werden dabei über einen individuellen WMS bezogen.
 
