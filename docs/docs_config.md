@@ -2,7 +2,7 @@
 
 # Dokumentation: Config File (.yaml)
 
-Die Beispielwerte der Parameter entsprechen denen des [Example Config Files](../example_config.yaml).
+Die Beispielwerte der Parameter entsprechen denen des [Example Config Files](../example_config.yaml "Example Config File").
 
 ## data
 
