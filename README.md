@@ -94,3 +94,9 @@ Nutzen Sie idealerweise das Basisverzeichnis Ihres Systems als Binding.
 ```
 docker run -t -v </Pfad/zu/config.yaml>:/config.yaml -v </Pfad/zu/Basisverzeichnis>:</Pfad/zu/Basisverzeichnis> adois
 ```
+
+**Options:**
+- `--debug`, `-d`: Debug Mode
+- `--ignore_cached_tiles`, `-ict`: Überschreiben bereits verarbeiteter Gebiete
+- zudem können alle Parameter des Config Files mit der entsprechenden Flag überschrieben werden.
+  Die Options werden in der [Dokumentation](options_docs.md "Options Dokumentation") erläutert.
