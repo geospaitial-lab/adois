@@ -11,8 +11,8 @@
 *adois* – automatic detection of impervious surfaces – ist eine Auftragsforschung des [Kreises Recklinghausen](https://www.kreis-re.de "Kreis Recklinghausen")
 in Kooperation mit der [Westfälischen Hochschule Gelsenkirchen](https://www.w-hs.de "Westfälische Hochschule")
 mit dem Ziel der automatisierten Erkennung versiegelter Flächen aus Fernerkundungsdaten mit Methoden des Deep Learnings.  
-*adois* ermittelt aus RGB- und NIR-DOPs hochauflösende Versiegelungskarten inklusive einer Aggregation auf nutzungsspezifische Flächen.
-Die DOPs werden dabei über einen individuellen WMS bezogen.
+*adois* ermittelt aus RGB- und NIR-DOPs (Digital Orthophoto) hochauflösende Versiegelungskarten inklusive einer Aggregation auf nutzungsspezifische Flächen.
+Die DOPs werden dabei über einen individuellen WMS (Web Map Service) bezogen.
 
 # Installation
 
