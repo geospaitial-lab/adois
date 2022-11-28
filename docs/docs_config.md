@@ -26,6 +26,7 @@ data:
 - ### wms_url
   - **type:** str
   - URL des WMS (Web Map Service) der RGB- und NIR-Fernerkundungsdaten
+    *Hinweis:* Der WMS benötigt eine Bodenauflösung von mindestens 20cm (DOP20).
 
 - ### wms_layer
   - **type:** str
