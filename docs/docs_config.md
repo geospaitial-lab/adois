@@ -62,8 +62,7 @@ Werden beide Parameter definiert, wird das Gebiet des Shape Files genutzt.
 
 - ### simplify
   - **type:** bool (*optional*, ***default:*** false)  
-  - Anwendung des Douglas Peucker Algorithmus, um die Datenmenge des Shape Files zu reduzieren und die Polygone
-    zu glätten
+  - Anwendung des Douglas Peucker Algorithmus, um die Datenmenge des Shape Files zu reduzieren
 
 ## aggregation
 
@@ -78,7 +77,7 @@ Werden beide Parameter definiert, wird das Gebiet des Shape Files genutzt.
 
 - ### tile_size
   - **type:** int, list of int (*optional*, ***default:*** null)
-  - Kantenlänge der quadratischen Kacheln in Metern
+  - Kantenlänge der quadratischen Kacheln zur Aggregation in Metern
 
 - ### shape_file_path
   - **type:** string, list of string (*optional*, ***default:*** null)
