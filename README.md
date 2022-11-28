@@ -113,3 +113,8 @@ python3 src/main.py </Pfad/zu/config.yaml>
 - `--ignore_cached_tiles`, `-ict`: Überschreiben bereits verarbeiteter Gebiete
 - zudem können alle Parameter des Config Files mit der entsprechenden Flag überschrieben werden.
   Die Options werden in der [Dokumentation](docs/docs_options.md "Options Dokumentation") erläutert.
+
+# Ergebnisse
+
+Die Versiegelungskarten inklusive der Aggregationen werden als Shape File ins [Ausgabeverzeichnis](docs/docs_config.md#output_dir_path "Config File Ausgabeverzeichnis") exportiert.  
+Die Attribute der Shape Files werden in der [Dokumentation](docs/docs_shape_file_attributes.md "Shape File Attribute Dokumentation") erläutert.
