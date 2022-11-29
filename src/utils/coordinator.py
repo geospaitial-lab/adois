@@ -6,7 +6,7 @@ from pathlib import Path
 import geopandas as gpd
 
 import src.utils.settings as settings
-from src.aggregation.grid_generator import GridGenerator
+from src.utils.grid_generator import GridGenerator
 
 
 class Coordinator:

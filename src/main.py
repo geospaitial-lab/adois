@@ -8,13 +8,13 @@ import enlighten
 import geopandas as gpd
 
 import src.utils as utils
-from src.aggregation import Aggregator, GridGenerator
+from src.aggregation import Aggregator
 from src.data import RemoteSensingDataDownloader
 from src.inference import Inference
 from src.postprocessing import Postprocessor
 from src.preprocessing import Preprocessor
 from src.utils import (ConfigParser, Coordinator, create_dir_structure, create_tiles_dir, export, get_argument_parser,
-                       get_metadata)
+                       get_metadata, GridGenerator)
 
 
 def main():
