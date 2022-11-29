@@ -119,12 +119,13 @@ class Postprocessor:
         :returns: sieved geodataframe
         :rtype: gpd.GeoDataFrame
         """
+        if gdf.empty:
+            return gdf
+
         mask = gdf.area >= sieve_size
         sieved_gdf = gdf.loc[mask]
-
-        if sieved_gdf.shape[0] > 0:
-            sieved_gdf.reset_index(drop=True,
-                                   inplace=True)
+        sieved_gdf.reset_index(drop=True,
+                               inplace=True)
 
         return sieved_gdf
 
@@ -166,6 +167,9 @@ class Postprocessor:
         :returns: filled geodataframe
         :rtype: gpd.GeoDataFrame
         """
+        if gdf.empty:
+            return gdf
+
         gdf['geometry'] = gdf.apply(lambda x:
                                     Postprocessor.fill_polygon(x['geometry'],
                                                                hole_size=2 * hole_size)
