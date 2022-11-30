@@ -23,20 +23,17 @@ def test_init():
 
 
 @pytest.mark.parametrize('test_input, expected', parameters_get_coordinates)
-def test_get_coordinates(test_input,
-                         expected,
-                         coordinator):
+def test_get_coordinates(test_input, expected):
     """
     | Tests get_coordinates() with different bounding boxes.
 
     :param (int, int, int, int) test_input: bounding box (x_1, y_1, x_2, y_2) of the area from
         the bottom left corner to the top right corner
     :param list[(int, int)] expected: coordinates (x, y) of each tile
-    :param Coordinator coordinator: coordinator
     :returns: None
     :rtype: None
     """
-    coordinates = coordinator.get_coordinates(bounding_box=test_input)
+    coordinates = Coordinator.get_coordinates(bounding_box=test_input)
 
     for coordinates_element in coordinates:
         assert isinstance(coordinates_element[0], int)
@@ -48,7 +45,6 @@ def test_get_coordinates(test_input,
 @pytest.mark.parametrize('test_input, expected', parameters_filter_cached_coordinates_empty_tiles_dir)
 def test_filter_cached_coordinates_empty_tiles_dir(test_input,
                                                    expected,
-                                                   coordinator,
                                                    output_dir_path_empty_tiles_dir):
     """
     | Tests filter_cached_coordinates() with different coordinates.
@@ -56,12 +52,11 @@ def test_filter_cached_coordinates_empty_tiles_dir(test_input,
 
     :param list[(int, int)] test_input: coordinates (x, y) of each tile
     :param list[(int, int)] expected: filtered coordinates (x, y) of each tile
-    :param Coordinator coordinator: coordinator
     :param Path output_dir_path_empty_tiles_dir: path to the output directory
     :returns: None
     :rtype: None
     """
-    filtered_coordinates = coordinator.filter_cached_coordinates(coordinates=test_input,
+    filtered_coordinates = Coordinator.filter_cached_coordinates(coordinates=test_input,
                                                                  output_dir_path=output_dir_path_empty_tiles_dir)
 
     for filtered_coordinates_element in filtered_coordinates:
@@ -74,7 +69,6 @@ def test_filter_cached_coordinates_empty_tiles_dir(test_input,
 @pytest.mark.parametrize('test_input, expected', parameters_filter_cached_coordinates_not_empty_tiles_dir)
 def test_filter_cached_coordinates_not_empty_tiles_dir(test_input,
                                                        expected,
-                                                       coordinator,
                                                        output_dir_path_not_empty_tiles_dir):
     """
     | Tests filter_cached_coordinates() with different coordinates.
@@ -82,12 +76,11 @@ def test_filter_cached_coordinates_not_empty_tiles_dir(test_input,
 
     :param list[(int, int)] test_input: coordinates (x, y) of each tile
     :param list[(int, int)] expected: filtered coordinates (x, y) of each tile
-    :param Coordinator coordinator: coordinator
     :param Path output_dir_path_not_empty_tiles_dir: path to the output directory
     :returns: None
     :rtype: None
     """
-    filtered_coordinates = coordinator.filter_cached_coordinates(coordinates=test_input,
+    filtered_coordinates = Coordinator.filter_cached_coordinates(coordinates=test_input,
                                                                  output_dir_path=output_dir_path_not_empty_tiles_dir)
 
     for filtered_coordinates_element in filtered_coordinates:
