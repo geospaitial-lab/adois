@@ -6,7 +6,6 @@
 ---
 
 [![Tests](https://github.com/KLIMA-WH/adois_app/actions/workflows/tests.yaml/badge.svg)](https://github.com/KLIMA-WH/adois_app/actions/workflows/tests.yaml)
-[![Build and deploy](https://github.com/KLIMA-WH/adois_app/actions/workflows/build_and_deploy.yaml/badge.svg)](https://github.com/KLIMA-WH/adois_app/actions/workflows/build_and_deploy.yaml)
 
 *adois* – automatic detection of impervious surfaces – ist eine Auftragsforschung des [Kreises Recklinghausen](https://www.kreis-re.de "Kreis Recklinghausen")
 in Kooperation mit der [Westfälischen Hochschule Gelsenkirchen](https://www.w-hs.de "Westfälische Hochschule")
@@ -17,21 +16,6 @@ Die DOPs werden dabei über einen individuellen WMS (Web Map Service) bezogen.
 # Installation
 
 **Hardwarevoraussetzungen:** 16GB RAM
-
-Installieren Sie zunächst [Docker](https://www.docker.com/products/docker-desktop "Get Docker").  
-Laden Sie anschließend das *adois* Image herunter.
-
-```
-docker pull ghcr.io/klima-wh/adois
-```
-
-***Hinweis:*** Das Parent Image ist das [python:3.8](https://hub.docker.com/_/python "Docker Hub - Python") Image.
-Die entsprechenden Lizenzbedingungen sind [hier](https://hub.docker.com/_/python "Docker Hub - Python") zu entnehmen.
-
-<details>
-<summary><b>Alternative Installationsmöglichkeiten</b></summary>
-
-## Docker Build From Source
 
 Installieren Sie zunächst [Docker](https://www.docker.com/products/docker-desktop "Get Docker").  
 Laden Sie anschließend das *adois* Repository in ein beliebiges Arbeitsverzeichnis herunter.
@@ -45,6 +29,12 @@ Wechseln Sie in das Verzeichnis und erstellen Sie nun das *adois* Image.
 ```
 docker build -t adois .
 ```
+
+***Hinweis:*** Das Parent Image ist das [python:3.8](https://hub.docker.com/_/python "Docker Hub - Python") Image.
+Die entsprechenden Lizenzbedingungen sind [hier](https://hub.docker.com/_/python "Docker Hub - Python") zu entnehmen.
+
+<details>
+<summary><b>Alternative Installationsmöglichkeiten</b></summary>
 
 ## Virtual Environment
 
