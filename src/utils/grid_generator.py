@@ -81,9 +81,9 @@ class GridGenerator:
         bounding_box = GridGenerator.get_bounding_box(coordinates=coordinates,
                                                       tile_size_meters=tile_size_meters)
         polygon = Polygon([[bounding_box[0], bounding_box[1]],
-                           [bounding_box[0], bounding_box[3]],
+                           [bounding_box[2], bounding_box[1]],
                            [bounding_box[2], bounding_box[3]],
-                           [bounding_box[2], bounding_box[1]]])
+                           [bounding_box[0], bounding_box[3]]])
         return polygon
 
     def get_grid(self, tile_size_meters):
