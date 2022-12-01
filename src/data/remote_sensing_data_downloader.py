@@ -56,9 +56,9 @@ class RemoteSensingDataDownloader:
                                    bbox=bounding_box,
                                    format='image/tiff',
                                    size=(utils.IMAGE_SIZE, utils.IMAGE_SIZE),
-                                   bgcolor='#000000')
+                                   bgcolor='#000000').read()
 
-        with Image.open(BytesIO(response.read())) as file:
+        with Image.open(BytesIO(response)) as file:
             # noinspection PyTypeChecker
             image = np.array(file, dtype=np.uint8)
 
