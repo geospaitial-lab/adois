@@ -42,6 +42,23 @@ class RemoteSensingDataDownloader:
                         coordinates[1])
         return bounding_box
 
+    def get_response(self, bounding_box):
+        """
+        | Wrapper of owslib.wms.WebMapService.getmap().read()
+        | Returns a response (byte stream) of the web map service given its bounding box.
+
+        :param (int, int, int, int) bounding_box: bounding_box (x_1, y_1, x_2, y_2)
+        :returns: response
+        :rtype: bytes
+        """
+        response = self.wms.getmap(layers=[self.wms_layer],
+                                   srs=f'EPSG:{self.epsg_code}',
+                                   bbox=bounding_box,
+                                   format='image/tiff',
+                                   size=(utils.IMAGE_SIZE, utils.IMAGE_SIZE),
+                                   bgcolor='#000000').read()
+        return response
+
     def get_image(self, coordinates):
         """
         | Returns an image given its coordinates of the top left corner.
@@ -51,12 +68,7 @@ class RemoteSensingDataDownloader:
         :rtype: np.ndarray[np.uint8]
         """
         bounding_box = self.get_bounding_box(coordinates)
-        response = self.wms.getmap(layers=[self.wms_layer],
-                                   srs=f'EPSG:{self.epsg_code}',
-                                   bbox=bounding_box,
-                                   format='image/tiff',
-                                   size=(utils.IMAGE_SIZE, utils.IMAGE_SIZE),
-                                   bgcolor='#000000').read()
+        response = self.get_response(bounding_box)
 
         with Image.open(BytesIO(response)) as file:
             # noinspection PyTypeChecker
