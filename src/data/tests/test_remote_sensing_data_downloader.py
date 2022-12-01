@@ -8,6 +8,7 @@ import numpy as np
 import pytest
 from PIL import Image
 
+import src.utils as utils
 from src.data.remote_sensing_data_downloader import RemoteSensingDataDownloader
 from src.data.tests.data import *
 
@@ -57,6 +58,32 @@ def test_get_bounding_box(test_input, expected):
         assert isinstance(bounding_box_element, int)
 
     assert bounding_box == expected
+
+
+@mock.patch('src.data.remote_sensing_data_downloader.WebMapService', return_value=mock.MagicMock)
+def test_get_response(mocked_wms):
+    """
+    | Tests get_response() with a mocked web map service.
+
+    :param mock.MagicMock mocked_wms: mocked web map service
+    :returns: None
+    :rtype: None
+    """
+    remote_sensing_data_downloader = RemoteSensingDataDownloader(wms_url='https://www.wms.de/wms_url',
+                                                                 wms_layer='wms_layer',
+                                                                 epsg_code=25832)
+
+    mocked_wms_instance = mocked_wms.return_value
+    mocked_wms_instance.getmap = mock.MagicMock()
+
+    remote_sensing_data_downloader.get_response(bounding_box=(0, 0, 256, 256))
+
+    mocked_wms_instance.getmap.assert_called_with(layers=['wms_layer'],
+                                                  srs='EPSG:25832',
+                                                  bbox=(0, 0, 256, 256),
+                                                  format='image/tiff',
+                                                  size=(utils.IMAGE_SIZE, utils.IMAGE_SIZE),
+                                                  bgcolor='#000000')
 
 
 @mock.patch('src.data.remote_sensing_data_downloader.WebMapService', return_value=mock.MagicMock)
