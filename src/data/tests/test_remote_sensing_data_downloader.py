@@ -13,8 +13,9 @@ mocked_wms = mock.MagicMock
 @mock.patch('src.data.remote_sensing_data_downloader.WebMapService', return_value=mocked_wms)
 def test_init(wms):
     """
-    | Tests __init__().
+    | Tests __init__() with mocked web map service.
 
+    :param mock.MagicMock wms: mocked web map service
     :returns: None
     :rtype: None
     """
