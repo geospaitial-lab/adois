@@ -11,7 +11,7 @@ mocked_wms = mock.MagicMock
 
 
 @mock.patch('src.data.remote_sensing_data_downloader.WebMapService', return_value=mocked_wms)
-def test_init(_mocked_wms):
+def test_init(wms):
     """
     | Tests __init__().
 
@@ -25,6 +25,7 @@ def test_init(_mocked_wms):
     assert isinstance(remote_sensing_data_downloader, RemoteSensingDataDownloader)
     assert list(remote_sensing_data_downloader.__dict__.keys()) == ['wms', 'wms_layer', 'epsg_code']
     assert isinstance(remote_sensing_data_downloader.wms, type(mock.MagicMock))
+    wms.assert_called_once_with('https://www.wms.de/wms_url')
     assert isinstance(remote_sensing_data_downloader.wms_layer, str)
     assert remote_sensing_data_downloader.wms_layer == 'wms_layer'
     assert isinstance(remote_sensing_data_downloader.epsg_code, int)
