@@ -1,11 +1,21 @@
 # @author: Maryniak, Marius - Fachbereich Elektrotechnik, Westfälische Hochschule Gelsenkirchen
 
+from io import BytesIO
+from pathlib import Path
 from unittest import mock
 
+import numpy as np
 import pytest
+from PIL import Image
 
 from src.data.remote_sensing_data_downloader import RemoteSensingDataDownloader
 from src.data.tests.data import *
+
+DATA_DIR_PATH = Path(__file__).resolve().parents[0] / 'data'
+
+with BytesIO() as output:
+    Image.open(DATA_DIR_PATH / 'data_test_get_image.tiff').save(output, format='TIFF')
+    mocked_response = output.getvalue()
 
 
 @mock.patch('src.data.remote_sensing_data_downloader.WebMapService', return_value=mock.MagicMock)
@@ -49,12 +59,28 @@ def test_get_bounding_box(test_input, expected):
     assert bounding_box == expected
 
 
-@pytest.mark.skip(reason='TODO')
-def test_get_image():
+@mock.patch('src.data.remote_sensing_data_downloader.WebMapService', return_value=mock.MagicMock)
+@mock.patch.object(RemoteSensingDataDownloader, 'get_response')
+def test_get_image(mocked_get_response, _mocked_wms):
     """
-    | Tests get_image().
+    | Tests get_image() with a mocked get_response() and a mocked web map service.
 
+    :param mock.MagicMock mocked_get_response: mocked get_response()
+    :param mock.MagicMock _mocked_wms: mocked web map service
     :returns: None
     :rtype: None
     """
-    pass
+    remote_sensing_data_downloader = RemoteSensingDataDownloader(wms_url='https://www.wms.de/wms_url',
+                                                                 wms_layer='wms_layer',
+                                                                 epsg_code=25832)
+
+    mocked_get_response.return_value = mocked_response
+
+    image = remote_sensing_data_downloader.get_image(coordinates=(0, 0))
+
+    with Image.open(DATA_DIR_PATH / 'data_test_get_image.tiff') as file:
+        # noinspection PyTypeChecker
+        expected = np.array(file, dtype=np.uint8)
+
+    assert image.dtype == expected.dtype
+    np.testing.assert_array_equal(image, expected)
