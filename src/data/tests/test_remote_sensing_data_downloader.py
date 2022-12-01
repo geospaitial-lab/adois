@@ -13,7 +13,7 @@ def test_init(mocked_wms):
     """
     | Tests __init__() with mocked web map service.
 
-    :param mock.MagicMock wms: mocked web map service
+    :param mock.MagicMock mocked_wms: mocked web map service
     :returns: None
     :rtype: None
     """
