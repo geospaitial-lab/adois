@@ -76,11 +76,12 @@ def test_get_image(mocked_get_response, _mocked_wms):
 
     mocked_get_response.return_value = mocked_response
 
-    image = remote_sensing_data_downloader.get_image(coordinates=(0, 0))
+    image = remote_sensing_data_downloader.get_image(coordinates=(0, 256))
 
     with Image.open(DATA_DIR_PATH / 'data_test_get_image.tiff') as file:
         # noinspection PyTypeChecker
         expected = np.array(file, dtype=np.uint8)
 
+    mocked_get_response.assert_called_once_with((0, 0, 256, 256))
     assert image.dtype == expected.dtype
     np.testing.assert_array_equal(image, expected)
