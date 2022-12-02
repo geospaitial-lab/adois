@@ -1,5 +1,3 @@
-# @author: Maryniak, Marius - Fachbereich Elektrotechnik, Westfälische Hochschule Gelsenkirchen
-
 from .data_test_Aggregation import *
 from .data_test_EPSGCodeError import *
 from .data_test_filter_cached_coordinates import *

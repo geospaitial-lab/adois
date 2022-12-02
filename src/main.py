@@ -1,5 +1,3 @@
-# @author: Maryniak, Marius - Fachbereich Elektrotechnik, Westfälische Hochschule Gelsenkirchen
-
 import logging
 from datetime import datetime as DateTime  # PEP8 compliant
 from pathlib import Path

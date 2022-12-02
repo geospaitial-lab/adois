@@ -1,5 +1,3 @@
-# @author: Maryniak, Marius - Fachbereich Elektrotechnik, Westfälische Hochschule Gelsenkirchen
-
 from io import BytesIO
 from pathlib import Path
 from unittest import mock

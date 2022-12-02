@@ -1,5 +1,3 @@
-# @author: Maryniak, Marius - Fachbereich Elektrotechnik, Westfälische Hochschule Gelsenkirchen
-
 import pytest
 
 from src.utils.config_parser_exceptions import *

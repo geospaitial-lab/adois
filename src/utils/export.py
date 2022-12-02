@@ -1,5 +1,3 @@
-# @author: Maryniak, Marius - Fachbereich Elektrotechnik, Westfälische Hochschule Gelsenkirchen
-
 from datetime import datetime as DateTime  # PEP8 compliant
 from datetime import timedelta as TimeDelta  # PEP8 compliant
 from pathlib import Path

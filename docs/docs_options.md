@@ -1,5 +1,3 @@
-<!-- @author: Maryniak, Marius - Fachbereich Elektrotechnik, Westfälische Hochschule Gelsenkirchen -->
-
 # Dokumentation: Options
 
 ## data

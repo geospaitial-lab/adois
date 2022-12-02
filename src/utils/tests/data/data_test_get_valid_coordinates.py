@@ -1,5 +1,3 @@
-# @author: Maryniak, Marius - Fachbereich Elektrotechnik, Westfälische Hochschule Gelsenkirchen
-
 parameters_get_valid_coordinates = [((-256, -256, 256, 256),
                                      [(-256, 0), (0, 0), (-256, 256), (0, 256)]),
 

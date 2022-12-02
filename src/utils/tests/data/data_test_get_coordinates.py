@@ -1,5 +1,3 @@
-# @author: Maryniak, Marius - Fachbereich Elektrotechnik, Westfälische Hochschule Gelsenkirchen
-
 parameters_get_coordinates = [((512, 512, 1024, 1024),
                                [(512, 768), (768, 768), (512, 1024), (768, 1024)]),
                               ((512, -1024, 1024, -512),

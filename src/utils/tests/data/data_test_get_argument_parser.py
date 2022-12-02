@@ -1,5 +1,3 @@
-# @author: Maryniak, Marius - Fachbereich Elektrotechnik, Westfälische Hochschule Gelsenkirchen
-
 parameters_get_argument_parser = [(['/path/to/config_file.yaml'],
                                    {'config_file_path': '/path/to/config_file.yaml',
                                     'debug': False,

@@ -1,5 +1,3 @@
-# @author: Maryniak, Marius - Fachbereich Elektrotechnik, Westfälische Hochschule Gelsenkirchen
-
 parameters_validate_tile_size = [(None, []),
                                  (0, []),
                                  (1, [1]),

@@ -1,5 +1,3 @@
-<!-- @author: Maryniak, Marius - Fachbereich Elektrotechnik, Westfälische Hochschule Gelsenkirchen -->
-
 # Dokumentation: Config File (.yaml)
 
 Die Beispielwerte der Parameter entsprechen denen des [Example Config Files](../example_config.yaml "Example Config File").

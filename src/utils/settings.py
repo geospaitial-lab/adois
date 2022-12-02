@@ -1,5 +1,3 @@
-# @author: Maryniak, Marius - Fachbereich Elektrotechnik, Westfälische Hochschule Gelsenkirchen
-
 DEBUG = False
 
 IMAGE_SIZE = 1280  # image size in pixels (type: int)

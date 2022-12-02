@@ -1,5 +1,3 @@
-# @author: Maryniak, Marius - Fachbereich Elektrotechnik, Westfälische Hochschule Gelsenkirchen
-
 parameters_validate_sieve_size = [(None, None),
                                   (0, None),
                                   (1, 1),

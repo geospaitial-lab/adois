@@ -1,5 +1,3 @@
-# @author: Maryniak, Marius - Fachbereich Elektrotechnik, Westfälische Hochschule Gelsenkirchen
-
 import geopandas as gpd
 import shapely.affinity
 from shapely.geometry import Polygon

@@ -1,5 +1,3 @@
-<!-- @author: Maryniak, Marius - Fachbereich Elektrotechnik, Westfälische Hochschule Gelsenkirchen -->
-
 ![adois](data/images/adois_logo_light_mode.svg#gh-light-mode-only)
 ![adois](data/images/adois_logo_dark_mode.svg#gh-dark-mode-only)
 
