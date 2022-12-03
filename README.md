@@ -63,7 +63,7 @@ source venv/bin/activate
 venv\Scripts\activate.bat
 ```
 
-Installieren Sie die Packages.
+Installieren Sie die Requirements.
 
 ```
 pip install -r requirements.txt
