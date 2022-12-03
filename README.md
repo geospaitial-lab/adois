@@ -3,7 +3,8 @@
 
 ---
 
-[![Tests](https://github.com/KLIMA-WH/adois/actions/workflows/tests.yaml/badge.svg)](https://github.com/KLIMA-WH/adois_app/actions/workflows/tests.yaml)
+[![Tests](https://img.shields.io/github/workflow/status/KLIMA-WH/adois/Tests?event=push&label=Tests&logo=GitHub)](https://github.com/KLIMA-WH/adois_app/actions/workflows/tests.yaml "Tests Workflow")
+[![License](https://img.shields.io/github/license/KLIMA-WH/adois?label=License)](https://gnu.org/licenses "GNU Licenses")
 
 *adois* – automatic detection of impervious surfaces – ist eine Auftragsforschung des [Kreises Recklinghausen](https://kreis-re.de "Kreis Recklinghausen")
 in Kooperation mit der [Westfälischen Hochschule Gelsenkirchen](https://w-hs.de "Westfälische Hochschule")
