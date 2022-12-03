@@ -13,7 +13,7 @@ Die DOPs werden dabei über einen individuellen WMS (Web Map Service) bezogen.
 
 # Installation
 
-**Hardwarevoraussetzungen:** 16GB RAM
+**Hardwarevoraussetzungen:** 8GB RAM
 
 Installieren Sie zunächst [Docker](https://www.docker.com/products/docker-desktop "Get Docker").  
 Laden Sie anschließend das *adois* Repository in ein beliebiges Arbeitsverzeichnis herunter.
