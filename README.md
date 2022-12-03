@@ -5,8 +5,8 @@
 
 [![Tests](https://github.com/KLIMA-WH/adois/actions/workflows/tests.yaml/badge.svg)](https://github.com/KLIMA-WH/adois_app/actions/workflows/tests.yaml)
 
-*adois* – automatic detection of impervious surfaces – ist eine Auftragsforschung des [Kreises Recklinghausen](https://www.kreis-re.de "Kreis Recklinghausen")
-in Kooperation mit der [Westfälischen Hochschule Gelsenkirchen](https://www.w-hs.de "Westfälische Hochschule")
+*adois* – automatic detection of impervious surfaces – ist eine Auftragsforschung des [Kreises Recklinghausen](https://kreis-re.de "Kreis Recklinghausen")
+in Kooperation mit der [Westfälischen Hochschule Gelsenkirchen](https://w-hs.de "Westfälische Hochschule")
 mit dem Ziel der automatisierten Erkennung versiegelter Flächen aus Fernerkundungsdaten mit Methoden des Deep Learnings.  
 *adois* ermittelt aus RGB- und NIR-DOPs (Digital Orthophoto) hochauflösende Versiegelungskarten inklusive einer Aggregation auf nutzungsspezifische Flächen.
 Die DOPs werden dabei über einen individuellen WMS (Web Map Service) bezogen.
@@ -15,7 +15,7 @@ Die DOPs werden dabei über einen individuellen WMS (Web Map Service) bezogen.
 
 **Hardwarevoraussetzungen:** 8GB RAM
 
-Installieren Sie zunächst [Docker](https://www.docker.com/products/docker-desktop "Get Docker").  
+Installieren Sie zunächst [Docker](https://docker.com/products/docker-desktop "Get Docker").  
 Laden Sie anschließend das *adois* Repository in ein beliebiges Arbeitsverzeichnis herunter.
 
 ```
@@ -36,7 +36,7 @@ Die entsprechenden Lizenzbedingungen sind [hier](https://hub.docker.com/_/python
 
 ## Virtual Environment
 
-Installieren Sie zunächst [Python 3.8](https://www.python.org/downloads "Get Python").  
+Installieren Sie zunächst [Python 3.8](https://python.org/downloads "Get Python").  
 Laden Sie anschließend das adois Repository in ein beliebiges Arbeitsverzeichnis herunter.
 
 ```
