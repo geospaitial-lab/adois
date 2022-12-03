@@ -3,8 +3,8 @@
 
 ---
 
-[![Tests](https://img.shields.io/github/workflow/status/KLIMA-WH/adois/Tests?event=push&label=Tests&logo=GitHub)](https://github.com/KLIMA-WH/adois_app/actions/workflows/tests.yaml "Tests Workflow")
-[![License](https://img.shields.io/github/license/KLIMA-WH/adois?label=License)](https://gnu.org/licenses "GNU Licenses")
+[![Tests](https://img.shields.io/github/workflow/status/mrsmrynk/adois/Tests?event=push&label=Tests&logo=GitHub)](https://github.com/KLIMA-WH/adois_app/actions/workflows/tests.yaml "Tests Workflow")
+[![License](https://img.shields.io/github/license/mrsmrynk/adois?label=License)](https://gnu.org/licenses "GNU Licenses")
 
 *adois* – automatic detection of impervious surfaces – ist eine Auftragsforschung des [Kreises Recklinghausen](https://kreis-re.de "Kreis Recklinghausen")
 in Kooperation mit der [Westfälischen Hochschule Gelsenkirchen](https://w-hs.de "Westfälische Hochschule")
@@ -20,7 +20,7 @@ Installieren Sie zunächst [Docker](https://docker.com/products/docker-desktop "
 Laden Sie anschließend das *adois* Repository in ein beliebiges Arbeitsverzeichnis herunter.
 
 ```
-git clone https://github.com/klima-wh/adois
+git clone https://github.com/mrsmrynk/adois
 ```
 
 Wechseln Sie in das Verzeichnis und erstellen Sie nun das *adois* Image.
@@ -41,7 +41,7 @@ Installieren Sie zunächst [Python 3.8](https://python.org/downloads "Get Python
 Laden Sie anschließend das adois Repository in ein beliebiges Arbeitsverzeichnis herunter.
 
 ```
-git clone https://github.com/klima-wh/adois
+git clone https://github.com/mrsmrynk/adois
 ```
 
 Wechseln Sie in das Verzeichnis und erstellen Sie nun eine Virtual Environment.
