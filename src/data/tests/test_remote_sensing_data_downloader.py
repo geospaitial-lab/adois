@@ -76,12 +76,12 @@ def test_get_response(mocked_wms):
 
     remote_sensing_data_downloader.get_response(bounding_box=(0, 0, 256, 256))
 
-    mocked_wms_instance.getmap.assert_called_with(layers=['wms_layer'],
-                                                  srs='EPSG:25832',
-                                                  bbox=(0, 0, 256, 256),
-                                                  format='image/tiff',
-                                                  size=(utils.IMAGE_SIZE, utils.IMAGE_SIZE),
-                                                  bgcolor='#000000')
+    mocked_wms_instance.getmap.assert_called_once_with(layers=['wms_layer'],
+                                                       srs='EPSG:25832',
+                                                       bbox=(0, 0, 256, 256),
+                                                       format='image/tiff',
+                                                       size=(utils.IMAGE_SIZE, utils.IMAGE_SIZE),
+                                                       bgcolor='#000000')
 
 
 @mock.patch('src.data.remote_sensing_data_downloader.WebMapService', return_value=mock.MagicMock)
