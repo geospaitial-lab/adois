@@ -90,7 +90,20 @@ docker run -t -v </Pfad/zu/config.yaml>:/config.yaml -v </Pfad/zu/Basisverzeichn
 
 ## Virtual Environment
 
-Wechseln Sie in das *adois* Verzeichnis und führen Sie die Software aus.
+Wechseln Sie zunächst in das *adois* Verzeichnis und aktivieren Sie gegebenenfalls die Virtual Environment.  
+**Mac/ Linux:**
+
+```
+source venv/bin/activate
+```
+
+**Windows:**
+
+```
+venv\Scripts\activate.bat
+```
+
+Führen Sie anschließend die Software aus.
 
 ```
 python3 src/main.py </Pfad/zu/config.yaml>
