@@ -52,7 +52,7 @@ python3 -m venv venv
 ```
 
 Aktivieren Sie die Virtual Environment.  
-**Mac/ Linux:**
+**MacOS/ Linux:**
 
 ```
 source venv/bin/activate
@@ -91,7 +91,7 @@ docker run -t -v </Pfad/zu/config.yaml>:/config.yaml -v </Pfad/zu/Basisverzeichn
 ## Virtual Environment
 
 Wechseln Sie zunächst in das *adois* Verzeichnis und aktivieren Sie gegebenenfalls die Virtual Environment.  
-**Mac/ Linux:**
+**MacOS/ Linux:**
 
 ```
 source venv/bin/activate
