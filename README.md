@@ -30,7 +30,7 @@ Wechseln Sie in das Verzeichnis und erstellen Sie nun das *adois* Image.
 docker build -t adois .
 ```
 
-***Hinweis:*** Das Parent Image ist das [python:3.8-bullseye](https://hub.docker.com/_/python "Docker Hub - Python") Image.
+***Hinweis:*** Das Parent Image ist das [python:3.8-slim-bullseye](https://hub.docker.com/_/python "Docker Hub - Python") Image.
 Die entsprechenden Lizenzbedingungen sind [hier](https://hub.docker.com/_/python "Docker Hub - Python") zu entnehmen.
 
 <details>
