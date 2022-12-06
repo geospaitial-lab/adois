@@ -106,7 +106,7 @@ venv\Scripts\activate.bat
 Führen Sie anschließend die Software aus.
 
 ```
-python3 src/main.py </Pfad/zu/config.yaml>
+python3 -m src.main </Pfad/zu/config.yaml>
 ```
 
 </details>
