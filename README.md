@@ -17,7 +17,23 @@ Die DOPs werden dabei über einen individuellen WMS (Web Map Service) bezogen.
 
 **Hardwarevoraussetzungen:** 8GB RAM
 
-Installieren Sie zunächst [Git](https://git-scm.com/downloads "Get Git") und [Git LFS](https://git-lfs.github.com "Get Git LFS").  
+Installieren Sie zunächst [Docker](https://docker.com/products/docker-desktop "Get Docker").  
+Laden sie anschließend das [*adois* Dockerfile](https://drive.google.com/uc?export=download&id=1fJ1CEctRLWTTdoghlWUhw8TNgdaPjZoT "Get adois Dockerfile") herunter.  
+Erstellen Sie nun das *adois* Image.
+
+```
+docker build -f </Pfad/zu/dist.Dockerfile> -t adois .
+```
+
+***Hinweis:*** Das Parent Image ist das [python:3.8-slim-bullseye](https://hub.docker.com/_/python "Docker Hub - Python") Image.
+Die entsprechenden Lizenzbedingungen sind [hier](https://hub.docker.com/_/python "Docker Hub - Python") zu entnehmen.
+
+<details>
+<summary><b>Alternative Installationsmöglichkeit zu Docker</b></summary>
+
+### Virtual Environment
+
+Installieren Sie zunächst [Git](https://git-scm.com/downloads "Get Git"), [Git LFS](https://git-lfs.github.com "Get Git LFS") und [Python 3.8](https://python.org/downloads "Get Python").  
 Aktivieren Sie Git LFS.
 
 ```
@@ -30,24 +46,6 @@ Laden Sie anschließend das *adois* Repository in ein beliebiges Arbeitsverzeich
 git clone https://github.com/mrsmrynk/adois --depth 1
 ```
 
-### Docker
-
-Installieren Sie [Docker](https://docker.com/products/docker-desktop "Get Docker").  
-Wechseln Sie in das *adois* Repository und erstellen Sie nun das *adois* Image.
-
-```
-docker build -t adois .
-```
-
-***Hinweis:*** Das Parent Image ist das [python:3.8-slim-bullseye](https://hub.docker.com/_/python "Docker Hub - Python") Image.
-Die entsprechenden Lizenzbedingungen sind [hier](https://hub.docker.com/_/python "Docker Hub - Python") zu entnehmen.
-
-<details>
-<summary><b>Alternative Installationsmöglichkeit zu Docker</b></summary>
-
-### Virtual Environment
-
-Installieren Sie [Python 3.8](https://python.org/downloads "Get Python").  
 Wechseln Sie in das *adois* Repository und erstellen Sie nun eine Virtual Environment.
 
 ```
