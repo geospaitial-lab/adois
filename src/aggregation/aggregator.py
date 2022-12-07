@@ -51,8 +51,8 @@ class Aggregator:
                 bui_imp_ratio = bui_area / imp_area
                 sur_imp_ratio = sur_area / imp_area
             except ZeroDivisionError:
-                bui_imp_ratio = 1.
-                sur_imp_ratio = 1.
+                bui_imp_ratio = 0.
+                sur_imp_ratio = 0.
 
             aggregation_gdf.at[index, 'area'] = area
             aggregation_gdf.at[index, 'imp_area'] = imp_area
