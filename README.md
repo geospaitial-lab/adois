@@ -27,10 +27,10 @@ git lfs install
 Laden Sie anschließend das *adois* Repository in ein beliebiges Arbeitsverzeichnis herunter.
 
 ```
-git clone https://github.com/mrsmrynk/adois
+git clone https://github.com/mrsmrynk/adois --depth 1
 ```
 
-## Docker
+### Docker
 
 Installieren Sie [Docker](https://docker.com/products/docker-desktop "Get Docker").  
 Wechseln Sie in das *adois* Repository und erstellen Sie nun das *adois* Image.
@@ -45,7 +45,7 @@ Die entsprechenden Lizenzbedingungen sind [hier](https://hub.docker.com/_/python
 <details>
 <summary><b>Alternative Installationsmöglichkeit zu Docker</b></summary>
 
-## Virtual Environment
+### Virtual Environment
 
 Installieren Sie [Python 3.8](https://python.org/downloads "Get Python").  
 Wechseln Sie in das *adois* Repository und erstellen Sie nun eine Virtual Environment.
@@ -91,7 +91,7 @@ docker run -t -v </Pfad/zu/config.yaml>:/config.yaml -v </Pfad/zu/Basisverzeichn
 <details>
 <summary><b>Alternative Ausführungsmöglichkeiten</b></summary>
 
-## Virtual Environment
+### Virtual Environment
 
 Wechseln Sie zunächst in das *adois* Verzeichnis und aktivieren Sie gegebenenfalls die Virtual Environment.  
 **MacOS/ Linux:**
