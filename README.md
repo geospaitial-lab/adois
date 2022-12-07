@@ -91,7 +91,7 @@ docker run -t -v </Pfad/zu/config.yaml>:/config.yaml -v </Pfad/zu/Basisverzeichn
 
 ### Virtual Environment
 
-Wechseln Sie zunächst in das *adois* Verzeichnis und aktivieren Sie gegebenenfalls die Virtual Environment.  
+Wechseln Sie zunächst in das *adois* Repository und aktivieren Sie gegebenenfalls die Virtual Environment.  
 **MacOS/ Linux:**
 
 ```
