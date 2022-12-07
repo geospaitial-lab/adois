@@ -17,14 +17,23 @@ Die DOPs werden dabei über einen individuellen WMS (Web Map Service) bezogen.
 
 **Hardwarevoraussetzungen:** 8GB RAM
 
-Installieren Sie zunächst [Docker](https://docker.com/products/docker-desktop "Get Docker").  
+Installieren Sie zunächst [Git](https://git-scm.com/downloads "Get Git") und [Git LFS](https://git-lfs.github.com "Get Git LFS").  
+Aktivieren Sie Git LFS.
+
+```
+git lfs install
+```
+
 Laden Sie anschließend das *adois* Repository in ein beliebiges Arbeitsverzeichnis herunter.
 
 ```
 git clone https://github.com/mrsmrynk/adois
 ```
 
-Wechseln Sie in das Verzeichnis und erstellen Sie nun das *adois* Image.
+## Docker
+
+Installieren Sie [Docker](https://docker.com/products/docker-desktop "Get Docker").  
+Wechseln Sie in das *adois* Repository und erstellen Sie nun das *adois* Image.
 
 ```
 docker build -t adois .
@@ -34,18 +43,12 @@ docker build -t adois .
 Die entsprechenden Lizenzbedingungen sind [hier](https://hub.docker.com/_/python "Docker Hub - Python") zu entnehmen.
 
 <details>
-<summary><b>Alternative Installationsmöglichkeiten</b></summary>
+<summary><b>Alternative Installationsmöglichkeit zu Docker</b></summary>
 
 ## Virtual Environment
 
-Installieren Sie zunächst [Python 3.8](https://python.org/downloads "Get Python").  
-Laden Sie anschließend das adois Repository in ein beliebiges Arbeitsverzeichnis herunter.
-
-```
-git clone https://github.com/mrsmrynk/adois
-```
-
-Wechseln Sie in das Verzeichnis und erstellen Sie nun eine Virtual Environment.
+Installieren Sie [Python 3.8](https://python.org/downloads "Get Python").  
+Wechseln Sie in das *adois* Repository und erstellen Sie nun eine Virtual Environment.
 
 ```
 python3 -m venv venv
