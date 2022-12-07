@@ -48,8 +48,8 @@ class Aggregator:
             sur_density = sur_area / area
 
             try:
-                bui_imp_ratio = bui_area / imp_area
-                sur_imp_ratio = sur_area / imp_area
+                bui_imp_ratio = min(bui_area / imp_area, 1.)
+                sur_imp_ratio = min(sur_area / imp_area, 1.)
             except ZeroDivisionError:
                 bui_imp_ratio = 0.
                 sur_imp_ratio = 0.
