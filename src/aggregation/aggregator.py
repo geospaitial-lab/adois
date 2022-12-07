@@ -39,13 +39,13 @@ class Aggregator:
         for index in aggregation_gdf['aggregation_id']:
             area = float(aggregation_gdf.loc[aggregation_gdf['aggregation_id'] == index].area)
             imp_area = float(aggregated_gdf.loc[aggregated_gdf['aggregation_id'] == index].area.sum())
-            imp_density = imp_area / area
+            imp_density = min(imp_area / area, 1.)
             bui_area = float(aggregated_gdf.loc[(aggregated_gdf['aggregation_id'] == index) &
                                                 (aggregated_gdf['class'] == 1)].area.sum())
-            bui_density = bui_area / area
+            bui_density = min(bui_area / area, 1.)
             sur_area = float(aggregated_gdf.loc[(aggregated_gdf['aggregation_id'] == index) &
                                                 (aggregated_gdf['class'] == 2)].area.sum())
-            sur_density = sur_area / area
+            sur_density = min(sur_area / area, 1.)
 
             try:
                 bui_imp_ratio = min(bui_area / imp_area, 1.)
