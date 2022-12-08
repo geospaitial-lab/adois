@@ -87,7 +87,7 @@ docker run -t -v </Pfad/zu/config.yaml>:/config.yaml -v </Pfad/zu/Basisverzeichn
 ```
 
 <details>
-<summary><b>Alternative Ausführungsmöglichkeiten</b></summary>
+<summary><b>Alternative Ausführungsmöglichkeit zu Docker</b></summary>
 
 ### Virtual Environment
 
