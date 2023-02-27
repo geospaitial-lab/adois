@@ -1,14 +1,12 @@
 FROM python:3.8-slim-bullseye
 
-RUN apt-get update && apt-get install -y git curl
-RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
-RUN apt-get install -y git-lfs
-RUN git lfs install
+RUN mkdir /adois
 
-RUN git clone https://github.com/mrsmrynk/adois --depth 1
+COPY requirements.txt /adois
 
 RUN python -m pip install -r /adois/requirements.txt --ignore-installed --no-warn-script-location --upgrade
 
+COPY . /adois
 WORKDIR /adois
 
 ENV PYTHONPATH "${PYTHONPATH}:/adois"

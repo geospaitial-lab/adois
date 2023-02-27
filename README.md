@@ -23,7 +23,7 @@ Laden sie anschließend das [*adois* Dockerfile](https://drive.google.com/uc?exp
 Erstellen Sie nun das *adois* Image.
 
 ```
-docker build -f </Pfad/zu/dist.Dockerfile> -t adois .
+docker build -f </Pfad/zu/Dockerfile> -t adois .
 ```
 
 ***Hinweis:*** Das Parent Image ist das [python:3.8-slim-bullseye](https://hub.docker.com/_/python "Docker Hub - Python") Image.
