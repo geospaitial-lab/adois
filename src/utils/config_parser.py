@@ -87,7 +87,7 @@ class Data(BaseModel):
                                 valid_epsg_codes=valid_epsg_codes)
         return value
 
-    @validator('boundary_shape_file_path')
+    @validator('boundary_shape_file_path', always=True)
     def validate_boundary_shape_file_path(cls, value):
         """
         | Validates boundary_shape_file_path defined in the config file.
@@ -108,7 +108,7 @@ class Data(BaseModel):
                 raise ShapeFileLengthError(gdf=boundary_gdf)
         return value
 
-    @validator('bounding_box')
+    @validator('bounding_box', always=True)
     def validate_bounding_box(cls,
                               value,
                               values):
