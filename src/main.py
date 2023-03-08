@@ -30,7 +30,7 @@ def main():
     # endregion
 
     # region Config parsing
-    config_parser = ConfigParser(args=args)
+    config_parser = ConfigParser(args)
     config = config_parser.parse_config()
     # endregion
 
