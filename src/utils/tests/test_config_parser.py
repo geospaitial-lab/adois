@@ -97,7 +97,7 @@ def test_Postprocessing_default():
     assert isinstance(postprocessing, Postprocessing)
     assert list(postprocessing.__dict__.keys()) == ['sieve_size', 'simplify']
     assert postprocessing.sieve_size is None
-    assert postprocessing.simplify is None
+    assert postprocessing.simplify is False
 
 
 @pytest.mark.parametrize('test_input, expected', parameters_validate_tile_size)

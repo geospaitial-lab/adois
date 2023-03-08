@@ -62,7 +62,7 @@ class Data(BaseModel):
     rgb: Wms
     nir: Wms
     epsg_code: int
-    boundary_shape_file_path: Optional[str]
+    boundary_shape_file_path: Optional[str] = None
     bounding_box: Optional[List[int]]
 
     @validator('epsg_code')
@@ -89,7 +89,7 @@ class Data(BaseModel):
                                 valid_epsg_codes=valid_epsg_codes)
         return value
 
-    @validator('boundary_shape_file_path', always=True)
+    @validator('boundary_shape_file_path')
     def validate_boundary_shape_file_path(cls, value):
         """
         | Validates boundary_shape_file_path defined in the config file.
@@ -142,7 +142,7 @@ class Data(BaseModel):
 
 class Postprocessing(BaseModel):
     sieve_size: Optional[int] = None
-    simplify: Optional[bool] = None
+    simplify: Optional[bool] = False
 
     @validator('sieve_size')
     def validate_sieve_size(cls, value):
@@ -235,7 +235,7 @@ class Aggregation(BaseModel):
 class ExportSettings(BaseModel):
     output_dir_path: str
     prefix: str
-    export_raw_shape_file: Optional[bool] = None
+    export_raw_shape_file: Optional[bool] = False
 
     @validator('output_dir_path')
     def validate_output_dir_path(cls, value):
