@@ -1,3 +1,5 @@
+import argparse
+# noinspection PyUnresolvedReferences
 from pathlib import Path
 from typing import List, Optional, Union
 
@@ -303,57 +305,58 @@ class Config(BaseModel):
 
 
 class ConfigParser:
-    def __init__(self, config_file_path):
+    def __init__(self, args):
         """
         | Constructor method
 
-        :param str or Path config_file_path: path to the config file (.yaml)
+        :param argparse.Namespace args: parsed arguments
         :returns: None
         :rtype: None
         """
-        self.config_file_path = Path(config_file_path)
-        with open(self.config_file_path) as file:
+        self.args = args
+
+        config_file_path = Path(self.args.config_file_path)
+        with open(config_file_path) as file:
             self.config_dict = yaml.safe_load(file)
 
-    def update_config_dict(self, args):
+    def update_config_dict(self):
         """
         | Updates the config dict with the optional parsed arguments.
 
-        :param args: parsed arguments
         :returns: None
         :rtype: None
         """
-        if hasattr(args, 'wms_url_rgb'):
-            self.config_dict['data']['rgb']['wms_url'] = args.wms_url_rgb
-        if hasattr(args, 'wms_layer_rgb'):
-            self.config_dict['data']['rgb']['wms_layer'] = args.wms_layer_rgb
-        if hasattr(args, 'wms_url_nir'):
-            self.config_dict['data']['nir']['wms_url'] = args.wms_url_nir
-        if hasattr(args, 'wms_layer_nir'):
-            self.config_dict['data']['nir']['wms_layer'] = args.wms_layer_nir
-        if hasattr(args, 'epsg_code'):
-            self.config_dict['data']['epsg_code'] = args.epsg_code
-        if hasattr(args, 'boundary_shape_file_path'):
-            self.config_dict['data']['boundary_shape_file_path'] = args.boundary_shape_file_path
-        if hasattr(args, 'bounding_box'):
-            self.config_dict['data']['bounding_box'] = args.bounding_box
+        if hasattr(self.args, 'wms_url_rgb'):
+            self.config_dict['data']['rgb']['wms_url'] = self.args.wms_url_rgb
+        if hasattr(self.args, 'wms_layer_rgb'):
+            self.config_dict['data']['rgb']['wms_layer'] = self.args.wms_layer_rgb
+        if hasattr(self.args, 'wms_url_nir'):
+            self.config_dict['data']['nir']['wms_url'] = self.args.wms_url_nir
+        if hasattr(self.args, 'wms_layer_nir'):
+            self.config_dict['data']['nir']['wms_layer'] = self.args.wms_layer_nir
+        if hasattr(self.args, 'epsg_code'):
+            self.config_dict['data']['epsg_code'] = self.args.epsg_code
+        if hasattr(self.args, 'boundary_shape_file_path'):
+            self.config_dict['data']['boundary_shape_file_path'] = self.args.boundary_shape_file_path
+        if hasattr(self.args, 'bounding_box'):
+            self.config_dict['data']['bounding_box'] = self.args.bounding_box
 
-        if hasattr(args, 'sieve_size'):
-            self.config_dict['postprocessing']['sieve_size'] = args.sieve_size
-        if hasattr(args, 'simplify'):
-            self.config_dict['postprocessing']['simplify'] = args.simplify
+        if hasattr(self.args, 'sieve_size'):
+            self.config_dict['postprocessing']['sieve_size'] = self.args.sieve_size
+        if hasattr(self.args, 'simplify'):
+            self.config_dict['postprocessing']['simplify'] = self.args.simplify
 
-        if hasattr(args, 'tile_size'):
-            self.config_dict['aggregation']['tile_size'] = args.tile_size
-        if hasattr(args, 'shape_file_path'):
-            self.config_dict['aggregation']['shape_file_path'] = args.shape_file_path
+        if hasattr(self.args, 'tile_size'):
+            self.config_dict['aggregation']['tile_size'] = self.args.tile_size
+        if hasattr(self.args, 'shape_file_path'):
+            self.config_dict['aggregation']['shape_file_path'] = self.args.shape_file_path
 
-        if hasattr(args, 'output_dir_path'):
-            self.config_dict['aggregation']['output_dir_path'] = args.output_dir_path
-        if hasattr(args, 'prefix'):
-            self.config_dict['aggregation']['prefix'] = args.prefix
-        if hasattr(args, 'export_raw_shape_file'):
-            self.config_dict['aggregation']['export_raw_shape_file'] = args.export_raw_shape_file
+        if hasattr(self.args, 'output_dir_path'):
+            self.config_dict['aggregation']['output_dir_path'] = self.args.output_dir_path
+        if hasattr(self.args, 'prefix'):
+            self.config_dict['aggregation']['prefix'] = self.args.prefix
+        if hasattr(self.args, 'export_raw_shape_file'):
+            self.config_dict['aggregation']['export_raw_shape_file'] = self.args.export_raw_shape_file
 
     def parse_config(self):
         """
@@ -362,5 +365,6 @@ class ConfigParser:
         :returns: parsed config
         :rtype: Config
         """
+        self.update_config_dict()
         parsed_config = Config(**self.config_dict)
         return parsed_config
