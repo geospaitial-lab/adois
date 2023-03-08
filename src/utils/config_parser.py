@@ -286,8 +286,8 @@ class ExportSettings(BaseModel):
 
 class Config(BaseModel):
     data: Data
-    postprocessing: Postprocessing
-    aggregation: Aggregation
+    postprocessing: Optional[Postprocessing] = Postprocessing()
+    aggregation: Optional[Aggregation] = Aggregation()
     export_settings: ExportSettings
 
     @root_validator
@@ -358,6 +358,17 @@ class ConfigParser:
         if hasattr(self.args, 'export_raw_shape_file'):
             self.config_dict['aggregation']['export_raw_shape_file'] = self.args.export_raw_shape_file
 
+    def clean_config_dict(self):
+        """
+        | Removes items of the config dict if their value is None.
+
+        :returns: None
+        :rtype: None
+        """
+        cleaned_config_dict = {key: value for key, value in self.config_dict.items() if value is not None}
+        self.config_dict.clear()
+        self.config_dict.update(cleaned_config_dict)
+
     def parse_config(self):
         """
         | Returns the parsed config.
@@ -366,5 +377,6 @@ class ConfigParser:
         :rtype: Config
         """
         self.update_config_dict()
+        self.clean_config_dict()
         parsed_config = Config(**self.config_dict)
         return parsed_config
