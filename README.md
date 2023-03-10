@@ -123,3 +123,7 @@ python3 -m src.main </Pfad/zu/config.yaml>
 
 Die Versiegelungskarten inklusive der Aggregationen werden als Shape File ins [Ausgabeverzeichnis](docs/docs_config.md#output_dir_path "Config File Ausgabeverzeichnis") exportiert.  
 Die Attribute der Shape Files werden in der [Dokumentation](docs/docs_shape_file_attributes.md "Shape File Attribute Dokumentation") erläutert.
+
+# Kontakt
+
+Marius Maryniak ([Westfälische Hochschule Gelsenkirchen](https://w-hs.de "Westfälische Hochschule")): <marius.maryniak@w-hs.de>
