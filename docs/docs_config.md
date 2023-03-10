@@ -23,7 +23,7 @@ data:
 
 - ### wms_url
   - **type:** str
-  - URL des WMSs (Web Map Service) der unbelaubten RGB- und NIR-Fernerkundungsdaten
+  - URL des WMSs (Web Map Service) der unbelaubten RGB- und NIR-Fernerkundungsdaten  
     *Hinweis:* Der WMS benötigt eine Bodenauflösung von mindestens 20cm (DOP20).  
     Zur Einbindung lokaler Daten können Sie mit einer Map Server Software (z. B. [GeoServer](https://geoserver.org "Get GeoServer")) einen lokalen WMS einrichten.
 
