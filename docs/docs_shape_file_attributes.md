@@ -2,16 +2,27 @@
 
 ## Versiegelungskarte
 
-- class: 1 (Gebäudeflächen), 2 (versiegelte Oberflächen)
+- class:
+    - Hochbau
+    - Tiefbau
 
 ## Aggregation
 
-- area: Absolute Fläche in Quadratmetern
-- imp_area: Absolute versiegelte Fläche in Quadratmetern
-- imp_dens: Relative versiegelte Fläche, Versiegelungsgrad
-- bui_area: Absolute versiegelte Fläche (Gebäudeflächen) in Quadratmetern
-- bui_dens: Relative versiegelte Fläche (Gebäudeflächen), Versiegelungsgrad
-- sur_area: Absolute versiegelte Fläche (versiegelte Oberflächen) in Quadratmetern
-- sur_dens: Relative versiegelte Fläche (versiegelte Oberflächen), Versiegelungsgrad
-- bui_imp_r: Verhältnis von Gebäudeflächen zu versiegelter Fläche
-- sur_imp_r: Verhältnis von versiegelten Oberflächen zu versiegelter Fläche
+- area:  
+  Absolute Fläche in Quadratmetern
+- imp_area:  
+  Absolute versiegelte Fläche in Quadratmetern
+- imp_dens:  
+  Relative versiegelte Fläche, Versiegelungsgrad
+- bui_area:  
+  Absolute versiegelte Fläche (Hochbau) in Quadratmetern
+- bui_dens:  
+  Relative versiegelte Fläche (Hochbau), Versiegelungsgrad
+- pav_area:  
+  Absolute versiegelte Fläche (Tiefbau) in Quadratmetern
+- pav_dens:  
+  Relative versiegelte Fläche (Tiefbau), Versiegelungsgrad
+- bui_imp_r:  
+  Verhältnis von versiegelter Fläche (Hochbau) zu gesamter versiegelter Fläche (Hochbau und Tiefbau)
+- pav_imp_r:  
+  Verhältnis von versiegelter Fläche (Tiefbau) zu gesamter versiegelter Fläche (Hochbau und Tiefbau)
