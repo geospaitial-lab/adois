@@ -19,7 +19,7 @@ class Inference:
         | Returns a mask with 2 dimensions and the following pixel values:
         | 0: pervious surface
         | 1: building
-        | 2: impervious surface
+        | 2: pavement
 
         :param np.ndarray[np.float32] image: image
         :returns: mask
