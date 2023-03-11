@@ -41,10 +41,10 @@ class Aggregator:
             imp_area = float(aggregated_gdf.loc[aggregated_gdf['aggregation_id'] == index].area.sum())
             imp_density = min(imp_area / area, 1.)
             bui_area = float(aggregated_gdf.loc[(aggregated_gdf['aggregation_id'] == index) &
-                                                (aggregated_gdf['class'] == 1)].area.sum())
+                                                (aggregated_gdf['class'] == 'Hochbau')].area.sum())
             bui_density = min(bui_area / area, 1.)
             pav_area = float(aggregated_gdf.loc[(aggregated_gdf['aggregation_id'] == index) &
-                                                (aggregated_gdf['class'] == 2)].area.sum())
+                                                (aggregated_gdf['class'] == 'Tiefbau')].area.sum())
             pav_density = min(pav_area / area, 1.)
 
             try:
