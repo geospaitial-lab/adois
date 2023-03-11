@@ -28,8 +28,8 @@ class Aggregator:
         | Each polygon has the following attributes:
         | - area, imp_area, imp_dens
         | - bui_area, bui_dens
-        | - sur_area, sur_dens
-        | - bui_imp_r, sur_imp_r
+        | - pav_area, pav_dens
+        | - bui_imp_r, pav_imp_r
 
         :param gpd.GeoDataFrame aggregation_gdf: geodataframe for aggregation
         :param gpd.GeoDataFrame aggregated_gdf: aggregated geodataframe
@@ -43,26 +43,26 @@ class Aggregator:
             bui_area = float(aggregated_gdf.loc[(aggregated_gdf['aggregation_id'] == index) &
                                                 (aggregated_gdf['class'] == 1)].area.sum())
             bui_density = min(bui_area / area, 1.)
-            sur_area = float(aggregated_gdf.loc[(aggregated_gdf['aggregation_id'] == index) &
+            pav_area = float(aggregated_gdf.loc[(aggregated_gdf['aggregation_id'] == index) &
                                                 (aggregated_gdf['class'] == 2)].area.sum())
-            sur_density = min(sur_area / area, 1.)
+            pav_density = min(pav_area / area, 1.)
 
             try:
                 bui_imp_ratio = min(bui_area / imp_area, 1.)
-                sur_imp_ratio = min(sur_area / imp_area, 1.)
+                pav_imp_ratio = min(pav_area / imp_area, 1.)
             except ZeroDivisionError:
                 bui_imp_ratio = 0.
-                sur_imp_ratio = 0.
+                pav_imp_ratio = 0.
 
             aggregation_gdf.at[index, 'area'] = area
             aggregation_gdf.at[index, 'imp_area'] = imp_area
             aggregation_gdf.at[index, 'imp_dens'] = imp_density
             aggregation_gdf.at[index, 'bui_area'] = bui_area
             aggregation_gdf.at[index, 'bui_dens'] = bui_density
-            aggregation_gdf.at[index, 'sur_area'] = sur_area
-            aggregation_gdf.at[index, 'sur_dens'] = sur_density
+            aggregation_gdf.at[index, 'pav_area'] = pav_area
+            aggregation_gdf.at[index, 'pav_dens'] = pav_density
             aggregation_gdf.at[index, 'bui_imp_r'] = bui_imp_ratio
-            aggregation_gdf.at[index, 'sur_imp_r'] = sur_imp_ratio
+            aggregation_gdf.at[index, 'pav_imp_r'] = pav_imp_ratio
 
         aggregation_gdf = aggregation_gdf.drop(columns='aggregation_id')
 
@@ -72,10 +72,10 @@ class Aggregator:
         attributes['imp_dens'] = f'float:13.{Aggregator.DECIMAL_PLACES}'
         attributes['bui_area'] = f'float:13.{Aggregator.DECIMAL_PLACES}'
         attributes['bui_dens'] = f'float:13.{Aggregator.DECIMAL_PLACES}'
-        attributes['sur_area'] = f'float:13.{Aggregator.DECIMAL_PLACES}'
-        attributes['sur_dens'] = f'float:13.{Aggregator.DECIMAL_PLACES}'
+        attributes['pav_area'] = f'float:13.{Aggregator.DECIMAL_PLACES}'
+        attributes['pav_dens'] = f'float:13.{Aggregator.DECIMAL_PLACES}'
         attributes['bui_imp_r'] = f'float:13.{Aggregator.DECIMAL_PLACES}'
-        attributes['sur_imp_r'] = f'float:13.{Aggregator.DECIMAL_PLACES}'
+        attributes['pav_imp_r'] = f'float:13.{Aggregator.DECIMAL_PLACES}'
         schema = {'properties': attributes,
                   'geometry': 'Polygon'}
 
@@ -106,8 +106,8 @@ class Aggregator:
         | Each polygon has the following attributes:
         | - area, imp_area, imp_dens
         | - bui_area, bui_dens
-        | - sur_area, sur_dens
-        | - bui_imp_r, sur_imp_r
+        | - pav_area, pav_dens
+        | - bui_imp_r, pav_imp_r
 
         :param gpd.GeoDataFrame aggregation_gdf: geodataframe for aggregation
         :param gpd.GeoDataFrame or None boundary_gdf: boundary geodataframe
