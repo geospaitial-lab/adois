@@ -251,7 +251,7 @@ class ExportSettings(BaseModel):
         if not Path(value).is_dir():
             raise OutputDirNotFoundError(output_dir_path=value)
         for path in Path(value).iterdir():
-            if not path.name.startswith('.'):
+            if not path.name.startswith('.') and path.suffix != '.log':
                 raise OutputDirNotEmptyError(output_dir_path=value)
         return value
 
