@@ -190,7 +190,7 @@ class Postprocessor:
             return gdf
 
         topo = tp.Topology(gdf, prequantize=False)
-        simplified_gdf = topo.toposimplify(utils.RESOLUTION + .05).to_gdf(crs=f'EPSG:{self.epsg_code}')
+        simplified_gdf = topo.toposimplify(utils.RESOLUTION).to_gdf(crs=f'EPSG:{self.epsg_code}')
         return simplified_gdf
 
     def clip_gdf(self, gdf):
