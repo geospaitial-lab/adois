@@ -2,7 +2,6 @@ import geopandas as gpd
 import shapely.affinity
 from shapely.geometry import Polygon
 
-
 polygon_exterior_coordinates = [[-14., -14.],
                                 [14., -14.],
                                 [14., 14.],
@@ -63,11 +62,11 @@ filled_gdf_buildings_10 = gpd.GeoDataFrame(geometry=[filled_polygon_buildings_10
 filled_gdf_buildings_10['class'] = ['Hochbau']
 
 filled_polygon_pavements_1 = Polygon(polygon_exterior_coordinates,
-                                    holes=[list(polygon_interior.exterior.coords) for polygon_interior in
-                                           polygons_interior if polygon_interior.area >= 1])
-filled_polygon_pavements_10 = Polygon(polygon_exterior_coordinates,
                                      holes=[list(polygon_interior.exterior.coords) for polygon_interior in
-                                            polygons_interior if polygon_interior.area >= 10])
+                                            polygons_interior if polygon_interior.area >= 1])
+filled_polygon_pavements_10 = Polygon(polygon_exterior_coordinates,
+                                      holes=[list(polygon_interior.exterior.coords) for polygon_interior in
+                                             polygons_interior if polygon_interior.area >= 10])
 
 filled_gdf_pavements_1 = gpd.GeoDataFrame(geometry=[filled_polygon_pavements_1], crs='EPSG:25832')
 filled_gdf_pavements_1['class'] = ['Tiefbau']
