@@ -15,6 +15,8 @@ pd.options.mode.chained_assignment = None
 
 
 class Postprocessor:
+    CLASS_MAP = {1: 'Hochbau', 2: 'Tiefbau'}
+
     def __init__(self,
                  output_dir_path,
                  bounding_box,
@@ -76,7 +78,7 @@ class Postprocessor:
                                               ysize=utils.RESOLUTION)
         vectorized_mask = rio.features.shapes(mask, transform=transform)
 
-        features = [{'properties': {'class': int(value)}, 'geometry': shape}
+        features = [{'properties': {'class': Postprocessor.CLASS_MAP.get(int(value))}, 'geometry': shape}
                     for shape, value in vectorized_mask if int(value) != 0]
         self.export_features(features=features,
                              coordinates=coordinates)
@@ -171,7 +173,7 @@ class Postprocessor:
         gdf['geometry'] = gdf.apply(lambda x:
                                     Postprocessor.fill_polygon(x['geometry'],
                                                                hole_size=2 * hole_size)
-                                    if x['class'] == 1
+                                    if x['class'] == 'Hochbau'
                                     else Postprocessor.fill_polygon(x['geometry'],
                                                                     hole_size=hole_size),
                                     axis=1)
