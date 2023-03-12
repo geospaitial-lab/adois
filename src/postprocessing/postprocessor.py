@@ -126,7 +126,6 @@ class Postprocessor:
         sieved_gdf = gdf.loc[mask]
         sieved_gdf.reset_index(drop=True,
                                inplace=True)
-
         return sieved_gdf
 
     @staticmethod
@@ -187,6 +186,9 @@ class Postprocessor:
         :returns: simplified geodataframe
         :rtype: gpd.GeoDataFrame
         """
+        if gdf.empty:
+            return gdf
+
         topo = tp.Topology(gdf, prequantize=False)
         simplified_gdf = topo.toposimplify(utils.RESOLUTION + .05).to_gdf(crs=f'EPSG:{self.epsg_code}')
         return simplified_gdf
