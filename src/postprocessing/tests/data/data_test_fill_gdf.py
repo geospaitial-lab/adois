@@ -2,6 +2,7 @@ import geopandas as gpd
 import shapely.affinity
 from shapely.geometry import Polygon
 
+
 polygon_exterior_coordinates = [[-14., -14.],
                                 [14., -14.],
                                 [14., 14.],
