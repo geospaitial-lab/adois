@@ -135,7 +135,11 @@ class Data(BaseModel):
                 raise BoundingBoxError(bounding_box=value)
         else:
             boundary_gdf = gpd.read_file(values['boundary_shape_file_path'])
-            value = boundary_gdf.total_bounds.astype(np.int32)
+            boundary_gdf_bounding_box = boundary_gdf.total_bounds
+            value = [int(np.floor(boundary_gdf_bounding_box[0])),
+                     int(np.floor(boundary_gdf_bounding_box[1])),
+                     int(np.ceil(boundary_gdf_bounding_box[2])),
+                     int(np.ceil(boundary_gdf_bounding_box[3]))]
         value = tuple(value)
         return value
 
