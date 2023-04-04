@@ -64,6 +64,7 @@ class Data(BaseModel):
     epsg_code: int
     boundary_shape_file_path: Optional[str] = None
     bounding_box: Optional[List[int]]
+    clip_border: Optional[bool] = False
 
     @validator('epsg_code')
     def validate_epsg_code(cls,
@@ -141,6 +142,19 @@ class Data(BaseModel):
                      int(np.ceil(boundary_gdf_bounding_box[2])),
                      int(np.ceil(boundary_gdf_bounding_box[3]))]
         value = tuple(value)
+        return value
+
+    @validator('clip_border')
+    def validate_clip_border(cls, value):
+        """
+        | Validates clip_border defined in the config file.
+
+        :param bool or None value: clip_border
+        :returns: validated clip_border
+        :rtype: bool
+        """
+        if value is None:
+            value = False
         return value
 
 
@@ -344,6 +358,8 @@ class ConfigParser:
             self.config_dict['data']['boundary_shape_file_path'] = self.args.boundary_shape_file_path
         if hasattr(self.args, 'bounding_box'):
             self.config_dict['data']['bounding_box'] = self.args.bounding_box
+        if hasattr(self.args, 'clip_border'):
+            self.config_dict['data']['clip_border'] = self.args.clip_border
 
         if hasattr(self.args, 'sieve_size'):
             self.config_dict['postprocessing']['sieve_size'] = self.args.sieve_size
