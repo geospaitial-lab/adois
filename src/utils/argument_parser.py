@@ -63,6 +63,17 @@ def get_argument_parser():
                                  dest='bounding_box',
                                  default=argparse.SUPPRESS,
                                  help='set the bounding box (x_1, y_1, x_2, y_2) to None')
+    argument_parser.add_argument('--clip_border',
+                                 action='store_true',
+                                 default=argparse.SUPPRESS,
+                                 help='set clip_border (the border of the mask is clipped to increase quality) '
+                                      'to True')
+    argument_parser.add_argument('--no-clip_border',
+                                 action='store_false',
+                                 dest='clip_border',
+                                 default=argparse.SUPPRESS,
+                                 help='set clip_border (the border of the mask is clipped to increase quality) '
+                                      'to False')
     # endregion
 
     # region postprocessing
