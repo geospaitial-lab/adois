@@ -2,7 +2,7 @@ import logging
 import sys
 import traceback as tb
 
-import src.utils as utils
+import src.utils.settings as settings
 
 logger = logging.getLogger('main_logger')
 
@@ -42,7 +42,7 @@ def set_exception_hook():
     :returns: None
     :rtype: None
     """
-    if utils.DEBUG:
+    if settings.DEBUG:
         sys.excepthook = exception_handler_debug
     else:
         sys.excepthook = exception_handler_production
