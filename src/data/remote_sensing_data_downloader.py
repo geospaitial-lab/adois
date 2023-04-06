@@ -11,22 +11,24 @@ class RemoteSensingDataDownloader:
     def __init__(self,
                  wms_url,
                  wms_layer,
-                 epsg_code):
+                 epsg_code,
+                 clip_border):
         """
         | Constructor method
 
         :param str wms_url: url of the web map service
         :param str wms_layer: layer of the web map service
         :param int epsg_code: epsg code of the coordinate reference system
+        :param bool clip_border: if True, the image size is increased by the border size
         :returns: None
         :rtype: None
         """
         self.wms = WebMapService(wms_url)
         self.wms_layer = wms_layer
         self.epsg_code = epsg_code
+        self.clip_border = clip_border
 
-    @staticmethod
-    def get_bounding_box(coordinates):
+    def get_bounding_box(self, coordinates):
         """
         | Returns the bounding box of a tile given its coordinates of the top left corner.
 
@@ -34,10 +36,16 @@ class RemoteSensingDataDownloader:
         :returns: bounding_box (x_1, y_1, x_2, y_2)
         :rtype: (int, int, int, int)
         """
-        bounding_box = (coordinates[0],
-                        coordinates[1] - utils.IMAGE_SIZE_METERS,
-                        coordinates[0] + utils.IMAGE_SIZE_METERS,
-                        coordinates[1])
+        if self.clip_border:
+            bounding_box = (coordinates[0] - utils.IMAGE_SIZE_METERS * utils.BORDER_SIZE // utils.IMAGE_SIZE,
+                            coordinates[1] - utils.IMAGE_SIZE_METERS * (1 + utils.BORDER_SIZE // utils.IMAGE_SIZE),
+                            coordinates[0] + utils.IMAGE_SIZE_METERS * (1 + utils.BORDER_SIZE // utils.IMAGE_SIZE),
+                            coordinates[1] + utils.IMAGE_SIZE_METERS * utils.BORDER_SIZE // utils.IMAGE_SIZE)
+        else:
+            bounding_box = (coordinates[0],
+                            coordinates[1] - utils.IMAGE_SIZE_METERS,
+                            coordinates[0] + utils.IMAGE_SIZE_METERS,
+                            coordinates[1])
         return bounding_box
 
     def get_response(self, bounding_box):
@@ -53,7 +61,10 @@ class RemoteSensingDataDownloader:
                                    srs=f'EPSG:{self.epsg_code}',
                                    bbox=bounding_box,
                                    format='image/tiff',
-                                   size=(utils.IMAGE_SIZE, utils.IMAGE_SIZE),
+                                   size=(utils.IMAGE_SIZE + 2 * utils.BORDER_SIZE
+                                         if self.clip_border else utils.IMAGE_SIZE,
+                                         utils.IMAGE_SIZE + 2 * utils.BORDER_SIZE
+                                         if self.clip_border else utils.IMAGE_SIZE),
                                    bgcolor='#000000').read()
         return response
 
