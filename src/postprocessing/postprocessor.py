@@ -9,7 +9,7 @@ import rasterio.features
 import topojson as tp
 from shapely.geometry import Polygon
 
-import src.utils as utils
+import src.utils.settings as settings
 
 pd.options.mode.chained_assignment = None
 
@@ -74,8 +74,8 @@ class Postprocessor:
         """
         transform = rio.transform.from_origin(west=coordinates[0],
                                               north=coordinates[1],
-                                              xsize=utils.RESOLUTION,
-                                              ysize=utils.RESOLUTION)
+                                              xsize=settings.RESOLUTION,
+                                              ysize=settings.RESOLUTION)
         vectorized_mask = rio.features.shapes(mask, transform=transform)
 
         features = [{'properties': {'class': Postprocessor.CLASS_MAP.get(int(value))}, 'geometry': shape}
@@ -190,7 +190,7 @@ class Postprocessor:
             return gdf
 
         topo = tp.Topology(gdf, prequantize=False)
-        simplified_gdf = topo.toposimplify(utils.RESOLUTION).to_gdf(crs=f'EPSG:{self.epsg_code}')
+        simplified_gdf = topo.toposimplify(settings.RESOLUTION).to_gdf(crs=f'EPSG:{self.epsg_code}')
         return simplified_gdf
 
     def clip_gdf(self, gdf):
