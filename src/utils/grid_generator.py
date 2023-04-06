@@ -1,7 +1,7 @@
 import geopandas as gpd
 from shapely.geometry import Polygon
 
-import src.utils as utils
+import src.utils.settings as settings
 
 
 class GridGenerator:
@@ -30,8 +30,8 @@ class GridGenerator:
         """
         coordinates = []
 
-        bounding_box = (self.bounding_box[0] - (self.bounding_box[0] % utils.IMAGE_SIZE_METERS),
-                        self.bounding_box[1] - (self.bounding_box[1] % utils.IMAGE_SIZE_METERS),
+        bounding_box = (self.bounding_box[0] - (self.bounding_box[0] % settings.IMAGE_SIZE_METERS),
+                        self.bounding_box[1] - (self.bounding_box[1] % settings.IMAGE_SIZE_METERS),
                         self.bounding_box[2],
                         self.bounding_box[3])
 
