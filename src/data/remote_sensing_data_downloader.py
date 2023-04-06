@@ -4,7 +4,7 @@ import numpy as np
 from PIL import Image
 from owslib.wms import WebMapService
 
-import src.utils as utils
+import src.utils.settings as settings
 
 
 class RemoteSensingDataDownloader:
@@ -37,14 +37,16 @@ class RemoteSensingDataDownloader:
         :rtype: (int, int, int, int)
         """
         if self.clip_border:
-            bounding_box = (coordinates[0] - utils.IMAGE_SIZE_METERS * utils.BORDER_SIZE // utils.IMAGE_SIZE,
-                            coordinates[1] - utils.IMAGE_SIZE_METERS * (1 + utils.BORDER_SIZE // utils.IMAGE_SIZE),
-                            coordinates[0] + utils.IMAGE_SIZE_METERS * (1 + utils.BORDER_SIZE // utils.IMAGE_SIZE),
-                            coordinates[1] + utils.IMAGE_SIZE_METERS * utils.BORDER_SIZE // utils.IMAGE_SIZE)
+            bounding_box = (coordinates[0] - settings.IMAGE_SIZE_METERS * settings.BORDER_SIZE // settings.IMAGE_SIZE,
+                            coordinates[1] - settings.IMAGE_SIZE_METERS * (1 + settings.BORDER_SIZE //
+                                                                           settings.IMAGE_SIZE),
+                            coordinates[0] + settings.IMAGE_SIZE_METERS * (1 + settings.BORDER_SIZE //
+                                                                           settings.IMAGE_SIZE),
+                            coordinates[1] + settings.IMAGE_SIZE_METERS * settings.BORDER_SIZE // settings.IMAGE_SIZE)
         else:
             bounding_box = (coordinates[0],
-                            coordinates[1] - utils.IMAGE_SIZE_METERS,
-                            coordinates[0] + utils.IMAGE_SIZE_METERS,
+                            coordinates[1] - settings.IMAGE_SIZE_METERS,
+                            coordinates[0] + settings.IMAGE_SIZE_METERS,
                             coordinates[1])
         return bounding_box
 
@@ -61,10 +63,10 @@ class RemoteSensingDataDownloader:
                                    srs=f'EPSG:{self.epsg_code}',
                                    bbox=bounding_box,
                                    format='image/tiff',
-                                   size=(utils.IMAGE_SIZE + 2 * utils.BORDER_SIZE
-                                         if self.clip_border else utils.IMAGE_SIZE,
-                                         utils.IMAGE_SIZE + 2 * utils.BORDER_SIZE
-                                         if self.clip_border else utils.IMAGE_SIZE),
+                                   size=(settings.IMAGE_SIZE + 2 * settings.BORDER_SIZE
+                                         if self.clip_border else settings.IMAGE_SIZE,
+                                         settings.IMAGE_SIZE + 2 * settings.BORDER_SIZE
+                                         if self.clip_border else settings.IMAGE_SIZE),
                                    bgcolor='#000000').read()
         return response
 
