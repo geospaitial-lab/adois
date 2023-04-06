@@ -26,7 +26,7 @@ class Inference:
         :rtype: np.ndarray[np.uint8]
         """
         model_input = np.expand_dims(image, axis=0)
-        mask = self.model.run([], {self.model_input_name: model_input})
+        mask = np.array(self.model.run([], {self.model_input_name: model_input}))
         mask = np.squeeze(mask)
         mask = np.argmax(mask, axis=-1).astype(np.uint8)
         return mask
