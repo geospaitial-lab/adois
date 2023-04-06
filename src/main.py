@@ -98,15 +98,18 @@ def main():
 
     rsdd_rgb = RemoteSensingDataDownloader(wms_url=config.data.rgb.wms_url,
                                            wms_layer=config.data.rgb.wms_layer,
-                                           epsg_code=config.data.epsg_code)
+                                           epsg_code=config.data.epsg_code,
+                                           clip_border=config.data.clip_border)
     logger.debug('RemoteSensingDataDownloader (rgb) initialized')
 
     rsdd_nir = RemoteSensingDataDownloader(wms_url=config.data.nir.wms_url,
                                            wms_layer=config.data.nir.wms_layer,
-                                           epsg_code=config.data.epsg_code)
+                                           epsg_code=config.data.epsg_code,
+                                           clip_border=config.data.clip_border)
     logger.debug('RemoteSensingDataDownloader (nir) initialized')
 
-    inference = Inference('data/model/model.onnx')
+    inference = Inference(model_path='data/model/model.onnx',
+                          clip_border=config.data.clip_border)
     logger.debug('Inference initialized')
 
     # noinspection PyTypeChecker
