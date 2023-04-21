@@ -11,6 +11,8 @@
 - `--no-boundary_shape_file_path`: no arguments
 - `--bounding_box`: list of int
 - `--no-bounding_box`: no arguments
+- `--clip_border`: no arguments
+- `--no-clip_border`: no arguments
 
 ## postprocessing
 
