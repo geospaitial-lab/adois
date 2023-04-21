@@ -55,12 +55,12 @@ Werden beide Parameter definiert, wird das Gebiet des Shape Files genutzt.
 ```
 
 - ### sieve_size
-  - **type:** int (*optional*, ***default:*** null, **valid range:** 0 <= sieve_size <= 10  )
+  - **type:** int (*optional*, ***default:*** null, **valid range:** 0 <= sieve_size <= 10)
   - Maximale Größe der Polygone in Quadratmetern, die aus dem Shape File entfernt werden sollen
     (Löcher dieser Größe in Polygonen werden aufgefüllt)
 
 - ### simplify
-  - **type:** bool (*optional*, ***default:*** false)  
+  - **type:** bool (*optional*, ***default:*** false)
   - Anwendung des Douglas Peucker Algorithmus, um die Datenmenge des Shape Files zu reduzieren
 
 ## aggregation
@@ -111,4 +111,4 @@ Werden beide Parameter definiert, wird das Gebiet des Shape Files genutzt.
 
 - ### export_raw_shape_file
   - **type:** bool (*optional*, ***default:*** false)
-  - zusätzlicher Export des Shape Files ohne Nachbearbeitung
+  - zusätzlicher Export des Shape Files ohne Postprocessing
