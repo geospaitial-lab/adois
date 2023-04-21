@@ -20,7 +20,7 @@ Das Modell ist auf manuell erhobenen Daten des [Emschergenossenschaft Lippeverba
 
 # Installation
 
-**Hardwarevoraussetzungen:** 8GB RAM
+**Hardwarevoraussetzung:** 8GB RAM
 
 Installieren Sie zunächst [Docker](https://docker.com/products/docker-desktop "Get Docker").  
 Laden sie anschließend das [*adois* Dockerfile](https://drive.google.com/uc?export=download&id=19Ogn_3Rm69kKpzq8T9qzL5fkKj7apgw1 "Get adois Dockerfile") herunter.  
