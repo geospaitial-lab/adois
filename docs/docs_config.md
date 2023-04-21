@@ -44,6 +44,11 @@ data:
   - **type:** list of int (*optional*, ***default:*** null)
   - 4 Koordinaten (x_min, y_min, x_max, y_max) des Gebiets
 
+- ### clip_border
+  - **type:** bool (*optional*, ***default:*** false)
+  - Anwendung von Border Clipping, um die Qualität der Versiegelungskarte zu erhöhen  
+    *Hinweis:* Die Hardwarevoraussetzung ändert sich (8GB RAM &rarr; 12GB RAM) und die Laufzeit erhöht sich um 50%.
+
 ***Hinweis:*** Es muss entweder `boundary_shape_file_path` oder `bounding_box` definiert werden.
 Werden beide Parameter definiert, wird das Gebiet des Shape Files genutzt.
 
