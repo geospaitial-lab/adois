@@ -37,12 +37,10 @@ class RemoteSensingDataDownloader:
         :rtype: (int, int, int, int)
         """
         if self.clip_border:
-            bounding_box = (coordinates[0] - settings.IMAGE_SIZE_METERS * settings.BORDER_SIZE // settings.IMAGE_SIZE,
-                            coordinates[1] - settings.IMAGE_SIZE_METERS * (1 + settings.BORDER_SIZE //
-                                                                           settings.IMAGE_SIZE),
-                            coordinates[0] + settings.IMAGE_SIZE_METERS * (1 + settings.BORDER_SIZE //
-                                                                           settings.IMAGE_SIZE),
-                            coordinates[1] + settings.IMAGE_SIZE_METERS * settings.BORDER_SIZE // settings.IMAGE_SIZE)
+            bounding_box = (coordinates[0] - settings.BORDER_SIZE_METERS,
+                            coordinates[1] - settings.IMAGE_SIZE_METERS - settings.BORDER_SIZE_METERS,
+                            coordinates[0] + settings.IMAGE_SIZE_METERS + settings.BORDER_SIZE_METERS,
+                            coordinates[1] + settings.BORDER_SIZE_METERS)
         else:
             bounding_box = (coordinates[0],
                             coordinates[1] - settings.IMAGE_SIZE_METERS,
