@@ -5,7 +5,18 @@ from shapely.geometry import Polygon
 
 
 class Aggregator:
-    DECIMAL_PLACES = 2
+    ATTRIBUTES = OrderedDict()
+    ATTRIBUTES['area'] = 'float:13.2'
+    ATTRIBUTES['imp_area'] = 'float:13.2'
+    ATTRIBUTES['imp_dens'] = 'float:4.2'
+    ATTRIBUTES['bui_area'] = 'float:13.2'
+    ATTRIBUTES['bui_dens'] = 'float:4.2'
+    ATTRIBUTES['pav_area'] = 'float:13.2'
+    ATTRIBUTES['pav_dens'] = 'float:4.2'
+    ATTRIBUTES['bui_imp_r'] = 'float:4.2'
+    ATTRIBUTES['pav_imp_r'] = 'float:4.2'
+    SCHEMA = {'properties': ATTRIBUTES,
+              'geometry': 'Polygon'}
 
     def __init__(self,
                  gdf,
@@ -24,7 +35,7 @@ class Aggregator:
     @staticmethod
     def evaluate_stats(aggregation_gdf, aggregated_gdf):
         """
-        | Returns an geodataframe with statistical values of the aggregated geodataframe and its shape file schema.
+        | Returns an geodataframe with statistical values of the aggregated geodataframe.
         | Each polygon has the following attributes:
         | - area, imp_area, imp_dens
         | - bui_area, bui_dens
@@ -33,8 +44,8 @@ class Aggregator:
 
         :param gpd.GeoDataFrame aggregation_gdf: geodataframe for aggregation
         :param gpd.GeoDataFrame aggregated_gdf: aggregated geodataframe
-        :returns: geodataframe with statistical values of the aggregated geodataframe and its shape file schema
-        :rtype: (gpd.GeoDataFrame, dict[str, OrderedDict[str, str] or str])
+        :returns: geodataframe with statistical values of the aggregated geodataframe
+        :rtype: gpd.GeoDataFrame
         """
         for index in aggregation_gdf['aggregation_id']:
             area = float(aggregation_gdf.loc[aggregation_gdf['aggregation_id'] == index].area)
@@ -65,21 +76,7 @@ class Aggregator:
             aggregation_gdf.at[index, 'pav_imp_r'] = pav_imp_ratio
 
         aggregation_gdf = aggregation_gdf.drop(columns='aggregation_id')
-
-        attributes = OrderedDict()
-        attributes['area'] = f'float:13.{Aggregator.DECIMAL_PLACES}'
-        attributes['imp_area'] = f'float:13.{Aggregator.DECIMAL_PLACES}'
-        attributes['imp_dens'] = f'float:13.{Aggregator.DECIMAL_PLACES}'
-        attributes['bui_area'] = f'float:13.{Aggregator.DECIMAL_PLACES}'
-        attributes['bui_dens'] = f'float:13.{Aggregator.DECIMAL_PLACES}'
-        attributes['pav_area'] = f'float:13.{Aggregator.DECIMAL_PLACES}'
-        attributes['pav_dens'] = f'float:13.{Aggregator.DECIMAL_PLACES}'
-        attributes['bui_imp_r'] = f'float:13.{Aggregator.DECIMAL_PLACES}'
-        attributes['pav_imp_r'] = f'float:13.{Aggregator.DECIMAL_PLACES}'
-        schema = {'properties': attributes,
-                  'geometry': 'Polygon'}
-
-        return aggregation_gdf, schema
+        return aggregation_gdf
 
     def mask_gdf(self, gdf):
         """
@@ -102,7 +99,7 @@ class Aggregator:
                       aggregation_gdf,
                       boundary_gdf):
         """
-        | Returns an geodataframe with statistical values of the aggregated geodataframe and its shape file schema.
+        | Returns an geodataframe with statistical values of the aggregated geodataframe.
         | Each polygon has the following attributes:
         | - area, imp_area, imp_dens
         | - bui_area, bui_dens
@@ -111,8 +108,8 @@ class Aggregator:
 
         :param gpd.GeoDataFrame aggregation_gdf: geodataframe for aggregation
         :param gpd.GeoDataFrame or None boundary_gdf: boundary geodataframe
-        :returns: geodataframe with statistical values of the aggregated geodataframe and its shape file schema
-        :rtype: (gpd.GeoDataFrame, dict[str, OrderedDict[str, str] or str])
+        :returns: geodataframe with statistical values of the aggregated geodataframe
+        :rtype: gpd.GeoDataFrame
         """
         aggregation_gdf = aggregation_gdf[['geometry']]
         aggregation_gdf['aggregation_id'] = aggregation_gdf.index
@@ -128,7 +125,7 @@ class Aggregator:
                                      how='intersection',
                                      keep_geom_type=False)
 
-        aggregation_gdf, schema = self.evaluate_stats(aggregation_gdf=aggregation_gdf,
-                                                      aggregated_gdf=aggregated_gdf)
+        aggregation_gdf = self.evaluate_stats(aggregation_gdf=aggregation_gdf,
+                                              aggregated_gdf=aggregated_gdf)
 
-        return aggregation_gdf, schema
+        return aggregation_gdf

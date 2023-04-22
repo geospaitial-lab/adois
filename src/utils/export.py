@@ -5,6 +5,7 @@ from pathlib import Path
 import geopandas as gpd
 import yaml
 
+from src.aggregation import Aggregator
 from src.postprocessing import Postprocessor
 
 
@@ -131,11 +132,11 @@ def export(output_dir_path,
     :param gpd.GeoDataFrame postprocessed_gdf: postprocessed geodataframe
     :param str prefix: prefix of the shape file names
     :param list[int] tile_sizes: tile sizes of the grid in meters for aggregation
-    :param list[(gpd.GeoDataFrame, dict[str, OrderedDict[str, str] or str])] aggregation_gdfs_grid: geodataframes
-        with statistical values of the aggregated geodataframe and its shape file schema
+    :param list[gpd.GeoDataFrame] aggregation_gdfs_grid: geodataframes with statistical values of
+        the aggregated geodataframe
     :param list[str] shape_file_paths: paths to the shape files for aggregation
-    :param list[(gpd.GeoDataFrame, dict[str, OrderedDict[str, str] or str])] aggregation_gdfs_shape_file: geodataframes
-        with statistical values of the aggregated geodataframe and its shape file schema
+    :param list[gpd.GeoDataFrame] aggregation_gdfs_shape_file: geodataframes with statistical values of
+        the aggregated geodataframe
     :param dict[str, Any] metadata: metadata
     :returns: None
     :rtype: None
@@ -155,12 +156,12 @@ def export(output_dir_path,
     for index, tile_size in enumerate(tile_sizes):
         path = (output_dir_path / 'impervious_surfaces_aggregated' / f'grid_{tile_size}m' /
                 f'{prefix}_impervious_surfaces_aggregated_grid_{tile_size}m.shp')
-        aggregation_gdfs_grid[index][0].to_file(str(path), schema=aggregation_gdfs_grid[index][1])
+        aggregation_gdfs_grid[index].to_file(str(path), schema=Aggregator.SCHEMA)
 
     for index, shape_file_path in enumerate(shape_file_paths):
         path = (output_dir_path / 'impervious_surfaces_aggregated' / Path(shape_file_path).stem /
                 f'{prefix}_impervious_surfaces_aggregated_{Path(shape_file_path).stem}.shp')
-        aggregation_gdfs_shape_file[index][0].to_file(str(path), schema=aggregation_gdfs_shape_file[index][1])
+        aggregation_gdfs_shape_file[index].to_file(str(path), schema=Aggregator.SCHEMA)
 
     with open(output_dir_path / 'metadata.yaml', 'w') as yaml_file:
         yaml.dump(data=metadata,
