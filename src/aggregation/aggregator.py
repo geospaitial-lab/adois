@@ -35,7 +35,7 @@ class Aggregator:
     @staticmethod
     def evaluate_stats(aggregation_gdf, aggregated_gdf):
         """
-        | Returns an geodataframe with statistical values of the aggregated geodataframe.
+        | Returns a geodataframe with statistical values of the aggregated geodataframe.
         | Each polygon has the following attributes:
         | - area, imp_area, imp_dens
         | - bui_area, bui_dens
@@ -99,7 +99,7 @@ class Aggregator:
                       aggregation_gdf,
                       boundary_gdf):
         """
-        | Returns an geodataframe with statistical values of the aggregated geodataframe.
+        | Returns a geodataframe with statistical values of the aggregated geodataframe.
         | Each polygon has the following attributes:
         | - area, imp_area, imp_dens
         | - bui_area, bui_dens
