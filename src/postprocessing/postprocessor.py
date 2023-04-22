@@ -1,4 +1,5 @@
 import re
+from collections import OrderedDict
 from pathlib import Path
 
 import geopandas as gpd
@@ -15,7 +16,11 @@ pd.options.mode.chained_assignment = None
 
 
 class Postprocessor:
+    ATTRIBUTES = OrderedDict()
+    ATTRIBUTES['class'] = 'str:7'
     CLASS_MAP = {1: 'Hochbau', 2: 'Tiefbau'}
+    SCHEMA = {'properties': ATTRIBUTES,
+              'geometry': 'Polygon'}
 
     def __init__(self,
                  output_dir_path,
@@ -58,7 +63,7 @@ class Postprocessor:
         if features:
             shape_file_path = sub_dir_path / f'{coordinates[0]}_{coordinates[1]}.shp'
             gdf = gpd.GeoDataFrame.from_features(features, crs=f'EPSG:{self.epsg_code}')
-            gdf.to_file(str(shape_file_path))
+            gdf.to_file(str(shape_file_path), schema=Postprocessor.SCHEMA)
 
     def vectorize_mask(self,
                        mask,
