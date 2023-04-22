@@ -49,4 +49,5 @@ class Inference:
 
         if self.clip_border:
             mask = self.clip_mask(mask)
+
         return mask
