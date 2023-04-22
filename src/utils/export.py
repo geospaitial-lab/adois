@@ -5,6 +5,8 @@ from pathlib import Path
 import geopandas as gpd
 import yaml
 
+from src.postprocessing import Postprocessor
+
 
 def create_tiles_dir(output_dir_path):
     """
@@ -142,13 +144,13 @@ def export(output_dir_path,
     shape_file_path = output_dir_path / 'impervious_surfaces' / f'{prefix}_impervious_surfaces.shp'
 
     if postprocessed_gdf is not None:
-        postprocessed_gdf.to_file(str(shape_file_path))
+        postprocessed_gdf.to_file(str(shape_file_path), schema=Postprocessor.SCHEMA)
     else:
-        raw_gdf.to_file(str(shape_file_path))
+        raw_gdf.to_file(str(shape_file_path), schema=Postprocessor.SCHEMA)
 
     if export_raw_shape_file:
         raw_shape_file_path = output_dir_path / 'impervious_surfaces_raw' / f'{prefix}_impervious_surfaces_raw.shp'
-        raw_gdf.to_file(str(raw_shape_file_path))
+        raw_gdf.to_file(str(raw_shape_file_path), schema=Postprocessor.SCHEMA)
 
     for index, tile_size in enumerate(tile_sizes):
         path = (output_dir_path / 'impervious_surfaces_aggregated' / f'grid_{tile_size}m' /
