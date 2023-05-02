@@ -14,14 +14,11 @@ def get_argument_parser():
                                  type=str,
                                  help='path to the config file (.yaml)')
 
-    # region data
     argument_parser.add_argument('-d', '--debug',
                                  action='store_true',
                                  help='debug mode')
-    argument_parser.add_argument('-ict', '--ignore_cached_tiles',
-                                 action='store_true',
-                                 help='ignore cached tiles')
 
+    # region data
     argument_parser.add_argument('--wms_url_rgb',
                                  type=str,
                                  default=argparse.SUPPRESS,
@@ -73,6 +70,17 @@ def get_argument_parser():
                                  dest='clip_border',
                                  default=argparse.SUPPRESS,
                                  help='set clip_border (the border of the mask is clipped to increase quality) '
+                                      'to False')
+    argument_parser.add_argument('--ignore_cached_tiles',
+                                 action='store_true',
+                                 default=argparse.SUPPRESS,
+                                 help='set ignore_cached_tiles (already processed tiles are ignored) '
+                                      'to True')
+    argument_parser.add_argument('--no-ignore_cached_tiles',
+                                 action='store_false',
+                                 dest='ignore_cached_tiles',
+                                 default=argparse.SUPPRESS,
+                                 help='set ignore_cached_tiles (already processed tiles are ignored) '
                                       'to False')
     # endregion
 
