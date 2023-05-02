@@ -100,7 +100,7 @@ Werden beide Parameter definiert, wird das Gebiet des Shape Files genutzt.
   - **type:** str
   - Pfad zum Ausgabeverzeichnis  
     *Hinweis:* Das Ausgabeverzeichnis muss leer sein, kann jedoch ein leeres, bereits genutztes Ausgabeverzeichnis sein.
-    Bereits verarbeitete Gebiete sind dort in dem ausgeblendeten `.tiles` Verzeichnis gecached.
+    Bereits verarbeitete Kacheln sind dort im ausgeblendeten `.tiles` Verzeichnis gespeichert.
     Dieses kann wie folgt eingeblendet werden:  
     **Mac:**
     <kbd>cmd</kbd> + <kbd>Shift</kbd> + <kbd>.</kbd>  
