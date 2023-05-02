@@ -20,6 +20,7 @@ data:
     - 364210
     - 5716455
   clip_border: false
+  ignore_cached_tiles: false
 ```
 
 - ### wms_url
