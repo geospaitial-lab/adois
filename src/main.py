@@ -85,7 +85,7 @@ def main():
         coordinates = coordinator.get_coordinates(bounding_box=config.data.bounding_box)
     logger.debug('Coordinates calculated')
 
-    if not args.ignore_cached_tiles:
+    if not config.data.ignore_cached_tiles:
         filtered_coordinates = \
             coordinator.filter_cached_coordinates(coordinates=coordinates,
                                                   output_dir_path=config.export_settings.output_dir_path)
