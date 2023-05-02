@@ -65,6 +65,7 @@ class Data(BaseModel):
     boundary_shape_file_path: Optional[str] = None
     bounding_box: Optional[List[int]]
     clip_border: Optional[bool] = False
+    ignore_cached_tiles: Optional[bool] = False
 
     @validator('epsg_code')
     def validate_epsg_code(cls,
@@ -151,6 +152,19 @@ class Data(BaseModel):
 
         :param bool or None value: clip_border
         :returns: validated clip_border
+        :rtype: bool
+        """
+        if value is None:
+            value = False
+        return value
+
+    @validator('ignore_cached_tiles')
+    def validate_ignore_cached_tiles(cls, value):
+        """
+        | Validates ignore_cached_tiles defined in the config file.
+
+        :param bool or None value: ignore_cached_tiles
+        :returns: validated ignore_cached_tiles
         :rtype: bool
         """
         if value is None:
@@ -360,6 +374,8 @@ class ConfigParser:
             self.config_dict['data']['bounding_box'] = self.args.bounding_box
         if hasattr(self.args, 'clip_border'):
             self.config_dict['data']['clip_border'] = self.args.clip_border
+        if hasattr(self.args, 'ignore_cached_tiles'):
+            self.config_dict['data']['ignore_cached_tiles'] = self.args.ignore_cached_tiles
 
         if hasattr(self.args, 'sieve_size'):
             self.config_dict['postprocessing']['sieve_size'] = self.args.sieve_size
