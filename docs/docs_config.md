@@ -50,6 +50,10 @@ data:
   - Anwendung von Border Clipping, um die Qualität der Versiegelungskarte zu erhöhen  
     *Hinweis:* Die Hardwarevoraussetzung ändert sich (8GB RAM &rarr; 12GB RAM) und die Laufzeit erhöht sich um 50%.
 
+- ### ignore_cached_tiles
+  - **type:** bool (*optional*, ***default:*** false)
+  - Neuberechnung bereits verarbeiteter Kacheln (`.tiles` Verzeichnis)
+
 ***Hinweis:*** Es muss entweder `boundary_shape_file_path` oder `bounding_box` definiert werden.
 Werden beide Parameter definiert, wird das Gebiet des Shape Files genutzt.
 
