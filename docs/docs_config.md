@@ -19,6 +19,7 @@ data:
     - 5715455
     - 364210
     - 5716455
+  clip_border: false
 ```
 
 - ### wms_url
