@@ -13,6 +13,8 @@
 - `--no-bounding_box`: no arguments
 - `--clip_border`: no arguments
 - `--no-clip_border`: no arguments
+- `--ignore_cached_tiles`: no arguments
+- `--no-ignore_cached_tiles`: no arguments
 
 ## postprocessing
 
