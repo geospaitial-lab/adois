@@ -117,12 +117,6 @@ python3 -m src.main </Pfad/zu/config.yaml>
 
 </details>
 
-**Options:**
-- `--debug`, `-d`: Debug Mode
-- `--ignore_cached_tiles`, `-ict`: Überschreiben bereits verarbeiteter Gebiete
-- zudem können alle Parameter des Config Files mit der entsprechenden Flag überschrieben werden.
-  Die Options werden in der [Dokumentation](docs/docs_options.md "Options Dokumentation") erläutert.
-
 # Ergebnisse
 
 Die Versiegelungskarten inklusive der Aggregationen werden als Shape File ins [Ausgabeverzeichnis](docs/docs_config.md#output_dir_path "Config File Ausgabeverzeichnis") exportiert.  
