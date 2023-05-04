@@ -47,7 +47,7 @@ class Postprocessor:
                         coordinates):
         """
         | Exports features of a tile as a shape file (.shp) in a subdirectory to the .tiles directory.
-            Each subdirectory name is in the following schema: x_y
+        | Each subdirectory name is in the following schema: x_y
 
         :param list[dict[str, dict[str, Any]]] features: features
         :param (int, int) coordinates: coordinates (x, y)
