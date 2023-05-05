@@ -78,7 +78,8 @@ pip install -r requirements.txt
 
 # Ausführen
 
-*adois* wird durch ein Config File (.yaml) parametrisiert. Die Parameter werden in der [Dokumentation](docs/docs_config.md "Config File Dokumentation") erläutert.
+Laden Sie zunächst das [*adois* Config File](https://drive.google.com/uc?export=download&id=1YrJnD0F7qyzlna5vhFvIOEm9DO6Y3PLp "Get adois config file") herunter.
+Die Beispielwerte der Parameter entsprechen denen des [Example Config Files](example_config.yaml "Example Config File") und werden in der [Dokumentation](docs/docs_config.md "Config File Dokumentation") erläutert.
 
 Um die Software auszuführen, müssen Sie die lokalen Pfade Ihres Systems in den *adois* Container mounten.  
 Verwenden Sie dazu die `-v` Flag und `</lokaler/Pfad>:</Pfad/im/Container>`.  
