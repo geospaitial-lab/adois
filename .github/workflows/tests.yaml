@@ -1,6 +1,6 @@
 name: Tests
 
-on: [push, pull_request]
+on: [push, pull_request]  # skip workflow with [skip ci]
 
 jobs:
   test:
