@@ -1,13 +1,22 @@
 FROM python:3.8-slim-bullseye
 
-RUN apt-get update && apt-get install -y git curl
-RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
-RUN apt-get install -y git-lfs
-RUN git lfs install
+ARG MODEL_ID="18aUSp1UYW5vVXbwZlVrRJHchuB7uvKxj"
 
-RUN git clone https://github.com/mrsmrynk/adois --depth 1
+RUN apt-get update && \
+    apt-get install -y git wget
 
-RUN python -m pip install -r /adois/requirements.txt --ignore-installed --no-warn-script-location --upgrade
+RUN git clone https://github.com/mrsmrynk/adois --depth 1 && \
+    python -m pip install -r /adois/requirements.txt --ignore-installed --no-warn-script-location --upgrade
+
+RUN wget --load-cookies /tmp/cookies.txt \
+    "https://drive.google.com/uc?export=download&confirm=$( \
+        wget --quiet --save-cookies /tmp/cookies.txt \
+        --keep-session-cookies --no-check-certificate \
+        'https://drive.google.com/uc?export=download&id=${MODEL_ID}' \
+        -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p' \
+    )&id=${MODEL_ID}" \
+    -O /adois/data/model/model.onnx && \
+    rm -rf /tmp/cookies.txt
 
 WORKDIR /adois
 
