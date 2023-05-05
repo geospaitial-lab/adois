@@ -37,7 +37,7 @@ class Postprocessor:
         :returns: None
         :rtype: None
         """
-        self.tiles_dir_path = Path(output_dir_path) / '.tiles'
+        self.tiles_dir_path = Path(output_dir_path) / 'cached_tiles'
         self.bounding_box = bounding_box
         self.epsg_code = epsg_code
         self.boundary_gdf = boundary_gdf
@@ -46,7 +46,7 @@ class Postprocessor:
                         features,
                         coordinates):
         """
-        | Exports features of a tile as a shape file (.shp) in a subdirectory to the .tiles directory.
+        | Exports features of a tile as a shape file (.shp) in a subdirectory to the cached_tiles directory.
         | Each subdirectory name is in the following schema: x_y
 
         :param list[dict[str, dict[str, Any]]] features: features
@@ -70,7 +70,7 @@ class Postprocessor:
                        coordinates):
         """
         | Exports a shape file (.shp) of the polygons in the vectorized mask given its coordinates
-            of the top left corner in a subdirectory to the .tiles directory.
+            of the top left corner in a subdirectory to the cached_tiles directory.
 
         :param np.ndarray[np.uint8] mask: mask
         :param (int, int) coordinates: coordinates (x, y)
