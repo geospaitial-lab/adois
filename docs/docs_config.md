@@ -53,7 +53,7 @@ data:
 
 - ### ignore_cached_tiles
   - **type:** bool (*optional*, ***default:*** false)
-  - Neuberechnung bereits verarbeiteter Kacheln (`.tiles` Verzeichnis)
+  - Neuberechnung bereits verarbeiteter Kacheln (`cached_tiles` Verzeichnis)
 
 ***Hinweis:*** Es muss entweder `boundary_shape_file_path` oder `bounding_box` definiert werden.
 Werden beide Parameter definiert, wird das Gebiet des Shape Files genutzt.
@@ -104,17 +104,8 @@ Werden beide Parameter definiert, wird das Gebiet des Shape Files genutzt.
 - ### output_dir_path
   - **type:** str
   - Pfad zum Ausgabeverzeichnis  
-    *Hinweis:* Das Ausgabeverzeichnis muss leer sein, kann jedoch ein leeres, bereits genutztes Ausgabeverzeichnis sein.
-    Bereits verarbeitete Kacheln sind dort im ausgeblendeten `.tiles` Verzeichnis gespeichert.
-    Dieses kann wie folgt eingeblendet werden:  
-    **Mac:**
-    <kbd>cmd</kbd> + <kbd>Shift</kbd> + <kbd>.</kbd>  
-    **Linux:**
-    <kbd>Strg</kbd> + <kbd>H</kbd>  
-    **Windows 11:**
-    `Anzeigen` &rarr; `Einblenden` &rarr; `Ausgeblendete Elemente`  
-    **Windows 10 & 8:**
-    `Ansicht` &rarr; `Ein-/ ausblenden` &rarr; `Ausgeblendete Elemente`
+    *Hinweis:* Das Ausgabeverzeichnis muss leer sein, kann jedoch ein bereits genutztes Ausgabeverzeichnis sein.
+    Bereits verarbeitete Kacheln sind dort im `cached_tiles` Verzeichnis gespeichert.
 
 - ### prefix
   - **type:** str
