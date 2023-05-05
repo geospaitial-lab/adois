@@ -28,7 +28,7 @@ jobs:
           pytest --cov=./ --cov-report=xml
 
       - name: Upload coverage report to codecov
-        if: ${{ !contains(github.event.head_commit.message, '[skip tests]') }}
+        if: ${{ !contains(github.event.head_commit.message, '[skip coverage report]') }}
         uses: codecov/codecov-action@v3
 
       - name: Lint with flake8
