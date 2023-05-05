@@ -38,18 +38,15 @@ Die entsprechenden Lizenzbedingungen sind [hier](https://hub.docker.com/_/python
 
 ### Virtual Environment
 
-Installieren Sie zunächst [Git](https://git-scm.com/downloads "Get Git"), [Git LFS](https://git-lfs.github.com "Get Git LFS") und [Python 3.8](https://python.org/downloads "Get Python").  
-Aktivieren Sie Git LFS.
-
-```
-git lfs install
-```
+Installieren Sie zunächst [Git](https://git-scm.com/downloads "Get Git") und [Python 3.8](https://python.org/downloads "Get Python").
 
 Laden Sie anschließend das *adois* Repository in ein beliebiges Arbeitsverzeichnis herunter.
 
 ```
 git clone https://github.com/mrsmrynk/adois --depth 1
 ```
+
+Laden Sie das [*adois* Modell](https://drive.google.com/uc?export=download&id=18aUSp1UYW5vVXbwZlVrRJHchuB7uvKxj "Get adois model") herunter und speichern Sie es in dem Arbeitsverzeichnis unter `data/model/model.onnx` ab.
 
 Wechseln Sie in das *adois* Repository und erstellen Sie nun eine Virtual Environment.
 
