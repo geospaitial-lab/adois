@@ -5,7 +5,7 @@
 
 <div align="center">
 
-[![Tests](https://img.shields.io/github/actions/workflow/status/mrsmrynk/adois/tests.yaml?branch=main&event=push&label=Tests&logo=GitHub)](https://github.com/KLIMA-WH/adois_app/actions/workflows/tests.yaml "Tests Workflow")
+[![Tests](https://img.shields.io/github/actions/workflow/status/mrsmrynk/adois/tests.yaml?branch=main&event=push&label=Tests&logo=GitHub)](https://github.com/mrsmrynk/adois/actions/workflows/tests.yaml "Tests Workflow")
 [![Coverage](https://img.shields.io/codecov/c/github/mrsmrynk/adois/main?label=Coverage&logo=codecov&logoColor=white)](https://app.codecov.io/gh/mrsmrynk/adois "Codecov")
 [![License](https://img.shields.io/github/license/mrsmrynk/adois?color=blue&label=License)](https://gnu.org/licenses "GNU Licenses")
 
