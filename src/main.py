@@ -11,8 +11,8 @@ from src.data import RemoteSensingDataDownloader
 from src.inference import Inference
 from src.postprocessing import Postprocessor
 from src.preprocessing import Preprocessor
-from src.utils import (ConfigParser, Coordinator, create_dir_structure, create_tiles_dir, export, get_argument_parser,
-                       get_metadata, GridGenerator)
+from src.utils import (ConfigParser, Coordinator, create_dir_structure, create_cached_tiles_dir, export,
+                       get_argument_parser, get_metadata, GridGenerator)
 
 
 def main():
@@ -62,7 +62,7 @@ def main():
     # endregion
 
     # region Initializing
-    create_tiles_dir(output_dir_path=config.export_settings.output_dir_path)
+    create_cached_tiles_dir(output_dir_path=config.export_settings.output_dir_path)
     logger.debug('.features directory created')
 
     coordinator = Coordinator()
