@@ -123,27 +123,27 @@ Die Attribute der Shape Files werden in der [Dokumentation](docs/docs_shape_file
 
 <div align="center">
 
-<img src="https://drive.google.com/uc?export=view&id=1xFAJwQzpbiXGUOY6hoqQfidFvMhqwsf1" alt="Impervious surfaces" width="50%">
+<img src="https://imgur.com/D72Nkgz.jpg" alt="Impervious surfaces" width="50%">
 
 </div>
 
 <div align="center">
 
-<img src="https://drive.google.com/uc?export=view&id=1ymBwb8HALGOCWY23ja5iWJQF9w79zi6t" alt="Impervious surfaces Recklinghausen" width="50%">
+<img src="https://imgur.com/Klw2eb2.jpg" alt="Impervious surfaces Recklinghausen" width="50%">
 
 </div>
 
 <div align="center">
 
-<img src="https://drive.google.com/uc?export=view&id=1rf2mvTXes1awHyJ2eG76dcmqj3OTdMD_" alt="Aggregated tiles" width="37.5%">
-<img src="https://drive.google.com/uc?export=view&id=12sOHo3GfVXmZCb_IWwYEKo7uExrWr9AC" alt="Aggregated parcels" width="37.5%">
+<img src="https://imgur.com/0A6eJzd.jpg" alt="Aggregated tiles" width="37.5%">
+<img src="https://imgur.com/Io0OT6C.jpg" alt="Aggregated parcels" width="37.5%">
 
 </div>
 
 <div align="center">
 
-<img src="https://drive.google.com/uc?export=view&id=1lEyeBI0_PmVbNpl9gK013FYJKP7YAKBY" alt="Aggregated tiles Recklinghausen" width="37.5%">
-<img src="https://drive.google.com/uc?export=view&id=1aKBLgvcnKU9nYdcwEJ9Fe1KIcJaeB9ka" alt="Aggregated parcels Recklinghausen" width="37.5%">
+<img src="https://imgur.com/gF0CB27.jpg" alt="Aggregated tiles Recklinghausen" width="37.5%">
+<img src="https://imgur.com/Rqh0OHY.jpg" alt="Aggregated parcels Recklinghausen" width="37.5%">
 
 </div>
 
