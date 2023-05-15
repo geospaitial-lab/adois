@@ -67,22 +67,22 @@ def test_get_valid_coordinates(test_input,
     assert valid_coordinates == expected
 
 
-@pytest.mark.parametrize('test_input, expected', parameters_filter_cached_coordinates_empty_tiles_dir)
+@pytest.mark.parametrize('test_input, expected', parameters_filter_cached_coordinates_empty_cached_tiles_dir)
 def test_filter_cached_coordinates_empty_tiles_dir(test_input,
                                                    expected,
-                                                   output_dir_path_empty_tiles_dir):
+                                                   output_dir_path_empty_cached_tiles_dir):
     """
     | Tests filter_cached_coordinates() with different coordinates.
-    | The .tiles directory is empty.
+    | The cached_tiles directory is empty.
 
     :param list[(int, int)] test_input: coordinates (x, y) of each tile
     :param list[(int, int)] expected: filtered coordinates (x, y) of each tile
-    :param Path output_dir_path_empty_tiles_dir: path to the output directory
+    :param Path output_dir_path_empty_cached_tiles_dir: path to the output directory
     :returns: None
     :rtype: None
     """
     filtered_coordinates = Coordinator.filter_cached_coordinates(coordinates=test_input,
-                                                                 output_dir_path=output_dir_path_empty_tiles_dir)
+                                                                 output_dir_path=output_dir_path_empty_cached_tiles_dir)
 
     for filtered_coordinates_element in filtered_coordinates:
         assert isinstance(filtered_coordinates_element[0], int)
@@ -91,22 +91,23 @@ def test_filter_cached_coordinates_empty_tiles_dir(test_input,
     assert filtered_coordinates == expected
 
 
-@pytest.mark.parametrize('test_input, expected', parameters_filter_cached_coordinates_not_empty_tiles_dir)
+@pytest.mark.parametrize('test_input, expected', parameters_filter_cached_coordinates_not_empty_cached_tiles_dir)
 def test_filter_cached_coordinates_not_empty_tiles_dir(test_input,
                                                        expected,
-                                                       output_dir_path_not_empty_tiles_dir):
+                                                       output_dir_path_not_empty_cached_tiles_dir):
     """
     | Tests filter_cached_coordinates() with different coordinates.
-    | The .tiles directory is not empty.
+    | The cached_tiles directory is not empty.
 
     :param list[(int, int)] test_input: coordinates (x, y) of each tile
     :param list[(int, int)] expected: filtered coordinates (x, y) of each tile
-    :param Path output_dir_path_not_empty_tiles_dir: path to the output directory
+    :param Path output_dir_path_not_empty_cached_tiles_dir: path to the output directory
     :returns: None
     :rtype: None
     """
-    filtered_coordinates = Coordinator.filter_cached_coordinates(coordinates=test_input,
-                                                                 output_dir_path=output_dir_path_not_empty_tiles_dir)
+    filtered_coordinates = \
+        Coordinator.filter_cached_coordinates(coordinates=test_input,
+                                              output_dir_path=output_dir_path_not_empty_cached_tiles_dir)
 
     for filtered_coordinates_element in filtered_coordinates:
         assert isinstance(filtered_coordinates_element[0], int)
