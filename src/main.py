@@ -63,7 +63,7 @@ def main():
 
     # region Initializing
     create_cached_tiles_dir(output_dir_path=config.export_settings.output_dir_path)
-    logger.debug('.features directory created')
+    logger.debug('cached_tiles directory created')
 
     coordinator = Coordinator()
     logger.debug('Coordinator initialized')
