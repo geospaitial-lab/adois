@@ -61,6 +61,7 @@ Werden beide Parameter definiert, wird das Gebiet des Shape Files genutzt.
 ## postprocessing
 
 ```yaml
+postprocessing:
   sieve_size: 2
   simplify: true
 ```
@@ -77,6 +78,7 @@ Werden beide Parameter definiert, wird das Gebiet des Shape Files genutzt.
 ## aggregation
 
 ```yaml
+aggregation:
   tile_size:
     - 50
     - 100
@@ -96,6 +98,7 @@ Werden beide Parameter definiert, wird das Gebiet des Shape Files genutzt.
 ## export_settings
 
 ```yaml
+export_settings:
   output_dir_path: /Pfad/zu/Ausgabeverzeichnis
   prefix: example
   export_raw_shape_file: true
