@@ -164,6 +164,8 @@ Die Attribute der Shape Files werden in der [Dokumentation](docs/docs_shape_file
 
 </div>
 
+Im [Web GIS](https://www.webgis-re.de/cms/versiegelte-flaechen "Web GIS - Kreis Recklinghausen") des Kreises Recklinghausen sind die Versiegelungsgrade der Flurstücke des gesamten Kreisgebiets visuell dargestellt.
+
 # Kontakt
 
 Marius Maryniak ([Westfälische Hochschule Gelsenkirchen](https://w-hs.de "Westfälische Hochschule")): <marius.maryniak@w-hs.de>
