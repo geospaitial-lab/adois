@@ -19,6 +19,9 @@ mit dem Ziel der automatisierten Erkennung versiegelter Flächen aus Fernerkundu
 Die DOPs werden dabei über einen konfigurierbaren WMS (Web Map Service) bezogen.  
 Das Modell ist auf manuell erhobenen Daten des [Emschergenossenschaft Lippeverbands](https://eglv.de "Emschergenossenschaft Lippeverband") trainiert worden.
 
+In unserem Fachartikel [Wie eine Maschine Versiegelungskarten erstellt](https://www.webgis-re.de/cms/fileadmin/user_upload/artikel_wie_eine_maschine_versiegelungskarten_erstellt_aus_vdvmagazin_3_23.pdf "Wie eine Maschine Versiegelungskarten erstellt")
+im [VDVmagazin](https://www.vdv-online.de "VDVmagazin") 03/23 finden Sie weitere Informationen zum Projekt, technische Details und beispielhafte praktische Anwendungen der Ergebnisse auf kommunaler Ebene.
+
 # Installation
 
 **Hardwarevoraussetzung:** 8GB RAM
