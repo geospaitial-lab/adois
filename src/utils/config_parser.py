@@ -210,8 +210,8 @@ class Postprocessing(BaseModel):
 
 
 class Aggregation(BaseModel):
-    tile_size: Optional[Union[int, List[Union[int, None]]]] = None
-    shape_file_path: Optional[Union[str, List[Union[str, None]]]] = None
+    tile_size: Optional[Union[int, List[Union[int, None]]]] = []
+    shape_file_path: Optional[Union[str, List[Union[str, None]]]] = []
 
     @validator('tile_size')
     def validate_tile_size(cls, value):

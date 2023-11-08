@@ -299,5 +299,5 @@ def test_Aggregation_default():
 
     assert isinstance(aggregation, Aggregation)
     assert list(aggregation.__dict__.keys()) == ['tile_size', 'shape_file_path']
-    assert aggregation.tile_size is None
-    assert aggregation.shape_file_path is None
+    assert aggregation.tile_size == []
+    assert aggregation.shape_file_path == []
