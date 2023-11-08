@@ -7,6 +7,8 @@ from typing import List, Optional, Union
 import geopandas as gpd
 import numpy as np
 import yaml
+# noinspection PyUnresolvedReferences
+from natsort import natsorted
 from owslib.wms import WebMapService
 from pydantic import BaseModel, root_validator, validator
 
