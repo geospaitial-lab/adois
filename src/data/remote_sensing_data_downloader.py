@@ -30,7 +30,7 @@ class RemoteSensingDataDownloader:
 
     def get_bounding_box(self, coordinates):
         """
-        | Returns the bounding box of a tile given its coordinates of the top left corner.
+        | Returns the bounding box of a tile.
 
         :param (int, int) coordinates: coordinates (x, y)
         :returns: bounding_box (x_1, y_1, x_2, y_2)
@@ -51,7 +51,7 @@ class RemoteSensingDataDownloader:
     def get_response(self, bounding_box):
         """
         | Wrapper of owslib.wms.WebMapService.getmap().read()
-        | Returns a response (byte stream) of the web map service given its bounding box.
+        | Returns a response (byte stream) of the web map service.
 
         :param (int, int, int, int) bounding_box: bounding_box (x_1, y_1, x_2, y_2)
         :returns: response
@@ -70,7 +70,7 @@ class RemoteSensingDataDownloader:
 
     def get_image(self, coordinates):
         """
-        | Returns an image given its coordinates of the top left corner.
+        | Returns an image.
 
         :param (int, int) coordinates: coordinates (x, y)
         :returns: image
