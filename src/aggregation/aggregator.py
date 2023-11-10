@@ -1,7 +1,7 @@
 from collections import OrderedDict
 
 import geopandas as gpd
-from shapely.geometry import Polygon
+from shapely.geometry import box as Box  # PEP8 compliant
 
 
 class Aggregator:
@@ -25,12 +25,12 @@ class Aggregator:
         | Constructor method
 
         :param gpd.GeoDataFrame gdf: geodataframe
-        :param (int, int, int, int) bounding_box: bounding box (x_1, y_1, x_2, y_2)
+        :param (int, int, int, int) bounding_box: bounding box (x_min, y_min, x_max, y_max)
         :returns: None
         :rtype: None
         """
         self.gdf = gdf
-        self.bounding_box = bounding_box
+        self.x_min, self.y_min, self.x_max, self.y_max = bounding_box
 
     @staticmethod
     def evaluate_stats(aggregation_gdf, aggregated_gdf):
@@ -78,23 +78,6 @@ class Aggregator:
         aggregation_gdf = aggregation_gdf.drop(columns='aggregation_id')
         return aggregation_gdf
 
-    def mask_gdf(self, gdf):
-        """
-        | Returns a masked geodataframe.
-
-        :param gpd.GeoDataFrame gdf: geodataframe
-        :returns: masked geodataframe
-        :rtype: gpd.GeoDataFrame
-        """
-        polygon_bounding_box = Polygon([[self.bounding_box[0], self.bounding_box[1]],
-                                        [self.bounding_box[0], self.bounding_box[3]],
-                                        [self.bounding_box[2], self.bounding_box[3]],
-                                        [self.bounding_box[2], self.bounding_box[1]]])
-        masked_gdf = gpd.clip(gdf,
-                              mask=polygon_bounding_box,
-                              keep_geom_type=True)
-        return masked_gdf
-
     def aggregate_gdf(self,
                       aggregation_gdf,
                       boundary_gdf):
@@ -113,11 +96,14 @@ class Aggregator:
         """
         aggregation_gdf = aggregation_gdf[['geometry']]
         aggregation_gdf['aggregation_id'] = aggregation_gdf.index
-        aggregation_gdf = self.mask_gdf(aggregation_gdf)
 
-        if boundary_gdf is not None:
+        if boundary_gdf:
             aggregation_gdf = gpd.clip(aggregation_gdf,
-                                       mask=boundary_gdf,
+                                       mask=boundary_gdf.geometry,
+                                       keep_geom_type=True)
+        else:
+            aggregation_gdf = gpd.clip(aggregation_gdf,
+                                       mask=Box(self.x_min, self.y_min, self.x_max, self.y_max),
                                        keep_geom_type=True)
 
         aggregated_gdf = gpd.overlay(df1=self.gdf,
