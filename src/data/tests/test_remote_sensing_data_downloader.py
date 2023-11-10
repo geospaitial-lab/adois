@@ -50,15 +50,15 @@ def test_get_bounding_box_no_clip_border(test_input,
     | Tests get_bounding_box() with different coordinates.
     | Border clipping is not used.
 
-    :param (int, int) test_input: coordinates (x, y)
-    :param (int, int, int, int) expected: bounding box (x_1, y_1, x_2, y_2)
+    :param (int, int) test_input: coordinates (x_min, y_max)
+    :param (int, int, int, int) expected: bounding box (x_min, y_min, x_max, y_max)
     :returns: None
     :rtype: None
     """
     bounding_box = remote_sensing_data_downloader_no_clip_border.get_bounding_box(coordinates=test_input)
 
-    for bounding_box_element in bounding_box:
-        assert isinstance(bounding_box_element, int)
+    for coordinate in bounding_box:
+        assert isinstance(coordinate, int)
 
     assert bounding_box == expected
 
@@ -71,15 +71,15 @@ def test_get_bounding_box_clip_border(test_input,
     | Tests get_bounding_box() with different coordinates.
     | Border clipping is used.
 
-    :param (int, int) test_input: coordinates (x, y)
-    :param (int, int, int, int) expected: bounding box (x_1, y_1, x_2, y_2)
+    :param (int, int) test_input: coordinates (x_min, y_max)
+    :param (int, int, int, int) expected: bounding box (x_min, y_min, x_max, y_max)
     :returns: None
     :rtype: None
     """
     bounding_box = remote_sensing_data_downloader_clip_border.get_bounding_box(coordinates=test_input)
 
-    for bounding_box_element in bounding_box:
-        assert isinstance(bounding_box_element, int)
+    for coordinate in bounding_box:
+        assert isinstance(coordinate, int)
 
     assert bounding_box == expected
 
