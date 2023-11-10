@@ -20,17 +20,20 @@ class Aggregator:
 
     def __init__(self,
                  gdf,
-                 bounding_box):
+                 bounding_box,
+                 boundary_gdf):
         """
         | Constructor method
 
         :param gpd.GeoDataFrame gdf: geodataframe
         :param (int, int, int, int) bounding_box: bounding box (x_min, y_min, x_max, y_max)
+        :param gpd.GeoDataFrame or None boundary_gdf: boundary geodataframe
         :returns: None
         :rtype: None
         """
         self.gdf = gdf
         self.x_min, self.y_min, self.x_max, self.y_max = bounding_box
+        self.boundary_gdf = boundary_gdf
 
     @staticmethod
     def evaluate_stats(aggregation_gdf, aggregated_gdf):
@@ -78,9 +81,7 @@ class Aggregator:
         aggregation_gdf = aggregation_gdf.drop(columns='aggregation_id')
         return aggregation_gdf
 
-    def aggregate_gdf(self,
-                      aggregation_gdf,
-                      boundary_gdf):
+    def aggregate_gdf(self, aggregation_gdf):
         """
         | Returns a geodataframe with statistical values of the aggregated geodataframe.
         | Each polygon has the following attributes:
@@ -90,21 +91,20 @@ class Aggregator:
         | - bui_imp_r, pav_imp_r
 
         :param gpd.GeoDataFrame aggregation_gdf: geodataframe for aggregation
-        :param gpd.GeoDataFrame or None boundary_gdf: boundary geodataframe
         :returns: geodataframe with statistical values of the aggregated geodataframe
         :rtype: gpd.GeoDataFrame
         """
         aggregation_gdf = aggregation_gdf[['geometry']]
         aggregation_gdf['aggregation_id'] = aggregation_gdf.index
 
-        if boundary_gdf:
+        if self.boundary_gdf:
             aggregation_gdf = gpd.clip(aggregation_gdf,
-                                       mask=boundary_gdf.geometry,
-                                       keep_geom_type=True)
+                                       mask=self.boundary_gdf.geometry,
+                                       keep_geom_type=True).reset_index(drop=True)
         else:
             aggregation_gdf = gpd.clip(aggregation_gdf,
                                        mask=Box(self.x_min, self.y_min, self.x_max, self.y_max),
-                                       keep_geom_type=True)
+                                       keep_geom_type=True).reset_index(drop=True)
 
         aggregated_gdf = gpd.overlay(df1=self.gdf,
                                      df2=aggregation_gdf,

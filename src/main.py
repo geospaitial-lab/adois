@@ -217,25 +217,25 @@ def main():
     if postprocessed_gdf is None:
         # noinspection PyTypeChecker
         aggregator = Aggregator(gdf=raw_gdf,
-                                bounding_box=config.data.bounding_box)
+                                bounding_box=config.data.bounding_box,
+                                boundary_gdf=boundary_gdf)
     else:
         # noinspection PyTypeChecker
         aggregator = Aggregator(gdf=postprocessed_gdf,
-                                bounding_box=config.data.bounding_box)
+                                bounding_box=config.data.bounding_box,
+                                boundary_gdf=boundary_gdf)
     logger.debug('Aggregator initialized')
 
     aggregation_gdfs_grid = []
 
     for index, gdf_grid in enumerate(gdfs_grid):
-        aggregation_gdfs_grid.append(aggregator.aggregate_gdf(aggregation_gdf=gdf_grid,
-                                                              boundary_gdf=boundary_gdf))
+        aggregation_gdfs_grid.append(aggregator.aggregate_gdf(aggregation_gdf=gdf_grid))
         logger.info(f'Grid {index + 1} / {grid_iterations} aggregated')
 
     aggregation_gdfs_shape_file = []
 
     for index, gdf_shape_file in enumerate(gdfs_shape_file):
-        aggregation_gdfs_shape_file.append(aggregator.aggregate_gdf(aggregation_gdf=gdf_shape_file,
-                                                                    boundary_gdf=boundary_gdf))
+        aggregation_gdfs_shape_file.append(aggregator.aggregate_gdf(aggregation_gdf=gdf_shape_file))
         logger.info(f'Shape file {index + 1} / {shape_file_iterations} aggregated')
     # endregion
 
