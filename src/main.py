@@ -143,13 +143,13 @@ def main():
     progress_bar.refresh()
 
     for index, coordinates_element in enumerate(filtered_coordinates):
-        rgb_image = rsdd_rgb.get_image(coordinates_element)
+        image_rgb = rsdd_rgb.get_image(coordinates_element)
         logger.debug(f'Iteration {index + 1} / {iterations} ->  rgb image downloaded')
-        nir_image = rsdd_nir.get_image(coordinates_element)
+        image_nir = rsdd_nir.get_image(coordinates_element)
         logger.debug(f'Iteration {index + 1} / {iterations} ->  nir image downloaded')
 
-        image = preprocessor.get_image(rgb_image=rgb_image,
-                                       nir_image=nir_image)
+        image = preprocessor.get_image(image_rgb=image_rgb,
+                                       image_nir=image_nir)
 
         mask = inference.get_mask(image)
         logger.debug(f'Iteration {index + 1} / {iterations} -> mask created')
