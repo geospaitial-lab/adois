@@ -8,6 +8,7 @@ import pandas as pd
 import rasterio as rio
 import rasterio.features
 import topojson as tp
+from shapely.geometry import box as Box  # PEP8 compliant
 from shapely.geometry import Polygon
 
 import src.utils.settings as settings
@@ -31,14 +32,14 @@ class Postprocessor:
         | Constructor method
 
         :param str or Path output_dir_path: path to the output directory
-        :param (int, int, int, int) bounding_box: bounding box (x_1, y_1, x_2, y_2)
+        :param (int, int, int, int) bounding_box: bounding box (x_min, y_min, x_max, y_max)
         :param int epsg_code: epsg code of the coordinate reference system
         :param gpd.GeoDataFrame or None boundary_gdf: boundary geodataframe
         :returns: None
         :rtype: None
         """
         self.tiles_dir_path = Path(output_dir_path) / 'cached_tiles'
-        self.bounding_box = bounding_box
+        self.x_min, self.y_min, self.x_max, self.y_max = bounding_box
         self.epsg_code = epsg_code
         self.boundary_gdf = boundary_gdf
 
@@ -206,16 +207,12 @@ class Postprocessor:
         :returns: clipped geodataframe
         :rtype: gpd.GeoDataFrame
         """
-        if self.boundary_gdf is not None:
+        if self.boundary_gdf:
             clipped_gdf = gpd.clip(gdf,
-                                   mask=self.boundary_gdf,
-                                   keep_geom_type=True)
+                                   mask=self.boundary_gdf.geometry,
+                                   keep_geom_type=True).reset_index(drop=True)
         else:
-            polygon_bounding_box = Polygon([[self.bounding_box[0], self.bounding_box[1]],
-                                            [self.bounding_box[0], self.bounding_box[3]],
-                                            [self.bounding_box[2], self.bounding_box[3]],
-                                            [self.bounding_box[2], self.bounding_box[1]]])
             clipped_gdf = gpd.clip(gdf,
-                                   mask=polygon_bounding_box,
-                                   keep_geom_type=True)
+                                   mask=Box(self.x_min, self.y_min, self.x_max, self.y_max),
+                                   keep_geom_type=True).reset_index(drop=True)
         return clipped_gdf
