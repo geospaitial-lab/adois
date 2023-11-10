@@ -1,12 +1,23 @@
 FROM python:3.8-slim-bullseye
 
-RUN mkdir /adois
+ARG MODEL_ID="18aUSp1UYW5vVXbwZlVrRJHchuB7uvKxj"
 
-COPY requirements.txt /adois
+RUN apt-get update && \
+    apt-get install -y git wget
 
-RUN python -m pip install -r /adois/requirements.txt --ignore-installed --no-warn-script-location --upgrade
+RUN git clone --branch dev https://github.com/mrsmrynk/adois --depth 1 && \
+    python -m pip install -r /adois/requirements.txt --ignore-installed --no-warn-script-location --upgrade
 
-COPY . /adois
+RUN wget --load-cookies /tmp/cookies.txt \
+    "https://drive.google.com/uc?export=download&confirm=$( \
+        wget --quiet --save-cookies /tmp/cookies.txt \
+        --keep-session-cookies --no-check-certificate \
+        'https://drive.google.com/uc?export=download&id=${MODEL_ID}' \
+        -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p' \
+    )&id=${MODEL_ID}" \
+    -O /adois/data/model/model.onnx && \
+    rm -rf /tmp/cookies.txt
+
 WORKDIR /adois
 
 ENV PYTHONPATH "${PYTHONPATH}:/adois"
