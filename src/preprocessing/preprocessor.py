@@ -11,8 +11,7 @@ class Preprocessor:
         :returns: normalized image
         :rtype: np.ndarray[np.float32]
         """
-        image = image.astype(np.float32) / 255.
-        return image
+        return image.astype(np.float32) / 255.
 
     def get_image(self,
                   rgb_image,
