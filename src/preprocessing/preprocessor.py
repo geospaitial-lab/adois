@@ -25,7 +25,7 @@ class Preprocessor:
         :returns: image
         :rtype: np.ndarray[np.float32]
         """
-        nir_image = np.expand_dims(nir_image[..., 0], axis=-1)
-        image = np.concatenate([rgb_image, nir_image], axis=-1)
+        nir_image = nir_image[..., 0]
+        image = np.concatenate((rgb_image, nir_image[..., np.newaxis]), axis=-1)
         image = self.normalize_image(image)
         return image
