@@ -38,7 +38,7 @@ class Postprocessor:
         :returns: None
         :rtype: None
         """
-        self.tiles_dir_path = Path(output_dir_path) / 'cached_tiles'
+        self.cached_tiles_dir_path = Path(output_dir_path) / 'cached_tiles'
         self.x_min, self.y_min, self.x_max, self.y_max = bounding_box
         self.epsg_code = epsg_code
         self.boundary_gdf = boundary_gdf
@@ -55,7 +55,7 @@ class Postprocessor:
         :returns: None
         :rtype: None
         """
-        sub_dir_path = self.tiles_dir_path / f'{coordinates[0]}_{coordinates[1]}'
+        sub_dir_path = self.cached_tiles_dir_path / f'{coordinates[0]}_{coordinates[1]}'
         sub_dir_path.mkdir(exist_ok=True)
 
         for path in sub_dir_path.iterdir():
@@ -101,13 +101,14 @@ class Postprocessor:
 
         pattern = re.compile(r'^(-?\d+)_(-?\d+)$')
 
-        for path in self.tiles_dir_path.iterdir():
+        for path in self.cached_tiles_dir_path.iterdir():
             match = pattern.search(path.name)
             if match:
                 processed_coordinates = (int(match.group(1)), int(match.group(2)))
                 if processed_coordinates in coordinates:
                     if any(path.iterdir()):
-                        gdf_path = (self.tiles_dir_path / f'{processed_coordinates[0]}_{processed_coordinates[1]}' /
+                        gdf_path = (self.cached_tiles_dir_path /
+                                    f'{processed_coordinates[0]}_{processed_coordinates[1]}' /
                                     f'{processed_coordinates[0]}_{processed_coordinates[1]}.shp')
                         gdf = gpd.read_file(gdf_path)
                         gdfs.append(gdf)
