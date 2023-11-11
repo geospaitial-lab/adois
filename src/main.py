@@ -194,8 +194,9 @@ def main():
     gdfs_grid = []
     grid_iterations = len(config.aggregation.tile_size)
 
-    for index, tile_size_meters in enumerate(config.aggregation.tile_size):
-        gdfs_grid.append(grid_generator.get_grid(tile_size_meters=tile_size_meters))
+    for index, tile_size in enumerate(config.aggregation.tile_size):
+        gdfs_grid.append(grid_generator.get_grid(tile_size=tile_size,
+                                                 quantize=False))
         logger.info(f'Grid {index + 1} / {grid_iterations} created')
     # endregion
 

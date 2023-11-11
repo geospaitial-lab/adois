@@ -57,7 +57,8 @@ class Coordinator:
 
         grid_generator = GridGenerator(bounding_box=bounding_box,
                                        epsg_code=epsg_code)
-        grid_gdf = grid_generator.get_grid(tile_size_meters=settings.IMAGE_SIZE_METERS)
+        grid_gdf = grid_generator.get_grid(tile_size=settings.IMAGE_SIZE_METERS,
+                                           quantize=True)
 
         intersections = list(grid_gdf['geometry'].intersects(boundary_gdf['geometry'][0]))
         valid_coordinates = [coordinates_element for (coordinates_element, valid) in zip(coordinates, intersections)

@@ -1,7 +1,6 @@
 import geopandas as gpd
-from shapely.geometry import Polygon
-
-import src.utils.settings as settings
+import numpy as np
+from shapely.geometry import box as Box  # PEP8 compliant
 
 
 class GridGenerator:
@@ -11,95 +10,59 @@ class GridGenerator:
         """
         | Constructor method
 
-        :param (int, int, int, int) bounding_box: bounding box (x_1, y_1, x_2, y_2)
+        :param (int, int, int, int) bounding_box: bounding box (x_min, y_min, x_max, y_max)
         :param int epsg_code: epsg code of the coordinate reference system
         :returns: None
         :rtype: None
         """
-        self.bounding_box = bounding_box
+        self.x_min, self.y_min, self.x_max, self.y_max = bounding_box
         self.epsg_code = epsg_code
 
-    def get_coordinates(self, tile_size_meters):
+    def get_coordinates(self,
+                        tile_size,
+                        quantize):
         """
-        | Returns the coordinates of the top left corner of each tile in the area of the bounding box.
-            The bounding box is quantized to the image size in meters.
+        | Returns the coordinates of the bottom left corner of each tile.
 
-        :param int tile_size_meters: tile size in meters
-        :returns: coordinates (x, y) of each tile
-        :rtype: list[(int, int)]
+        :param int tile_size: tile size in meters
+        :param bool quantize: if True, the bounding box is quantized to the tile_size
+        :returns: coordinates (x_min, y_min) of each tile
+        :rtype: np.ndarray[np.int32]
         """
-        coordinates = []
+        if quantize:
+            x_min = self.x_min - (self.x_min % tile_size)
+            y_min = self.y_min - (self.y_min % tile_size)
+        else:
+            x_min = self.x_min
+            y_min = self.y_min
 
-        bounding_box = (self.bounding_box[0] - (self.bounding_box[0] % settings.IMAGE_SIZE_METERS),
-                        self.bounding_box[1] - (self.bounding_box[1] % settings.IMAGE_SIZE_METERS),
-                        self.bounding_box[2],
-                        self.bounding_box[3])
+        coordinates_x, coordinates_y = np.meshgrid(np.arange(x_min, self.x_max, tile_size),
+                                                   np.arange(y_min, self.y_max, tile_size))
 
-        columns = (bounding_box[2] - bounding_box[0]) // tile_size_meters
-        if (bounding_box[2] - bounding_box[0]) % tile_size_meters:
-            columns += 1
-
-        rows = (bounding_box[3] - bounding_box[1]) // tile_size_meters
-        if (bounding_box[3] - bounding_box[1]) % tile_size_meters:
-            rows += 1
-
-        for row in range(rows):
-            for column in range(columns):
-                coordinates.append((bounding_box[0] + column * tile_size_meters,
-                                    bounding_box[1] + (row + 1) * tile_size_meters))
+        coordinates = np.concatenate((coordinates_x.reshape(-1)[..., np.newaxis],
+                                      coordinates_y.reshape(-1)[..., np.newaxis]),
+                                     axis=-1).astype(np.int32)
 
         return coordinates
 
-    @staticmethod
-    def get_bounding_box(coordinates, tile_size_meters):
-        """
-        | Returns the bounding box of a tile given its coordinates of the top left corner.
-
-        :param (int, int) coordinates: coordinates (x, y)
-        :param int tile_size_meters: tile size in meters
-        :returns: bounding box (x_1, y_1, x_2, y_2)
-        :rtype: (int, int, int, int)
-        """
-        bounding_box = (coordinates[0],
-                        coordinates[1] - tile_size_meters,
-                        coordinates[0] + tile_size_meters,
-                        coordinates[1])
-        return bounding_box
-
-    @staticmethod
-    def get_polygon(coordinates, tile_size_meters):
-        """
-        | Returns the polygon of a tile given its coordinates of the top left corner.
-
-        :param (int, int) coordinates: coordinates (x, y)
-        :param int tile_size_meters: tile size in meters
-        :returns: polygon
-        :rtype: Polygon
-        """
-        bounding_box = GridGenerator.get_bounding_box(coordinates=coordinates,
-                                                      tile_size_meters=tile_size_meters)
-        polygon = Polygon([[bounding_box[0], bounding_box[1]],
-                           [bounding_box[2], bounding_box[1]],
-                           [bounding_box[2], bounding_box[3]],
-                           [bounding_box[0], bounding_box[3]]])
-        return polygon
-
-    def get_grid(self, tile_size_meters):
+    def get_grid(self,
+                 tile_size,
+                 quantize):
         """
         | Returns a geodataframe of the grid.
 
-        :param int tile_size_meters: tile size in meters
-        :returns: geodataframe
+        :param int tile_size: tile size in meters
+        :param bool quantize: if True, the bounding box is quantized to the tile_size
+        :returns: grid
         :rtype: gpd.GeoDataFrame
         """
-        coordinates = self.get_coordinates(tile_size_meters=tile_size_meters)
+        coordinates = self.get_coordinates(tile_size=tile_size,
+                                           quantize=quantize)
 
-        polygons = []
+        polygons = [Box(x_min, y_min, x_min + tile_size, y_min + tile_size)
+                    for x_min, y_min in coordinates]
 
-        for coordinates_element in coordinates:
-            polygon = self.get_polygon(coordinates=coordinates_element,
-                                       tile_size_meters=tile_size_meters)
-            polygons.append(polygon)
+        gdf = gpd.GeoDataFrame(geometry=polygons,
+                               crs=f'EPSG:{self.epsg_code}')
 
-        gdf = gpd.GeoDataFrame(geometry=polygons, crs=f'EPSG:{self.epsg_code}')
         return gdf
