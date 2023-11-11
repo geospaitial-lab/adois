@@ -11,5 +11,4 @@ def preprocessor():
     :returns: preprocessor
     :rtype: Preprocessor
     """
-    preprocessor = Preprocessor()
-    return preprocessor
+    return Preprocessor()

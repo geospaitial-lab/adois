@@ -68,6 +68,7 @@ class RemoteSensingDataDownloader:
                                    format='image/tiff',
                                    size=(image_size, image_size),
                                    bgcolor='#000000').read()
+
         return response
 
     def get_image(self, coordinates):

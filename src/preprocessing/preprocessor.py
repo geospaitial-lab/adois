@@ -25,6 +25,10 @@ class Preprocessor:
         :rtype: np.ndarray[np.float32]
         """
         image_nir = image_nir[..., 0]
-        image = np.concatenate((image_rgb, image_nir[..., np.newaxis]), axis=-1)
+
+        image = np.concatenate((image_rgb,
+                                image_nir[..., np.newaxis]),
+                               axis=-1)
+
         image = self.normalize_image(image)
         return image

@@ -15,8 +15,14 @@ image_bottom_right = np.full(shape=(640, 640, 3),
                              fill_value=np.array([102, 51, 0]),
                              dtype=np.uint8)
 
-image_top = np.concatenate((image_top_left, image_top_right), axis=1)
-image_bottom = np.concatenate((image_bottom_left, image_bottom_right), axis=1)
-expected = np.concatenate((image_top, image_bottom), axis=0)
+image_top = np.concatenate((image_top_left,
+                            image_top_right),
+                           axis=1)
+image_bottom = np.concatenate((image_bottom_left,
+                               image_bottom_right),
+                              axis=1)
+expected = np.concatenate((image_top,
+                           image_bottom),
+                          axis=0)
 
 Image.fromarray(expected).save('data_test_get_image.tiff')

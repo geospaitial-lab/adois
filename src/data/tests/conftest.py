@@ -18,6 +18,7 @@ def remote_sensing_data_downloader_no_clip_border(_mocked_wms):
                                                                  wms_layer='wms_layer',
                                                                  epsg_code=25832,
                                                                  clip_border=False)
+
     return remote_sensing_data_downloader
 
 
@@ -35,4 +36,5 @@ def remote_sensing_data_downloader_clip_border(_mocked_wms):
                                                                  wms_layer='wms_layer',
                                                                  epsg_code=25832,
                                                                  clip_border=True)
+
     return remote_sensing_data_downloader
