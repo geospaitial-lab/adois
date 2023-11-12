@@ -3,9 +3,6 @@ from pathlib import Path
 import geopandas as gpd
 import pytest
 from shapely.geometry import box as Box  # PEP8 compliant
-from shapely.geometry import Polygon
-
-from src.utils.coordinator import Coordinator
 
 
 @pytest.fixture(scope='session')
@@ -25,17 +22,6 @@ def shape_file_dir_path(tmp_path_factory):
     (shape_file_dir_path / 'shape_file_4.shp').touch()
     (shape_file_dir_path / 'invalid_shape_file.py').touch()
     return shape_file_dir_path
-
-
-@pytest.fixture(scope='session')
-def coordinator():
-    """
-    | Returns a coordinator instance.
-
-    :returns: coordinator
-    :rtype: Coordinator
-    """
-    return Coordinator()
 
 
 @pytest.fixture(scope='session')
@@ -92,19 +78,19 @@ def output_dir_path_not_empty_cached_tiles_dir(tmp_path_factory):
 
 
 @pytest.fixture(scope='session')
-def boundary_gdf():
+def gdf_boundary():
     """
     | Returns a boundary geodataframe.
 
     :returns: boundary geodataframe
     :rtype: gpd.GeoDataFrame
     """
-    polygon = Polygon([[-512, -512],
-                       [512, -512],
-                       [512, 512],
-                       [-512, 512]])
-    boundary_gdf = gpd.GeoDataFrame(geometry=[polygon], crs='EPSG:25832')
-    return boundary_gdf
+    polygon = Box(-512, -512, 512, 512)
+
+    gdf_boundary = gpd.GeoDataFrame(geometry=[polygon],
+                                    crs='EPSG:25832')
+
+    return gdf_boundary
 
 
 @pytest.fixture(scope='session')

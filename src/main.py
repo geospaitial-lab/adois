@@ -62,9 +62,6 @@ def main():
     # endregion
 
     # region Initializing
-    coordinator = Coordinator()
-    logger.debug('Coordinator initialized')
-
     if config.data.boundary_shape_file_path:
         boundary_gdf = gpd.read_file(config.data.boundary_shape_file_path)
         if boundary_gdf.crs is None:
@@ -72,14 +69,16 @@ def main():
         else:
             boundary_gdf = boundary_gdf.to_crs(f'EPSG:{config.data.epsg_code}')
         boundary_gdf = boundary_gdf[['geometry']]
-        # noinspection PyTypeChecker
-        coordinates = coordinator.get_valid_coordinates(bounding_box=config.data.bounding_box,
-                                                        epsg_code=config.data.epsg_code,
-                                                        boundary_gdf=boundary_gdf)
     else:
         boundary_gdf = None
-        # noinspection PyTypeChecker
-        coordinates = coordinator.get_coordinates(bounding_box=config.data.bounding_box)
+
+    # noinspection PyTypeChecker
+    coordinator = Coordinator(bounding_box=config.data.bounding_box,
+                              epsg_code=config.data.epsg_code,
+                              gdf_boundary=boundary_gdf)
+    logger.debug('Coordinator initialized')
+
+    coordinates = coordinator.get_coordinates()
     logger.debug('Coordinates calculated')
 
     if not config.data.ignore_cached_tiles:

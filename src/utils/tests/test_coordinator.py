@@ -1,70 +1,86 @@
 from pathlib import Path
 
 import geopandas as gpd
+import geopandas.testing
 import pytest
 
 from src.utils.coordinator import Coordinator
 from src.utils.tests.data import *
 
 
-def test_init():
+def test_init(gdf_boundary):
     """
     | Tests __init__().
 
+    :param gpd.GeoDataFrame gdf_boundary: boundary geodataframe
     :returns: None
     :rtype: None
     """
-    coordinator = Coordinator()
+    coordinator = Coordinator(bounding_box=(-512, -512, 512, 512),
+                              epsg_code=25832,
+                              gdf_boundary=gdf_boundary)
 
     assert isinstance(coordinator, Coordinator)
-    assert list(coordinator.__dict__.keys()) == []
+    assert list(coordinator.__dict__.keys()) == ['bounding_box', 'epsg_code', 'gdf_boundary']
+
+    assert isinstance(coordinator.bounding_box, tuple)
+    for coordinate in coordinator.bounding_box:
+        assert isinstance(coordinate, int)
+    assert coordinator.bounding_box == (-512, -512, 512, 512)
+
+    assert isinstance(coordinator.epsg_code, int)
+    assert coordinator.epsg_code == 25832
+
+    assert isinstance(coordinator.gdf_boundary, gpd.GeoDataFrame)
+    gpd.testing.assert_geodataframe_equal(coordinator.gdf_boundary,
+                                          gdf_boundary,
+                                          check_index_type=False)
+
+
+@pytest.mark.parametrize('test_input, expected', parameters_get_coordinates_no_gdf_boundary)
+def test_get_coordinates_no_gdf_boundary(test_input,
+                                         expected):
+    """
+    | Tests get_coordinates() with different bounding boxes.
+    | The boundary geodataframe is not used.
+
+    :param (int, int, int, int) test_input: bounding box (x_min, y_min, x_max, y_max)
+    :param np.ndarray[np.int32] expected: coordinates (x_min, y_max) of each tile
+    :returns: None
+    :rtype: None
+    """
+    coordinator = Coordinator(bounding_box=test_input,
+                              epsg_code=25832,
+                              gdf_boundary=None)
+
+    coordinates = coordinator.get_coordinates()
+
+    assert coordinates.dtype == expected.dtype
+    np.testing.assert_array_equal(coordinates, expected)
 
 
 @pytest.mark.parametrize('test_input, expected', parameters_get_coordinates)
-def test_get_coordinates(test_input, expected):
+def test_get_coordinates(test_input,
+                         expected,
+                         gdf_boundary):
     """
     | Tests get_coordinates() with different bounding boxes.
+    | The boundary geodataframe is used.
 
-    :param (int, int, int, int) test_input: bounding box (x_1, y_1, x_2, y_2) of the area from
-        the bottom left corner to the top right corner
-    :param list[(int, int)] expected: coordinates (x, y) of each tile
+    :param (int, int, int, int) test_input: bounding box (x_min, y_min, x_max, y_max)
+    :param np.ndarray[np.int32] expected: coordinates (x_min, y_max) of each tile
+    :param gpd.GeoDataFrame gdf_boundary: boundary geodataframe
     :returns: None
     :rtype: None
     """
-    coordinates = Coordinator.get_coordinates(bounding_box=test_input)
+    coordinator = Coordinator(bounding_box=test_input,
+                              epsg_code=25832,
+                              gdf_boundary=gdf_boundary)
 
-    for coordinates_element in coordinates:
-        assert isinstance(coordinates_element[0], int)
-        assert isinstance(coordinates_element[1], int)
+    coordinates = coordinator.get_coordinates()
 
-    assert coordinates == expected
-
-
-@pytest.mark.parametrize('test_input, expected', parameters_get_valid_coordinates)
-def test_get_valid_coordinates(test_input,
-                               expected,
-                               coordinator,
-                               boundary_gdf):
-    """
-    | Tests get_valid_coordinates() with different bounding boxes.
-
-    :param (int, int, int, int) test_input: bounding box (x_1, y_1, x_2, y_2) of the area from
-        the bottom left corner to the top right corner
-    :param list[(int, int)] expected: valid coordinates (x, y) of each tile
-    :param Coordinator coordinator: coordinator
-    :param gpd.GeoDataFrame boundary_gdf: boundary geodataframe
-    :returns: None
-    :rtype: None
-    """
-    valid_coordinates = coordinator.get_valid_coordinates(bounding_box=test_input,
-                                                          epsg_code=25832,
-                                                          boundary_gdf=boundary_gdf)
-
-    for valid_coordinates_element in valid_coordinates:
-        assert isinstance(valid_coordinates_element[0], int)
-        assert isinstance(valid_coordinates_element[1], int)
-
-    assert valid_coordinates == expected
+    assert coordinates.dtype == expected.dtype
+    np.testing.assert_array_equal(coordinates, expected)
 
 
 @pytest.mark.parametrize('test_input, expected', parameters_filter_cached_coordinates_no_cached_tiles_dir)
@@ -75,20 +91,17 @@ def test_filter_cached_coordinates_no_cached_tiles_dir(test_input,
     | Tests filter_cached_coordinates() with different coordinates.
     | The cached_tiles directory does not exist.
 
-    :param list[(int, int)] test_input: coordinates (x, y) of each tile
-    :param list[(int, int)] expected: filtered coordinates (x, y) of each tile
+    :param np.ndarray[np.int32] test_input: coordinates (x_min, y_max) of each tile
+    :param np.ndarray[np.int32] expected: filtered coordinates (x_min, y_max) of each tile
     :param Path output_dir_path_no_cached_tiles_dir: path to the output directory
     :returns: None
     :rtype: None
     """
-    filtered_coordinates = Coordinator.filter_cached_coordinates(coordinates=test_input,
+    coordinates_filtered = Coordinator.filter_cached_coordinates(coordinates=test_input,
                                                                  output_dir_path=output_dir_path_no_cached_tiles_dir)
 
-    for filtered_coordinates_element in filtered_coordinates:
-        assert isinstance(filtered_coordinates_element[0], int)
-        assert isinstance(filtered_coordinates_element[1], int)
-
-    assert filtered_coordinates == expected
+    assert coordinates_filtered.dtype == expected.dtype
+    np.testing.assert_array_equal(coordinates_filtered, expected)
 
 
 @pytest.mark.parametrize('test_input, expected', parameters_filter_cached_coordinates_empty_cached_tiles_dir)
@@ -99,20 +112,17 @@ def test_filter_cached_coordinates_empty_cached_tiles_dir(test_input,
     | Tests filter_cached_coordinates() with different coordinates.
     | The cached_tiles directory is empty.
 
-    :param list[(int, int)] test_input: coordinates (x, y) of each tile
-    :param list[(int, int)] expected: filtered coordinates (x, y) of each tile
+    :param np.ndarray[np.int32] test_input: coordinates (x_min, y_max) of each tile
+    :param np.ndarray[np.int32] expected: filtered coordinates (x_min, y_max) of each tile
     :param Path output_dir_path_empty_cached_tiles_dir: path to the output directory
     :returns: None
     :rtype: None
     """
-    filtered_coordinates = Coordinator.filter_cached_coordinates(coordinates=test_input,
+    coordinates_filtered = Coordinator.filter_cached_coordinates(coordinates=test_input,
                                                                  output_dir_path=output_dir_path_empty_cached_tiles_dir)
 
-    for filtered_coordinates_element in filtered_coordinates:
-        assert isinstance(filtered_coordinates_element[0], int)
-        assert isinstance(filtered_coordinates_element[1], int)
-
-    assert filtered_coordinates == expected
+    assert coordinates_filtered.dtype == expected.dtype
+    np.testing.assert_array_equal(coordinates_filtered, expected)
 
 
 @pytest.mark.parametrize('test_input, expected', parameters_filter_cached_coordinates_not_empty_cached_tiles_dir)
@@ -123,18 +133,15 @@ def test_filter_cached_coordinates_not_empty_cached_tiles_dir(test_input,
     | Tests filter_cached_coordinates() with different coordinates.
     | The cached_tiles directory is not empty.
 
-    :param list[(int, int)] test_input: coordinates (x, y) of each tile
-    :param list[(int, int)] expected: filtered coordinates (x, y) of each tile
+    :param np.ndarray[np.int32] test_input: coordinates (x_min, y_max) of each tile
+    :param np.ndarray[np.int32] expected: filtered coordinates (x_min, y_max) of each tile
     :param Path output_dir_path_not_empty_cached_tiles_dir: path to the output directory
     :returns: None
     :rtype: None
     """
-    filtered_coordinates = \
+    coordinates_filtered = \
         Coordinator.filter_cached_coordinates(coordinates=test_input,
                                               output_dir_path=output_dir_path_not_empty_cached_tiles_dir)
 
-    for filtered_coordinates_element in filtered_coordinates:
-        assert isinstance(filtered_coordinates_element[0], int)
-        assert isinstance(filtered_coordinates_element[1], int)
-
-    assert filtered_coordinates == expected
+    assert coordinates_filtered.dtype == expected.dtype
+    np.testing.assert_array_equal(coordinates_filtered, expected)

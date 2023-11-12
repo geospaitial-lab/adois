@@ -2,69 +2,54 @@ import re
 from pathlib import Path
 
 import geopandas as gpd
+import numpy as np
 
 import src.utils.settings as settings
 from src.utils.grid_generator import GridGenerator
 
 
 class Coordinator:
-    @staticmethod
-    def get_coordinates(bounding_box):
+    def __init__(self,
+                 bounding_box,
+                 epsg_code,
+                 gdf_boundary):
         """
-        | Returns the coordinates of the top left corner of each tile in the area of the bounding box.
-            The bounding box is quantized to the image size in meters.
+        | Constructor method
 
-        :param (int, int, int, int) bounding_box: bounding box (x_1, y_1, x_2, y_2)
-        :returns: coordinates (x, y) of each tile
-        :rtype: list[(int, int)]
-        """
-        coordinates = []
-
-        bounding_box = (bounding_box[0] - (bounding_box[0] % settings.IMAGE_SIZE_METERS),
-                        bounding_box[1] - (bounding_box[1] % settings.IMAGE_SIZE_METERS),
-                        bounding_box[2],
-                        bounding_box[3])
-
-        columns = (bounding_box[2] - bounding_box[0]) // settings.IMAGE_SIZE_METERS
-        if (bounding_box[2] - bounding_box[0]) % settings.IMAGE_SIZE_METERS:
-            columns += 1
-
-        rows = (bounding_box[3] - bounding_box[1]) // settings.IMAGE_SIZE_METERS
-        if (bounding_box[3] - bounding_box[1]) % settings.IMAGE_SIZE_METERS:
-            rows += 1
-
-        for row in range(rows):
-            for column in range(columns):
-                coordinates.append((bounding_box[0] + column * settings.IMAGE_SIZE_METERS,
-                                    bounding_box[1] + (row + 1) * settings.IMAGE_SIZE_METERS))
-
-        return coordinates
-
-    def get_valid_coordinates(self,
-                              bounding_box,
-                              epsg_code,
-                              boundary_gdf):
-        """
-        | Returns the coordinates of the top left corner of each tile in the area of the boundary geodataframe.
-
-        :param (int, int, int, int) bounding_box: bounding box (x_1, y_1, x_2, y_2)
+        :param (int, int, int, int) bounding_box: bounding box (x_min, y_min, x_max, y_max)
         :param int epsg_code: epsg code of the coordinate reference system
-        :param gpd.GeoDataFrame boundary_gdf: boundary geodataframe
-        :returns: valid coordinates (x, y) of each tile
-        :rtype: list[(int, int)]
+        :param gpd.GeoDataFrame or None gdf_boundary: boundary geodataframe
+        :returns: None
+        :rtype: None
         """
-        coordinates = self.get_coordinates(bounding_box)
+        self.bounding_box = bounding_box
+        self.epsg_code = epsg_code
+        self.gdf_boundary = gdf_boundary
 
-        grid_generator = GridGenerator(bounding_box=bounding_box,
-                                       epsg_code=epsg_code)
-        grid_gdf = grid_generator.get_grid(tile_size=settings.IMAGE_SIZE_METERS,
+    def get_coordinates(self):
+        """
+        | Returns the coordinates of the top left corner of each tile.
+
+        :returns: coordinates (x_min, y_max) of each tile
+        :rtype: np.ndarray[np.int32]
+        """
+        grid_generator = GridGenerator(bounding_box=self.bounding_box,
+                                       epsg_code=self.epsg_code)
+
+        coordinates = grid_generator.get_coordinates(tile_size=settings.IMAGE_SIZE_METERS,
+                                                     quantize=True)
+
+        coordinates[:, 1] += settings.IMAGE_SIZE_METERS
+
+        if self.gdf_boundary is None:
+            return coordinates
+
+        gdf_grid = grid_generator.get_grid(tile_size=settings.IMAGE_SIZE_METERS,
                                            quantize=True)
 
-        intersections = list(grid_gdf['geometry'].intersects(boundary_gdf['geometry'][0]))
-        valid_coordinates = [coordinates_element for (coordinates_element, valid) in zip(coordinates, intersections)
-                             if valid]
+        mask = np.array(gdf_grid['geometry'].intersects(self.gdf_boundary['geometry'][0]), dtype=bool)
 
-        return valid_coordinates
+        return coordinates[mask]
 
     @staticmethod
     def filter_cached_coordinates(coordinates, output_dir_path):
@@ -72,17 +57,17 @@ class Coordinator:
         | Returns the filtered coordinates. If a tile has already been processed (its shape file directory exists in
             the cached_tiles directory), its coordinates are removed.
 
-        :param list[(int, int)] coordinates: coordinates (x, y) of each tile
+        :param np.ndarray[np.int32] coordinates: coordinates (x_min, y_max) of each tile
         :param str or Path output_dir_path: path to the output directory
-        :returns: filtered coordinates (x, y) of each tile
-        :rtype: list[(int, int)]
+        :returns: filtered coordinates (x_min, y_max) of each tile
+        :rtype: np.ndarray[np.int32]
         """
         cached_tiles_dir_path = Path(output_dir_path) / 'cached_tiles'
 
         if not cached_tiles_dir_path.is_dir():
             return coordinates
 
-        filtered_coordinates = coordinates[:]
+        mask = np.ones(coordinates.shape[0], dtype=bool)
 
         pattern = re.compile(r'^(-?\d+)_(-?\d+)$')
 
@@ -90,9 +75,7 @@ class Coordinator:
             match = pattern.search(path.name)
 
             if match:
-                cached_coordinates = (int(match.group(1)), int(match.group(2)))
+                coordinates_cached = np.array([int(match.group(1)), int(match.group(2))], dtype=np.int32)
+                mask &= np.any(coordinates != coordinates_cached, axis=1)
 
-                if cached_coordinates in coordinates:
-                    filtered_coordinates.remove(cached_coordinates)
-
-        return filtered_coordinates
+        return coordinates[mask]
