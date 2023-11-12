@@ -92,9 +92,9 @@ def test_filter_cached_coordinates_no_cached_tiles_dir(test_input,
 
 
 @pytest.mark.parametrize('test_input, expected', parameters_filter_cached_coordinates_empty_cached_tiles_dir)
-def test_filter_cached_coordinates_empty_tiles_dir(test_input,
-                                                   expected,
-                                                   output_dir_path_empty_cached_tiles_dir):
+def test_filter_cached_coordinates_empty_cached_tiles_dir(test_input,
+                                                          expected,
+                                                          output_dir_path_empty_cached_tiles_dir):
     """
     | Tests filter_cached_coordinates() with different coordinates.
     | The cached_tiles directory is empty.
@@ -116,9 +116,9 @@ def test_filter_cached_coordinates_empty_tiles_dir(test_input,
 
 
 @pytest.mark.parametrize('test_input, expected', parameters_filter_cached_coordinates_not_empty_cached_tiles_dir)
-def test_filter_cached_coordinates_not_empty_tiles_dir(test_input,
-                                                       expected,
-                                                       output_dir_path_not_empty_cached_tiles_dir):
+def test_filter_cached_coordinates_not_empty_cached_tiles_dir(test_input,
+                                                              expected,
+                                                              output_dir_path_not_empty_cached_tiles_dir):
     """
     | Tests filter_cached_coordinates() with different coordinates.
     | The cached_tiles directory is not empty.
