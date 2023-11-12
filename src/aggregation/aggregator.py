@@ -99,7 +99,7 @@ class Aggregator:
 
         if self.boundary_gdf:
             aggregation_gdf = gpd.clip(aggregation_gdf,
-                                       mask=self.boundary_gdf.geometry,
+                                       mask=self.boundary_gdf['geometry'],
                                        keep_geom_type=True).reset_index(drop=True)
         else:
             aggregation_gdf = gpd.clip(aggregation_gdf,

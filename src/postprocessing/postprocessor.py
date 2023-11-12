@@ -219,7 +219,7 @@ class Postprocessor:
         """
         if self.boundary_gdf:
             clipped_gdf = gpd.clip(gdf,
-                                   mask=self.boundary_gdf.geometry,
+                                   mask=self.boundary_gdf['geometry'],
                                    keep_geom_type=True).reset_index(drop=True)
         else:
             clipped_gdf = gpd.clip(gdf,
