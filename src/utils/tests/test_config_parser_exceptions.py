@@ -74,7 +74,7 @@ def test_ShapeFileExtensionError():
         raise ShapeFileExtensionError(shape_file_path='/path/to/shape_file.py')
 
 
-def test_ShapeFileLengthError(invalid_boundary_gdf):
+def test_ShapeFileLengthError(invalid_gdf_boundary):
     """
     | Tests ShapeFileLengthError exception.
 
@@ -83,7 +83,7 @@ def test_ShapeFileLengthError(invalid_boundary_gdf):
     """
     with pytest.raises(ShapeFileLengthError, match=r'Invalid shape file in shape_file_path in config file!'
                                                    r'\n  Expected shape file with 1 polygon, got 4 polygons instead\.'):
-        raise ShapeFileLengthError(gdf=invalid_boundary_gdf)
+        raise ShapeFileLengthError(gdf=invalid_gdf_boundary)
 
 
 def test_BoundingBoxNotDefinedError():

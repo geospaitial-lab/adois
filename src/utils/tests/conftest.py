@@ -2,6 +2,7 @@ from pathlib import Path
 
 import geopandas as gpd
 import pytest
+from shapely.geometry import box as Box  # PEP8 compliant
 from shapely.geometry import Polygon
 
 from src.utils.coordinator import Coordinator
@@ -107,29 +108,20 @@ def boundary_gdf():
 
 
 @pytest.fixture(scope='session')
-def invalid_boundary_gdf():
+def invalid_gdf_boundary():
     """
     | Returns an invalid boundary geodataframe (more than 1 polygon).
 
     :returns: invalid boundary geodataframe
     :rtype: gpd.GeoDataFrame
     """
-    polygon_1 = Polygon([[-512, -512],
-                         [0, -512],
-                         [0, 0],
-                         [-512, 0]])
-    polygon_2 = Polygon([[0, -512],
-                         [512, -512],
-                         [512, 0],
-                         [0, 0]])
-    polygon_3 = Polygon([[0, 0],
-                         [512, 0],
-                         [512, 512],
-                         [0, 512]])
-    polygon_4 = Polygon([[-512, 0],
-                         [0, 0],
-                         [0, 512],
-                         [-512, 512]])
+    polygon_1 = Box(-512, -512, 0, 0)
+    polygon_2 = Box(0, -512, 512, 0)
+    polygon_3 = Box(0, 0, 512, 512)
+    polygon_4 = Box(-512, 0, 0, 512)
     polygons = [polygon_1, polygon_2, polygon_3, polygon_4]
-    invalid_boundary_gdf = gpd.GeoDataFrame(geometry=polygons, crs='EPSG:25832')
-    return invalid_boundary_gdf
+
+    invalid_gdf_boundary = gpd.GeoDataFrame(geometry=polygons,
+                                            crs='EPSG:25832')
+
+    return invalid_gdf_boundary
