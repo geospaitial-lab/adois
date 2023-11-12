@@ -217,12 +217,12 @@ class Postprocessor:
         :returns: clipped geodataframe
         :rtype: gpd.GeoDataFrame
         """
-        if self.boundary_gdf:
+        if self.boundary_gdf is None:
             clipped_gdf = gpd.clip(gdf,
-                                   mask=self.boundary_gdf['geometry'],
+                                   mask=Box(self.x_min, self.y_min, self.x_max, self.y_max),
                                    keep_geom_type=True).reset_index(drop=True)
         else:
             clipped_gdf = gpd.clip(gdf,
-                                   mask=Box(self.x_min, self.y_min, self.x_max, self.y_max),
+                                   mask=self.boundary_gdf['geometry'],
                                    keep_geom_type=True).reset_index(drop=True)
         return clipped_gdf
