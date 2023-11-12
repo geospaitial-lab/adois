@@ -69,7 +69,7 @@ class Coordinator:
     @staticmethod
     def filter_cached_coordinates(coordinates, output_dir_path):
         """
-        | Returns the filtered coordinates. If a tile has already been downloaded (its shape file directory exists in
+        | Returns the filtered coordinates. If a tile has already been processed (its shape file directory exists in
             the cached_tiles directory), its coordinates are removed.
 
         :param list[(int, int)] coordinates: coordinates (x, y) of each tile
