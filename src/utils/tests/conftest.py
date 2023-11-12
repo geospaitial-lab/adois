@@ -31,8 +31,8 @@ def coordinator():
     """
     | Returns a coordinator instance.
 
-    :returns: preprocessor
-    :rtype: Preprocessor
+    :returns: coordinator
+    :rtype: Coordinator
     """
     return Coordinator()
 
