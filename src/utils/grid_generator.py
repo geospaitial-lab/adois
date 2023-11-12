@@ -25,7 +25,7 @@ class GridGenerator:
         | Returns the coordinates of the bottom left corner of each tile.
 
         :param int tile_size: tile size in meters
-        :param bool quantize: if True, the bounding box is quantized to the tile_size
+        :param bool quantize: if True, the bounding box is quantized to tile_size
         :returns: coordinates (x_min, y_min) of each tile
         :rtype: np.ndarray[np.int32]
         """
@@ -52,7 +52,7 @@ class GridGenerator:
         | Returns a geodataframe of the grid.
 
         :param int tile_size: tile size in meters
-        :param bool quantize: if True, the bounding box is quantized to the tile_size
+        :param bool quantize: if True, the bounding box is quantized to tile_size
         :returns: grid
         :rtype: gpd.GeoDataFrame
         """
