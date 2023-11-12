@@ -54,8 +54,9 @@ class Coordinator:
     @staticmethod
     def filter_cached_coordinates(coordinates, output_dir_path):
         """
-        | Returns the filtered coordinates. If a tile has already been processed (its shape file directory exists in
-            the cached_tiles directory), its coordinates are removed.
+        | Returns the filtered coordinates of the top left corner of each tile.
+        | If a tile has already been processed (its directory exists in the cached_tiles directory),
+            its coordinates are removed.
 
         :param np.ndarray[np.int32] coordinates: coordinates (x_min, y_max) of each tile
         :param str or Path output_dir_path: path to the output directory
