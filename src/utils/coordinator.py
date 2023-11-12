@@ -88,8 +88,10 @@ class Coordinator:
 
         for path in cached_tiles_dir_path.iterdir():
             match = pattern.search(path.name)
+
             if match:
                 cached_coordinates = (int(match.group(1)), int(match.group(2)))
+
                 if cached_coordinates in coordinates:
                     filtered_coordinates.remove(cached_coordinates)
 
