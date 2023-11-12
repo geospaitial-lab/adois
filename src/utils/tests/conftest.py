@@ -34,8 +34,7 @@ def coordinator():
     :returns: preprocessor
     :rtype: Preprocessor
     """
-    coordinator = Coordinator()
-    return coordinator
+    return Coordinator()
 
 
 @pytest.fixture(scope='session')
