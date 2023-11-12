@@ -97,13 +97,13 @@ class Aggregator:
         aggregation_gdf = aggregation_gdf[['geometry']]
         aggregation_gdf['aggregation_id'] = aggregation_gdf.index
 
-        if self.boundary_gdf:
+        if self.boundary_gdf is None:
             aggregation_gdf = gpd.clip(aggregation_gdf,
-                                       mask=self.boundary_gdf['geometry'],
+                                       mask=Box(self.x_min, self.y_min, self.x_max, self.y_max),
                                        keep_geom_type=True).reset_index(drop=True)
         else:
             aggregation_gdf = gpd.clip(aggregation_gdf,
-                                       mask=Box(self.x_min, self.y_min, self.x_max, self.y_max),
+                                       mask=self.boundary_gdf['geometry'],
                                        keep_geom_type=True).reset_index(drop=True)
 
         aggregated_gdf = gpd.overlay(df1=self.gdf,
