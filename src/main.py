@@ -11,8 +11,8 @@ from src.data import RemoteSensingDataDownloader
 from src.inference import Inference
 from src.postprocessing import Postprocessor
 from src.preprocessing import Preprocessor
-from src.utils import (ConfigParser, Coordinator, create_dir_structure, create_cached_tiles_dir, export,
-                       get_argument_parser, get_metadata, GridGenerator)
+from src.utils import (ConfigParser, Coordinator, create_dir_structure, export, get_argument_parser, get_metadata,
+                       GridGenerator)
 
 
 def main():
@@ -62,9 +62,6 @@ def main():
     # endregion
 
     # region Initializing
-    create_cached_tiles_dir(output_dir_path=config.export_settings.output_dir_path)
-    logger.debug('cached_tiles directory created')
-
     coordinator = Coordinator()
     logger.debug('Coordinator initialized')
 
@@ -118,6 +115,9 @@ def main():
                                   epsg_code=config.data.epsg_code,
                                   boundary_gdf=boundary_gdf)
     logger.debug('Postprocessor initialized')
+
+    postprocessor.create_cached_tiles_dir()
+    logger.debug('cached_tiles directory created')
 
     # noinspection PyTypeChecker
     grid_generator = GridGenerator(bounding_box=config.data.bounding_box,

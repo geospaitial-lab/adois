@@ -9,18 +9,6 @@ from src.aggregation import Aggregator
 from src.postprocessing import Postprocessor
 
 
-def create_cached_tiles_dir(output_dir_path):
-    """
-    | Creates a cached_tiles directory in the output directory.
-
-    :param str or Path output_dir_path: path to the output directory
-    :returns: None
-    :rtype: None
-    """
-    output_dir_path = Path(output_dir_path)
-    (output_dir_path / 'cached_tiles').mkdir(exist_ok=True)
-
-
 def create_dir_structure(output_dir_path,
                          export_raw_shape_file,
                          tile_sizes,

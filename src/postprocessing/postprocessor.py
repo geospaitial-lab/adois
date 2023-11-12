@@ -43,6 +43,15 @@ class Postprocessor:
         self.epsg_code = epsg_code
         self.boundary_gdf = boundary_gdf
 
+    def create_cached_tiles_dir(self):
+        """
+        | Creates a cached_tiles directory in the output directory.
+
+        :returns: None
+        :rtype: None
+        """
+        self.cached_tiles_dir_path.mkdir(exist_ok=True)
+
     def export_features(self,
                         features,
                         coordinates):

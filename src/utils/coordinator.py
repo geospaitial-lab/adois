@@ -77,12 +77,16 @@ class Coordinator:
         :returns: filtered coordinates (x, y) of each tile
         :rtype: list[(int, int)]
         """
+        cached_tiles_dir_path = Path(output_dir_path) / 'cached_tiles'
+
+        if not cached_tiles_dir_path.is_dir():
+            return coordinates
+
         filtered_coordinates = coordinates[:]
 
-        tiles_dir_path = Path(output_dir_path) / 'cached_tiles'
         pattern = re.compile(r'^(-?\d+)_(-?\d+)$')
 
-        for path in tiles_dir_path.iterdir():
+        for path in cached_tiles_dir_path.iterdir():
             match = pattern.search(path.name)
             if match:
                 cached_coordinates = (int(match.group(1)), int(match.group(2)))

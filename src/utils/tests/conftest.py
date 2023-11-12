@@ -38,6 +38,19 @@ def coordinator():
 
 
 @pytest.fixture(scope='session')
+def output_dir_path_no_cached_tiles_dir(tmp_path_factory):
+    """
+    | Returns the path to the temporary output directory.
+    | The cached_tiles directory does not exist.
+
+    :param pytest.TempPathFactory tmp_path_factory: temporary path
+    :returns: path to the output directory
+    :rtype: Path
+    """
+    return tmp_path_factory.mktemp('output_dir')
+
+
+@pytest.fixture(scope='session')
 def output_dir_path_empty_cached_tiles_dir(tmp_path_factory):
     """
     | Returns the path to the temporary output directory.
