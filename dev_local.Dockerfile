@@ -10,6 +10,6 @@ COPY . /adois
 WORKDIR /adois
 
 ENV PYTHONPATH "${PYTHONPATH}:/adois"
-ENV PYTHONUNBUFFERED=1
+ENV PYTHONUNBUFFERED 1
 
 ENTRYPOINT ["python", "/adois/src/main.py", "/config.yaml"]
