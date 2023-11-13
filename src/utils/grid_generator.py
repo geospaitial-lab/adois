@@ -15,6 +15,12 @@ class GridGenerator:
         :returns: None
         :rtype: None
         """
+        assert isinstance(bounding_box, tuple) and len(bounding_box) == 4
+        assert all(isinstance(i, int) for i in bounding_box)
+        assert bounding_box[0] < bounding_box[2] and bounding_box[1] < bounding_box[3]
+
+        assert isinstance(epsg_code, int)
+
         self.x_min, self.y_min, self.x_max, self.y_max = bounding_box
         self.epsg_code = epsg_code
 
@@ -29,6 +35,11 @@ class GridGenerator:
         :returns: coordinates (x_min, y_min) of each tile
         :rtype: np.ndarray[np.int32]
         """
+        assert isinstance(tile_size, int)
+        assert tile_size > 0
+
+        assert isinstance(quantize, bool)
+
         if quantize:
             x_min = self.x_min - (self.x_min % tile_size)
             y_min = self.y_min - (self.y_min % tile_size)
@@ -56,6 +67,11 @@ class GridGenerator:
         :returns: grid
         :rtype: gpd.GeoDataFrame
         """
+        assert isinstance(tile_size, int)
+        assert tile_size > 0
+
+        assert isinstance(quantize, bool)
+
         coordinates = self.get_coordinates(tile_size=tile_size,
                                            quantize=quantize)
 
