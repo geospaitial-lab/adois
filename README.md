@@ -27,7 +27,7 @@ im [VDVmagazin](https://www.vdv-online.de "VDVmagazin") 03/23 finden Sie weitere
 **Hardwarevoraussetzung:** 8GB RAM
 
 Installieren Sie zunächst [Docker](https://docker.com/products/docker-desktop "Get Docker").  
-Laden Sie anschließend das [*adois* Dockerfile](https://drive.google.com/uc?export=download&id=1hYMp6DBBprZHKxWAfgM0_u3Hb27QEvYz "Get adois Dockerfile") herunter.  
+Laden Sie anschließend das [*adois* Dockerfile](https://drive.google.com/uc?export=download&id=1vqelNBqp039jIVq4NQYMvacCGi0qH-cD "Get adois Dockerfile") herunter.  
 Erstellen Sie nun das *adois* Image.
 
 ```
