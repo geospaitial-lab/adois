@@ -16,7 +16,7 @@ class GridGenerator:
         :rtype: None
         """
         assert isinstance(bounding_box, tuple) and len(bounding_box) == 4
-        assert all(isinstance(i, int) for i in bounding_box)
+        assert all(isinstance(coordinate, int) for coordinate in bounding_box)
         assert bounding_box[0] < bounding_box[2] and bounding_box[1] < bounding_box[3]
 
         assert isinstance(epsg_code, int)
