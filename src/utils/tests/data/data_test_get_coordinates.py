@@ -73,9 +73,9 @@ parameters_get_coordinates = \
 
      ((768, 768, 1024, 1024),
       np.empty(shape=(0, 2), dtype=np.int32)),
-     ((768, -768, 1024, -1024),
+     ((768, -1024, 1024, -768),
       np.empty(shape=(0, 2), dtype=np.int32)),
-     ((-768, -768, -1024, -1024),
+     ((-1024, -1024, -768, -768),
       np.empty(shape=(0, 2), dtype=np.int32)),
-     ((-768, 768, -1024, 1024),
+     ((-1024, 768, -768, 1024),
       np.empty(shape=(0, 2), dtype=np.int32))]
