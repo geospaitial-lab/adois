@@ -11,6 +11,8 @@ class Preprocessor:
         :returns: normalized image
         :rtype: np.ndarray[np.float32]
         """
+        assert isinstance(image, np.ndarray) and image.dtype == np.uint8
+
         return image.astype(np.float32) / 255.
 
     def get_image(self,
@@ -24,6 +26,12 @@ class Preprocessor:
         :returns: image
         :rtype: np.ndarray[np.float32]
         """
+        assert isinstance(image_rgb, np.ndarray) and image_rgb.dtype == np.uint8
+        assert len(image_rgb.shape) == 3 and image_rgb.shape[-1] == 3
+
+        assert isinstance(image_nir, np.ndarray) and image_nir.dtype == np.uint8
+        assert len(image_nir.shape) == 3 and image_nir.shape[-1] == 3
+
         image_nir = image_nir[..., 0]
 
         image = np.concatenate((image_rgb,
