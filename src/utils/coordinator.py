@@ -93,8 +93,8 @@ class Coordinator:
 
         pattern = re.compile(r'^(-?\d+)_(-?\d+)$')
 
-        for path in cached_tiles_dir_path.iterdir():
-            match = pattern.search(path.name)
+        for path_cached_tile_dir in cached_tiles_dir_path.iterdir():
+            match = pattern.search(path_cached_tile_dir.name)
 
             if match:
                 x_min = int(match.group(1))
