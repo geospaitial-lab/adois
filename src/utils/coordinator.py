@@ -97,7 +97,10 @@ class Coordinator:
             match = pattern.search(path.name)
 
             if match:
-                coordinates_cached = np.array([int(match.group(1)), int(match.group(2))], dtype=np.int32)
+                x_min = int(match.group(1))
+                y_max = int(match.group(2))
+
+                coordinates_cached = np.array([x_min, y_max], dtype=np.int32)
                 mask &= np.any(coordinates != coordinates_cached, axis=1)
 
         return coordinates[mask]
