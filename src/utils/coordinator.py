@@ -84,16 +84,16 @@ class Coordinator:
 
         assert isinstance(output_dir_path, str) or isinstance(output_dir_path, Path)
 
-        cached_tiles_dir_path = Path(output_dir_path) / 'cached_tiles'
+        path_cached_tiles_dir = Path(output_dir_path) / 'cached_tiles'
 
-        if not cached_tiles_dir_path.is_dir():
+        if not path_cached_tiles_dir.is_dir():
             return coordinates
 
         mask = np.ones(coordinates.shape[0], dtype=bool)
 
         pattern = re.compile(r'^(-?\d+)_(-?\d+)$')
 
-        for path_cached_tile_dir in cached_tiles_dir_path.iterdir():
+        for path_cached_tile_dir in path_cached_tiles_dir.iterdir():
             match = pattern.search(path_cached_tile_dir.name)
 
             if match:
