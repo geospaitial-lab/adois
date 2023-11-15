@@ -79,7 +79,7 @@ class GridGenerator:
         polygons = [Box(x_min, y_min, x_min + tile_size, y_min + tile_size)
                     for x_min, y_min in coordinates]
 
-        gdf_grid = gpd.GeoDataFrame(geometry=polygons,
-                                    crs=f'EPSG:{self.epsg_code}')
+        grid = gpd.GeoDataFrame(geometry=polygons,
+                                crs=f'EPSG:{self.epsg_code}')
 
-        return gdf_grid
+        return grid
