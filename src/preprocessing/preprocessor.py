@@ -27,10 +27,12 @@ class Preprocessor:
         :rtype: np.ndarray[np.float32]
         """
         assert isinstance(image_rgb, np.ndarray) and image_rgb.dtype == np.uint8
-        assert len(image_rgb.shape) == 3 and image_rgb.shape[-1] == 3
+        assert len(image_rgb.shape) == 3
+        assert image_rgb.shape[-1] == 3
 
         assert isinstance(image_nir, np.ndarray) and image_nir.dtype == np.uint8
-        assert len(image_nir.shape) == 3 and image_nir.shape[-1] == 3
+        assert len(image_nir.shape) == 3
+        assert image_nir.shape[-1] == 3
 
         image_nir = image_nir[..., 0]
 
