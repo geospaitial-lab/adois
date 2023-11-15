@@ -63,19 +63,19 @@ def main():
 
     # region Initializing
     if config.data.boundary_shape_file_path:
-        boundary_gdf = gpd.read_file(config.data.boundary_shape_file_path)
-        if boundary_gdf.crs is None:
-            boundary_gdf = boundary_gdf.set_crs(f'EPSG:{config.data.epsg_code}')
+        boundary = gpd.read_file(config.data.boundary_shape_file_path)
+        if boundary.crs is None:
+            boundary = boundary.set_crs(f'EPSG:{config.data.epsg_code}')
         else:
-            boundary_gdf = boundary_gdf.to_crs(f'EPSG:{config.data.epsg_code}')
-        boundary_gdf = boundary_gdf[['geometry']]
+            boundary = boundary.to_crs(f'EPSG:{config.data.epsg_code}')
+        boundary = boundary[['geometry']]
     else:
-        boundary_gdf = None
+        boundary = None
 
     # noinspection PyTypeChecker
     coordinator = Coordinator(bounding_box=config.data.bounding_box,
                               epsg_code=config.data.epsg_code,
-                              gdf_boundary=boundary_gdf)
+                              boundary=boundary)
     logger.debug('Coordinator initialized')
 
     coordinates = coordinator.get_coordinates()
@@ -112,7 +112,7 @@ def main():
     postprocessor = Postprocessor(output_dir_path=config.export_settings.output_dir_path,
                                   bounding_box=config.data.bounding_box,
                                   epsg_code=config.data.epsg_code,
-                                  boundary_gdf=boundary_gdf)
+                                  boundary_gdf=boundary)
     logger.debug('Postprocessor initialized')
 
     postprocessor.create_cached_tiles_dir()
@@ -218,12 +218,12 @@ def main():
         # noinspection PyTypeChecker
         aggregator = Aggregator(gdf=raw_gdf,
                                 bounding_box=config.data.bounding_box,
-                                boundary_gdf=boundary_gdf)
+                                boundary_gdf=boundary)
     else:
         # noinspection PyTypeChecker
         aggregator = Aggregator(gdf=postprocessed_gdf,
                                 bounding_box=config.data.bounding_box,
-                                boundary_gdf=boundary_gdf)
+                                boundary_gdf=boundary)
     logger.debug('Aggregator initialized')
 
     aggregation_gdfs_grid = []

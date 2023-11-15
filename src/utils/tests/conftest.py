@@ -78,27 +78,27 @@ def output_dir_path_not_empty_cached_tiles_dir(tmp_path_factory):
 
 
 @pytest.fixture(scope='session')
-def gdf_boundary():
+def boundary():
     """
-    | Returns a boundary geodataframe.
+    | Returns a geodataframe of the boundary.
 
-    :returns: boundary geodataframe
+    :returns: boundary
     :rtype: gpd.GeoDataFrame
     """
     polygon = Box(-512, -512, 512, 512)
 
-    gdf_boundary = gpd.GeoDataFrame(geometry=[polygon],
-                                    crs='EPSG:25832')
+    boundary = gpd.GeoDataFrame(geometry=[polygon],
+                                crs='EPSG:25832')
 
-    return gdf_boundary
+    return boundary
 
 
 @pytest.fixture(scope='session')
-def invalid_gdf_boundary():
+def invalid_boundary():
     """
-    | Returns an invalid boundary geodataframe (more than 1 polygon).
+    | Returns an invalid geodataframe of the boundary (more than 1 polygon).
 
-    :returns: invalid boundary geodataframe
+    :returns: invalid boundary
     :rtype: gpd.GeoDataFrame
     """
     polygon_1 = Box(-512, -512, 0, 0)
@@ -107,7 +107,7 @@ def invalid_gdf_boundary():
     polygon_4 = Box(-512, 0, 0, 512)
     polygons = [polygon_1, polygon_2, polygon_3, polygon_4]
 
-    invalid_gdf_boundary = gpd.GeoDataFrame(geometry=polygons,
-                                            crs='EPSG:25832')
+    invalid_boundary = gpd.GeoDataFrame(geometry=polygons,
+                                        crs='EPSG:25832')
 
-    return invalid_gdf_boundary
+    return invalid_boundary

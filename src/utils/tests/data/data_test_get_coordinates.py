@@ -1,7 +1,7 @@
 import numpy as np
 
 
-parameters_get_coordinates_no_gdf_boundary = \
+parameters_get_coordinates_no_boundary = \
     [((512, 512, 1024, 1024),
       np.array([[512, 768], [768, 768], [512, 1024], [768, 1024]], dtype=np.int32)),
      ((512, -1024, 1024, -512),

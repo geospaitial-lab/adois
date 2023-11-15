@@ -8,20 +8,20 @@ from src.utils.coordinator import Coordinator
 from src.utils.tests.data import *
 
 
-def test_init(gdf_boundary):
+def test_init(boundary):
     """
     | Tests __init__().
 
-    :param gpd.GeoDataFrame gdf_boundary: boundary geodataframe
+    :param gpd.GeoDataFrame boundary: boundary
     :returns: None
     :rtype: None
     """
     coordinator = Coordinator(bounding_box=(-512, -512, 512, 512),
                               epsg_code=25832,
-                              gdf_boundary=gdf_boundary)
+                              boundary=boundary)
 
     assert isinstance(coordinator, Coordinator)
-    assert list(coordinator.__dict__.keys()) == ['bounding_box', 'epsg_code', 'gdf_boundary']
+    assert list(coordinator.__dict__.keys()) == ['bounding_box', 'epsg_code', 'boundary']
 
     assert isinstance(coordinator.bounding_box, tuple)
     for coordinate in coordinator.bounding_box:
@@ -31,18 +31,18 @@ def test_init(gdf_boundary):
     assert isinstance(coordinator.epsg_code, int)
     assert coordinator.epsg_code == 25832
 
-    assert isinstance(coordinator.gdf_boundary, gpd.GeoDataFrame)
-    gpd.testing.assert_geodataframe_equal(coordinator.gdf_boundary,
-                                          gdf_boundary,
+    assert isinstance(coordinator.boundary, gpd.GeoDataFrame)
+    gpd.testing.assert_geodataframe_equal(coordinator.boundary,
+                                          boundary,
                                           check_index_type=False)
 
 
-@pytest.mark.parametrize('test_input, expected', parameters_get_coordinates_no_gdf_boundary)
-def test_get_coordinates_no_gdf_boundary(test_input,
-                                         expected):
+@pytest.mark.parametrize('test_input, expected', parameters_get_coordinates_no_boundary)
+def test_get_coordinates_no_boundary(test_input,
+                                     expected):
     """
     | Tests get_coordinates() with different bounding boxes.
-    | The boundary geodataframe is not used.
+    | The geodataframe of the boundary is not used.
 
     :param (int, int, int, int) test_input: bounding box (x_min, y_min, x_max, y_max)
     :param np.ndarray[np.int32] expected: coordinates (x_min, y_max) of each tile
@@ -51,7 +51,7 @@ def test_get_coordinates_no_gdf_boundary(test_input,
     """
     coordinator = Coordinator(bounding_box=test_input,
                               epsg_code=25832,
-                              gdf_boundary=None)
+                              boundary=None)
 
     coordinates = coordinator.get_coordinates()
 
@@ -62,20 +62,20 @@ def test_get_coordinates_no_gdf_boundary(test_input,
 @pytest.mark.parametrize('test_input, expected', parameters_get_coordinates)
 def test_get_coordinates(test_input,
                          expected,
-                         gdf_boundary):
+                         boundary):
     """
     | Tests get_coordinates() with different bounding boxes.
-    | The boundary geodataframe is used.
+    | The geodataframe of the boundary is used.
 
     :param (int, int, int, int) test_input: bounding box (x_min, y_min, x_max, y_max)
     :param np.ndarray[np.int32] expected: coordinates (x_min, y_max) of each tile
-    :param gpd.GeoDataFrame gdf_boundary: boundary geodataframe
+    :param gpd.GeoDataFrame boundary: boundary
     :returns: None
     :rtype: None
     """
     coordinator = Coordinator(bounding_box=test_input,
                               epsg_code=25832,
-                              gdf_boundary=gdf_boundary)
+                              boundary=boundary)
 
     coordinates = coordinator.get_coordinates()
 

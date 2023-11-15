@@ -12,19 +12,19 @@ class Coordinator:
     def __init__(self,
                  bounding_box,
                  epsg_code,
-                 gdf_boundary):
+                 boundary):
         """
         | Constructor method
 
         :param (int, int, int, int) bounding_box: bounding box (x_min, y_min, x_max, y_max)
         :param int epsg_code: epsg code of the coordinate reference system
-        :param gpd.GeoDataFrame or None gdf_boundary: boundary
+        :param gpd.GeoDataFrame or None boundary: boundary
         :returns: None
         :rtype: None
         """
         self.bounding_box = bounding_box
         self.epsg_code = epsg_code
-        self.gdf_boundary = gdf_boundary
+        self.boundary = boundary
 
     def get_coordinates(self):
         """
@@ -41,13 +41,13 @@ class Coordinator:
 
         coordinates[:, 1] += settings.IMAGE_SIZE_METERS
 
-        if self.gdf_boundary is None:
+        if self.boundary is None:
             return coordinates
 
-        gdf_grid = grid_generator.get_grid(tile_size=settings.IMAGE_SIZE_METERS,
-                                           quantize=True)
+        grid = grid_generator.get_grid(tile_size=settings.IMAGE_SIZE_METERS,
+                                       quantize=True)
 
-        mask = np.array(gdf_grid['geometry'].intersects(self.gdf_boundary['geometry'][0]), dtype=bool)
+        mask = np.array(grid['geometry'].intersects(self.boundary['geometry'][0]), dtype=bool)
 
         return coordinates[mask]
 
