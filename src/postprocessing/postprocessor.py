@@ -106,6 +106,10 @@ class Postprocessor:
         :returns: concatenated cached tiles
         :rtype: gpd.GeoDataFrame
         """
+        assert isinstance(coordinates, np.ndarray) and coordinates.dtype == np.int32
+        assert len(coordinates.shape) == 2
+        assert coordinates.shape[-1] == 2
+
         cached_tiles = []
 
         pattern = re.compile(r'^(-?\d+)_(-?\d+)$')
