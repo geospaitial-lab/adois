@@ -16,6 +16,10 @@ class Inference:
         :returns: None
         :rtype: None
         """
+        assert isinstance(model_path, str)
+
+        assert isinstance(clip_border, bool)
+
         self.model = onnxruntime.InferenceSession(model_path)
         self.model_input_name = self.model.get_inputs()[0].name
         self.clip_border = clip_border
@@ -29,6 +33,12 @@ class Inference:
         :returns: clipped mask
         :rtype: np.ndarray[np.uint8]
         """
+        assert isinstance(mask, np.ndarray) and mask.dtype == np.uint8
+        assert len(mask.shape) == 2
+
+        assert mask.shape == (settings.IMAGE_SIZE + settings.BORDER_SIZE,
+                              settings.IMAGE_SIZE + settings.BORDER_SIZE)
+
         return np.array(mask[settings.BORDER_SIZE:-settings.BORDER_SIZE, settings.BORDER_SIZE:-settings.BORDER_SIZE])
 
     def get_mask(self, image):
@@ -42,6 +52,18 @@ class Inference:
         :returns: mask
         :rtype: np.ndarray[np.uint8]
         """
+        assert isinstance(image, np.ndarray) and image.dtype == np.float32
+        assert len(image.shape) == 3
+
+        if self.clip_border:
+            assert image.shape == (settings.IMAGE_SIZE + settings.BORDER_SIZE,
+                                   settings.IMAGE_SIZE + settings.BORDER_SIZE,
+                                   4)
+        else:
+            assert image.shape == (settings.IMAGE_SIZE,
+                                   settings.IMAGE_SIZE,
+                                   4)
+
         model_input = image[np.newaxis, ...]
         mask = np.array(self.model.run([], {self.model_input_name: model_input}))
         mask = np.squeeze(mask)
