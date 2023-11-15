@@ -22,6 +22,21 @@ class Coordinator:
         :returns: None
         :rtype: None
         """
+        assert isinstance(bounding_box, tuple)
+        assert len(bounding_box) == 4
+        assert all(isinstance(coordinate, int) for coordinate in bounding_box)
+        assert bounding_box[0] < bounding_box[2] and bounding_box[1] < bounding_box[3]
+
+        assert isinstance(epsg_code, int)
+
+        assert isinstance(boundary, gpd.GeoDataFrame) or boundary is None
+
+        if isinstance(boundary, gpd.GeoDataFrame):
+            assert not boundary.empty
+            assert boundary.crs == f'EPSG:{epsg_code}'
+            assert boundary.shape[0] == 1
+            assert boundary.geometry.iloc[0].geom_type == 'Polygon'
+
         self.bounding_box = bounding_box
         self.epsg_code = epsg_code
         self.boundary = boundary
@@ -63,6 +78,12 @@ class Coordinator:
         :returns: filtered coordinates (x_min, y_max) of each tile
         :rtype: np.ndarray[np.int32]
         """
+        assert isinstance(coordinates, np.ndarray) and coordinates.dtype == np.int32
+        assert len(coordinates.shape) == 2
+        assert coordinates.shape[-1] == 2
+
+        assert isinstance(output_dir_path, str) or isinstance(output_dir_path, Path)
+
         cached_tiles_dir_path = Path(output_dir_path) / 'cached_tiles'
 
         if not cached_tiles_dir_path.is_dir():
