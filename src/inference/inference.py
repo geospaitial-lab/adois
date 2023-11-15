@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import numpy as np
 import onnxruntime
 
@@ -11,16 +13,16 @@ class Inference:
         """
         | Constructor method
 
-        :param str model_path: path to the onnx model
+        :param str or Path model_path: path to the onnx model
         :param bool clip_border: if True, the mask is clipped
         :returns: None
         :rtype: None
         """
-        assert isinstance(model_path, str)
+        assert isinstance(model_path, str) or isinstance(model_path, Path)
 
         assert isinstance(clip_border, bool)
 
-        self.model = onnxruntime.InferenceSession(model_path)
+        self.model = onnxruntime.InferenceSession(str(model_path))
         self.model_input_name = self.model.get_inputs()[0].name
         self.clip_border = clip_border
 
