@@ -98,32 +98,40 @@ class Postprocessor:
         self.export_features(features=features,
                              coordinates=coordinates)
 
-    def concatenate_gdfs(self, coordinates):
+    def concatenate_cached_tiles(self, coordinates):
         """
-        | Returns a concatenated geodataframe.
+        | Returns a geodataframe of the concatenated cached tiles.
 
-        :param list[(int, int)] coordinates: coordinates (x, y) of each tile
-        :returns: concatenated geodataframe
+        :param np.ndarray[np.int32] coordinates: coordinates (x_min, y_max) of each tile
+        :returns: concatenated cached tiles
         :rtype: gpd.GeoDataFrame
         """
-        gdfs = []
+        cached_tiles = []
 
         pattern = re.compile(r'^(-?\d+)_(-?\d+)$')
 
-        for path in self.cached_tiles_dir_path.iterdir():
-            match = pattern.search(path.name)
-            if match:
-                processed_coordinates = (int(match.group(1)), int(match.group(2)))
-                if processed_coordinates in coordinates:
-                    if any(path.iterdir()):
-                        gdf_path = (self.cached_tiles_dir_path /
-                                    f'{processed_coordinates[0]}_{processed_coordinates[1]}' /
-                                    f'{processed_coordinates[0]}_{processed_coordinates[1]}.shp')
-                        gdf = gpd.read_file(gdf_path)
-                        gdfs.append(gdf)
+        for path_cached_tile_dir in self.cached_tiles_dir_path.iterdir():
+            match = pattern.search(path_cached_tile_dir.name)
 
-        concatenated_gdf = gpd.GeoDataFrame(pd.concat(gdfs, ignore_index=True), crs=f'EPSG:{self.epsg_code}')
-        return concatenated_gdf
+            if match:
+                x_min = int(match.group(1))
+                y_max = int(match.group(2))
+
+                coordinates_cached = np.array([x_min, y_max], dtype=np.int32)
+
+                if np.any(np.all(coordinates == coordinates_cached, axis=1)):
+                    path_cached_tile = (self.cached_tiles_dir_path /
+                                        f'{x_min}_{y_max}' /
+                                        f'{x_min}_{y_max}.gpkg')
+
+                    if path_cached_tile.is_file():
+                        cached_tile = gpd.read_file(path_cached_tile)
+                        cached_tiles.append(cached_tile)
+
+        cached_tiles_concatenated = gpd.GeoDataFrame(pd.concat(cached_tiles, ignore_index=True),
+                                                     crs=f'EPSG:{self.epsg_code}')
+
+        return cached_tiles_concatenated
 
     @staticmethod
     def sieve_gdf(gdf, sieve_size):

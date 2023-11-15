@@ -164,7 +164,7 @@ def main():
     # noinspection PyTypeChecker
     status_bar.update(stage='Postprocessing',
                       force=True)
-    raw_gdf = postprocessor.concatenate_gdfs(coordinates=coordinates)
+    raw_gdf = postprocessor.concatenate_cached_tiles(coordinates=coordinates)
     logger.info('Cached geodataframes concatenated')
 
     if config.postprocessing.sieve_size:
