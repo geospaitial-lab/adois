@@ -44,7 +44,8 @@ class RemoteSensingDataDownloader:
         :returns: bounding_box (x_min, y_min, x_max, y_max)
         :rtype: (int, int, int, int)
         """
-        assert isinstance(coordinates, tuple) and len(coordinates) == 2
+        assert isinstance(coordinates, tuple)
+        assert len(coordinates) == 2
         assert all(isinstance(coordinate, int) for coordinate in coordinates)
 
         x_min, y_max = coordinates
@@ -71,7 +72,8 @@ class RemoteSensingDataDownloader:
         :returns: response
         :rtype: bytes
         """
-        assert isinstance(bounding_box, tuple) and len(bounding_box) == 4
+        assert isinstance(bounding_box, tuple)
+        assert len(bounding_box) == 4
         assert all(isinstance(coordinate, int) for coordinate in bounding_box)
         assert bounding_box[0] < bounding_box[2] and bounding_box[1] < bounding_box[3]
 
@@ -94,7 +96,8 @@ class RemoteSensingDataDownloader:
         :returns: image
         :rtype: np.ndarray[np.uint8]
         """
-        assert isinstance(coordinates, tuple) and len(coordinates) == 2
+        assert isinstance(coordinates, tuple)
+        assert len(coordinates) == 2
         assert all(isinstance(coordinate, int) for coordinate in coordinates)
 
         bounding_box = self.get_bounding_box(coordinates)
