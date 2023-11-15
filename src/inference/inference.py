@@ -11,7 +11,7 @@ class Inference:
         """
         | Constructor method
 
-        :param str model_path: path to the model (.onnx)
+        :param str model_path: path to the onnx model
         :param bool clip_border: if True, the mask is clipped
         :returns: None
         :rtype: None
