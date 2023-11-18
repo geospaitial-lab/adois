@@ -35,14 +35,12 @@ def main():
     # endregion
 
     # region Logging
-    utils.DEBUG = args.debug
-
     logger_formatter = logging.Formatter(fmt='%(asctime)s - %(levelname)s: %(message)s',
                                          datefmt="%Y-%m-%d %H:%M:%S")
     logger = logging.getLogger('main_logger')
 
     console_handler = logging.StreamHandler()
-    if utils.DEBUG:
+    if args.debug:
         console_handler.setLevel(logging.DEBUG)
     else:
         console_handler.setLevel(logging.INFO)

@@ -1,5 +1,3 @@
-DEBUG = False
-
 BORDER_SIZE = 320  # border size in pixels (type: int)
 BORDER_SIZE_METERS = 64  # border size in meters (type: int)
 IMAGE_SIZE = 1280  # image size in pixels (type: int)
