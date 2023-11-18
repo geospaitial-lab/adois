@@ -1,0 +1,5 @@
+[report]
+exclude_also =
+    if __name__ == .__main__.:
+    @(abc\.)?abstractmethod
+    def __repr__
