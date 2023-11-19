@@ -38,6 +38,7 @@ class GridGenerator:
         """
         assert isinstance(tile_size, int)
         assert tile_size > 0
+        assert tile_size > (self.x_max - self.x_min) and tile_size > (self.y_max - self.y_min)
 
         assert isinstance(quantize, bool)
 
@@ -70,6 +71,7 @@ class GridGenerator:
         """
         assert isinstance(tile_size, int)
         assert tile_size > 0
+        assert tile_size > (self.x_max - self.x_min) and tile_size > (self.y_max - self.y_min)
 
         assert isinstance(quantize, bool)
 
