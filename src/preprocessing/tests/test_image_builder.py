@@ -1,3 +1,5 @@
+import inspect
+
 import numpy as np
 import pytest
 
@@ -145,6 +147,25 @@ def test_concatenate_images():
 @pytest.mark.skip(reason='Test not implemented yet.')
 def test_preprocess():
     pass
+
+
+@pytest.mark.parametrize('image_builder', parameters_image_builders)
+def test_build_default(image_builder, request):
+    """
+    | Tests the default values of the parameters of build().
+
+    :param ImageBuilder image_builder: image builder
+    :param request: request
+    :returns: None
+    :rtype: None
+    """
+    image_builder = request.getfixturevalue(image_builder)
+
+    signature = inspect.signature(image_builder.build)
+    reset_default = signature.parameters['reset'].default
+
+    assert isinstance(reset_default, bool)
+    assert reset_default is True
 
 
 @pytest.mark.skip(reason='Test not implemented yet.')
