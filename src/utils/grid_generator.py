@@ -1,6 +1,6 @@
 import geopandas as gpd
 import numpy as np
-from shapely.geometry import box as Box  # PEP8 compliant
+from shapely.geometry import box, Polygon
 
 
 class GridGenerator:
@@ -25,9 +25,9 @@ class GridGenerator:
         self.x_min, self.y_min, self.x_max, self.y_max = bounding_box
         self.epsg_code = epsg_code
 
-    def get_coordinates(self,
-                        tile_size,
-                        quantize):
+    def compute_coordinates(self,
+                            tile_size,
+                            quantize=True):
         """
         | Returns the coordinates of the bottom left corner of each tile.
 
@@ -58,9 +58,24 @@ class GridGenerator:
 
         return coordinates
 
-    def get_grid(self,
-                 tile_size,
-                 quantize):
+    @staticmethod
+    def generate_polygons(coordinates, tile_size):
+        """
+        | Returns a polygon of each tile.
+
+        :param np.ndarray[np.int32] coordinates: coordinates (x_min, y_min) of each tile
+        :param int tile_size: tile size in meters
+        :returns: polygon of each tile
+        :rtype: list[Polygon]
+        """
+        polygons = [box(x_min, y_min, x_min + tile_size, y_min + tile_size)
+                    for x_min, y_min in coordinates]
+
+        return polygons
+
+    def generate_grid(self,
+                      tile_size,
+                      quantize=True):
         """
         | Returns a geodataframe of the grid.
 
@@ -75,11 +90,11 @@ class GridGenerator:
 
         assert isinstance(quantize, bool)
 
-        coordinates = self.get_coordinates(tile_size=tile_size,
-                                           quantize=quantize)
+        coordinates = self.compute_coordinates(tile_size=tile_size,
+                                               quantize=quantize)
 
-        polygons = [Box(x_min, y_min, x_min + tile_size, y_min + tile_size)
-                    for x_min, y_min in coordinates]
+        polygons = self.generate_polygons(coordinates=coordinates,
+                                          tile_size=tile_size)
 
         grid = gpd.GeoDataFrame(geometry=polygons,
                                 crs=f'EPSG:{self.epsg_code}')
