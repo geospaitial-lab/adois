@@ -3,9 +3,14 @@ import inspect
 import numpy as np
 import pytest
 
-from src.preprocessing.image_builder import *
-from src.preprocessing.preprocessing_strategies import PreprocessingStrategy
-from src.preprocessing.tests.data.data_test_image_builder import *
+from src.preprocessing.image_builder import ImageBuilder
+from src.preprocessing.preprocessing_strategies import PreprocessingStrategy  # noqa: F401 (used for type hinting)
+from src.preprocessing.tests.data.data_test_image_builder import (
+    parameters_init,
+    parameters_set_image_rgb,
+    parameters_set_image_nir,
+    parameters_set_preprocessing_strategies,
+    parameters_reset)
 
 parameters_image_builders = ['image_builder_without_preprocessing_strategies',
                              'image_builder_with_preprocessing_strategy']
