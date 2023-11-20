@@ -1,6 +1,6 @@
 import geopandas as gpd
 import numpy as np
-from shapely.geometry import box, Polygon
+from shapely.geometry import box, Polygon  # noqa: F401 (used for type hinting)
 
 
 class GridGenerator:
