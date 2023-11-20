@@ -94,8 +94,8 @@ def test_generate_polygons(test_input,
     :returns: None
     :rtype: None
     """
-    polygons = GridGenerator.generate_polygons(coordinates=test_input[0],
-                                               tile_size=test_input[1])
+    polygons = grid_generator.generate_polygons(coordinates=test_input[0],
+                                                tile_size=test_input[1])
 
     assert isinstance(polygons, list)
     assert all(isinstance(polygon, Polygon) for polygon in polygons)

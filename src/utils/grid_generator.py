@@ -58,8 +58,9 @@ class GridGenerator:
 
         return coordinates
 
-    @staticmethod
-    def generate_polygons(coordinates, tile_size):
+    def generate_polygons(self,
+                          coordinates,
+                          tile_size):
         """
         | Returns a polygon of each tile.
 
@@ -72,6 +73,10 @@ class GridGenerator:
         assert coordinates.dtype == np.int32
         assert len(coordinates.shape) == 2
         assert coordinates.shape[-1] == 2
+
+        assert isinstance(tile_size, int)
+        assert tile_size > 0
+        assert tile_size < (self.x_max - self.x_min) and tile_size < (self.y_max - self.y_min)
 
         polygons = [box(x_min, y_min, x_min + tile_size, y_min + tile_size)
                     for x_min, y_min in coordinates]
