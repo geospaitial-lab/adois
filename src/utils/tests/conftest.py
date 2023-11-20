@@ -4,6 +4,20 @@ import geopandas as gpd
 import pytest
 from shapely.geometry import box as Box  # PEP8 compliant
 
+from src.utils.grid_generator import GridGenerator
+
+
+@pytest.fixture(scope='session')
+def grid_generator():
+    """
+    | Returns a grid generator object.
+
+    :returns: grid generator
+    :rtype: GridGenerator
+    """
+    return GridGenerator(bounding_box=(-128, -128, 128, 128),
+                         epsg_code=25832)
+
 
 @pytest.fixture(scope='session')
 def shape_file_dir_path(tmp_path_factory):
