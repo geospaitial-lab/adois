@@ -68,6 +68,11 @@ class GridGenerator:
         :returns: polygon of each tile
         :rtype: list[Polygon]
         """
+        assert isinstance(coordinates, np.ndarray)
+        assert coordinates.dtype == np.int32
+        assert len(coordinates.shape) == 2
+        assert coordinates.shape[-1] == 2
+
         polygons = [box(x_min, y_min, x_min + tile_size, y_min + tile_size)
                     for x_min, y_min in coordinates]
 
