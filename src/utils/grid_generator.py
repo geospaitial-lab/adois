@@ -110,3 +110,15 @@ class GridGenerator:
                                 crs=f'EPSG:{self.epsg_code}')
 
         return grid
+
+    def __repr__(self):
+        """
+        | Returns a representation of the object.
+
+        :returns: representation
+        :rtype: str
+        """
+        representation = f'{self.__class__.__name__}('
+        representation += f'x_min={self.x_min}, y_min={self.y_min}, x_max={self.x_max}, y_max={self.y_max}, '
+        representation += f'epsg_code={self.epsg_code})'
+        return representation
