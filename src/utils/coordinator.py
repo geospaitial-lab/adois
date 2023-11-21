@@ -33,9 +33,9 @@ class Coordinator:
 
         if isinstance(boundary, gpd.GeoDataFrame):
             assert not boundary.empty
-            assert boundary.crs == f'EPSG:{epsg_code}'
             assert boundary.shape[0] == 1
-            assert boundary.geometry.iloc[0].geom_type == 'Polygon'
+            assert all(boundary['geometry'].geom_type == 'Polygon')
+            assert boundary.crs == f'EPSG:{epsg_code}'
 
         self.bounding_box = bounding_box
         self.epsg_code = epsg_code
