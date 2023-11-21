@@ -137,6 +137,7 @@ def test_generate_grid(test_input,
     assert not grid.empty
     assert grid.shape[1] == 1
     assert all(grid['geometry'].geom_type == 'Polygon')
+    assert all(grid['geometry'].is_valid)
     assert grid.crs == f'EPSG:{grid_generator.epsg_code}'
     gpd.testing.assert_geodataframe_equal(grid,
                                           expected,
