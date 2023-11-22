@@ -117,6 +117,9 @@ class ImageBuilder:
         :returns: built image
         :rtype: np.ndarray
         """
+        assert self.image_rgb is not None
+        assert self.image_nir is not None
+
         image = self.concatenate_images()
         image = self.preprocess_image(image)
 
