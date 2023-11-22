@@ -30,7 +30,7 @@ parameters_set_preprocessing_strategies = \
      ([UInt8LinearScalingNormalization()], [UInt8LinearScalingNormalization()]),
      ([Float32Casting(), UInt8LinearScalingNormalization()], [Float32Casting(), UInt8LinearScalingNormalization()])]
 
-parameters_reset = \
+parameters_reset_images = \
     [np.full(shape=(128, 128, 3),
              fill_value=(0, 1, 2),
              dtype=np.uint8)]

@@ -67,7 +67,7 @@ class ImageBuilder:
         self.preprocessing_strategies = preprocessing_strategies
         return self
 
-    def reset(self):
+    def reset_images(self):
         """
         | Resets the rgb image and the nir image.
 
@@ -93,7 +93,7 @@ class ImageBuilder:
 
         return image
 
-    def preprocess(self, image):
+    def preprocess_image(self, image):
         """
         | Returns the preprocessed image.
 
@@ -109,7 +109,7 @@ class ImageBuilder:
 
         return image
 
-    def build(self, reset=True):
+    def build_image(self, reset=True):
         """
         | Returns the built image.
 
@@ -118,10 +118,10 @@ class ImageBuilder:
         :rtype: np.ndarray
         """
         image = self.concatenate_images()
-        image = self.preprocess(image)
+        image = self.preprocess_image(image)
 
         if reset:
-            self.reset()
+            self.reset_images()
 
         return image
 

@@ -10,7 +10,7 @@ from src.preprocessing.tests.data.data_test_image_builder import (
     parameters_set_image_rgb,
     parameters_set_image_nir,
     parameters_set_preprocessing_strategies,
-    parameters_reset)
+    parameters_reset_images)
 
 parameters_image_builders = ['image_builder_without_preprocessing_strategies',
                              'image_builder_with_preprocessing_strategy']
@@ -120,13 +120,13 @@ def test_set_preprocessing_strategies(test_input,
                for i, preprocessing_strategy in enumerate(image_builder.preprocessing_strategies))
 
 
-@pytest.mark.parametrize('test_input', parameters_reset)
+@pytest.mark.parametrize('test_input', parameters_reset_images)
 @pytest.mark.parametrize('image_builder', parameters_image_builders)
-def test_reset(test_input,
-               image_builder,
-               request):
+def test_reset_images(test_input,
+                      image_builder,
+                      request):
     """
-    | Tests reset().
+    | Tests reset_images().
 
     :param np.ndarray[np.uint8] test_input: image
     :param ImageBuilder image_builder: image builder
@@ -138,7 +138,7 @@ def test_reset(test_input,
 
     image_builder.image_rgb = test_input
     image_builder.image_nir = test_input
-    image_builder.reset()
+    image_builder.reset_images()
 
     assert image_builder.image_rgb is None
     assert image_builder.image_nir is None
@@ -150,14 +150,14 @@ def test_concatenate_images():
 
 
 @pytest.mark.skip(reason='Test not implemented yet.')
-def test_preprocess():
+def test_preprocess_image():
     pass
 
 
 @pytest.mark.parametrize('image_builder', parameters_image_builders)
-def test_build_default(image_builder, request):
+def test_build_image_default(image_builder, request):
     """
-    | Tests the default values of the parameters of build().
+    | Tests the default values of the parameters of build_image().
 
     :param ImageBuilder image_builder: image builder
     :param request: request
@@ -166,7 +166,7 @@ def test_build_default(image_builder, request):
     """
     image_builder = request.getfixturevalue(image_builder)
 
-    signature = inspect.signature(image_builder.build)
+    signature = inspect.signature(image_builder.build_image)
     reset_default = signature.parameters['reset'].default
 
     assert isinstance(reset_default, bool)
@@ -174,5 +174,5 @@ def test_build_default(image_builder, request):
 
 
 @pytest.mark.skip(reason='Test not implemented yet.')
-def test_build():
+def test_build_image():
     pass
