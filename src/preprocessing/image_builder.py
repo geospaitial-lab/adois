@@ -145,5 +145,5 @@ class ImageBuilder:
                            f"image_nir_dtype={getattr(self.image_nir, 'dtype', None)}, "
                            f"image_nir_shape={getattr(self.image_nir, 'shape', None)}, ")
 
-        representation += f'preprocessing_strategies = {self.preprocessing_strategies!r})'
+        representation += f'preprocessing_strategies={self.preprocessing_strategies!r})'
         return representation
