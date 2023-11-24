@@ -105,7 +105,7 @@ class ImageBuilder:
         assert image.dtype == np.uint8
 
         for preprocessing_strategy in self.preprocessing_strategies:
-            image = preprocessing_strategy.preprocess(image)
+            image = preprocessing_strategy.preprocess(image=image)
 
         return image
 
@@ -121,7 +121,7 @@ class ImageBuilder:
         assert self.image_nir is not None
 
         image = self.concatenate_images()
-        image = self.preprocess_image(image)
+        image = self.preprocess_image(image=image)
 
         if reset:
             self.reset_images()
