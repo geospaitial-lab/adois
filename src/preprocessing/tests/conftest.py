@@ -1,29 +1,12 @@
+import unittest.mock as mock
+
 import pytest
 
 from src.preprocessing.image_builder import ImageBuilder
-from src.preprocessing.preprocessing_strategies import Float32Casting, UInt8LinearScalingNormalization
-
-
-@pytest.fixture(scope='session')
-def image_builder_without_preprocessing_strategies():
-    """
-    | Returns an image builder object without any preprocessing strategies.
-
-    :returns: image builder fixture
-    :rtype: ImageBuilder
-    """
-    return ImageBuilder(preprocessing_strategies=[])
-
-
-@pytest.fixture(scope='session')
-def image_builder_with_preprocessing_strategy():
-    """
-    | Returns an image builder object with uint8 linear scaling normalization as the preprocessing strategy.
-
-    :returns: image builder fixture
-    :rtype: ImageBuilder
-    """
-    return ImageBuilder(preprocessing_strategies=[UInt8LinearScalingNormalization()])
+from src.preprocessing.preprocessing_strategies import (
+    Float32Casting,
+    PreprocessingStrategy,
+    UInt8LinearScalingNormalization)
 
 
 @pytest.fixture(scope='session')
@@ -35,6 +18,53 @@ def float32_casting():
     :rtype: Float32Casting
     """
     return Float32Casting()
+
+
+@pytest.fixture(scope='function')
+def image_builder_without_preprocessing_strategies():
+    """
+    | Returns an image builder object without any preprocessing strategies.
+
+    :returns: image builder fixture
+    :rtype: ImageBuilder
+    """
+    return ImageBuilder(preprocessing_strategies=[])
+
+
+@pytest.fixture(scope='function')
+def image_builder_with_mocked_preprocessing_strategy(mocked_preprocessing_strategy):
+    """
+    | Returns an image builder object with a mocked preprocessing strategy.
+
+    :param PreprocessingStrategy mocked_preprocessing_strategy: mocked preprocessing strategy fixture
+    :returns: image builder fixture
+    :rtype: ImageBuilder
+    """
+    return ImageBuilder(preprocessing_strategies=[mocked_preprocessing_strategy])
+
+
+@pytest.fixture(scope='function')
+def image_builder_with_mocked_preprocessing_strategies(mocked_preprocessing_strategy):
+    """
+    | Returns an image builder object with multiple mocked preprocessing strategies.
+
+    :param PreprocessingStrategy mocked_preprocessing_strategy: mocked preprocessing strategy fixture
+    :returns: image builder fixture
+    :rtype: ImageBuilder
+    """
+    return ImageBuilder(preprocessing_strategies=[mocked_preprocessing_strategy,
+                                                  mocked_preprocessing_strategy])
+
+
+@pytest.fixture(scope='function')
+def mocked_preprocessing_strategy():
+    """
+    | Returns a mocked preprocessing strategy object.
+
+    :returns: mocked preprocessing strategy fixture
+    :rtype: PreprocessingStrategy
+    """
+    return mock.Mock(spec=PreprocessingStrategy)
 
 
 @pytest.fixture(scope='session')
