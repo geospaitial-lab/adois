@@ -4,103 +4,207 @@ from pathlib import Path
 import geopandas as gpd
 import numpy as np
 
-import src.utils.settings as settings
 from src.utils.grid_generator import GridGenerator
 
 
 class Coordinator:
     def __init__(self,
+                 grid_generator,
                  bounding_box,
-                 epsg_code,
-                 boundary):
+                 tile_size,
+                 epsg_code):
         """
-        | Constructor method
+        | Initializer method
 
+        :param GridGenerator grid_generator: grid generator
         :param (int, int, int, int) bounding_box: bounding box (x_min, y_min, x_max, y_max)
+        :param int tile_size: tile size in meters
         :param int epsg_code: epsg code of the coordinate reference system
-        :param gpd.GeoDataFrame or None boundary: boundary
         :returns: None
         :rtype: None
         """
+        assert isinstance(grid_generator, GridGenerator)
+
         assert isinstance(bounding_box, tuple)
         assert len(bounding_box) == 4
         assert all(isinstance(coordinate, int) for coordinate in bounding_box)
         assert bounding_box[0] < bounding_box[2] and bounding_box[1] < bounding_box[3]
 
+        assert isinstance(tile_size, int)
+        assert tile_size > 0
+        assert tile_size < (bounding_box[2] - bounding_box[0]) and tile_size < (bounding_box[3] - bounding_box[1])
+
         assert isinstance(epsg_code, int)
 
-        assert isinstance(boundary, gpd.GeoDataFrame) or boundary is None
+        assert grid_generator.x_min == bounding_box[0]
+        assert grid_generator.y_min == bounding_box[1]
+        assert grid_generator.x_max == bounding_box[2]
+        assert grid_generator.y_max == bounding_box[3]
+        assert grid_generator.epsg_code == epsg_code
 
-        if isinstance(boundary, gpd.GeoDataFrame):
-            assert not boundary.empty
-            assert boundary.shape[0] == 1
-            assert all(boundary['geometry'].geom_type == 'Polygon')
-            assert boundary.crs == f'EPSG:{epsg_code}'
-
-        self.bounding_box = bounding_box
+        self.grid_generator = grid_generator
+        self.tile_size = tile_size
         self.epsg_code = epsg_code
-        self.boundary = boundary
 
-    def get_coordinates(self):
+    def compute_coordinates(self):
         """
         | Returns the coordinates of the top left corner of each tile.
 
         :returns: coordinates (x_min, y_max) of each tile
         :rtype: np.ndarray[np.int32]
         """
-        grid_generator = GridGenerator(bounding_box=self.bounding_box,
-                                       epsg_code=self.epsg_code)
+        coordinates = self.grid_generator.compute_coordinates(tile_size=self.tile_size,
+                                                              quantize=True)
 
-        coordinates = grid_generator.get_coordinates(tile_size=settings.IMAGE_SIZE_METERS,
-                                                     quantize=True)
+        coordinates[:, 1] += self.tile_size
+        return coordinates
 
-        coordinates[:, 1] += settings.IMAGE_SIZE_METERS
-
-        if self.boundary is None:
-            return coordinates
-
-        grid = grid_generator.get_grid(tile_size=settings.IMAGE_SIZE_METERS,
-                                       quantize=True)
-
-        mask = np.array(grid['geometry'].intersects(self.boundary['geometry'][0]), dtype=bool)
-
-        return coordinates[mask]
-
-    @staticmethod
-    def filter_cached_coordinates(coordinates, output_dir_path):
+    def filter_coordinates_outside_boundary(self,
+                                            coordinates,
+                                            boundary):
         """
         | Returns the filtered coordinates of the top left corner of each tile.
-        | If a tile has already been processed (its directory exists in the cached_tiles directory),
-            its coordinates are removed.
+        | The coordinates are filtered based on whether they are inside the boundary or not.
+            Only the coordinates of tiles that intersect the polygons of boundary are retained.
 
         :param np.ndarray[np.int32] coordinates: coordinates (x_min, y_max) of each tile
-        :param str or Path output_dir_path: path to the output directory
+        :param gpd.GeoDataFrame boundary: boundary
         :returns: filtered coordinates (x_min, y_max) of each tile
         :rtype: np.ndarray[np.int32]
         """
-        assert isinstance(coordinates, np.ndarray) and coordinates.dtype == np.int32
+        assert isinstance(coordinates, np.ndarray)
+        assert coordinates.dtype == np.int32
         assert len(coordinates.shape) == 2
         assert coordinates.shape[-1] == 2
 
-        assert isinstance(output_dir_path, str) or isinstance(output_dir_path, Path)
+        assert isinstance(boundary, gpd.GeoDataFrame)
+        assert not boundary.empty
+        assert all(boundary['geometry'].geom_type == 'Polygon')
+        assert all(boundary['geometry'].is_valid)
+        assert boundary.crs == f'EPSG:{self.epsg_code}'
 
-        path_cached_tiles_dir = Path(output_dir_path) / 'cached_tiles'
+        grid = self.grid_generator.generate_grid(tile_size=self.tile_size,
+                                                 quantize=True)
 
-        if not path_cached_tiles_dir.is_dir():
-            return coordinates
+        mask = np.array(grid['geometry'].intersects(boundary['geometry']).any(axis=1), dtype=bool)
+        return coordinates[mask]
 
-        mask = np.ones(coordinates.shape[0], dtype=bool)
+    @staticmethod
+    def extract_coordinates_processed(path_tiles_processed_dir):
+        """
+        | Returns the coordinates of the top left corner of each processed tile.
+        | The coordinates are extracted from the names of the subdirectories in the processed tiles directory.
+
+        :param str or Path path_tiles_processed_dir: path to the processed tiles directory
+        :returns: coordinates (x_min, y_max) of each processed tile
+        :rtype: np.ndarray[np.int32] or None
+        """
+        assert isinstance(path_tiles_processed_dir, (str, Path))
+
+        path_tiles_processed_dir = Path(path_tiles_processed_dir)
+
+        if not path_tiles_processed_dir.is_dir():
+            return None
+
+        coordinates_processed = []
 
         pattern = re.compile(r'^(-?\d+)_(-?\d+)$')
 
-        for path_cached_tile_dir in path_cached_tiles_dir.iterdir():
-            match = pattern.search(path_cached_tile_dir.name)
+        for path_tiles_processed_subdir in path_tiles_processed_dir.iterdir():
+            if not path_tiles_processed_subdir.is_dir():
+                continue
+
+            match = pattern.search(path_tiles_processed_subdir.name)
 
             if match:
                 x_min = int(match.group(1))
                 y_max = int(match.group(2))
 
-                coordinates_cached = np.array([x_min, y_max], dtype=np.int32)
-                mask &= np.any(coordinates != coordinates_cached, axis=1)
+                coordinates_processed.append([x_min, y_max])
 
-        return coordinates[mask]
+        if len(coordinates_processed) == 0:
+            return None
+
+        return np.array(coordinates_processed, dtype=np.int32)
+
+    @staticmethod
+    def filter_coordinates_processed(coordinates, coordinates_processed):
+        """
+        | Returns the filtered coordinates of the top left corner of each tile.
+        | The coordinates are filtered based on whether they are processed or not.
+            Only the coordinates of tiles that are not processed are retained.
+
+        :param np.ndarray[np.int32] coordinates: coordinates (x_min, y_max) of each tile
+        :param np.ndarray[np.int32] coordinates_processed: coordinates (x_min, y_max) of each processed tile
+        :returns: filtered coordinates (x_min, y_max) of each tile
+        :rtype: np.ndarray[np.int32]
+        """
+        assert isinstance(coordinates, np.ndarray)
+        assert coordinates.dtype == np.int32
+        assert len(coordinates.shape) == 2
+        assert coordinates.shape[-1] == 2
+
+        assert isinstance(coordinates_processed, np.ndarray)
+        assert coordinates_processed.dtype == np.int32
+        assert len(coordinates_processed.shape) == 2
+        assert coordinates_processed.shape[-1] == 2
+
+        mask = np.all(coordinates[:, np.newaxis, :] == coordinates_processed[np.newaxis, ...], axis=-1)
+        return coordinates[~np.any(mask, axis=-1)]
+
+    def filter_coordinates(self,
+                           coordinates,
+                           boundary=None,
+                           path_tiles_processed_dir=None):
+        """
+        | Returns the filtered coordinates of the top left corner of each tile.
+
+        :param np.ndarray[np.int32] coordinates: coordinates (x_min, y_max) of each tile
+        :param gpd.GeoDataFrame or None boundary: boundary
+        :param str or Path or None path_tiles_processed_dir: path to the processed tiles directory
+        :returns: filtered coordinates (x_min, y_max) of each tile
+        :rtype: np.ndarray[np.int32]
+        """
+        assert isinstance(coordinates, np.ndarray)
+        assert coordinates.dtype == np.int32
+        assert len(coordinates.shape) == 2
+        assert coordinates.shape[-1] == 2
+
+        assert isinstance(boundary, gpd.GeoDataFrame) or boundary is None
+
+        if boundary is not None:
+            assert not boundary.empty
+            assert all(boundary['geometry'].geom_type == 'Polygon')
+            assert all(boundary['geometry'].is_valid)
+            assert boundary.crs == f'EPSG:{self.epsg_code}'
+
+        assert isinstance(path_tiles_processed_dir, (str, Path)) or path_tiles_processed_dir is None
+
+        if boundary is not None:
+            coordinates = self.filter_coordinates_outside_boundary(coordinates=coordinates,
+                                                                   boundary=boundary)
+
+        if path_tiles_processed_dir is not None:
+            path_tiles_processed_dir = Path(path_tiles_processed_dir)
+
+            coordinates_processed = \
+                self.extract_coordinates_processed(path_tiles_processed_dir=path_tiles_processed_dir)
+
+            if coordinates_processed is not None:
+                coordinates = self.filter_coordinates_processed(coordinates=coordinates,
+                                                                coordinates_processed=coordinates_processed)
+
+        return coordinates
+
+    def __repr__(self):
+        """
+        | Returns a representation of the object.
+
+        :returns: representation
+        :rtype: str
+        """
+        representation = f'{self.__class__.__name__}('
+        representation += f'grid_generator={self.grid_generator!r}, '
+        representation += f'tile_size={self.tile_size}, '
+        representation += f'epsg_code={self.epsg_code})'
+        return representation
