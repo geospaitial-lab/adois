@@ -118,7 +118,8 @@ class GridGenerator:
         :returns: representation
         :rtype: str
         """
-        representation = f'{self.__class__.__name__}('
-        representation += f'x_min={self.x_min}, y_min={self.y_min}, x_max={self.x_max}, y_max={self.y_max}, '
-        representation += f'epsg_code={self.epsg_code})'
+        representation = (f'{self.__class__.__name__}('
+                          + f'x_min={self.x_min}, y_min={self.y_min}, x_max={self.x_max}, y_max={self.y_max}, '
+                          + f'epsg_code={self.epsg_code})')
+
         return representation

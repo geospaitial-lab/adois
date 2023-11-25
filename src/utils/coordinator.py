@@ -203,8 +203,9 @@ class Coordinator:
         :returns: representation
         :rtype: str
         """
-        representation = f'{self.__class__.__name__}('
-        representation += f'grid_generator={self.grid_generator!r}, '
-        representation += f'tile_size={self.tile_size}, '
-        representation += f'epsg_code={self.epsg_code})'
+        representation = (f'{self.__class__.__name__}('
+                          + f'grid_generator={self.grid_generator!r}, '
+                          + f'tile_size={self.tile_size}, '
+                          + f'epsg_code={self.epsg_code})')
+
         return representation

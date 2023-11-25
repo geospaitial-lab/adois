@@ -135,15 +135,13 @@ class ImageBuilder:
         :returns: representation
         :rtype: str
         """
-        representation = f'{self.__class__.__name__}('
+        representation = (f'{self.__class__.__name__}('
+                          + f'image_rgb_type={type(self.image_rgb).__name__}, '
+                          + f"image_rgb_dtype={getattr(self.image_rgb, 'dtype', None)}, "
+                          + f"image_rgb_shape={getattr(self.image_rgb, 'shape', None)}, "
+                          + f'image_nir_type={type(self.image_nir).__name__}, '
+                          + f"image_nir_dtype={getattr(self.image_nir, 'dtype', None)}, "
+                          + f"image_nir_shape={getattr(self.image_nir, 'shape', None)}, "
+                          + f'preprocessing_strategies={self.preprocessing_strategies!r})')
 
-        representation += (f'image_rgb_type={type(self.image_rgb).__name__}, '
-                           f"image_rgb_dtype={getattr(self.image_rgb, 'dtype', None)}, "
-                           f"image_rgb_shape={getattr(self.image_rgb, 'shape', None)}, ")
-
-        representation += (f'image_nir_type={type(self.image_nir).__name__}, '
-                           f"image_nir_dtype={getattr(self.image_nir, 'dtype', None)}, "
-                           f"image_nir_shape={getattr(self.image_nir, 'shape', None)}, ")
-
-        representation += f'preprocessing_strategies={self.preprocessing_strategies!r})'
         return representation
