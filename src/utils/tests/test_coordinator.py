@@ -7,7 +7,7 @@ from src.utils.coordinator import Coordinator
 from src.utils.grid_generator import GridGenerator
 
 
-def test_coordinator_init(mocked_grid_generator):
+def test_init(mocked_grid_generator):
     """
     | Tests __init__().
 
