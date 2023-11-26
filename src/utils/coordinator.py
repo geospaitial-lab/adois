@@ -8,6 +8,7 @@ from src.utils.grid_generator import GridGenerator
 
 
 class Coordinator:
+
     def __init__(self,
                  grid_generator,
                  bounding_box,
@@ -119,7 +120,6 @@ class Coordinator:
             if match:
                 x_min = int(match.group(1))
                 y_max = int(match.group(2))
-
                 coordinates_processed.append([x_min, y_max])
 
         if len(coordinates_processed) == 0:
@@ -128,7 +128,8 @@ class Coordinator:
         return np.array(coordinates_processed, dtype=np.int32)
 
     @staticmethod
-    def filter_coordinates_processed(coordinates, coordinates_processed):
+    def filter_coordinates_processed(coordinates,
+                                     coordinates_processed):
         """
         | Returns the filtered coordinates of the top left corner of each tile.
         | The coordinates are filtered based on whether they are processed or not.
@@ -187,8 +188,8 @@ class Coordinator:
         if path_tiles_processed_dir is not None:
             path_tiles_processed_dir = Path(path_tiles_processed_dir)
 
-            coordinates_processed = \
-                self.extract_coordinates_processed(path_tiles_processed_dir=path_tiles_processed_dir)
+            coordinates_processed = (
+                self.extract_coordinates_processed(path_tiles_processed_dir=path_tiles_processed_dir))
 
             if coordinates_processed is not None:
                 coordinates = self.filter_coordinates_processed(coordinates=coordinates,
@@ -203,9 +204,10 @@ class Coordinator:
         :returns: representation
         :rtype: str
         """
-        representation = (f'{self.__class__.__name__}('
-                          + f'grid_generator={self.grid_generator!r}, '
-                          + f'tile_size={self.tile_size}, '
-                          + f'epsg_code={self.epsg_code})')
+        representation = (
+            f'{self.__class__.__name__}('
+            f'grid_generator={self.grid_generator!r}, '
+            f'tile_size={self.tile_size}, '
+            f'epsg_code={self.epsg_code})')
 
         return representation
