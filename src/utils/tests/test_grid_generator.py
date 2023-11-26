@@ -24,7 +24,9 @@ def test_init():
                                    epsg_code=epsg_code)
 
     assert isinstance(grid_generator, GridGenerator)
-    assert list(grid_generator.__dict__.keys()) == ['x_min', 'y_min', 'x_max', 'y_max', 'epsg_code']
+    parameters = ['x_min', 'y_min', 'x_max', 'y_max', 'epsg_code']
+    assert list(grid_generator.__dict__.keys()) == parameters
+
     assert isinstance(grid_generator.x_min, int)
     assert grid_generator.x_min == bounding_box[0]
     assert isinstance(grid_generator.y_min, int)
@@ -86,10 +88,7 @@ def test_generate_polygons(grid_generator):
     coordinates = np.array([[-128, -128], [0, -128], [-128, 0], [0, 0]], dtype=np.int32)
     tile_size = 128
 
-    expected = [box(-128, -128, 0, 0),
-                box(0, -128, 128, 0),
-                box(-128, 0, 0, 128),
-                box(0, 0, 128, 128)]
+    expected = [box(-128, -128, 0, 0), box(0, -128, 128, 0), box(-128, 0, 0, 128), box(0, 0, 128, 128)]
 
     polygons = grid_generator.generate_polygons(coordinates=coordinates,
                                                 tile_size=tile_size)
@@ -125,10 +124,9 @@ def test_generate_grid(grid_generator):
     tile_size = 128
     quantize = True
 
-    expected = gpd.GeoDataFrame(geometry=[box(-128, -128, 0, 0),
-                                          box(0, -128, 128, 0),
-                                          box(-128, 0, 0, 128),
-                                          box(0, 0, 128, 128)],
+    polygons = [box(-128, -128, 0, 0), box(0, -128, 128, 0), box(-128, 0, 0, 128), box(0, 0, 128, 128)]
+
+    expected = gpd.GeoDataFrame(geometry=polygons,
                                 crs='EPSG:25832')
 
     grid = grid_generator.generate_grid(tile_size=tile_size,
@@ -140,6 +138,4 @@ def test_generate_grid(grid_generator):
     assert all(grid['geometry'].geom_type == 'Polygon')
     assert all(grid['geometry'].is_valid)
     assert grid.crs == f'EPSG:{grid_generator.epsg_code}'
-    gpd.testing.assert_geodataframe_equal(grid,
-                                          expected,
-                                          check_geom_type=True)
+    gpd.testing.assert_geodataframe_equal(grid, expected, check_geom_type=True)

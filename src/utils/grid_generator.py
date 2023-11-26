@@ -4,6 +4,7 @@ from shapely.geometry import box, Polygon  # noqa: F401 (used for type hinting)
 
 
 class GridGenerator:
+
     def __init__(self,
                  bounding_box,
                  epsg_code):
@@ -49,13 +50,13 @@ class GridGenerator:
             x_min = self.x_min
             y_min = self.y_min
 
-        coordinates_x, coordinates_y = np.meshgrid(np.arange(x_min, self.x_max, tile_size),
-                                                   np.arange(y_min, self.y_max, tile_size))
+        coordinates_range_x = np.arange(x_min, self.x_max, tile_size)
+        coordinates_range_y = np.arange(y_min, self.y_max, tile_size)
+        coordinates_x, coordinates_y = np.meshgrid(coordinates_range_x, coordinates_range_y)
 
-        coordinates = np.concatenate((coordinates_x.reshape(-1)[..., np.newaxis],
-                                      coordinates_y.reshape(-1)[..., np.newaxis]),
-                                     axis=-1).astype(np.int32)
-
+        coordinates_x = coordinates_x.reshape(-1)[..., np.newaxis]
+        coordinates_y = coordinates_y.reshape(-1)[..., np.newaxis]
+        coordinates = np.concatenate((coordinates_x, coordinates_y), axis=-1).astype(np.int32)
         return coordinates
 
     def generate_polygons(self,
@@ -118,8 +119,9 @@ class GridGenerator:
         :returns: representation
         :rtype: str
         """
-        representation = (f'{self.__class__.__name__}('
-                          + f'x_min={self.x_min}, y_min={self.y_min}, x_max={self.x_max}, y_max={self.y_max}, '
-                          + f'epsg_code={self.epsg_code})')
+        representation = (
+            f'{self.__class__.__name__}('
+            f'x_min={self.x_min}, y_min={self.y_min}, x_max={self.x_max}, y_max={self.y_max}, '
+            f'epsg_code={self.epsg_code})')
 
         return representation

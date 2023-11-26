@@ -1,6 +1,6 @@
 import numpy as np
 
-parameters_compute_coordinates = \
+parameters_compute_coordinates = (
     [((128, True),
       np.array([[-128, -128], [0, -128], [-128, 0], [0, 0]], dtype=np.int32)),
      ((128, False),
@@ -19,4 +19,4 @@ parameters_compute_coordinates = \
      ((129, True),
       np.array([[-129, -129], [0, -129], [-129, 0], [0, 0]], dtype=np.int32)),
      ((129, False),
-      np.array([[-128, -128], [1, -128], [-128, 1], [1, 1]], dtype=np.int32))]
+      np.array([[-128, -128], [1, -128], [-128, 1], [1, 1]], dtype=np.int32))])
