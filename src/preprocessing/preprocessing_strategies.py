@@ -4,8 +4,10 @@ import numpy as np
 
 
 class PreprocessingStrategy(ABC):
+
     @abstractmethod
-    def preprocess(self, image):
+    def preprocess(self,
+                   image):
         """
         | Returns the preprocessed image.
 
@@ -17,7 +19,9 @@ class PreprocessingStrategy(ABC):
 
 
 class Float32Casting(PreprocessingStrategy):
-    def preprocess(self, image):
+
+    def preprocess(self,
+                   image):
         """
         | Returns the preprocessed image.
         | float32 casting is used to cast the values to float32.
@@ -41,7 +45,9 @@ class Float32Casting(PreprocessingStrategy):
 
 
 class UInt8LinearScalingNormalization(PreprocessingStrategy):
-    def preprocess(self, image):
+
+    def preprocess(self,
+                   image):
         """
         | Returns the preprocessed image.
         | uint8 linear scaling normalization is used to scale the values from their natural range between 0 and 255

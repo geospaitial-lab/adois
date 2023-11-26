@@ -15,7 +15,8 @@ def test_float32_casting_init():
     float32_casting = Float32Casting()
 
     assert isinstance(float32_casting, Float32Casting)
-    assert list(float32_casting.__dict__.keys()) == []
+    parameters = []
+    assert list(float32_casting.__dict__.keys()) == parameters
 
 
 @pytest.mark.parametrize('test_input, expected', parameters_float32_casting_preprocess)
@@ -49,7 +50,8 @@ def test_uint8_linear_scaling_normalization_init():
     uint8_linear_scaling_normalization = UInt8LinearScalingNormalization()
 
     assert isinstance(uint8_linear_scaling_normalization, UInt8LinearScalingNormalization)
-    assert list(uint8_linear_scaling_normalization.__dict__.keys()) == []
+    parameters = []
+    assert list(uint8_linear_scaling_normalization.__dict__.keys()) == parameters
 
 
 def test_uint8_linear_scaling_normalization_preprocess(uint8_linear_scaling_normalization):

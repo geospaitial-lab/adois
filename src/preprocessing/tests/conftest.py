@@ -52,8 +52,9 @@ def image_builder_with_mocked_preprocessing_strategies(mocked_preprocessing_stra
     :returns: image builder fixture
     :rtype: ImageBuilder
     """
-    return ImageBuilder(preprocessing_strategies=[mocked_preprocessing_strategy,
-                                                  mocked_preprocessing_strategy])
+    preprocessing_strategies = [mocked_preprocessing_strategy, mocked_preprocessing_strategy]
+    image_builder = ImageBuilder(preprocessing_strategies=preprocessing_strategies)
+    return image_builder
 
 
 @pytest.fixture(scope='function')

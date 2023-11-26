@@ -11,7 +11,8 @@ from src.preprocessing.tests.data.data_test_image_builder import (
 
 
 @pytest.mark.parametrize('test_input', parameters_init)
-def test_init(test_input, request):
+def test_init(test_input,
+              request):
     """
     | Tests __init__().
 
@@ -25,12 +26,17 @@ def test_init(test_input, request):
     image_builder = ImageBuilder(preprocessing_strategies=test_input)
 
     assert isinstance(image_builder, ImageBuilder)
-    assert list(image_builder.__dict__.keys()) == ['image_rgb', 'image_nir', 'preprocessing_strategies']
+    parameters = ['image_rgb', 'image_nir', 'preprocessing_strategies']
+    assert list(image_builder.__dict__.keys()) == parameters
+
     assert image_builder.image_rgb is None
     assert image_builder.image_nir is None
     assert isinstance(image_builder.preprocessing_strategies, list)
-    assert all(isinstance(preprocessing_strategy, PreprocessingStrategy)
-               for preprocessing_strategy in image_builder.preprocessing_strategies)
+
+    conditions = [isinstance(preprocessing_strategy, PreprocessingStrategy)
+                  for preprocessing_strategy in image_builder.preprocessing_strategies]
+
+    assert all(conditions)
 
 
 def test_set_image_rgb(image_builder_without_preprocessing_strategies):
@@ -101,8 +107,11 @@ def test_set_preprocessing_strategies(test_input,
     image_builder_without_preprocessing_strategies.set_preprocessing_strategies(test_input)
 
     assert isinstance(image_builder_without_preprocessing_strategies.preprocessing_strategies, list)
-    assert all(isinstance(preprocessing_strategy, PreprocessingStrategy)
-               for preprocessing_strategy in image_builder_without_preprocessing_strategies.preprocessing_strategies)
+
+    conditions = [isinstance(preprocessing_strategy, PreprocessingStrategy)
+                  for preprocessing_strategy in image_builder_without_preprocessing_strategies.preprocessing_strategies]
+
+    assert all(conditions)
 
 
 def test_reset_images(image_builder_without_preprocessing_strategies):

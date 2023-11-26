@@ -4,7 +4,9 @@ from src.preprocessing.preprocessing_strategies import PreprocessingStrategy
 
 
 class ImageBuilder:
-    def __init__(self, preprocessing_strategies):
+
+    def __init__(self,
+                 preprocessing_strategies):
         """
         | Initializer method
 
@@ -13,14 +15,18 @@ class ImageBuilder:
         :rtype: None
         """
         assert isinstance(preprocessing_strategies, list)
-        assert all(isinstance(preprocessing_strategy, PreprocessingStrategy)
-                   for preprocessing_strategy in preprocessing_strategies)
+
+        conditions = [isinstance(preprocessing_strategy, PreprocessingStrategy)
+                      for preprocessing_strategy in preprocessing_strategies]
+
+        assert all(conditions)
 
         self.image_rgb = None
         self.image_nir = None
         self.preprocessing_strategies = preprocessing_strategies
 
-    def set_image_rgb(self, image_rgb):
+    def set_image_rgb(self,
+                      image_rgb):
         """
         | Sets the rgb image.
 
@@ -36,7 +42,8 @@ class ImageBuilder:
         self.image_rgb = image_rgb
         return self
 
-    def set_image_nir(self, image_nir):
+    def set_image_nir(self,
+                      image_nir):
         """
         | Sets the nir image.
 
@@ -52,7 +59,8 @@ class ImageBuilder:
         self.image_nir = image_nir[..., 0][..., np.newaxis]
         return self
 
-    def set_preprocessing_strategies(self, preprocessing_strategies):
+    def set_preprocessing_strategies(self,
+                                     preprocessing_strategies):
         """
         | Sets the preprocessing strategies.
 
@@ -61,8 +69,11 @@ class ImageBuilder:
         :rtype: ImageBuilder
         """
         assert isinstance(preprocessing_strategies, list)
-        assert all(isinstance(preprocessing_strategy, PreprocessingStrategy)
-                   for preprocessing_strategy in preprocessing_strategies)
+
+        conditions = [isinstance(preprocessing_strategy, PreprocessingStrategy)
+                      for preprocessing_strategy in preprocessing_strategies]
+
+        assert all(conditions)
 
         self.preprocessing_strategies = preprocessing_strategies
         return self
@@ -87,13 +98,11 @@ class ImageBuilder:
         assert self.image_rgb is not None
         assert self.image_nir is not None
 
-        image = np.concatenate((self.image_rgb,
-                                self.image_nir),
-                               axis=-1)
-
+        image = np.concatenate((self.image_rgb, self.image_nir), axis=-1)
         return image
 
-    def preprocess_image(self, image):
+    def preprocess_image(self,
+                         image):
         """
         | Returns the preprocessed image.
 
@@ -109,7 +118,8 @@ class ImageBuilder:
 
         return image
 
-    def build_image(self, reset=True):
+    def build_image(self,
+                    reset=True):
         """
         | Returns the built image.
 
@@ -135,13 +145,14 @@ class ImageBuilder:
         :returns: representation
         :rtype: str
         """
-        representation = (f'{self.__class__.__name__}('
-                          + f'image_rgb_type={type(self.image_rgb).__name__}, '
-                          + f"image_rgb_dtype={getattr(self.image_rgb, 'dtype', None)}, "
-                          + f"image_rgb_shape={getattr(self.image_rgb, 'shape', None)}, "
-                          + f'image_nir_type={type(self.image_nir).__name__}, '
-                          + f"image_nir_dtype={getattr(self.image_nir, 'dtype', None)}, "
-                          + f"image_nir_shape={getattr(self.image_nir, 'shape', None)}, "
-                          + f'preprocessing_strategies={self.preprocessing_strategies!r})')
+        representation = (
+            f'{self.__class__.__name__}('
+            f'image_rgb_type={type(self.image_rgb).__name__}, '
+            f"image_rgb_dtype={getattr(self.image_rgb, 'dtype', None)}, "
+            f"image_rgb_shape={getattr(self.image_rgb, 'shape', None)}, "
+            f'image_nir_type={type(self.image_nir).__name__}, '
+            f"image_nir_dtype={getattr(self.image_nir, 'dtype', None)}, "
+            f"image_nir_shape={getattr(self.image_nir, 'shape', None)}, "
+            f'preprocessing_strategies={self.preprocessing_strategies!r})')
 
         return representation
