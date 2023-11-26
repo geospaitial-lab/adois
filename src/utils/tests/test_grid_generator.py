@@ -25,7 +25,7 @@ def test_init():
 
     assert isinstance(grid_generator, GridGenerator)
     parameters = ['x_min', 'y_min', 'x_max', 'y_max', 'epsg_code']
-    assert list(grid_generator.__dict__.keys()) == parameters
+    assert list(vars(grid_generator).keys()) == parameters
 
     assert isinstance(grid_generator.x_min, int)
     assert grid_generator.x_min == bounding_box[0]

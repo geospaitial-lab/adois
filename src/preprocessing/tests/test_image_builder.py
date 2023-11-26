@@ -27,7 +27,7 @@ def test_init(test_input,
 
     assert isinstance(image_builder, ImageBuilder)
     parameters = ['image_rgb', 'image_nir', 'preprocessing_strategies']
-    assert list(image_builder.__dict__.keys()) == parameters
+    assert list(vars(image_builder).keys()) == parameters
 
     assert image_builder.image_rgb is None
     assert image_builder.image_nir is None
