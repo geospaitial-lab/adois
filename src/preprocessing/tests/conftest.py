@@ -57,7 +57,7 @@ def image_builder_with_mocked_preprocessing_strategies(mocked_preprocessing_stra
     return image_builder
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture(scope='session')
 def mocked_preprocessing_strategy():
     """
     | Returns a mocked preprocessing strategy object.
