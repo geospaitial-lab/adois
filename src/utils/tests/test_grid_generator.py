@@ -1,4 +1,5 @@
 import inspect
+import unittest.mock as mock
 
 import geopandas as gpd
 import geopandas.testing
@@ -113,9 +114,54 @@ def test_generate_grid_default(grid_generator):
     assert quantize_default is True
 
 
-def test_generate_grid(grid_generator):
+@mock.patch('src.utils.grid_generator.GridGenerator.compute_coordinates')
+@mock.patch('src.utils.grid_generator.GridGenerator.generate_polygons')
+def test_generate_grid(mocked_generate_polygons,
+                       mocked_compute_coordinates,
+                       grid_generator):
     """
     | Tests generate_grid().
+
+    :param mock.MagicMock mocked_generate_polygons: mocked generate_polygons method
+    :param mock.MagicMock mocked_compute_coordinates: mocked compute_coordinates method
+    :param GridGenerator grid_generator: grid generator fixture
+    :returns: None
+    :rtype: None
+    """
+    tile_size = 128
+    quantize = True
+
+    polygons = [box(-128, -128, 0, 0), box(0, -128, 128, 0), box(-128, 0, 0, 128), box(0, 0, 128, 128)]
+
+    expected = gpd.GeoDataFrame(geometry=polygons,
+                                crs='EPSG:25832')
+
+    mocked_compute_coordinates.return_value = np.array([[-128, -128], [0, -128], [-128, 0], [0, 0]], dtype=np.int32)
+    mocked_generate_polygons.return_value = polygons
+
+    grid = grid_generator.generate_grid(tile_size=tile_size,
+                                        quantize=quantize)
+
+    mocked_compute_coordinates.assert_called_once_with(tile_size=tile_size,
+                                                       quantize=quantize)
+
+    mocked_generate_polygons.assert_called_once_with(coordinates=mocked_compute_coordinates.return_value,
+                                                     tile_size=tile_size)
+
+    assert isinstance(grid, gpd.GeoDataFrame)
+    assert not grid.empty
+    assert grid.shape[1] == 1
+    assert all(grid['geometry'].geom_type == 'Polygon')
+    assert all(grid['geometry'].is_valid)
+    assert grid.crs == f'EPSG:{grid_generator.epsg_code}'
+    gpd.testing.assert_geodataframe_equal(grid, expected, check_geom_type=True)
+
+
+@pytest.mark.integration
+def test_generate_grid_integration(grid_generator):
+    """
+    | Tests generate_grid().
+    | Integration test.
 
     :param GridGenerator grid_generator: grid generator fixture
     :returns: None
