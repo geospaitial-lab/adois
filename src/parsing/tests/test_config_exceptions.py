@@ -393,16 +393,16 @@ def test_WMSConnectionError():
     :returns: None
     :rtype: None
     """
-    wms_url = 'https://invalid.wms.com'
+    url = 'https://invalid.wms.com'
     passed_exception = Exception('Test message.')
 
     expected = (
-        r'Invalid wms_url in the config!\n'
+        r'Invalid url in the config!\n'
         r'An exception occurred while connecting to the web map service \(https://invalid.wms.com\).\n'
         'Test message.')
 
     with pytest.raises(WMSConnectionError, match=expected):
-        raise WMSConnectionError(wms_url=wms_url,
+        raise WMSConnectionError(url=url,
                                  passed_exception=passed_exception)
 
 
@@ -412,11 +412,11 @@ def test_WMSLayerError(test_input,
     """
     | Tests WMSLayerError.
 
-    :param (str, list[str]) test_input: wms_layer, wms_layers_valid
+    :param (str, list[str]) test_input: layer, layers_valid
     :param str expected: message
     :returns: None
     :rtype: None
     """
     with pytest.raises(WMSLayerError, match=expected):
-        raise WMSLayerError(wms_layer=test_input[0],
-                            wms_layers_valid=test_input[1])
+        raise WMSLayerError(layer=test_input[0],
+                            layers_valid=test_input[1])

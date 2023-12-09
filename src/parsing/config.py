@@ -29,17 +29,17 @@ from src.parsing.config_exceptions import (
 
 
 class WMS(pydantic.BaseModel):
-    wms_url: str
-    wms_layer: str
+    url: str
+    layer: str
 
-    @validator('wms_url')
-    def validate_wms_url(cls,
-                         value):
+    @validator('url')
+    def validate_url(cls,
+                     value):
         """
-        | Validates wms_url.
+        | Validates url.
 
-        :param str value: wms_url
-        :returns: validated wms_url
+        :param str value: url
+        :returns: validated url
         :rtype: str
         :raises WMSConnectionError: if an exception occurs while connecting to the web map service
             (the exception raised by owslib is passed)
@@ -49,39 +49,39 @@ class WMS(pydantic.BaseModel):
                               version='1.1.1')
 
         except Exception as e:
-            raise WMSConnectionError(wms_url=value,
+            raise WMSConnectionError(url=value,
                                      passed_exception=e)
 
         return value
 
-    @validator('wms_layer')
-    def validate_wms_layer(cls,
-                           value,
-                           values):
+    @validator('layer')
+    def validate_layer(cls,
+                       value,
+                       values):
         """
-        | Validates wms_layer.
+        | Validates layer.
 
-        :param str value: wms_layer
+        :param str value: layer
         :param dict[str, Any] values: values
-        :returns: validated wms_layer
+        :returns: validated layer
         :rtype: str
         :raises WMSConnectionError: if an exception occurs while connecting to the web map service
             (the exception raised by owslib is passed)
-        :raises WMSLayerError: if wms_layer is not a valid layer of the web map service
+        :raises WMSLayerError: if layer is not a valid layer of the web map service
         """
         try:
-            wms = WebMapService(url=values['wms_url'],
-                                version='1.1.1')
+            web_map_service = WebMapService(url=values['url'],
+                                            version='1.1.1')
 
         except Exception as e:
-            raise WMSConnectionError(wms_url=value,
+            raise WMSConnectionError(url=value,
                                      passed_exception=e)
 
-        wms_layers_valid = [*wms.contents]
+        layers_valid = [*web_map_service.contents]
 
-        if value not in wms_layers_valid:
-            raise WMSLayerError(wms_layer=value,
-                                wms_layers_valid=wms_layers_valid)
+        if value not in layers_valid:
+            raise WMSLayerError(layer=value,
+                                layers_valid=layers_valid)
 
         return value
 
@@ -108,17 +108,17 @@ class Data(pydantic.BaseModel):
         :rtype: int
         :raises EPSGCodeError: if epsg_code is not a valid epsg code of the web map services
         """
-        wms_rgb = WebMapService(url=values['rgb'].wms_url,
+        wms_rgb = WebMapService(url=values['rgb'].url,
                                 version='1.1.1')
 
-        wms_nir = WebMapService(url=values['nir'].wms_url,
+        wms_nir = WebMapService(url=values['nir'].url,
                                 version='1.1.1')
 
         epsg_codes_valid_rgb = [int(epsg_code[5:])
-                                for epsg_code in wms_rgb[values['rgb'].wms_layer].crsOptions]
+                                for epsg_code in wms_rgb[values['rgb'].layer].crsOptions]
 
         epsg_codes_valid_nir = [int(epsg_code[5:])
-                                for epsg_code in wms_nir[values['nir'].wms_layer].crsOptions]
+                                for epsg_code in wms_nir[values['nir'].layer].crsOptions]
 
         epsg_codes_valid = list(set(epsg_codes_valid_rgb) & set(epsg_codes_valid_nir))
 

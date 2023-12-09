@@ -352,19 +352,19 @@ class WMSError(Exception):
 class WMSConnectionError(WMSError):
 
     def __init__(self,
-                 wms_url,
+                 url,
                  passed_exception):
         """
         | Initializer method
 
-        :param str wms_url: url of the web map service
+        :param str url: url of the web map service
         :param Exception passed_exception: passed exception
         :returns: None
         :rtype: None
         """
         message = (
-            'Invalid wms_url in the config!\n'
-            f'An exception occurred while connecting to the web map service ({wms_url}).\n'
+            'Invalid url in the config!\n'
+            f'An exception occurred while connecting to the web map service ({url}).\n'
             f'{passed_exception}')
 
         super().__init__(message)
@@ -373,26 +373,26 @@ class WMSConnectionError(WMSError):
 class WMSLayerError(WMSError):
 
     def __init__(self,
-                 wms_layer,
-                 wms_layers_valid):
+                 layer,
+                 layers_valid):
         """
         | Initializer method
 
-        :param str wms_layer: layer of the web map service
-        :param list[str] wms_layers_valid: valid layers of the web map service
+        :param str layer: layer of the web map service
+        :param list[str] layers_valid: valid layers of the web map service
         :returns: None
         :rtype: None
         """
-        if len(wms_layers_valid) == 1:
-            wms_layers_valid = wms_layers_valid[0]
+        if len(layers_valid) == 1:
+            layers_valid = layers_valid[0]
         else:
-            wms_layers_valid = natsorted(wms_layers_valid)
-            wms_layers_valid = (
-                f"{', '.join(map(str, wms_layers_valid[:-1]))} "
-                f'or {wms_layers_valid[-1]}')
+            layers_valid = natsorted(layers_valid)
+            layers_valid = (
+                f"{', '.join(map(str, layers_valid[:-1]))} "
+                f'or {layers_valid[-1]}')
 
         message = (
-            'Invalid wms_layer in the config!\n'
-            f'Expected {wms_layers_valid}, got {wms_layer} instead.')
+            'Invalid layer in the config!\n'
+            f'Expected {layers_valid}, got {layer} instead.')
 
         super().__init__(message)

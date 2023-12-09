@@ -108,11 +108,11 @@ parameters_SieveSizeError = (
 
 parameters_WMSLayerError = (
     [(('z', ['a']),
-      r'Invalid wms_layer in the config!\n'
+      r'Invalid layer in the config!\n'
       'Expected a, got z instead.'),
      (('z', ['a', 'b']),
-      r'Invalid wms_layer in the config!\n'
+      r'Invalid layer in the config!\n'
       'Expected a or b, got z instead.'),
      (('z', ['a', 'b', 'c']),
-      r'Invalid wms_layer in the config!\n'
+      r'Invalid layer in the config!\n'
       'Expected a, b or c, got z instead.')])
