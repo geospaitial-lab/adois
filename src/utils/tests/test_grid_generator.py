@@ -89,7 +89,11 @@ def test_generate_polygons(grid_generator):
     coordinates = np.array([[-128, -128], [0, -128], [-128, 0], [0, 0]], dtype=np.int32)
     tile_size = 128
 
-    expected = [box(-128, -128, 0, 0), box(0, -128, 128, 0), box(-128, 0, 0, 128), box(0, 0, 128, 128)]
+    expected = (
+        [box(-128, -128, 0, 0),
+         box(0, -128, 128, 0),
+         box(-128, 0, 0, 128),
+         box(0, 0, 128, 128)])
 
     polygons = grid_generator.generate_polygons(coordinates=coordinates,
                                                 tile_size=tile_size)
@@ -131,7 +135,11 @@ def test_generate_grid(mocked_generate_polygons,
     tile_size = 128
     quantize = True
 
-    polygons = [box(-128, -128, 0, 0), box(0, -128, 128, 0), box(-128, 0, 0, 128), box(0, 0, 128, 128)]
+    polygons = (
+        [box(-128, -128, 0, 0),
+         box(0, -128, 128, 0),
+         box(-128, 0, 0, 128),
+         box(0, 0, 128, 128)])
 
     expected = gpd.GeoDataFrame(geometry=polygons,
                                 crs='EPSG:25832')
@@ -170,7 +178,11 @@ def test_generate_grid_integration(grid_generator):
     tile_size = 128
     quantize = True
 
-    polygons = [box(-128, -128, 0, 0), box(0, -128, 128, 0), box(-128, 0, 0, 128), box(0, 0, 128, 128)]
+    polygons = (
+        [box(-128, -128, 0, 0),
+         box(0, -128, 128, 0),
+         box(-128, 0, 0, 128),
+         box(0, 0, 128, 128)])
 
     expected = gpd.GeoDataFrame(geometry=polygons,
                                 crs='EPSG:25832')
