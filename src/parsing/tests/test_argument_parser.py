@@ -75,7 +75,7 @@ def test_parse_integration(test_input,
     | Tests parse().
     | Integration test.
 
-    :param list[str] test_input: arguments
+    :param list[str] test_input: args
     :param argparse.Namespace expected: parsed arguments
     :param ArgumentParser argument_parser: argument parser fixture
     :returns: None
@@ -98,7 +98,7 @@ def test_parse_SystemExit_integration(test_input,
     | Tests parse().
     | Integration test.
 
-    :param list[str] test_input: arguments
+    :param list[str] test_input: args
     :param str expected: message
     :param ArgumentParser argument_parser: argument parser fixture
     :param capsys: pytest capsys
