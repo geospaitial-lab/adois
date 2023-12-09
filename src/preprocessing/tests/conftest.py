@@ -3,6 +3,7 @@ import unittest.mock as mock
 import pytest
 
 from src.preprocessing.image_builder import ImageBuilder
+
 from src.preprocessing.preprocessing_strategies import (
     Float32Casting,
     PreprocessingStrategy,
