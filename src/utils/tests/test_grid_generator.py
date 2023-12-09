@@ -62,7 +62,7 @@ def test_compute_coordinates(test_input,
     """
     | Tests compute_coordinates().
 
-    :param (int, bool) test_input: tile size in meters, quantize
+    :param (int, bool) test_input: tile_size, quantize
     :param np.ndarray[np.int32] expected: coordinates (x_min, y_min) of each tile
     :param GridGenerator grid_generator: grid generator fixture
     :returns: None

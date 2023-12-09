@@ -12,7 +12,7 @@ class GridGenerator:
         | Initializer method
 
         :param (int, int, int, int) bounding_box: bounding box (x_min, y_min, x_max, y_max)
-        :param int epsg_code: epsg code of the coordinate reference system
+        :param int epsg_code: epsg code
         :returns: None
         :rtype: None
         """
