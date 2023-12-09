@@ -1,33 +1,30 @@
 data:
   rgb:
-    wms_url: https://www.wms.nrw.de/geobasis/wms_nw_dop
-    wms_layer: nw_dop_rgb
+    url: https://www.wms.nrw.de/geobasis/wms_nw_dop
+    layer: nw_dop_rgb
   nir:
-    wms_url: https://www.wms.nrw.de/geobasis/wms_nw_dop
-    wms_layer: nw_dop_nir
+    url: https://www.wms.nrw.de/geobasis/wms_nw_dop
+    layer: nw_dop_nir
   epsg_code: 25832
-  boundary_shape_file_path: /Pfad/zu/boundary_shape_file.shp
+  path_boundary:
   bounding_box:
     - 363210
     - 5715455
     - 364210
     - 5716455
-  clip_border: false
-  ignore_cached_tiles: false
+  apply_padding: false
+  ignore_processed_tiles: false
 
 postprocessing:
   sieve_size: 2
-  simplify: true
+  simplify: false
 
 aggregation:
   tile_size:
     - 50
     - 100
-  shape_file_path:
-    - /Pfad/zu/aggregation_shape_file_1.shp
-    - /Pfad/zu/aggregation_shape_file_2.shp
+  path_aggregation_areas:
 
-export_settings:
-  output_dir_path: /Pfad/zu/Ausgabeverzeichnis
-  prefix: example
-  export_raw_shape_file: true
+export:
+  path_output_dir: /Pfad/zu/Ausgabeverzeichnis
+  prefix: prefix
