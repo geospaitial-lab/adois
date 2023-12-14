@@ -5,7 +5,7 @@ import pytest
 
 from src.parsing.argument_parser import ArgumentParser
 
-from src.parsing.tests.data.data_test_argument_parser import (
+from .data.data_test_argument_parser import (
     data_test_parse_integration,
     data_test_parse_SystemExit_integration)
 

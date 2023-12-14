@@ -1,6 +1,6 @@
 import numpy as np
 
-from src.preprocessing.preprocessing_strategies import PreprocessingStrategy
+from .preprocessing_strategies import PreprocessingStrategy
 
 
 class ImageBuilder:

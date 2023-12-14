@@ -25,7 +25,7 @@ from src.parsing.config_exceptions import (
     WMSConnectionError,
     WMSLayerError)
 
-from src.parsing.tests.data.data_test_config_exceptions import (
+from .data.data_test_config_exceptions import (
     parameters_BoundingBoxLengthError,
     parameters_BoundingBoxValueError,
     parameters_EPSGCodeError,

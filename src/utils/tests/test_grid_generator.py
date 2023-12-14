@@ -8,7 +8,7 @@ import pytest
 from shapely.geometry import box, Polygon
 
 from src.utils.grid_generator import GridGenerator
-from src.utils.tests.data.data_test_grid_generator import parameters_compute_coordinates
+from .data.data_test_grid_generator import parameters_compute_coordinates
 
 
 def test_init():

@@ -6,7 +6,7 @@ import pytest
 from src.preprocessing.image_builder import ImageBuilder
 from src.preprocessing.preprocessing_strategies import PreprocessingStrategy
 
-from src.preprocessing.tests.data.data_test_image_builder import (
+from .data.data_test_image_builder import (
     parameters_init,
     parameters_set_preprocessing_strategies)
 

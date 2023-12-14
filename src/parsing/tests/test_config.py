@@ -6,7 +6,7 @@ from src.parsing.config import (
 from src.parsing.config_exceptions import (
     SieveSizeError)
 
-from src.parsing.tests.data.data_test_config import (
+from .data.data_test_config import (
     parameters_validate_sieve_size,
     parameters_validate_sieve_size_SieveSizeError,
     parameters_validate_simplify)

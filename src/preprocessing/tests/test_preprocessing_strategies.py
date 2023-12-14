@@ -2,7 +2,7 @@ import numpy as np
 import pytest
 
 from src.preprocessing.preprocessing_strategies import Float32Casting, UInt8LinearScalingNormalization
-from src.preprocessing.tests.data.data_test_preprocessing_strategies import parameters_float32_casting_preprocess
+from .data.data_test_preprocessing_strategies import parameters_float32_casting_preprocess
 
 
 def test_float32_casting_init():
