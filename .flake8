@@ -1,7 +1,4 @@
 [flake8]
 max-line-length = 120
 ignore =
-    F401,
-    F403,
-    F405,
-    W504
+    W503  # despite being in the anti-pattern section, this will soon be considered the best practice
