@@ -1,5 +1,5 @@
-BORDER_SIZE = 320  # border size in pixels (type: int)
-BORDER_SIZE_METERS = 64  # border size in meters (type: int)
+PADDING_SIZE = 320  # padding size in pixels (type: int)
+PADDING_SIZE_METERS = 64  # padding size in meters (type: int)
 IMAGE_SIZE = 1280  # image size in pixels (type: int)
 IMAGE_SIZE_METERS = 256  # image size in meters (type: int)
 RESOLUTION = .2  # resolution in meters per pixel (type: float)
