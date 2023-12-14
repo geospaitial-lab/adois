@@ -25,8 +25,8 @@ def test_init(mocked_grid_generator):
                               epsg_code=epsg_code)
 
     assert isinstance(coordinator, Coordinator)
-    parameters = ['grid_generator', 'tile_size', 'epsg_code']
-    assert list(vars(coordinator).keys()) == parameters
+    attributes = ['grid_generator', 'tile_size', 'epsg_code']
+    assert list(vars(coordinator).keys()) == attributes
 
     assert isinstance(coordinator.grid_generator, GridGenerator)
     assert coordinator.grid_generator.x_min == bounding_box[0]

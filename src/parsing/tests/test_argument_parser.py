@@ -22,8 +22,8 @@ def test_init(mocked_argument_parser):
     argument_parser = ArgumentParser()
 
     assert isinstance(argument_parser, ArgumentParser)
-    parameters = ['argument_parser']
-    assert list(vars(argument_parser).keys()) == parameters
+    attributes = ['argument_parser']
+    assert list(vars(argument_parser).keys()) == attributes
 
     mocked_argument_parser.assert_called_once_with(description='adois - automatic detection of impervious surfaces')
     assert len(mocked_argument_parser.return_value.add_argument.mock_calls) == 2

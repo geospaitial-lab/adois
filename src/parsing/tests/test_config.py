@@ -22,8 +22,8 @@ def test_Postprocessing_default():
     postprocessing = Postprocessing()
 
     assert isinstance(postprocessing, Postprocessing)
-    parameters = ['sieve_size', 'simplify']
-    assert list(vars(postprocessing).keys()) == parameters
+    attributes = ['sieve_size', 'simplify']
+    assert list(vars(postprocessing).keys()) == attributes
 
     assert postprocessing.sieve_size is None
     assert postprocessing.simplify is False
