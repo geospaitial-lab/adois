@@ -96,13 +96,11 @@ class Coordinator:
         | Returns the coordinates of the top left corner of each processed tile.
         | The coordinates are extracted from the names of the subdirectories in the processed tiles directory.
 
-        :param str or Path path_tiles_processed_dir: path to the processed tiles directory
+        :param Path path_tiles_processed_dir: path to the processed tiles directory
         :returns: coordinates (x_min, y_max) of each processed tile
         :rtype: np.ndarray[np.int32] or None
         """
-        assert isinstance(path_tiles_processed_dir, (str, Path))
-
-        path_tiles_processed_dir = Path(path_tiles_processed_dir)
+        assert isinstance(path_tiles_processed_dir, Path)
 
         if not path_tiles_processed_dir.is_dir():
             return None
@@ -162,7 +160,7 @@ class Coordinator:
 
         :param np.ndarray[np.int32] coordinates: coordinates (x_min, y_max) of each tile
         :param gpd.GeoDataFrame or None boundary: boundary
-        :param str or Path or None path_tiles_processed_dir: path to the processed tiles directory
+        :param Path or None path_tiles_processed_dir: path to the processed tiles directory
         :returns: filtered coordinates (x_min, y_max) of each tile
         :rtype: np.ndarray[np.int32]
         """
@@ -179,15 +177,13 @@ class Coordinator:
             assert all(boundary['geometry'].is_valid)
             assert boundary.crs == f'EPSG:{self.epsg_code}'
 
-        assert isinstance(path_tiles_processed_dir, (str, Path)) or path_tiles_processed_dir is None
+        assert isinstance(path_tiles_processed_dir, Path) or path_tiles_processed_dir is None
 
         if boundary is not None:
             coordinates = self.filter_coordinates_outside_boundary(coordinates=coordinates,
                                                                    boundary=boundary)
 
         if path_tiles_processed_dir is not None:
-            path_tiles_processed_dir = Path(path_tiles_processed_dir)
-
             coordinates_processed = (
                 self.extract_coordinates_processed(path_tiles_processed_dir=path_tiles_processed_dir))
 
