@@ -21,72 +21,70 @@ class ImageBuilder:
 
         assert all(conditions)
 
-        self.image_rgb = None
-        self.image_nir = None
+        self._image_rgb = None
+        self._image_nir = None
         self.preprocessing_strategies = preprocessing_strategies
 
-    def set_image_rgb(self,
-                      image_rgb):
+    @property
+    def image_rgb(self):
+        """
+        | Returns the rgb image.
+
+        :returns: rgb image
+        :rtype: np.ndarray[np.uint8] or None
+        """
+        return self._image_rgb
+
+    @image_rgb.setter
+    def image_rgb(self,
+                  image_rgb):
         """
         | Sets the rgb image.
 
-        :param np.ndarray[np.uint8] image_rgb: rgb image
-        :returns: image builder
-        :rtype: ImageBuilder
-        """
-        assert isinstance(image_rgb, np.ndarray)
-        assert image_rgb.dtype == np.uint8
-        assert len(image_rgb.shape) == 3
-        assert image_rgb.shape[-1] == 3
-
-        self.image_rgb = image_rgb
-        return self
-
-    def set_image_nir(self,
-                      image_nir):
-        """
-        | Sets the nir image.
-
-        :param np.ndarray[np.uint8] image_nir: nir image
-        :returns: image builder
-        :rtype: ImageBuilder
-        """
-        assert isinstance(image_nir, np.ndarray)
-        assert image_nir.dtype == np.uint8
-        assert len(image_nir.shape) == 3
-        assert image_nir.shape[-1] == 3
-
-        self.image_nir = image_nir[..., 0][..., np.newaxis]
-        return self
-
-    def set_preprocessing_strategies(self,
-                                     preprocessing_strategies):
-        """
-        | Sets the preprocessing strategies.
-
-        :param list[PreprocessingStrategy] preprocessing_strategies: preprocessing strategies
-        :returns: image builder
-        :rtype: ImageBuilder
-        """
-        assert isinstance(preprocessing_strategies, list)
-
-        conditions = [isinstance(preprocessing_strategy, PreprocessingStrategy)
-                      for preprocessing_strategy in preprocessing_strategies]
-
-        assert all(conditions)
-
-        self.preprocessing_strategies = preprocessing_strategies
-        return self
-
-    def reset_images(self):
-        """
-        | Resets the rgb image and the nir image.
-
+        :param np.ndarray[np.uint8] or None image_rgb: rgb image
         :returns: None
         :rtype: None
         """
-        self.image_rgb = None
-        self.image_nir = None
+        assert isinstance(image_rgb, np.ndarray) or image_rgb is None
+
+        if image_rgb is not None:
+            assert image_rgb.dtype == np.uint8
+            assert image_rgb.ndim == 3
+            assert image_rgb.shape[-1] == 3
+
+        self._image_rgb = image_rgb
+
+    @property
+    def image_nir(self):
+        """
+        | Returns the nir image.
+
+        :returns: nir image
+        :rtype: np.ndarray[np.uint8] or None
+        """
+        return self._image_nir
+
+    @image_nir.setter
+    def image_nir(self,
+                  image_nir):
+        """
+        | Sets the nir image.
+
+        :param np.ndarray[np.uint8] or None image_nir: nir image
+        :returns: None
+        :rtype: None
+        """
+        assert isinstance(image_nir, np.ndarray) or image_nir is None
+
+        if image_nir is not None:
+            assert image_nir.dtype == np.uint8
+            assert image_nir.ndim == 3
+            assert image_nir.shape[-1] == 3
+
+        if image_nir is not None:
+            self._image_nir = image_nir[..., 0][..., np.newaxis]
+        else:
+            self._image_nir = image_nir
 
     def concatenate_images(self):
         """
@@ -134,7 +132,8 @@ class ImageBuilder:
         image = self.preprocess_image(image=image)
 
         if reset:
-            self.reset_images()
+            self.image_rgb = None
+            self.image_nir = None
 
         return image
 
