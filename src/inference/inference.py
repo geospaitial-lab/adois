@@ -36,7 +36,7 @@ class Inference:
         :rtype: np.ndarray[np.uint8]
         """
         assert isinstance(mask, np.ndarray) and mask.dtype == np.uint8
-        assert len(mask.shape) == 2
+        assert mask.ndim == 2
 
         assert mask.shape == (settings.IMAGE_SIZE + settings.BORDER_SIZE,
                               settings.IMAGE_SIZE + settings.BORDER_SIZE)
@@ -55,7 +55,7 @@ class Inference:
         :rtype: np.ndarray[np.uint8]
         """
         assert isinstance(image, np.ndarray) and image.dtype == np.float32
-        assert len(image.shape) == 3
+        assert image.ndim == 3
 
         if self.clip_border:
             assert image.shape == (settings.IMAGE_SIZE + settings.BORDER_SIZE,

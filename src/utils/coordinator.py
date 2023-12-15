@@ -75,7 +75,7 @@ class Coordinator:
         """
         assert isinstance(coordinates, np.ndarray)
         assert coordinates.dtype == np.int32
-        assert len(coordinates.shape) == 2
+        assert coordinates.ndim == 2
         assert coordinates.shape[-1] == 2
 
         assert isinstance(boundary, gpd.GeoDataFrame)
@@ -142,12 +142,12 @@ class Coordinator:
         """
         assert isinstance(coordinates, np.ndarray)
         assert coordinates.dtype == np.int32
-        assert len(coordinates.shape) == 2
+        assert coordinates.ndim == 2
         assert coordinates.shape[-1] == 2
 
         assert isinstance(coordinates_processed, np.ndarray)
         assert coordinates_processed.dtype == np.int32
-        assert len(coordinates_processed.shape) == 2
+        assert coordinates_processed.ndim == 2
         assert coordinates_processed.shape[-1] == 2
 
         mask = np.all(coordinates[:, np.newaxis, :] == coordinates_processed[np.newaxis, ...], axis=-1)
@@ -168,7 +168,7 @@ class Coordinator:
         """
         assert isinstance(coordinates, np.ndarray)
         assert coordinates.dtype == np.int32
-        assert len(coordinates.shape) == 2
+        assert coordinates.ndim == 2
         assert coordinates.shape[-1] == 2
 
         assert isinstance(boundary, gpd.GeoDataFrame) or boundary is None

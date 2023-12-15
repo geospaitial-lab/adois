@@ -73,7 +73,7 @@ def test_compute_coordinates(test_input,
 
     assert isinstance(coordinates, np.ndarray)
     assert coordinates.dtype == np.int32
-    assert len(coordinates.shape) == 2
+    assert coordinates.ndim == 2
     assert coordinates.shape[-1] == 2
     np.testing.assert_array_equal(coordinates, expected)
 
