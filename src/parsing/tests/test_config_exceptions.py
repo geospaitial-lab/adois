@@ -24,18 +24,18 @@ from src.parsing.config_exceptions import (
     WMSLayerError)
 
 from .data.data_test_config_exceptions import (
-    parameters_BoundingBoxLengthError,
-    parameters_BoundingBoxValueError,
-    parameters_EPSGCodeError,
-    parameters_GeoDataEmptyError,
-    parameters_GeoDataFormatError,
-    parameters_GeoDataGeometryError,
-    parameters_GeoDataLoadingError,
-    parameters_GeoDataNotFoundError,
-    parameters_GeoDataTypeError,
-    parameters_OutputDirNotFoundError,
-    parameters_SieveSizeError,
-    parameters_WMSLayerError)
+    data_test_BoundingBoxLengthError,
+    data_test_BoundingBoxValueError,
+    data_test_EPSGCodeError,
+    data_test_GeoDataEmptyError,
+    data_test_GeoDataFormatError,
+    data_test_GeoDataGeometryError,
+    data_test_GeoDataLoadingError,
+    data_test_GeoDataNotFoundError,
+    data_test_GeoDataTypeError,
+    data_test_OutputDirNotFoundError,
+    data_test_SieveSizeError,
+    data_test_WMSLayerError)
 
 
 def test_BoundingBoxError_default():
@@ -66,7 +66,7 @@ def test_BoundingBoxError():
         raise BoundingBoxError(message=message)
 
 
-@pytest.mark.parametrize('test_input, expected', parameters_BoundingBoxLengthError)
+@pytest.mark.parametrize('test_input, expected', data_test_BoundingBoxLengthError)
 def test_BoundingBoxLengthError(test_input,
                                 expected):
     """
@@ -94,7 +94,7 @@ def test_BoundingBoxNotDefinedError():
         raise BoundingBoxNotDefinedError()
 
 
-@pytest.mark.parametrize('test_input, expected', parameters_BoundingBoxValueError)
+@pytest.mark.parametrize('test_input, expected', data_test_BoundingBoxValueError)
 def test_BoundingBoxValueError(test_input,
                                expected):
     """
@@ -109,7 +109,7 @@ def test_BoundingBoxValueError(test_input,
         raise BoundingBoxValueError(bounding_box=test_input)
 
 
-@pytest.mark.parametrize('test_input, expected', parameters_EPSGCodeError)
+@pytest.mark.parametrize('test_input, expected', data_test_EPSGCodeError)
 def test_EPSGCodeError(test_input,
                        expected):
     """
@@ -153,7 +153,7 @@ def test_GeoDataError():
         raise GeoDataError(message=message)
 
 
-@pytest.mark.parametrize('test_input, expected', parameters_GeoDataEmptyError)
+@pytest.mark.parametrize('test_input, expected', data_test_GeoDataEmptyError)
 def test_GeoDataEmptyError(test_input,
                            expected):
     """
@@ -169,7 +169,7 @@ def test_GeoDataEmptyError(test_input,
                                 path=test_input[1])
 
 
-@pytest.mark.parametrize('test_input, expected', parameters_GeoDataFormatError)
+@pytest.mark.parametrize('test_input, expected', data_test_GeoDataFormatError)
 def test_GeoDataFormatError(test_input,
                             expected):
     """
@@ -185,7 +185,7 @@ def test_GeoDataFormatError(test_input,
                                  path=test_input[1])
 
 
-@pytest.mark.parametrize('test_input, expected', parameters_GeoDataGeometryError)
+@pytest.mark.parametrize('test_input, expected', data_test_GeoDataGeometryError)
 def test_GeoDataGeometryError(test_input,
                               expected):
     """
@@ -201,7 +201,7 @@ def test_GeoDataGeometryError(test_input,
                                    path=test_input[1])
 
 
-@pytest.mark.parametrize('test_input, expected', parameters_GeoDataLoadingError)
+@pytest.mark.parametrize('test_input, expected', data_test_GeoDataLoadingError)
 def test_GeoDataLoadingError(test_input,
                              expected):
     """
@@ -218,7 +218,7 @@ def test_GeoDataLoadingError(test_input,
                                   passed_exception=test_input[2])
 
 
-@pytest.mark.parametrize('test_input, expected', parameters_GeoDataNotFoundError)
+@pytest.mark.parametrize('test_input, expected', data_test_GeoDataNotFoundError)
 def test_GeoDataNotFoundError(test_input,
                               expected):
     """
@@ -234,7 +234,7 @@ def test_GeoDataNotFoundError(test_input,
                                    path=test_input[1])
 
 
-@pytest.mark.parametrize('test_input, expected', parameters_GeoDataTypeError)
+@pytest.mark.parametrize('test_input, expected', data_test_GeoDataTypeError)
 def test_GeoDataTypeError(test_input,
                           expected):
     """
@@ -250,7 +250,7 @@ def test_GeoDataTypeError(test_input,
                                path=test_input[1])
 
 
-@pytest.mark.parametrize('test_input, expected', parameters_OutputDirNotFoundError)
+@pytest.mark.parametrize('test_input, expected', data_test_OutputDirNotFoundError)
 def test_OutputDirNotFoundError(test_input,
                                 expected):
     """
@@ -280,7 +280,7 @@ def test_PrefixError():
         raise PrefixError()
 
 
-@pytest.mark.parametrize('test_input, expected', parameters_SieveSizeError)
+@pytest.mark.parametrize('test_input, expected', data_test_SieveSizeError)
 def test_SieveSizeError(test_input,
                         expected):
     """
@@ -360,7 +360,7 @@ def test_WMSConnectionError():
                                  passed_exception=passed_exception)
 
 
-@pytest.mark.parametrize('test_input, expected', parameters_WMSLayerError)
+@pytest.mark.parametrize('test_input, expected', data_test_WMSLayerError)
 def test_WMSLayerError(test_input,
                        expected):
     """

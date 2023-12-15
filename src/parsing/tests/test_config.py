@@ -7,9 +7,9 @@ from src.parsing.config_exceptions import (
     SieveSizeError)
 
 from .data.data_test_config import (
-    parameters_validate_sieve_size,
-    parameters_validate_sieve_size_SieveSizeError,
-    parameters_validate_simplify)
+    data_test_validate_sieve_size,
+    data_test_validate_sieve_size_SieveSizeError,
+    data_test_validate_simplify)
 
 
 def test_Postprocessing_default():
@@ -29,7 +29,7 @@ def test_Postprocessing_default():
     assert postprocessing.simplify is False
 
 
-@pytest.mark.parametrize('test_input, expected', parameters_validate_sieve_size)
+@pytest.mark.parametrize('test_input, expected', data_test_validate_sieve_size)
 def test_validate_sieve_size(test_input,
                              expected):
     """
@@ -46,7 +46,7 @@ def test_validate_sieve_size(test_input,
     assert sieve_size == expected
 
 
-@pytest.mark.parametrize('test_input', parameters_validate_sieve_size_SieveSizeError)
+@pytest.mark.parametrize('test_input', data_test_validate_sieve_size_SieveSizeError)
 def test_validate_sieve_size_SieveSizeError(test_input):
     """
     | Tests validate_sieve_size().
@@ -59,7 +59,7 @@ def test_validate_sieve_size_SieveSizeError(test_input):
         _ = Postprocessing.validate_sieve_size(value=test_input)
 
 
-@pytest.mark.parametrize('test_input, expected', parameters_validate_simplify)
+@pytest.mark.parametrize('test_input, expected', data_test_validate_simplify)
 def test_validate_simplify(test_input,
                            expected):
     """

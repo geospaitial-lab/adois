@@ -8,7 +8,7 @@ import pytest
 from shapely.geometry import box, Polygon
 
 from src.utils.grid_generator import GridGenerator
-from .data.data_test_grid_generator import parameters_compute_coordinates
+from .data.data_test_grid_generator import data_test_compute_coordinates
 
 
 def test_init():
@@ -55,7 +55,7 @@ def test_compute_coordinates_default(grid_generator):
     assert quantize_default is True
 
 
-@pytest.mark.parametrize('test_input, expected', parameters_compute_coordinates)
+@pytest.mark.parametrize('test_input, expected', data_test_compute_coordinates)
 def test_compute_coordinates(test_input,
                              expected,
                              grid_generator):
