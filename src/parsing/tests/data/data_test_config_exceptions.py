@@ -1,6 +1,6 @@
 from pathlib import Path
 
-parameters_BoundingBoxLengthError = (
+data_test_BoundingBoxLengthError = (
     [([],
       r'Invalid bounding_box in the config!\n'
       r'Expected 4 coordinates \(x_min, y_min, x_max, y_max\), got 0 coordinates instead.'),
@@ -11,7 +11,7 @@ parameters_BoundingBoxLengthError = (
       r'Invalid bounding_box in the config!\n'
       r'Expected 4 coordinates \(x_min, y_min, x_max, y_max\), got 5 coordinates instead.')])
 
-parameters_BoundingBoxValueError = (
+data_test_BoundingBoxValueError = (
     [([2, 2, 1, 1],
       r'Invalid bounding_box in the config!\n'
       r'Expected 4 coordinates \(x_min, y_min, x_max, y_max\) with x_min < x_max and y_min < y_max, '
@@ -21,7 +21,7 @@ parameters_BoundingBoxValueError = (
       r'Expected 4 coordinates \(x_min, y_min, x_max, y_max\) with x_min < x_max and y_min < y_max, '
       r'got \(-1, -1, -2, -2\) instead.')])
 
-parameters_EPSGCodeError = (
+data_test_EPSGCodeError = (
     [((0, [1]),
       r'Invalid epsg_code in the config!\n'
       'Expected 1, got 0 instead.'),
@@ -32,7 +32,7 @@ parameters_EPSGCodeError = (
       r'Invalid epsg_code in the config!\n'
       'Expected 1, 2 or 3, got 0 instead.')])
 
-parameters_GeoDataEmptyError = (
+data_test_GeoDataEmptyError = (
     [(('path_test', Path(r'path\to\geo_data.gpkg')),
       r'Invalid path_test in the config!\n'
       r'The geo data at path\\to\\geo_data.gpkg is empty.'),
@@ -40,7 +40,7 @@ parameters_GeoDataEmptyError = (
       r'Invalid path_test in the config!\n'
       'The geo data at path/to/geo_data.gpkg is empty.')])
 
-parameters_GeoDataFormatError = (
+data_test_GeoDataFormatError = (
     [(('path_test', Path(r'path\to\geo_data.invalid')),
       r'Invalid path_test in the config!\n'
       'Expected file extension .gpkg or .shp, got .invalid instead.'),
@@ -48,7 +48,7 @@ parameters_GeoDataFormatError = (
       r'Invalid path_test in the config!\n'
       'Expected file extension .gpkg or .shp, got .invalid instead.')])
 
-parameters_GeoDataGeometryError = (
+data_test_GeoDataGeometryError = (
     [(('path_test', Path(r'path\to\geo_data.gpkg')),
       r'Invalid path_test in the config!\n'
       r'The geo data at path\\to\\geo_data.gpkg contains invalid polygons.'),
@@ -56,7 +56,7 @@ parameters_GeoDataGeometryError = (
       r'Invalid path_test in the config!\n'
       'The geo data at path/to/geo_data.gpkg contains invalid polygons.')])
 
-parameters_GeoDataLoadingError = (
+data_test_GeoDataLoadingError = (
     [(('path_test', Path(r'path\to\geo_data.gpkg'), Exception('Test message.')),
       r'Invalid path_test in the config!\n'
       r'An exception occurred while loading the geo data at path\\to\\geo_data.gpkg.\n'
@@ -66,7 +66,7 @@ parameters_GeoDataLoadingError = (
       r'An exception occurred while loading the geo data at path/to/geo_data.gpkg.\n'
       'Test message.')])
 
-parameters_GeoDataNotFoundError = (
+data_test_GeoDataNotFoundError = (
     [(('path_test', Path(r'path\to\geo_data.gpkg')),
       r'Invalid path_test in the config!\n'
       r'The geo data at path\\to\\geo_data.gpkg does not exist.'),
@@ -74,7 +74,7 @@ parameters_GeoDataNotFoundError = (
       r'Invalid path_test in the config!\n'
       'The geo data at path/to/geo_data.gpkg does not exist.')])
 
-parameters_GeoDataTypeError = (
+data_test_GeoDataTypeError = (
     [(('path_test', Path(r'path\to\geo_data.gpkg')),
       r'Invalid path_test in the config!\n'
       r'The geo data at path\\to\\geo_data.gpkg contains geometries other than polygons.'),
@@ -82,7 +82,7 @@ parameters_GeoDataTypeError = (
       r'Invalid path_test in the config!\n'
       'The geo data at path/to/geo_data.gpkg contains geometries other than polygons.')])
 
-parameters_OutputDirNotFoundError = (
+data_test_OutputDirNotFoundError = (
     [(Path(r'path\to\output_dir'),
       r'Invalid path_output_dir in the config!\n'
       r'The output directory at path\\to\\output_dir does not exist.'),
@@ -90,7 +90,7 @@ parameters_OutputDirNotFoundError = (
       r'Invalid path_output_dir in the config!\n'
       'The output directory at path/to/output_dir does not exist.')])
 
-parameters_SieveSizeError = (
+data_test_SieveSizeError = (
     [(-1,
       r'Invalid sieve_size in the config!\n'
       'Expected a number in the range of 0 to 10, got -1 instead.'),
@@ -98,7 +98,7 @@ parameters_SieveSizeError = (
       r'Invalid sieve_size in the config!\n'
       'Expected a number in the range of 0 to 10, got 11 instead.')])
 
-parameters_WMSLayerError = (
+data_test_WMSLayerError = (
     [(('z', ['a']),
       r'Invalid layer in the config!\n'
       'Expected a, got z instead.'),

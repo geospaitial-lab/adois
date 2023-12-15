@@ -1,6 +1,6 @@
 import numpy as np
 
-parameters_compute_coordinates = (
+data_test_compute_coordinates = (
     [((128, True),
       np.array([[-128, -128], [0, -128], [-128, 0], [0, 0]], dtype=np.int32)),
      ((128, False),
