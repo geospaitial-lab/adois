@@ -82,14 +82,6 @@ parameters_GeoDataTypeError = (
       r'Invalid path_test in the config!\n'
       'The geo data at path/to/geo_data.gpkg contains geometries other than polygons.')])
 
-parameters_OutputDirNotEmptyError = (
-    [(Path(r'path\to\output_dir'),
-      r'Invalid path_output_dir in the config!\n'
-      r'The output directory at path\\to\\output_dir is not empty.'),
-     (Path('path/to/output_dir'),
-      r'Invalid path_output_dir in the config!\n'
-      'The output directory at path/to/output_dir is not empty.')])
-
 parameters_OutputDirNotFoundError = (
     [(Path(r'path\to\output_dir'),
       r'Invalid path_output_dir in the config!\n'

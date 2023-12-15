@@ -15,8 +15,6 @@ from src.parsing.config_exceptions import (
     GeoDataLoadingError,
     GeoDataNotFoundError,
     GeoDataTypeError,
-    OutputDirError,
-    OutputDirNotEmptyError,
     OutputDirNotFoundError,
     PrefixError,
     SieveSizeError,
@@ -35,7 +33,6 @@ from .data.data_test_config_exceptions import (
     parameters_GeoDataLoadingError,
     parameters_GeoDataNotFoundError,
     parameters_GeoDataTypeError,
-    parameters_OutputDirNotEmptyError,
     parameters_OutputDirNotFoundError,
     parameters_SieveSizeError,
     parameters_WMSLayerError)
@@ -251,49 +248,6 @@ def test_GeoDataTypeError(test_input,
     with pytest.raises(GeoDataTypeError, match=expected):
         raise GeoDataTypeError(field=test_input[0],
                                path=test_input[1])
-
-
-def test_OutputDirError_default():
-    """
-    | Tests the default message of OutputDirError.
-
-    :returns: None
-    :rtype: None
-    """
-    expected = 'Invalid path_output_dir in the config!'
-
-    with pytest.raises(OutputDirError, match=expected):
-        raise OutputDirError()
-
-
-def test_OutputDirError():
-    """
-    | Tests OutputDirError.
-
-    :returns: None
-    :rtype: None
-    """
-    message = 'Test message.'
-
-    expected = 'Test message.'
-
-    with pytest.raises(OutputDirError, match=expected):
-        raise OutputDirError(message=message)
-
-
-@pytest.mark.parametrize('test_input, expected', parameters_OutputDirNotEmptyError)
-def test_OutputDirNotEmptyError(test_input,
-                                expected):
-    """
-    | Tests OutputDirNotEmptyError.
-
-    :param Path test_input: path
-    :param str expected: message
-    :returns: None
-    :rtype: None
-    """
-    with pytest.raises(OutputDirNotEmptyError, match=expected):
-        raise OutputDirNotEmptyError(path=test_input)
 
 
 @pytest.mark.parametrize('test_input, expected', parameters_OutputDirNotFoundError)

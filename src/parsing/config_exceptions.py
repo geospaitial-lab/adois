@@ -233,39 +233,7 @@ class GeoDataTypeError(GeoDataError):
         super().__init__(message)
 
 
-class OutputDirError(Exception):
-
-    def __init__(self,
-                 message='Invalid path_output_dir in the config!'):
-        """
-        | Initializer method
-
-        :param str message: message
-        :returns: None
-        :rtype: None
-        """
-        super().__init__(message)
-
-
-class OutputDirNotEmptyError(OutputDirError):
-
-    def __init__(self,
-                 path):
-        """
-        | Initializer method
-
-        :param Path path: path to the output directory
-        :returns: None
-        :rtype: None
-        """
-        message = (
-            'Invalid path_output_dir in the config!\n'
-            f'The output directory at {path} is not empty.')
-
-        super().__init__(message)
-
-
-class OutputDirNotFoundError(OutputDirError):
+class OutputDirNotFoundError(Exception):
 
     def __init__(self,
                  path):

@@ -19,7 +19,6 @@ from src.parsing.config_exceptions import (
     GeoDataLoadingError,
     GeoDataNotFoundError,
     GeoDataTypeError,
-    OutputDirNotEmptyError,
     OutputDirNotFoundError,
     PrefixError,
     SieveSizeError,
@@ -398,22 +397,12 @@ class Export(pydantic.BaseModel):
         :param str value: path_output_dir
         :returns: validated path_output_dir
         :rtype: Path
-        :raises OutputDirNotEmptyError: if the output directory is not empty
         :raises OutputDirNotFoundError: if the output directory does not exist
         """
         value = Path(value)
 
         if not value.is_dir():
             raise OutputDirNotFoundError(path=value)
-
-        for path in value.iterdir():
-            conditions = (
-                [not path.name.startswith('.'),
-                 not path.name == 'tiles_processed',
-                 path.suffix not in ['.log', '.yml', '.yaml']])
-
-            if all(conditions):
-                raise OutputDirNotEmptyError(path=value)
 
         return value
 
