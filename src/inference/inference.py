@@ -1,77 +1,62 @@
-from pathlib import Path
-
 import numpy as np
-import onnxruntime
 
-import src.utils.settings as settings
+from src.utils.settings import IMAGE_SIZE, PADDING_SIZE
+from .model import Model  # noqa: F401 (used for type hinting)
 
 
 class Inference:
-    def __init__(self,
-                 model_path,
-                 clip_border):
-        """
-        | Constructor method
 
-        :param str or Path model_path: path to the onnx model
-        :param bool clip_border: if True, the mask is clipped
+    def __init__(self,
+                 model):
+        """
+        | Initializer method
+
+        :param Model model: model
         :returns: None
         :rtype: None
         """
-        assert isinstance(model_path, str) or isinstance(model_path, Path)
-
-        assert isinstance(clip_border, bool)
-
-        self.model = onnxruntime.InferenceSession(str(model_path))
-        self.model_input_name = self.model.get_inputs()[0].name
-        self.clip_border = clip_border
+        self.model = model
+        self.model.set_up()
 
     @staticmethod
-    def clip_mask(mask):
+    def remove_padding(mask):
         """
-        | Returns a clipped mask.
+        | Returns the mask without padding.
 
         :param np.ndarray[np.uint8] mask: mask
-        :returns: clipped mask
+        :returns: mask without padding
         :rtype: np.ndarray[np.uint8]
         """
-        assert isinstance(mask, np.ndarray) and mask.dtype == np.uint8
+        assert isinstance(mask, np.ndarray)
+        assert mask.dtype == np.uint8
         assert mask.ndim == 2
+        assert mask.shape == (IMAGE_SIZE + PADDING_SIZE, IMAGE_SIZE + PADDING_SIZE)
 
-        assert mask.shape == (settings.IMAGE_SIZE + settings.BORDER_SIZE,
-                              settings.IMAGE_SIZE + settings.BORDER_SIZE)
+        return np.array(mask[PADDING_SIZE:-PADDING_SIZE, PADDING_SIZE:-PADDING_SIZE])
 
-        return np.array(mask[settings.BORDER_SIZE:-settings.BORDER_SIZE, settings.BORDER_SIZE:-settings.BORDER_SIZE])
-
-    def get_mask(self, image):
+    def predict_mask(self,
+                     image,
+                     apply_padding=False):
         """
-        | Returns a mask with 2 dimensions and the following pixel values:
-        | 0: pervious surface
-        | 1: building
-        | 2: pavement
+        | Returns the mask.
 
         :param np.ndarray[np.float32] image: image
+        :param bool apply_padding: if True, the padding of the mask is removed
         :returns: mask
         :rtype: np.ndarray[np.uint8]
         """
-        assert isinstance(image, np.ndarray) and image.dtype == np.float32
+        assert isinstance(image, np.ndarray)
+        assert image.dtype == np.float32
         assert image.ndim == 3
 
-        if self.clip_border:
-            assert image.shape == (settings.IMAGE_SIZE + settings.BORDER_SIZE,
-                                   settings.IMAGE_SIZE + settings.BORDER_SIZE,
-                                   4)
+        if apply_padding:
+            assert image.shape == (IMAGE_SIZE + PADDING_SIZE, IMAGE_SIZE + PADDING_SIZE, 4)
         else:
-            assert image.shape == (settings.IMAGE_SIZE,
-                                   settings.IMAGE_SIZE,
-                                   4)
+            assert image.shape == (IMAGE_SIZE, IMAGE_SIZE, 4)
 
-        model_input = image[np.newaxis, ...]
-        mask = np.array(self.model.run([], {self.model_input_name: model_input}))
-        mask = np.squeeze(mask)
-        mask = np.argmax(mask, axis=-1).astype(np.uint8)
+        mask = self.model.run(image=image)
 
-        if self.clip_border:
-            mask = self.clip_mask(mask)
+        if apply_padding:
+            mask = Inference.remove_padding(mask)
 
         return mask
