@@ -42,7 +42,7 @@ class ONNXModel:
         assert isinstance(path, Path)
 
         self.path = path
-        self.session = None
+        self._session = None
 
     def set_up(self):
         """
@@ -51,7 +51,7 @@ class ONNXModel:
         :returns: None
         :rtype: None
         """
-        self.session = ort.InferenceSession(str(self.path))
+        self._session = ort.InferenceSession(str(self.path))
 
     def run(self,
             image):
@@ -64,9 +64,9 @@ class ONNXModel:
         """
         image = image[np.newaxis, ...]
 
-        input_name = self.session.get_inputs()[0].name
+        input_name = self._session.get_inputs()[0].name
 
-        mask = np.array(self.session.run(None, {input_name: image}))
+        mask = np.array(self._session.run(None, {input_name: image}))
         mask = np.squeeze(mask)
         mask = np.argmax(mask, axis=-1).astype(np.uint8)
         return mask
