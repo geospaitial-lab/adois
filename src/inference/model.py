@@ -44,6 +44,9 @@ class ONNXModel:
         :returns: mask
         :rtype: np.ndarray[np.uint8]
         """
+        assert isinstance(image, np.ndarray)
+        assert image.dtype == np.float32
+
         image = image[np.newaxis, ...]
 
         input_name = self._session.get_inputs()[0].name
