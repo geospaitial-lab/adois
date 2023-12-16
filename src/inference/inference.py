@@ -16,7 +16,6 @@ class Inference:
         :rtype: None
         """
         self.model = model
-        self.model.set_up()
 
     @staticmethod
     def remove_padding(mask):

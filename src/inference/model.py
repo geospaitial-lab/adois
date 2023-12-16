@@ -7,15 +7,6 @@ import onnxruntime as ort
 
 class Model(Protocol):
 
-    def set_up(self):
-        """
-        | Sets up the model.
-
-        :returns: None
-        :rtype: None
-        """
-        ...
-
     def run(self,
             image):
         """
@@ -42,15 +33,6 @@ class ONNXModel:
         assert isinstance(path, Path)
 
         self.path = path
-        self._session = None
-
-    def set_up(self):
-        """
-        | Sets up the model.
-
-        :returns: None
-        :rtype: None
-        """
         self._session = ort.InferenceSession(str(self.path))
 
     def run(self,
