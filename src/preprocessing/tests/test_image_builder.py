@@ -43,15 +43,13 @@ def test_init(test_input,
     assert all(conditions)
 
 
-@pytest.mark.parametrize('test_input, expected', data_test_getter_image_rgb)
+@pytest.mark.parametrize('test_input', data_test_getter_image_rgb)
 def test_getter_image_rgb(test_input,
-                          expected,
                           image_builder_without_preprocessing_strategies):
     """
     | Tests the getter method of image_rgb.
 
     :param np.ndarray[np.uint8] or None test_input: rgb image
-    :param np.ndarray[np.uint8] or None expected: rgb image
     :param ImageBuilder image_builder_without_preprocessing_strategies: image builder fixture
     :returns: None
     :rtype: None
@@ -64,11 +62,11 @@ def test_getter_image_rgb(test_input,
 
     assert any(conditions)
 
-    if expected is not None:
+    if test_input is not None:
         assert image_builder_without_preprocessing_strategies.image_rgb.dtype == np.uint8
         assert image_builder_without_preprocessing_strategies.image_rgb.ndim == 3
         assert image_builder_without_preprocessing_strategies.image_rgb.shape[-1] == 3
-        np.testing.assert_array_equal(image_builder_without_preprocessing_strategies.image_rgb, expected)
+        np.testing.assert_array_equal(image_builder_without_preprocessing_strategies.image_rgb, test_input)
 
 
 @pytest.mark.parametrize('test_input, expected', data_test_setter_image_rgb)
@@ -99,15 +97,13 @@ def test_setter_image_rgb(test_input,
         np.testing.assert_array_equal(image_builder_without_preprocessing_strategies._image_rgb, expected)
 
 
-@pytest.mark.parametrize('test_input, expected', data_test_getter_image_nir)
+@pytest.mark.parametrize('test_input', data_test_getter_image_nir)
 def test_getter_image_nir(test_input,
-                          expected,
                           image_builder_without_preprocessing_strategies):
     """
     | Tests the getter method of image_nir.
 
     :param np.ndarray[np.uint8] or None test_input: nir image
-    :param np.ndarray[np.uint8] or None expected: nir image
     :param ImageBuilder image_builder_without_preprocessing_strategies: image builder fixture
     :returns: None
     :rtype: None
@@ -120,11 +116,11 @@ def test_getter_image_nir(test_input,
 
     assert any(conditions)
 
-    if expected is not None:
+    if test_input is not None:
         assert image_builder_without_preprocessing_strategies.image_nir.dtype == np.uint8
         assert image_builder_without_preprocessing_strategies.image_nir.ndim == 3
         assert image_builder_without_preprocessing_strategies.image_nir.shape[-1] == 1
-        np.testing.assert_array_equal(image_builder_without_preprocessing_strategies.image_nir, expected)
+        np.testing.assert_array_equal(image_builder_without_preprocessing_strategies.image_nir, test_input)
 
 
 @pytest.mark.parametrize('test_input, expected', data_test_setter_image_nir)
