@@ -156,7 +156,7 @@ class GeoDataLoadingError(GeoDataError):
         """
         message = (
             f'Invalid {field} in the config!\n'
-            f'An exception occurred while loading the geo data at {path}.\n'
+            f'An exception is raised while loading the geo data at {path}.\n'
             f'{passed_exception}')
 
         super().__init__(message)

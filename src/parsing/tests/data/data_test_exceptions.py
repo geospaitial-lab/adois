@@ -48,11 +48,11 @@ data_test_GeoDataGeometryError = (
 data_test_GeoDataLoadingError = (
     [(('path_test', Path(r'path\to\geo_data.gpkg'), Exception('Test message.')),
       r'Invalid path_test in the config!\n'
-      r'An exception occurred while loading the geo data at path\\to\\geo_data.gpkg.\n'
+      r'An exception is raised while loading the geo data at path\\to\\geo_data.gpkg.\n'
       'Test message.'),
      (('path_test', Path('path/to/geo_data.gpkg'), Exception('Test message.')),
       r'Invalid path_test in the config!\n'
-      r'An exception occurred while loading the geo data at path/to/geo_data.gpkg.\n'
+      r'An exception is raised while loading the geo data at path/to/geo_data.gpkg.\n'
       'Test message.')])
 
 data_test_GeoDataNotFoundError = (

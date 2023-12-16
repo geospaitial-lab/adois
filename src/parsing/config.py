@@ -117,7 +117,7 @@ class Data(pydantic.BaseModel):
         :raises GeoDataEmptyError: if the geo data is empty
         :raises GeoDataFormatError: if the file extension of the geo data is not .gpkg or .shp
         :raises GeoDataGeometryError: if the geo data contains invalid polygons
-        :raises GeoDataLoadingError: if an exception occurs while loading the geo data
+        :raises GeoDataLoadingError: if an exception is raised while loading the geo data
             (the exception raised by geopandas is passed)
         :raises GeoDataNotFoundError: if the geo data does not exist
         :raises GeoDataTypeError: if the geo data contains geometries other than polygons
@@ -313,7 +313,7 @@ class Aggregation(pydantic.BaseModel):
         :raises GeoDataEmptyError: if the geo data is empty
         :raises GeoDataFormatError: if the file extension of the geo data is not .gpkg or .shp
         :raises GeoDataGeometryError: if the geo data contains invalid polygons
-        :raises GeoDataLoadingError: if an exception occurs while loading the geo data
+        :raises GeoDataLoadingError: if an exception is raised while loading the geo data
             (the exception raised by geopandas is passed)
         :raises GeoDataNotFoundError: if the geo data does not exist
         :raises GeoDataTypeError: if the geo data contains geometries other than polygons
