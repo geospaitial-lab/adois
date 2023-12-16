@@ -1,40 +1,35 @@
+import unittest.mock as mock
+
 import pytest
-from unittest import mock
 
-from src.data.remote_sensing_data_downloader import RemoteSensingDataDownloader
+from src.data.remote_sensing_data_fetcher import RemoteSensingDataFetcher
+from src.data.web_map_service import WebMapServiceProtocol
 
 
-@pytest.fixture(scope='session')
-@mock.patch('src.data.remote_sensing_data_downloader.WebMapService', return_value=mock.MagicMock)
-def remote_sensing_data_downloader_no_clip_border(_mocked_wms):
+@pytest.fixture(scope='function')
+def remote_sensing_data_fetcher_with_mocked_web_map_service(mocked_web_map_service):
     """
-    | Returns a remote_sensing_data_downloader instance.
-    | Border clipping is not used.
+    | Returns a remote sensing data fetcher object with a mocked web map service.
 
-    :returns: remote_sensing_data_downloader
-    :rtype: RemoteSensingDataDownloader
+    :param WebMapServiceProtocol mocked_web_map_service: mocked web map service fixture
+    :returns: remote sensing data fetcher fixture
+    :rtype: (RemoteSensingDataFetcher, WebMapServiceProtocol)
     """
-    remote_sensing_data_downloader = RemoteSensingDataDownloader(wms_url='https://www.wms.de/wms_url',
-                                                                 wms_layer='wms_layer',
-                                                                 epsg_code=25832,
-                                                                 clip_border=False)
+    remote_sensing_data_fetcher = RemoteSensingDataFetcher(web_map_service=mocked_web_map_service,
+                                                           layer='test_layer',
+                                                           epsg_code=25832)
 
-    return remote_sensing_data_downloader
+    return remote_sensing_data_fetcher, mocked_web_map_service
 
 
-@pytest.fixture(scope='session')
-@mock.patch('src.data.remote_sensing_data_downloader.WebMapService', return_value=mock.MagicMock)
-def remote_sensing_data_downloader_clip_border(_mocked_wms):
+@pytest.fixture(scope='function')
+def mocked_web_map_service():
     """
-    | Returns a remote_sensing_data_downloader instance.
-    | Border clipping is used.
+    | Returns a mocked web map service object.
 
-    :returns: remote_sensing_data_downloader
-    :rtype: RemoteSensingDataDownloader
+    :returns: mocked web map service fixture
+    :rtype: WebMapServiceProtocol
     """
-    remote_sensing_data_downloader = RemoteSensingDataDownloader(wms_url='https://www.wms.de/wms_url',
-                                                                 wms_layer='wms_layer',
-                                                                 epsg_code=25832,
-                                                                 clip_border=True)
-
-    return remote_sensing_data_downloader
+    mocked_web_map_service = mock.Mock(spec=WebMapServiceProtocol)
+    mocked_web_map_service.url = 'https://wms.com'
+    return mocked_web_map_service

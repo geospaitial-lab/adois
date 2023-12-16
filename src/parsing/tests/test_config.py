@@ -3,7 +3,7 @@ import pytest
 from src.parsing.config import (
     Postprocessing)
 
-from src.parsing.config_exceptions import (
+from src.parsing.exceptions import (
     SieveSizeError)
 
 from .data.data_test_config import (
