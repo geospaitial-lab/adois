@@ -1,7 +1,7 @@
 import numpy as np
 
 from src.utils.settings import IMAGE_SIZE, PADDING_SIZE
-from .model import Model  # noqa: F401 (used for type hinting)
+from .model import ModelProtocol  # noqa: F401 (used for type hinting)
 
 
 class Inference:
@@ -11,7 +11,7 @@ class Inference:
         """
         | Initializer method
 
-        :param Model model: model
+        :param ModelProtocol model: model
         :returns: None
         :rtype: None
         """

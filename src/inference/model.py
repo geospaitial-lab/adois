@@ -5,7 +5,7 @@ import numpy as np
 import onnxruntime as ort
 
 
-class Model(Protocol):
+class ModelProtocol(Protocol):
 
     def run(self,
             image):
