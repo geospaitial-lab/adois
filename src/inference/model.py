@@ -1,20 +1,20 @@
-from pathlib import Path  # noqa: F401 (used for type hinting)
+from pathlib import Path
 from typing import Protocol
 
 import numpy as np
 import onnxruntime as ort
+from numpy import typing as npt
 
 
 class ModelProtocol(Protocol):
 
     def run(self,
-            image):
+            image: npt.NDArray[np.float32]) -> npt.NDArray[np.uint8]:
         """
         | Returns the mask.
 
-        :param np.ndarray[np.float32] image: image
+        :param image: image
         :returns: mask
-        :rtype: np.ndarray[np.uint8]
         """
         ...
 
@@ -22,13 +22,12 @@ class ModelProtocol(Protocol):
 class ONNXModel:
 
     def __init__(self,
-                 path):
+                 path: Path) -> None:
         """
         | Initializer method
 
-        :param Path path: path to the onnx model
+        :param path: path to the onnx model
         :returns: None
-        :rtype: None
         """
         assert isinstance(path, Path)
 
@@ -36,13 +35,12 @@ class ONNXModel:
         self._session = ort.InferenceSession(str(self.path))
 
     def run(self,
-            image):
+            image: npt.NDArray[np.float32]) -> npt.NDArray[np.uint8]:
         """
         | Returns the mask.
 
-        :param np.ndarray[np.float32] image: image
+        :param image: image
         :returns: mask
-        :rtype: np.ndarray[np.uint8]
         """
         assert isinstance(image, np.ndarray)
         assert image.dtype == np.float32

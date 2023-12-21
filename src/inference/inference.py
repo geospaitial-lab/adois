@@ -1,30 +1,29 @@
 import numpy as np
+from numpy import typing as npt
 
 from src.utils.settings import IMAGE_SIZE, PADDING_SIZE
-from .model import ModelProtocol  # noqa: F401 (used for type hinting)
+from .model import ModelProtocol
 
 
 class Inference:
 
     def __init__(self,
-                 model):
+                 model: ModelProtocol) -> None:
         """
         | Initializer method
 
-        :param ModelProtocol model: model
+        :param model: model
         :returns: None
-        :rtype: None
         """
         self.model = model
 
     @staticmethod
-    def remove_padding(mask):
+    def remove_padding(mask: npt.NDArray[np.uint8]) -> npt.NDArray[np.uint8]:
         """
         | Returns the mask without padding.
 
-        :param np.ndarray[np.uint8] mask: mask
+        :param mask: mask
         :returns: mask without padding
-        :rtype: np.ndarray[np.uint8]
         """
         assert isinstance(mask, np.ndarray)
         assert mask.dtype == np.uint8
@@ -34,15 +33,14 @@ class Inference:
         return np.array(mask[PADDING_SIZE:-PADDING_SIZE, PADDING_SIZE:-PADDING_SIZE])
 
     def predict_mask(self,
-                     image,
-                     apply_padding=False):
+                     image: npt.NDArray[np.float32],
+                     apply_padding: bool = False) -> npt.NDArray[np.uint8]:
         """
         | Returns the mask.
 
-        :param np.ndarray[np.float32] image: image
-        :param bool apply_padding: if True, the padding of the mask is removed
+        :param image: image
+        :param apply_padding: if True, the padding of the mask is removed
         :returns: mask
-        :rtype: np.ndarray[np.uint8]
         """
         assert isinstance(image, np.ndarray)
         assert image.dtype == np.float32
