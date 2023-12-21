@@ -1,11 +1,15 @@
 from pathlib import Path
-from typing import List, Union
+from typing import Self
 
 import geopandas as gpd
 import numpy as np
-import pydantic
 from natsort import natsorted
-from pydantic import root_validator, validator
+
+from pydantic import (
+    BaseModel,
+    field_validator,
+    model_validator,
+    ValidationInfo)
 
 from src.data import WebMapService
 
@@ -29,37 +33,39 @@ from src.parsing.exceptions import (
     TileSizeError)
 
 
-class WMS(pydantic.BaseModel):
+class WMS(BaseModel):
     url: str
     layer: str
 
-    @validator('url')
+    # noinspection PyNestedDecorators
+    @field_validator('url')
+    @classmethod
     def validate_url(cls,
-                     value):
+                     value: str) -> str:
         """
         | Validates url.
 
-        :param str value: url
+        :param value: url
         :returns: validated url
-        :rtype: str
         """
         _ = WebMapService(url=value)
         return value
 
-    @validator('layer')
+    # noinspection PyNestedDecorators
+    @field_validator('layer')
+    @classmethod
     def validate_layer(cls,
-                       value,
-                       values):
+                       value: str,
+                       values: ValidationInfo) -> str:
         """
         | Validates layer.
 
-        :param str value: layer
-        :param dict[str, Any] values: values
+        :param value: layer
+        :param values: values
         :returns: validated layer
-        :rtype: str
         :raises WMSLayerError: if layer is not a valid layer
         """
-        web_map_service = WebMapService(url=values['url'])
+        web_map_service = WebMapService(url=values.data['url'])
         layers_valid = web_map_service.get_layers()
 
         if value not in layers_valid:
@@ -69,33 +75,34 @@ class WMS(pydantic.BaseModel):
         return value
 
 
-class Data(pydantic.BaseModel):
+class Data(BaseModel):
     rgb: WMS
     nir: WMS
     epsg_code: int
-    path_boundary: str = None
-    bounding_box: List[int] = None
+    path_boundary: str | None = None
+    bounding_box: list[int] | None = None
     apply_padding: bool = False
     ignore_processed_tiles: bool = False
 
-    @validator('epsg_code')
+    # noinspection PyNestedDecorators
+    @field_validator('epsg_code')
+    @classmethod
     def validate_epsg_code(cls,
-                           value,
-                           values):
+                           value: int,
+                           values: ValidationInfo) -> int:
         """
         | Validates epsg_code.
 
-        :param int value: epsg_code
-        :param dict[str, Any] values: values
+        :param value: epsg_code
+        :param values: values
         :returns: validated epsg_code
-        :rtype: int
         :raises WMSEPSGCodeError: if epsg_code is not a valid epsg code
         """
-        web_map_service_rgb = WebMapService(url=values['rgb'].url)
-        web_map_service_nir = WebMapService(url=values['nir'].url)
+        web_map_service_rgb = WebMapService(url=values.data['rgb'].url)
+        web_map_service_nir = WebMapService(url=values.data['nir'].url)
 
-        epsg_codes_valid_rgb = web_map_service_rgb.get_epsg_codes(values['rgb'].layer)
-        epsg_codes_valid_nir = web_map_service_nir.get_epsg_codes(values['nir'].layer)
+        epsg_codes_valid_rgb = web_map_service_rgb.get_epsg_codes(values.data['rgb'].layer)
+        epsg_codes_valid_nir = web_map_service_nir.get_epsg_codes(values.data['nir'].layer)
 
         epsg_codes_valid = list(set(epsg_codes_valid_rgb) & set(epsg_codes_valid_nir))
 
@@ -105,15 +112,16 @@ class Data(pydantic.BaseModel):
 
         return value
 
-    @validator('path_boundary')
+    # noinspection PyNestedDecorators
+    @field_validator('path_boundary')
+    @classmethod
     def validate_path_boundary(cls,
-                               value):
+                               value: str | None) -> Path | None:
         """
         | Validates path_boundary.
 
-        :param str or None value: path_boundary
+        :param value: path_boundary
         :returns: validated path_boundary
-        :rtype: Path or None
         :raises GeoDataEmptyError: if the geo data is empty
         :raises GeoDataFormatError: if the file extension of the geo data is not .gpkg or .shp
         :raises GeoDataGeometryError: if the geo data contains invalid polygons
@@ -156,25 +164,26 @@ class Data(pydantic.BaseModel):
 
         return value
 
-    @validator('bounding_box', always=True)
+    # noinspection PyNestedDecorators
+    @field_validator('bounding_box')
+    @classmethod
     def validate_bounding_box(cls,
-                              value,
-                              values):
+                              value: list[int] | None,
+                              values: ValidationInfo) -> tuple[int, ...]:
         """
         | Validates bounding_box.
 
-        :param list[int] or None value: bounding_box
-        :param dict[str, Any] values: values
+        :param value: bounding_box
+        :param values: values
         :returns: validated bounding_box
-        :rtype: (int, int, int, int)
         :raises BoundingBoxLengthError: if the length of bounding_box is not equal to 4
         :raises BoundingBoxNotDefinedError: if neither path_boundary nor bounding_box are defined in the config
         :raises BoundingBoxValueError: if x_min >= x_max or y_min >= y_max
         """
-        if value is None and values['path_boundary'] is None:
+        if value is None and values.data['path_boundary'] is None:
             raise BoundingBoxNotDefinedError()
 
-        if values['path_boundary'] is None:
+        if values.data['path_boundary'] is None:
             if len(value) != 4:
                 raise BoundingBoxLengthError(bounding_box=value)
 
@@ -182,7 +191,7 @@ class Data(pydantic.BaseModel):
                 raise BoundingBoxValueError(bounding_box=value)
 
         else:
-            boundary = gpd.read_file(Path(values['path_boundary']))
+            boundary = gpd.read_file(Path(values.data['path_boundary']))
             bounding_box_boundary = boundary.total_bounds
 
             value = (
@@ -193,30 +202,32 @@ class Data(pydantic.BaseModel):
 
         return tuple(value)
 
-    @validator('apply_padding')
+    # noinspection PyNestedDecorators
+    @field_validator('apply_padding')
+    @classmethod
     def validate_apply_padding(cls,
-                               value):
+                               value: bool | None) -> bool:
         """
         | Validates apply_padding.
 
-        :param bool or None value: apply_padding
+        :param value: apply_padding
         :returns: validated apply_padding
-        :rtype: bool
         """
         if value is None:
             value = False
 
         return value
 
-    @validator('ignore_processed_tiles')
+    # noinspection PyNestedDecorators
+    @field_validator('ignore_processed_tiles')
+    @classmethod
     def validate_ignore_processed_tiles(cls,
-                                        value):
+                                        value: bool | None) -> bool:
         """
         | Validates ignore_processed_tiles.
 
-        :param bool or None value: ignore_processed_tiles
+        :param value: ignore_processed_tiles
         :returns: validated ignore_processed_tiles
-        :rtype: bool
         """
         if value is None:
             value = False
@@ -224,19 +235,20 @@ class Data(pydantic.BaseModel):
         return value
 
 
-class Postprocessing(pydantic.BaseModel):
-    sieve_size: int = None
+class Postprocessing(BaseModel):
+    sieve_size: int | None = None
     simplify: bool = False
 
-    @validator('sieve_size')
+    # noinspection PyNestedDecorators
+    @field_validator('sieve_size')
+    @classmethod
     def validate_sieve_size(cls,
-                            value):
+                            value: int | None) -> int | None:
         """
         | Validates sieve_size.
 
-        :param int or None value: sieve_size
+        :param value: sieve_size
         :returns: validated sieve_size
-        :rtype: int or None
         :raises SieveSizeError: if sieve_size is not a number in the range of 0 to 10
         """
         if value is None:
@@ -250,15 +262,16 @@ class Postprocessing(pydantic.BaseModel):
 
         return value
 
-    @validator('simplify')
+    # noinspection PyNestedDecorators
+    @field_validator('simplify')
+    @classmethod
     def validate_simplify(cls,
-                          value):
+                          value: bool | None) -> bool:
         """
         | Validates simplify.
 
-        :param bool or None value: simplify
+        :param value: simplify
         :returns: validated simplify
-        :rtype: bool
         """
         if value is None:
             value = False
@@ -266,19 +279,20 @@ class Postprocessing(pydantic.BaseModel):
         return value
 
 
-class Aggregation(pydantic.BaseModel):
-    tile_size: Union[int, List[Union[int, None]], None] = []
-    path_aggregation_areas: Union[str, List[Union[str, None]], None] = []
+class Aggregation(BaseModel):
+    tile_size: int | list[int | None] | None = []
+    path_aggregation_areas: str | list[str | None] | None = []
 
-    @validator('tile_size')
+    # noinspection PyNestedDecorators
+    @field_validator('tile_size')
+    @classmethod
     def validate_tile_size(cls,
-                           value):
+                           value: int | list[int | None] | None) -> list[int]:
         """
         | Validates tile_size.
 
-        :param int or list[int or None] or None value: tile_size
+        :param value: tile_size
         :returns: validated tile_size
-        :rtype: list[int]
         :raises TileSizeError: if tile_size is not a number greater than 0
         """
         if value is None:
@@ -301,15 +315,16 @@ class Aggregation(pydantic.BaseModel):
 
         return list(set(value))
 
-    @validator('path_aggregation_areas')
+    # noinspection PyNestedDecorators
+    @field_validator('path_aggregation_areas')
+    @classmethod
     def validate_path_aggregation_areas(cls,
-                                        value):
+                                        value: str | list[str | None] | None) -> list[Path]:
         """
         | Validates path_aggregation_areas.
 
-        :param str or list[str or None] or None value: path_aggregation_areas
+        :param value: path_aggregation_areas
         :returns: validated path_aggregation_areas
-        :rtype: list[Path]
         :raises GeoDataEmptyError: if the geo data is empty
         :raises GeoDataFormatError: if the file extension of the geo data is not .gpkg or .shp
         :raises GeoDataGeometryError: if the geo data contains invalid polygons
@@ -362,19 +377,20 @@ class Aggregation(pydantic.BaseModel):
         return natsorted(list(set(value)))
 
 
-class Export(pydantic.BaseModel):
+class Export(BaseModel):
     path_output_dir: str
     prefix: str
 
-    @validator('path_output_dir')
+    # noinspection PyNestedDecorators
+    @field_validator('path_output_dir')
+    @classmethod
     def validate_path_output_dir(cls,
-                                 value):
+                                 value: str) -> Path:
         """
         | Validates path_output_dir.
 
-        :param str value: path_output_dir
+        :param value: path_output_dir
         :returns: validated path_output_dir
-        :rtype: Path
         :raises OutputDirNotFoundError: if the output directory does not exist
         """
         value = Path(value)
@@ -384,15 +400,16 @@ class Export(pydantic.BaseModel):
 
         return value
 
-    @validator('prefix')
+    # noinspection PyNestedDecorators
+    @field_validator('prefix')
+    @classmethod
     def validate_prefix(cls,
-                        value):
+                        value: str) -> str:
         """
         | Validates prefix.
 
-        :param str value: prefix
+        :param value: prefix
         :returns: validated prefix
-        :rtype: str
         :raises PrefixError: if prefix contains only whitespaces or underscores
         """
         value = value.replace(' ', '').rstrip('_')
@@ -403,30 +420,27 @@ class Export(pydantic.BaseModel):
         return value
 
 
-class Config(pydantic.BaseModel):
+class Config(BaseModel):
     data: Data
     postprocessing: Postprocessing = Postprocessing()
     aggregation: Aggregation = Aggregation()
     export: Export
 
-    @root_validator
-    def validate_tile_size(cls,
-                           values):
+    @model_validator(mode='after')
+    def validate_tile_size(self) -> Self:
         """
         | Validates tile_size.
 
-        :param dict[str, Any] values: values
         :returns: validated values
-        :rtype: dict[str, Any]
         """
-        if not values['Aggregation'].tile_size:
-            return values
+        if not self.aggregation.tile_size:
+            return self
 
-        tile_size_max = min(values['data'].bounding_box[2] - values['data'].bounding_box[0],
-                            values['data'].bounding_box[3] - values['data'].bounding_box[1])
+        tile_size_max = min(self.data.bounding_box[2] - self.data.bounding_box[0],
+                            self.data.bounding_box[3] - self.data.bounding_box[1])
 
-        values['Aggregation'].tile_size = [tile_size
-                                           for tile_size in values['Aggregation'].tile_size
-                                           if tile_size <= tile_size_max]
+        self.aggregation.tile_size = [tile_size
+                                      for tile_size in self.aggregation.tile_size
+                                      if tile_size <= tile_size_max]
 
-        return values
+        return self

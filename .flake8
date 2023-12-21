@@ -1,6 +1,7 @@
 [flake8]
 ignore =
-    W503  # despite being in the anti-pattern section, this will soon be considered the best practice
+    # despite being in the anti-pattern section, this will soon be considered the best practice
+    W503
 max-line-length = 120
 per-file-ignores =
     */__init__.py: F401
