@@ -109,11 +109,11 @@ class Coordinator:
 
         pattern = re.compile(r'^(-?\d+)_(-?\d+)$')
 
-        for path_tiles_processed_subdir in path_tiles_processed_dir.iterdir():
-            if not path_tiles_processed_subdir.is_dir():
+        for path_tile_processed_dir in path_tiles_processed_dir.iterdir():
+            if not path_tile_processed_dir.is_dir():
                 continue
 
-            match = pattern.search(path_tiles_processed_subdir.name)
+            match = pattern.search(path_tile_processed_dir.name)
 
             if match:
                 x_min = int(match.group(1))
