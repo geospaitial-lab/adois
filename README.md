@@ -27,7 +27,7 @@ im [VDVmagazin](https://www.vdv-online.de "VDVmagazin") 03/23 finden Sie weitere
 **Hardwarevoraussetzung:** 8GB RAM
 
 Installieren Sie zunächst [Docker](https://docker.com/products/docker-desktop "Get Docker").  
-Laden Sie anschließend das [*adois* Dockerfile](https://drive.google.com/uc?export=download&id=1hYMp6DBBprZHKxWAfgM0_u3Hb27QEvYz "Get adois Dockerfile") herunter.  
+Laden Sie anschließend das [*adois* Dockerfile](Dockerfile "Get adois Dockerfile") herunter.  
 Erstellen Sie nun das *adois* Image.
 
 ```
@@ -50,7 +50,7 @@ Laden Sie anschließend das *adois* Repository in ein beliebiges Arbeitsverzeich
 git clone https://github.com/mrsmrynk/adois --depth 1
 ```
 
-Laden Sie das [*adois* Modell](https://drive.google.com/uc?export=download&id=18aUSp1UYW5vVXbwZlVrRJHchuB7uvKxj "Get adois model") herunter und speichern Sie es in dem Arbeitsverzeichnis unter `data/model/model.onnx` ab.
+Laden Sie das [*adois* Modell](https://huggingface.co/WH-KI-KG/adois "Get adois model") herunter und speichern Sie es in dem Arbeitsverzeichnis unter `data/model/model.onnx` ab.
 
 Wechseln Sie in das *adois* Repository und erstellen Sie nun eine Virtual Environment.
 
