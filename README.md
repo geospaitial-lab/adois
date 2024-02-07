@@ -81,8 +81,8 @@ pip install -r requirements.txt
 
 # Ausführen
 
-Laden Sie zunächst das [*adois* Config File](https://drive.google.com/uc?export=download&id=1YrJnD0F7qyzlna5vhFvIOEm9DO6Y3PLp "Get adois config file") herunter.
-Die Beispielwerte der Parameter entsprechen denen des [Example Config Files](example_config.yaml "Example Config File") und werden in der [Dokumentation](docs/docs_config.md "Config File Dokumentation") erläutert.
+Laden Sie zunächst das [*adois* Example Config File](example_config.yaml "Get adois example config file") herunter.
+Die Beispielwerte der Parameter werden in der [Dokumentation](docs/docs_config.md "Dokumentation: Config File") erläutert.
 
 Um die Software auszuführen, müssen Sie die lokalen Pfade Ihres Systems in den *adois* Container mounten.  
 Verwenden Sie dazu die `-v` Flag und `</lokaler/Pfad>:</Pfad/im/Container>`.  
@@ -121,8 +121,8 @@ python3 -m src.main </Pfad/zu/config.yaml>
 
 # Ergebnisse
 
-Die Versiegelungskarten inklusive der Aggregationen werden als Shape File ins [Ausgabeverzeichnis](docs/docs_config.md#output_dir_path "Config File Ausgabeverzeichnis") exportiert.  
-Die Attribute der Shape Files werden in der [Dokumentation](docs/docs_shape_file_attributes.md "Shape File Attribute Dokumentation") erläutert.
+Die Versiegelungskarten inklusive der Aggregationen werden als Shape File ins Ausgabeverzeichnis exportiert.  
+Die Attribute der Shape Files werden in der [Dokumentation](docs/docs_shape_file_attributes.md "Dokumentation: Shape File Attribute") erläutert.
 
 <div align="center">
 
