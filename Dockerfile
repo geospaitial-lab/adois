@@ -14,7 +14,7 @@ WORKDIR /adois
 ENV PYTHONPATH "${PYTHONPATH}:/adois"
 ENV PYTHONUNBUFFERED=1
 
-RUN huggingface-cli download WH-KI-KG/adois "models/adois_${ADOIS_VERSION}.onnx" --local-dir data && \
+RUN huggingface-cli download geospaitial-lab/adois "models/adois_${ADOIS_VERSION}.onnx" --local-dir data && \
     mv data/models/adois_${ADOIS_VERSION}.onnx data/model/model.onnx
 
 ENTRYPOINT ["python", "/adois/src/main.py", "/config.yaml"]

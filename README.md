@@ -50,7 +50,7 @@ Laden Sie anschließend das *adois* Repository in ein beliebiges Arbeitsverzeich
 git clone https://github.com/mrsmrynk/adois --depth 1
 ```
 
-Laden Sie das [*adois* Modell](https://huggingface.co/WH-KI-KG/adois "Get adois model") herunter und speichern Sie es in dem Arbeitsverzeichnis unter `data/model/model.onnx` ab.
+Laden Sie das [*adois* Modell](https://huggingface.co/geospaitial-lab/adois "Get adois model") herunter und speichern Sie es in dem Arbeitsverzeichnis unter `data/model/model.onnx` ab.
 
 Wechseln Sie in das *adois* Repository und erstellen Sie nun eine Virtual Environment.
 
