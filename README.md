@@ -5,10 +5,10 @@
 
 <div align="center">
 
-[![Tests](https://img.shields.io/github/actions/workflow/status/mrsmrynk/adois/tests.yaml?branch=main&event=push&label=Tests&logo=GitHub)](https://github.com/mrsmrynk/adois/actions/workflows/tests.yaml "Tests Workflow")
-[![Coverage](https://img.shields.io/codecov/c/github/mrsmrynk/adois/main?label=Coverage&logo=codecov&logoColor=white)](https://app.codecov.io/gh/mrsmrynk/adois "Codecov")
-[![Issues](https://img.shields.io/github/issues/mrsmrynk/adois?label=Issues)](https://github.com/mrsmrynk/adois/issues "Issues")
-[![License](https://img.shields.io/github/license/mrsmrynk/adois?color=blue&label=License)](https://gnu.org/licenses "GNU Licenses")
+[![Tests](https://img.shields.io/github/actions/workflow/status/geospaitial-lab/adois/tests.yaml?branch=main&event=push&label=Tests&logo=GitHub)](https://github.com/geospaitial-lab/adois/actions/workflows/tests.yaml "Tests Workflow")
+[![Coverage](https://img.shields.io/codecov/c/github/geospaitial-lab/adois/main?label=Coverage&logo=codecov&logoColor=white)](https://app.codecov.io/gh/geospaitial-lab/adois "Codecov")
+[![Issues](https://img.shields.io/github/issues/geospaitial-lab/adois?label=Issues)](https://github.com/geospaitial-lab/adois/issues "Issues")
+[![License](https://img.shields.io/github/license/geospaitial-lab/adois?color=blue&label=License)](https://gnu.org/licenses "GNU Licenses")
 
 </div>
 
@@ -47,7 +47,7 @@ Installieren Sie zunächst [Git](https://git-scm.com/downloads "Get Git") und [P
 Laden Sie anschließend das *adois* Repository in ein beliebiges Arbeitsverzeichnis herunter.
 
 ```
-git clone https://github.com/mrsmrynk/adois --depth 1
+git clone https://github.com/geospaitial-lab/adois --depth 1
 ```
 
 Laden Sie das [*adois* Modell](https://huggingface.co/geospaitial-lab/adois "Get adois model") herunter und speichern Sie es in dem Arbeitsverzeichnis unter `data/model/model.onnx` ab.
