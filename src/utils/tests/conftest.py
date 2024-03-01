@@ -7,13 +7,12 @@ from src.utils.grid_generator import GridGenerator
 
 
 @pytest.fixture(scope='function')
-def coordinator_with_mocked_grid_generator(mocked_grid_generator):
+def coordinator_with_mocked_grid_generator(mocked_grid_generator: GridGenerator) -> tuple[Coordinator, GridGenerator]:
     """
     | Returns a coordinator object with a mocked grid generator.
 
-    :param GridGenerator mocked_grid_generator: mocked grid generator fixture
+    :param mocked_grid_generator: mocked grid generator fixture
     :returns: coordinator fixture
-    :rtype: (Coordinator, GridGenerator)
     """
     coordinator = Coordinator(grid_generator=mocked_grid_generator,
                               bounding_box=(-128, -128, 128, 128),
@@ -24,24 +23,22 @@ def coordinator_with_mocked_grid_generator(mocked_grid_generator):
 
 
 @pytest.fixture(scope='function')
-def grid_generator():
+def grid_generator() -> GridGenerator:
     """
     | Returns a grid generator object.
 
     :returns: grid generator fixture
-    :rtype: GridGenerator
     """
     return GridGenerator(bounding_box=(-128, -128, 128, 128),
                          epsg_code=25832)
 
 
 @pytest.fixture(scope='function')
-def mocked_grid_generator():
+def mocked_grid_generator() -> GridGenerator:
     """
     | Returns a mocked grid generator object.
 
     :returns: mocked grid generator fixture
-    :rtype: GridGenerator
     """
     mocked_grid_generator = mock.Mock(spec=GridGenerator)
     mocked_grid_generator.x_min = -128

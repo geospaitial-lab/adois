@@ -1,20 +1,20 @@
 import geopandas as gpd
 import numpy as np
-from shapely.geometry import box, Polygon  # noqa: F401 (used for type hinting)
+from numpy import typing as npt
+from shapely.geometry import box, Polygon
 
 
 class GridGenerator:
 
     def __init__(self,
-                 bounding_box,
-                 epsg_code):
+                 bounding_box: tuple[int, int, int, int],
+                 epsg_code: int) -> None:
         """
         | Initializer method
 
-        :param (int, int, int, int) bounding_box: bounding box (x_min, y_min, x_max, y_max)
-        :param int epsg_code: epsg code
+        :param bounding_box: bounding box (x_min, y_min, x_max, y_max)
+        :param epsg_code: epsg code
         :returns: None
-        :rtype: None
         """
         assert isinstance(bounding_box, tuple)
         assert len(bounding_box) == 4
@@ -27,15 +27,14 @@ class GridGenerator:
         self.epsg_code = epsg_code
 
     def compute_coordinates(self,
-                            tile_size,
-                            quantize=True):
+                            tile_size: int,
+                            quantize: bool = True) -> npt.NDArray[np.int32]:
         """
         | Returns the coordinates of the bottom left corner of each tile.
 
-        :param int tile_size: tile size in meters
-        :param bool quantize: if True, the bounding box is quantized to tile_size
+        :param tile_size: tile size in meters
+        :param quantize: if True, the bounding box is quantized to tile_size
         :returns: coordinates (x_min, y_min) of each tile
-        :rtype: np.ndarray[np.int32]
         """
         assert isinstance(tile_size, int)
         assert tile_size > 0
@@ -60,15 +59,14 @@ class GridGenerator:
         return coordinates
 
     def generate_polygons(self,
-                          coordinates,
-                          tile_size):
+                          coordinates: npt.NDArray[np.int32],
+                          tile_size: int) -> list[Polygon]:
         """
         | Returns a polygon of each tile.
 
-        :param np.ndarray[np.int32] coordinates: coordinates (x_min, y_min) of each tile
-        :param int tile_size: tile size in meters
+        :param coordinates: coordinates (x_min, y_min) of each tile
+        :param tile_size: tile size in meters
         :returns: polygon of each tile
-        :rtype: list[Polygon]
         """
         assert isinstance(coordinates, np.ndarray)
         assert coordinates.dtype == np.int32
@@ -85,15 +83,14 @@ class GridGenerator:
         return polygons
 
     def generate_grid(self,
-                      tile_size,
-                      quantize=True):
+                      tile_size: int,
+                      quantize: bool = True) -> gpd.GeoDataFrame:
         """
         | Returns a geodataframe of the grid.
 
-        :param int tile_size: tile size in meters
-        :param bool quantize: if True, the bounding box is quantized to tile_size
+        :param tile_size: tile size in meters
+        :param quantize: if True, the bounding box is quantized to tile_size
         :returns: grid
-        :rtype: gpd.GeoDataFrame
         """
         assert isinstance(tile_size, int)
         assert tile_size > 0
@@ -112,12 +109,11 @@ class GridGenerator:
 
         return grid
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """
         | Returns a representation of the object.
 
         :returns: representation
-        :rtype: str
         """
         representation = (
             f'{self.__class__.__name__}('

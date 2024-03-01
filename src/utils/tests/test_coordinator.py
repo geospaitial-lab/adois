@@ -7,13 +7,12 @@ from src.utils.coordinator import Coordinator
 from src.utils.grid_generator import GridGenerator
 
 
-def test_init(mocked_grid_generator):
+def test_init(mocked_grid_generator: GridGenerator) -> None:
     """
     | Tests __init__().
 
-    :param GridGenerator mocked_grid_generator: mocked grid generator fixture
+    :param mocked_grid_generator: mocked grid generator fixture
     :returns: None
-    :rtype: None
     """
     bounding_box = (-128, -128, 128, 128)
     tile_size = 128
@@ -40,13 +39,12 @@ def test_init(mocked_grid_generator):
     assert coordinator.epsg_code == epsg_code
 
 
-def test_compute_coordinates(coordinator_with_mocked_grid_generator):
+def test_compute_coordinates(coordinator_with_mocked_grid_generator: tuple[Coordinator, GridGenerator]) -> None:
     """
     | Tests compute_coordinates().
 
-    :param (Coordinator, GridGenerator) coordinator_with_mocked_grid_generator: coordinator fixture
+    :param coordinator_with_mocked_grid_generator: coordinator fixture
     :returns: None
-    :rtype: None
     """
     coordinator, mocked_grid_generator = coordinator_with_mocked_grid_generator
 
@@ -83,13 +81,12 @@ def test_filter_coordinates_processed():
     pass
 
 
-def test_filter_coordinates_default(coordinator_with_mocked_grid_generator):
+def test_filter_coordinates_default(coordinator_with_mocked_grid_generator: tuple[Coordinator, GridGenerator]) -> None:
     """
     | Tests the default values of the parameters of filter_coordinates().
 
-    :param (Coordinator, GridGenerator) coordinator_with_mocked_grid_generator: coordinator fixture
+    :param coordinator_with_mocked_grid_generator: coordinator fixture
     :returns: None
-    :rtype: None
     """
     coordinator, _ = coordinator_with_mocked_grid_generator
 

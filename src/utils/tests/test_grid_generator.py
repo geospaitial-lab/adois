@@ -5,18 +5,18 @@ import geopandas as gpd
 import geopandas.testing
 import numpy as np
 import pytest
+from numpy import typing as npt
 from shapely.geometry import box, Polygon
 
 from src.utils.grid_generator import GridGenerator
 from .data.data_test_grid_generator import data_test_compute_coordinates
 
 
-def test_init():
+def test_init() -> None:
     """
     | Tests __init__().
 
     :returns: None
-    :rtype: None
     """
     bounding_box = (-128, -128, 128, 128)
     epsg_code = 25832
@@ -40,13 +40,12 @@ def test_init():
     assert grid_generator.epsg_code == epsg_code
 
 
-def test_compute_coordinates_default(grid_generator):
+def test_compute_coordinates_default(grid_generator: GridGenerator) -> None:
     """
     | Tests the default values of the parameters of compute_coordinates().
 
-    :param GridGenerator grid_generator: grid generator fixture
+    :param grid_generator: grid generator fixture
     :returns: None
-    :rtype: None
     """
     signature = inspect.signature(grid_generator.compute_coordinates)
     quantize_default = signature.parameters['quantize'].default
@@ -56,17 +55,16 @@ def test_compute_coordinates_default(grid_generator):
 
 
 @pytest.mark.parametrize('test_input, expected', data_test_compute_coordinates)
-def test_compute_coordinates(test_input,
-                             expected,
-                             grid_generator):
+def test_compute_coordinates(test_input: tuple[int, bool],
+                             expected: npt.NDArray[np.int32],
+                             grid_generator: GridGenerator) -> None:
     """
     | Tests compute_coordinates().
 
-    :param (int, bool) test_input: tile_size, quantize
-    :param np.ndarray[np.int32] expected: coordinates (x_min, y_min) of each tile
-    :param GridGenerator grid_generator: grid generator fixture
+    :param test_input: tile_size, quantize
+    :param expected: coordinates (x_min, y_min) of each tile
+    :param grid_generator: grid generator fixture
     :returns: None
-    :rtype: None
     """
     coordinates = grid_generator.compute_coordinates(tile_size=test_input[0],
                                                      quantize=test_input[1])
@@ -78,13 +76,12 @@ def test_compute_coordinates(test_input,
     np.testing.assert_array_equal(coordinates, expected)
 
 
-def test_generate_polygons(grid_generator):
+def test_generate_polygons(grid_generator: GridGenerator) -> None:
     """
     | Tests generate_polygons().
 
-    :param GridGenerator grid_generator: grid generator fixture
+    :param grid_generator: grid generator fixture
     :returns: None
-    :rtype: None
     """
     coordinates = np.array([[-128, -128], [0, -128], [-128, 0], [0, 0]], dtype=np.int32)
     tile_size = 128
@@ -103,13 +100,12 @@ def test_generate_polygons(grid_generator):
     assert all(polygon.equals(expected[i]) for i, polygon in enumerate(polygons))
 
 
-def test_generate_grid_default(grid_generator):
+def test_generate_grid_default(grid_generator: GridGenerator) -> None:
     """
     | Tests the default values of the parameters of generate_grid().
 
-    :param GridGenerator grid_generator: grid generator fixture
+    :param grid_generator: grid generator fixture
     :returns: None
-    :rtype: None
     """
     signature = inspect.signature(grid_generator.generate_grid)
     quantize_default = signature.parameters['quantize'].default
@@ -120,17 +116,16 @@ def test_generate_grid_default(grid_generator):
 
 @mock.patch('src.utils.grid_generator.GridGenerator.compute_coordinates')
 @mock.patch('src.utils.grid_generator.GridGenerator.generate_polygons')
-def test_generate_grid(mocked_generate_polygons,
-                       mocked_compute_coordinates,
-                       grid_generator):
+def test_generate_grid(mocked_generate_polygons: mock.MagicMock,
+                       mocked_compute_coordinates: mock.MagicMock,
+                       grid_generator: GridGenerator) -> None:
     """
     | Tests generate_grid().
 
-    :param mock.MagicMock mocked_generate_polygons: mocked generate_polygons method
-    :param mock.MagicMock mocked_compute_coordinates: mocked compute_coordinates method
-    :param GridGenerator grid_generator: grid generator fixture
+    :param mocked_generate_polygons: mocked generate_polygons method
+    :param mocked_compute_coordinates: mocked compute_coordinates method
+    :param grid_generator: grid generator fixture
     :returns: None
-    :rtype: None
     """
     tile_size = 128
     quantize = True
@@ -166,14 +161,13 @@ def test_generate_grid(mocked_generate_polygons,
 
 
 @pytest.mark.integration
-def test_generate_grid_integration(grid_generator):
+def test_generate_grid_integration(grid_generator: GridGenerator) -> None:
     """
     | Tests generate_grid().
     | Integration test.
 
-    :param GridGenerator grid_generator: grid generator fixture
+    :param grid_generator: grid generator fixture
     :returns: None
-    :rtype: None
     """
     tile_size = 128
     quantize = True

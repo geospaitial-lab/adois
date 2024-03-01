@@ -3,6 +3,7 @@ from pathlib import Path
 
 import geopandas as gpd
 import numpy as np
+from numpy import typing as npt
 
 from src.utils.grid_generator import GridGenerator
 
@@ -10,19 +11,18 @@ from src.utils.grid_generator import GridGenerator
 class Coordinator:
 
     def __init__(self,
-                 grid_generator,
-                 bounding_box,
-                 tile_size,
-                 epsg_code):
+                 grid_generator: GridGenerator,
+                 bounding_box: tuple[int, int, int, int],
+                 tile_size: int,
+                 epsg_code: int) -> None:
         """
         | Initializer method
 
-        :param GridGenerator grid_generator: grid generator
-        :param (int, int, int, int) bounding_box: bounding box (x_min, y_min, x_max, y_max)
-        :param int tile_size: tile size in meters
-        :param int epsg_code: epsg code
+        :param grid_generator: grid generator
+        :param bounding_box: bounding box (x_min, y_min, x_max, y_max)
+        :param tile_size: tile size in meters
+        :param epsg_code: epsg code
         :returns: None
-        :rtype: None
         """
         assert isinstance(grid_generator, GridGenerator)
 
@@ -47,12 +47,11 @@ class Coordinator:
         self.tile_size = tile_size
         self.epsg_code = epsg_code
 
-    def compute_coordinates(self):
+    def compute_coordinates(self) -> npt.NDArray[np.int32]:
         """
         | Returns the coordinates of the top left corner of each tile.
 
         :returns: coordinates (x_min, y_max) of each tile
-        :rtype: np.ndarray[np.int32]
         """
         coordinates = self.grid_generator.compute_coordinates(tile_size=self.tile_size,
                                                               quantize=True)
@@ -61,17 +60,16 @@ class Coordinator:
         return coordinates
 
     def filter_coordinates_outside_boundary(self,
-                                            coordinates,
-                                            boundary):
+                                            coordinates: npt.NDArray[np.int32],
+                                            boundary: gpd.GeoDataFrame) -> npt.NDArray[np.int32]:
         """
         | Returns the filtered coordinates of the top left corner of each tile.
         | The coordinates are filtered based on whether they are inside the boundary or not.
             Only the coordinates of tiles that intersect the polygons of boundary are retained.
 
-        :param np.ndarray[np.int32] coordinates: coordinates (x_min, y_max) of each tile
-        :param gpd.GeoDataFrame boundary: boundary
+        :param coordinates: coordinates (x_min, y_max) of each tile
+        :param boundary: boundary
         :returns: filtered coordinates (x_min, y_max) of each tile
-        :rtype: np.ndarray[np.int32]
         """
         assert isinstance(coordinates, np.ndarray)
         assert coordinates.dtype == np.int32
@@ -91,14 +89,13 @@ class Coordinator:
         return coordinates[mask]
 
     @staticmethod
-    def extract_coordinates_processed(path_tiles_processed_dir):
+    def extract_coordinates_processed(path_tiles_processed_dir: Path) -> npt.NDArray[np.int32] | None:
         """
         | Returns the coordinates of the top left corner of each processed tile.
         | The coordinates are extracted from the names of the subdirectories in the processed tiles directory.
 
-        :param Path path_tiles_processed_dir: path to the processed tiles directory
+        :param path_tiles_processed_dir: path to the processed tiles directory
         :returns: coordinates (x_min, y_max) of each processed tile
-        :rtype: np.ndarray[np.int32] or None
         """
         assert isinstance(path_tiles_processed_dir, Path)
 
@@ -126,17 +123,16 @@ class Coordinator:
         return np.array(coordinates_processed, dtype=np.int32)
 
     @staticmethod
-    def filter_coordinates_processed(coordinates,
-                                     coordinates_processed):
+    def filter_coordinates_processed(coordinates: npt.NDArray[np.int32],
+                                     coordinates_processed: npt.NDArray[np.int32]) -> npt.NDArray[np.int32]:
         """
         | Returns the filtered coordinates of the top left corner of each tile.
         | The coordinates are filtered based on whether they are processed or not.
             Only the coordinates of tiles that are not processed are retained.
 
-        :param np.ndarray[np.int32] coordinates: coordinates (x_min, y_max) of each tile
-        :param np.ndarray[np.int32] coordinates_processed: coordinates (x_min, y_max) of each processed tile
+        :param coordinates: coordinates (x_min, y_max) of each tile
+        :param coordinates_processed: coordinates (x_min, y_max) of each processed tile
         :returns: filtered coordinates (x_min, y_max) of each tile
-        :rtype: np.ndarray[np.int32]
         """
         assert isinstance(coordinates, np.ndarray)
         assert coordinates.dtype == np.int32
@@ -152,17 +148,16 @@ class Coordinator:
         return coordinates[~np.any(mask, axis=-1)]
 
     def filter_coordinates(self,
-                           coordinates,
-                           boundary=None,
-                           path_tiles_processed_dir=None):
+                           coordinates: npt.NDArray[np.int32],
+                           boundary: gpd.GeoDataFrame | None = None,
+                           path_tiles_processed_dir: Path | None = None) -> npt.NDArray[np.int32]:
         """
         | Returns the filtered coordinates of the top left corner of each tile.
 
-        :param np.ndarray[np.int32] coordinates: coordinates (x_min, y_max) of each tile
-        :param gpd.GeoDataFrame or None boundary: boundary
-        :param Path or None path_tiles_processed_dir: path to the processed tiles directory
+        :param coordinates: coordinates (x_min, y_max) of each tile
+        :param boundary: boundary
+        :param path_tiles_processed_dir: path to the processed tiles directory
         :returns: filtered coordinates (x_min, y_max) of each tile
-        :rtype: np.ndarray[np.int32]
         """
         assert isinstance(coordinates, np.ndarray)
         assert coordinates.dtype == np.int32
@@ -193,12 +188,11 @@ class Coordinator:
 
         return coordinates
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """
         | Returns a representation of the object.
 
         :returns: representation
-        :rtype: str
         """
         representation = (
             f'{self.__class__.__name__}('
