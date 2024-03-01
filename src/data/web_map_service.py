@@ -3,47 +3,46 @@ from typing import Protocol
 
 import numpy as np
 import owslib.wms
+from numpy import typing as npt
 from PIL import Image
 
 from .exceptions import WMSConnectionError, WMSFetchingError
 
 
 class WebMapServiceProtocol(Protocol):
+    url: str
 
-    def get_layers(self):
+    def get_layers(self) -> list[str]:
         """
         | Returns the layers.
 
         :returns: layers
-        :rtype: list[str]
         """
         ...
 
     def get_epsg_codes(self,
-                       layer):
+                       layer: str) -> list[int]:
         """
         | Returns the epsg codes.
 
-        :param str layer: layer
+        :param layer: layer
         :returns: epsg codes
-        :rtype: list[int]
         """
         ...
 
     def fetch_image(self,
-                    layer,
-                    bounding_box,
-                    image_size,
-                    epsg_code):
+                    layer: str,
+                    bounding_box: tuple[int, int, int, int],
+                    image_size: int,
+                    epsg_code: int) -> npt.NDArray[np.uint8]:
         """
         | Returns the fetched image.
 
-        :param str layer: layer
-        :param (int, int, int, int) bounding_box: bounding box (x_min, y_min, x_max, y_max)
-        :param int image_size: image size in pixels
-        :param int epsg_code: epsg code
+        :param layer: layer
+        :param bounding_box: bounding box (x_min, y_min, x_max, y_max)
+        :param image_size: image size in pixels
+        :param epsg_code: epsg code
         :returns: fetched image
-        :rtype: np.ndarray[np.uint8]
         :raises WMSFetchingError: if an exception is raised while fetching the image
         """
         ...
@@ -52,13 +51,12 @@ class WebMapServiceProtocol(Protocol):
 class WebMapService:
 
     def __init__(self,
-                 url):
+                 url: str) -> None:
         """
         | Initializer method
 
-        :param str url: url
+        :param url: url
         :returns: None
-        :rtype: None
         :raises WMSConnectionError: if an exception is raised while connecting to the web map service
         """
         assert isinstance(url, str)
@@ -73,42 +71,39 @@ class WebMapService:
             raise WMSConnectionError(url=self.url,
                                      passed_exception=e)
 
-    def get_layers(self):
+    def get_layers(self) -> list[str]:
         """
         | Returns the layers.
 
         :returns: layers
-        :rtype: list[str]
         """
         return [*self._session.contents]
 
     def get_epsg_codes(self,
-                       layer):
+                       layer: str) -> list[int]:
         """
         | Returns the epsg codes.
 
-        :param str layer: layer
+        :param layer: layer
         :returns: epsg codes
-        :rtype: list[int]
         """
         assert isinstance(layer, str)
 
         return [int(epsg_code[5:]) for epsg_code in self._session[layer].crsOptions]
 
     def fetch_image(self,
-                    layer,
-                    bounding_box,
-                    image_size,
-                    epsg_code):
+                    layer: str,
+                    bounding_box: tuple[int, int, int, int],
+                    image_size: int,
+                    epsg_code: int) -> npt.NDArray[np.uint8]:
         """
         | Returns the fetched image.
 
-        :param str layer: layer
-        :param (int, int, int, int) bounding_box: bounding box (x_min, y_min, x_max, y_max)
-        :param int image_size: image size in pixels
-        :param int epsg_code: epsg code
+        :param layer: layer
+        :param bounding_box: bounding box (x_min, y_min, x_max, y_max)
+        :param image_size: image size in pixels
+        :param epsg_code: epsg code
         :returns: fetched image
-        :rtype: np.ndarray[np.uint8]
         :raises WMSFetchingError: if an exception is raised while fetching the image
         """
         assert isinstance(layer, str)

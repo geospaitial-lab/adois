@@ -4,13 +4,12 @@ from natsort import natsorted
 class WMSError(Exception):
 
     def __init__(self,
-                 message='Invalid web map service in the config!'):
+                 message: str = 'Invalid web map service in the config!') -> None:
         """
         | Initializer method
 
-        :param str message: message
+        :param message: message
         :returns: None
-        :rtype: None
         """
         super().__init__(message)
 
@@ -18,15 +17,14 @@ class WMSError(Exception):
 class WMSConnectionError(WMSError):
 
     def __init__(self,
-                 url,
-                 passed_exception):
+                 url: str,
+                 passed_exception: Exception) -> None:
         """
         | Initializer method
 
-        :param str url: url
-        :param Exception passed_exception: passed exception
+        :param url: url
+        :param passed_exception: passed exception
         :returns: None
-        :rtype: None
         """
         message = (
             'Invalid url in the config!\n'
@@ -39,15 +37,14 @@ class WMSConnectionError(WMSError):
 class WMSEPSGCodeError(WMSError):
 
     def __init__(self,
-                 epsg_code,
-                 epsg_codes_valid):
+                 epsg_code: int,
+                 epsg_codes_valid: list[int]) -> None:
         """
         | Initializer method
 
-        :param int epsg_code: epsg code
-        :param list[int] epsg_codes_valid: valid epsg codes
+        :param epsg_code: epsg code
+        :param epsg_codes_valid: valid epsg codes
         :returns: None
-        :rtype: None
         """
         if len(epsg_codes_valid) == 1:
             epsg_codes_valid = epsg_codes_valid[0]
@@ -68,15 +65,14 @@ class WMSEPSGCodeError(WMSError):
 class WMSFetchingError(WMSError):
 
     def __init__(self,
-                 url,
-                 passed_exception):
+                 url: str,
+                 passed_exception: Exception) -> None:
         """
         | Initializer method
 
-        :param str url: url
-        :param Exception passed_exception: passed exception
+        :param url: url
+        :param passed_exception: passed exception
         :returns: None
-        :rtype: None
         """
         message = (
             f'An exception is raised while fetching the image from the web map service ({url}).\n'
@@ -88,15 +84,14 @@ class WMSFetchingError(WMSError):
 class WMSLayerError(WMSError):
 
     def __init__(self,
-                 layer,
-                 layers_valid):
+                 layer: str,
+                 layers_valid: list[str]) -> None:
         """
         | Initializer method
 
-        :param str layer: layer
-        :param list[str] layers_valid: valid layers
+        :param layer: layer
+        :param layers_valid: valid layers
         :returns: None
-        :rtype: None
         """
         if len(layers_valid) == 1:
             layers_valid = layers_valid[0]

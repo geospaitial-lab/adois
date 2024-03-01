@@ -7,17 +7,14 @@ from src.data.exceptions import (
     WMSFetchingError,
     WMSLayerError)
 
-from .data.data_test_exceptions import (
-    data_test_WMSEPSGCodeError,
-    data_test_WMSLayerError)
+from .data.data_test_exceptions import data_test_WMSEPSGCodeError, data_test_WMSLayerError
 
 
-def test_WMSError_default():
+def test_WMSError_default() -> None:
     """
     | Tests the default message of WMSError.
 
     :returns: None
-    :rtype: None
     """
     expected = 'Invalid web map service in the config!'
 
@@ -25,12 +22,11 @@ def test_WMSError_default():
         raise WMSError()
 
 
-def test_WMSError():
+def test_WMSError() -> None:
     """
     | Tests WMSError.
 
     :returns: None
-    :rtype: None
     """
     message = 'Test message.'
 
@@ -40,12 +36,11 @@ def test_WMSError():
         raise WMSError(message=message)
 
 
-def test_WMSConnectionError():
+def test_WMSConnectionError() -> None:
     """
     | Tests WMSConnectionError.
 
     :returns: None
-    :rtype: None
     """
     url = 'https://invalid.wms.com'
     passed_exception = Exception('Test message.')
@@ -61,27 +56,25 @@ def test_WMSConnectionError():
 
 
 @pytest.mark.parametrize('test_input, expected', data_test_WMSEPSGCodeError)
-def test_WMSEPSGCodeError(test_input,
-                          expected):
+def test_WMSEPSGCodeError(test_input: tuple[int, list[int]],
+                          expected: str) -> None:
     """
     | Tests WMSEPSGCodeError.
 
-    :param (int, list[int]) test_input: epsg_code, epsg_codes_valid
-    :param str expected: message
+    :param test_input: epsg_code, epsg_codes_valid
+    :param expected: message
     :returns: None
-    :rtype: None
     """
     with pytest.raises(WMSEPSGCodeError, match=expected):
         raise WMSEPSGCodeError(epsg_code=test_input[0],
                                epsg_codes_valid=test_input[1])
 
 
-def test_WMSFetchingError():
+def test_WMSFetchingError() -> None:
     """
     | Tests WMSFetchingError.
 
     :returns: None
-    :rtype: None
     """
     url = 'https://invalid.wms.com'
     passed_exception = Exception('Test message.')
@@ -96,15 +89,14 @@ def test_WMSFetchingError():
 
 
 @pytest.mark.parametrize('test_input, expected', data_test_WMSLayerError)
-def test_WMSLayerError(test_input,
-                       expected):
+def test_WMSLayerError(test_input: tuple[str, list[str]],
+                       expected: str) -> None:
     """
     | Tests WMSLayerError.
 
-    :param (str, list[str]) test_input: layer, layers_valid
-    :param str expected: message
+    :param test_input: layer, layers_valid
+    :param expected: message
     :returns: None
-    :rtype: None
     """
     with pytest.raises(WMSLayerError, match=expected):
         raise WMSLayerError(layer=test_input[0],

@@ -1,4 +1,5 @@
-import numpy as np  # noqa: F401 (used for type hinting)
+import numpy as np
+from numpy import typing as npt
 
 from src.utils.settings import (
     IMAGE_SIZE,
@@ -6,23 +7,22 @@ from src.utils.settings import (
     PADDING_SIZE,
     PADDING_SIZE_METERS)
 
-from .web_map_service import WebMapServiceProtocol  # noqa: F401 (used for type hinting)
+from .web_map_service import WebMapServiceProtocol
 
 
 class RemoteSensingDataFetcher:
 
     def __init__(self,
-                 web_map_service,
-                 layer,
-                 epsg_code):
+                 web_map_service: WebMapServiceProtocol,
+                 layer: str,
+                 epsg_code: int) -> None:
         """
         | Initializer method
 
-        :param WebMapServiceProtocol web_map_service: web map service
-        :param str layer: layer
-        :param int epsg_code: epsg code
+        :param web_map_service: web map service
+        :param layer: layer
+        :param epsg_code: epsg code
         :returns: None
-        :rtype: None
         """
         assert isinstance(layer, str)
 
@@ -33,15 +33,14 @@ class RemoteSensingDataFetcher:
         self.epsg_code = epsg_code
 
     @staticmethod
-    def compute_bounding_box(coordinates,
-                             apply_padding=False):
+    def compute_bounding_box(coordinates: tuple[int, int],
+                             apply_padding: bool = False) -> tuple[int, int, int, int]:
         """
         | Returns the bounding box of a tile.
 
-        :param (int, int) coordinates: coordinates (x_min, y_max)
-        :param bool apply_padding: if True, the bounding box is increased by PADDING_SIZE_METERS
+        :param coordinates: coordinates (x_min, y_max)
+        :param apply_padding: if True, the bounding box is increased by PADDING_SIZE_METERS
         :returns: bounding box (x_min, y_min, x_max, y_max)
-        :rtype: (int, int, int, int)
         """
         assert isinstance(coordinates, tuple)
         assert len(coordinates) == 2
@@ -68,15 +67,14 @@ class RemoteSensingDataFetcher:
         return bounding_box
 
     def fetch_image(self,
-                    coordinates,
-                    apply_padding=False):
+                    coordinates: tuple[int, int],
+                    apply_padding: bool = False) -> npt.NDArray[np.uint8]:
         """
         | Returns the fetched image.
 
-        :param (int, int) coordinates: coordinates (x_min, y_max)
-        :param bool apply_padding: if True, the image size is increased by PADDING_SIZE
+        :param coordinates: coordinates (x_min, y_max)
+        :param apply_padding: if True, the image size is increased by PADDING_SIZE
         :returns: fetched image
-        :rtype: np.ndarray[np.uint8]
         """
         assert isinstance(coordinates, tuple)
         assert len(coordinates) == 2

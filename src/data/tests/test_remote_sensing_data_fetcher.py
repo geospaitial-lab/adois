@@ -1,14 +1,13 @@
 from src.data.remote_sensing_data_fetcher import RemoteSensingDataFetcher
-from src.data.web_map_service import WebMapServiceProtocol  # noqa: F401 (used for type hinting)
+from src.data.web_map_service import WebMapServiceProtocol
 
 
-def test_init(mocked_web_map_service):
+def test_init(mocked_web_map_service: WebMapServiceProtocol) -> None:
     """
     | Tests __init__().
 
-    :param WebMapServiceProtocol mocked_web_map_service: mocked web map service fixture
+    :param mocked_web_map_service: mocked web map service fixture
     :returns: None
-    :rtype: None
     """
     layer = 'layer_test'
     epsg_code = 25832
