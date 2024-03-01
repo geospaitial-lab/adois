@@ -1,6 +1,7 @@
 *
 !data/model/model.onnx
-!requirements.txt
 !src
 **.pytest_cache
 **tests
+!requirements.txt
+!requirements_dev.txt
