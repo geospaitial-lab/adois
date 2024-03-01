@@ -6,8 +6,9 @@ RUN apt-get update && \
     apt-get install -y git
 
 RUN git clone https://github.com/geospaitial-lab/adois --depth 1 && \
-    python -m pip install -r /adois/requirements.txt --ignore-installed --no-warn-script-location --upgrade && \
-    python -m pip install huggingface_hub[cli]==0.20.3
+    pip install --upgrade pip && \
+    pip install --root-user-action ignore --upgrade -r /adois/requirements.txt && \
+    pip install --root-user-action ignore huggingface_hub[cli]==0.20.3
 
 WORKDIR /adois
 
