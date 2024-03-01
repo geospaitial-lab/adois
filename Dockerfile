@@ -1,27 +1,21 @@
 FROM python:3.11-slim-bullseye
 
-ARG MODEL_ID="18aUSp1UYW5vVXbwZlVrRJHchuB7uvKxj"
+ARG ADOIS_VERSION="v0_0"
 
 RUN apt-get update && \
-    apt-get install -y git wget
+    apt-get install -y git
 
-RUN git clone https://github.com/mrsmrynk/adois --depth 1 && \
-    python -m pip install -r /adois/requirements.txt --ignore-installed --no-warn-script-location --upgrade
-
-RUN wget --load-cookies /tmp/cookies.txt \
-    "https://drive.google.com/uc?export=download&confirm=$( \
-        wget --quiet --save-cookies /tmp/cookies.txt \
-        --keep-session-cookies --no-check-certificate \
-        'https://drive.google.com/uc?export=download&id=${MODEL_ID}' \
-        -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p' \
-    )&id=${MODEL_ID}" \
-    -O /adois/data/model/model.onnx && \
-    rm -rf /tmp/cookies.txt
+RUN git clone https://github.com/geospaitial-lab/adois --depth 1 && \
+    python -m pip install -r /adois/requirements.txt --ignore-installed --no-warn-script-location --upgrade && \
+    python -m pip install huggingface_hub[cli]==0.20.3
 
 WORKDIR /adois
 
 ENV PYTHONPATH "${PYTHONPATH}:/adois"
 ENV PYTHONOPTIMIZE 1
 ENV PYTHONUNBUFFERED 1
+
+RUN huggingface-cli download geospaitial-lab/adois "models/adois_${ADOIS_VERSION}.onnx" --local-dir data && \
+    mv data/models/adois_${ADOIS_VERSION}.onnx data/model/model.onnx
 
 ENTRYPOINT ["python", "/adois/src/main.py", "/config.yaml"]
