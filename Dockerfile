@@ -1,4 +1,4 @@
-FROM python:3.8-slim-bullseye
+FROM python:3.11-slim-bullseye
 
 ARG MODEL_ID="18aUSp1UYW5vVXbwZlVrRJHchuB7uvKxj"
 
