@@ -4,20 +4,16 @@ import unittest.mock as mock
 import pytest
 
 from src.parsing.argument_parser import ArgumentParser
-
-from .data.data_test_argument_parser import (
-    data_test_parse_integration,
-    data_test_parse_SystemExit_integration)
+from .data.data_test_argument_parser import data_test_parse_integration, data_test_parse_SystemExit_integration
 
 
 @mock.patch('src.parsing.argument_parser.argparse.ArgumentParser')
-def test_init(mocked_argument_parser):
+def test_init(mocked_argument_parser: mock.MagicMock) -> None:
     """
     | Tests __init__().
 
-    :param mock.MagicMock mocked_argument_parser: mocked argument parser
+    :param mocked_argument_parser: mocked argument parser
     :returns: None
-    :rtype: None
     """
     argument_parser = ArgumentParser()
 
@@ -41,15 +37,14 @@ def test_init(mocked_argument_parser):
 
 
 @mock.patch('src.parsing.argument_parser.ArgumentParser.parse')
-def test_parse(mocked_parse,
-               argument_parser):
+def test_parse(mocked_parse: mock.MagicMock,
+               argument_parser: ArgumentParser) -> None:
     """
     | Tests parse().
 
-    :param mock.MagicMock mocked_parse: mocked parse method
-    :param ArgumentParser argument_parser: argument parser fixture
+    :param mocked_parse: mocked parse method
+    :param argument_parser: argument parser fixture
     :returns: None
-    :rtype: None
     """
     args = ['path/to/config.yaml', '-d']
 
@@ -68,18 +63,17 @@ def test_parse(mocked_parse,
 
 @pytest.mark.integration
 @pytest.mark.parametrize('test_input, expected', data_test_parse_integration)
-def test_parse_integration(test_input,
-                           expected,
-                           argument_parser):
+def test_parse_integration(test_input: list[str],
+                           expected: argparse.Namespace,
+                           argument_parser: ArgumentParser) -> None:
     """
     | Tests parse().
     | Integration test.
 
-    :param list[str] test_input: args
-    :param argparse.Namespace expected: parsed arguments
-    :param ArgumentParser argument_parser: argument parser fixture
+    :param test_input: args
+    :param expected: parsed arguments
+    :param argument_parser: argument parser fixture
     :returns: None
-    :rtype: None
     """
     args_parsed = argument_parser.parse(args=test_input)
 
@@ -90,20 +84,19 @@ def test_parse_integration(test_input,
 
 @pytest.mark.integration
 @pytest.mark.parametrize('test_input, expected', data_test_parse_SystemExit_integration)
-def test_parse_SystemExit_integration(test_input,
-                                      expected,
-                                      argument_parser,
-                                      capsys):
+def test_parse_SystemExit_integration(test_input: list[str],
+                                      expected: str,
+                                      argument_parser: ArgumentParser,
+                                      capsys) -> None:
     """
     | Tests parse().
     | Integration test.
 
-    :param list[str] test_input: args
-    :param str expected: message
-    :param ArgumentParser argument_parser: argument parser fixture
+    :param test_input: args
+    :param expected: message
+    :param argument_parser: argument parser fixture
     :param capsys: pytest capsys
     :returns: None
-    :rtype: None
     """
     with pytest.raises(SystemExit):
         argument_parser.parse(args=test_input)

@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Self
+from typing import cast, Self
 
 import geopandas as gpd
 import numpy as np
@@ -169,7 +169,7 @@ class Data(BaseModel):
     @classmethod
     def validate_bounding_box(cls,
                               value: list[int] | None,
-                              values: ValidationInfo) -> tuple[int, ...]:
+                              values: ValidationInfo) -> tuple[int, int, int, int]:
         """
         | Validates bounding_box.
 
@@ -200,7 +200,9 @@ class Data(BaseModel):
                  int(np.ceil(bounding_box_boundary[2])),
                  int(np.ceil(bounding_box_boundary[3]))])
 
-        return tuple(value)
+        value = tuple(value)
+        value = cast(tuple[int, int, int, int], value)
+        return value
 
     # noinspection PyNestedDecorators
     @field_validator('apply_padding')

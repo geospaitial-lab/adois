@@ -1,4 +1,4 @@
-from pathlib import Path  # noqa: F401 (used for type hinting)
+from pathlib import Path
 
 import pytest
 
@@ -32,12 +32,11 @@ from .data.data_test_exceptions import (
     data_test_SieveSizeError)
 
 
-def test_BoundingBoxError_default():
+def test_BoundingBoxError_default() -> None:
     """
     | Tests the default message of BoundingBoxError.
 
     :returns: None
-    :rtype: None
     """
     expected = 'Invalid bounding_box in the config!'
 
@@ -45,12 +44,11 @@ def test_BoundingBoxError_default():
         raise BoundingBoxError()
 
 
-def test_BoundingBoxError():
+def test_BoundingBoxError() -> None:
     """
     | Tests BoundingBoxError.
 
     :returns: None
-    :rtype: None
     """
     message = 'Test message.'
 
@@ -61,26 +59,24 @@ def test_BoundingBoxError():
 
 
 @pytest.mark.parametrize('test_input, expected', data_test_BoundingBoxLengthError)
-def test_BoundingBoxLengthError(test_input,
-                                expected):
+def test_BoundingBoxLengthError(test_input: list[int],
+                                expected: str) -> None:
     """
     | Tests BoundingBoxLengthError.
 
-    :param list[int] test_input: bounding_box
-    :param str expected: message
+    :param test_input: bounding_box
+    :param expected: message
     :returns: None
-    :rtype: None
     """
     with pytest.raises(BoundingBoxLengthError, match=expected):
         raise BoundingBoxLengthError(bounding_box=test_input)
 
 
-def test_BoundingBoxNotDefinedError():
+def test_BoundingBoxNotDefinedError() -> None:
     """
     | Tests BoundingBoxNotDefinedError.
 
     :returns: None
-    :rtype: None
     """
     expected = 'Neither path_boundary nor bounding_box are defined in the config!'
 
@@ -89,26 +85,24 @@ def test_BoundingBoxNotDefinedError():
 
 
 @pytest.mark.parametrize('test_input, expected', data_test_BoundingBoxValueError)
-def test_BoundingBoxValueError(test_input,
-                               expected):
+def test_BoundingBoxValueError(test_input: list[int],
+                               expected: str) -> None:
     """
     | Tests BoundingBoxValueError.
 
-    :param list[int] test_input: bounding_box
-    :param str expected: message
+    :param test_input: bounding_box
+    :param expected: message
     :returns: None
-    :rtype: None
     """
     with pytest.raises(BoundingBoxValueError, match=expected):
         raise BoundingBoxValueError(bounding_box=test_input)
 
 
-def test_GeoDataError_default():
+def test_GeoDataError_default() -> None:
     """
     | Tests the default message of GeoDataError.
 
     :returns: None
-    :rtype: None
     """
     expected = 'Invalid geo data in the config!'
 
@@ -116,12 +110,11 @@ def test_GeoDataError_default():
         raise GeoDataError()
 
 
-def test_GeoDataError():
+def test_GeoDataError() -> None:
     """
     | Tests GeoDataError.
 
     :returns: None
-    :rtype: None
     """
     message = 'Test message.'
 
@@ -132,15 +125,14 @@ def test_GeoDataError():
 
 
 @pytest.mark.parametrize('test_input, expected', data_test_GeoDataEmptyError)
-def test_GeoDataEmptyError(test_input,
-                           expected):
+def test_GeoDataEmptyError(test_input: tuple[str, Path],
+                           expected: str) -> None:
     """
     | Tests GeoDataEmptyError.
 
-    :param (str, Path) test_input: field, path
-    :param str expected: message
+    :param test_input: field, path
+    :param expected: message
     :returns: None
-    :rtype: None
     """
     with pytest.raises(GeoDataEmptyError, match=expected):
         raise GeoDataEmptyError(field=test_input[0],
@@ -148,15 +140,14 @@ def test_GeoDataEmptyError(test_input,
 
 
 @pytest.mark.parametrize('test_input, expected', data_test_GeoDataFormatError)
-def test_GeoDataFormatError(test_input,
-                            expected):
+def test_GeoDataFormatError(test_input: tuple[str, Path],
+                            expected: str) -> None:
     """
     | Tests GeoDataFormatError.
 
-    :param (str, Path) test_input: field, path
-    :param str expected: message
+    :param test_input: field, path
+    :param expected: message
     :returns: None
-    :rtype: None
     """
     with pytest.raises(GeoDataFormatError, match=expected):
         raise GeoDataFormatError(field=test_input[0],
@@ -164,15 +155,14 @@ def test_GeoDataFormatError(test_input,
 
 
 @pytest.mark.parametrize('test_input, expected', data_test_GeoDataGeometryError)
-def test_GeoDataGeometryError(test_input,
-                              expected):
+def test_GeoDataGeometryError(test_input: tuple[str, Path],
+                              expected: str) -> None:
     """
     | Tests GeoDataGeometryError.
 
-    :param (str, Path) test_input: field, path
-    :param str expected: message
+    :param test_input: field, path
+    :param expected: message
     :returns: None
-    :rtype: None
     """
     with pytest.raises(GeoDataGeometryError, match=expected):
         raise GeoDataGeometryError(field=test_input[0],
@@ -180,15 +170,14 @@ def test_GeoDataGeometryError(test_input,
 
 
 @pytest.mark.parametrize('test_input, expected', data_test_GeoDataLoadingError)
-def test_GeoDataLoadingError(test_input,
-                             expected):
+def test_GeoDataLoadingError(test_input: tuple[str, Path, Exception],
+                             expected: str) -> None:
     """
     | Tests GeoDataLoadingError.
 
-    :param (str, Path, Exception) test_input: field, path, passed_exception
-    :param str expected: message
+    :param test_input: field, path, passed_exception
+    :param expected: message
     :returns: None
-    :rtype: None
     """
     with pytest.raises(GeoDataLoadingError, match=expected):
         raise GeoDataLoadingError(field=test_input[0],
@@ -197,15 +186,14 @@ def test_GeoDataLoadingError(test_input,
 
 
 @pytest.mark.parametrize('test_input, expected', data_test_GeoDataNotFoundError)
-def test_GeoDataNotFoundError(test_input,
-                              expected):
+def test_GeoDataNotFoundError(test_input: tuple[str, Path],
+                              expected: str) -> None:
     """
     | Tests GeoDataNotFoundError.
 
-    :param (str, Path) test_input: field, path
-    :param str expected: message
+    :param test_input: field, path
+    :param expected: message
     :returns: None
-    :rtype: None
     """
     with pytest.raises(GeoDataNotFoundError, match=expected):
         raise GeoDataNotFoundError(field=test_input[0],
@@ -213,15 +201,14 @@ def test_GeoDataNotFoundError(test_input,
 
 
 @pytest.mark.parametrize('test_input, expected', data_test_GeoDataTypeError)
-def test_GeoDataTypeError(test_input,
-                          expected):
+def test_GeoDataTypeError(test_input: tuple[str, Path],
+                          expected: str) -> None:
     """
     | Tests GeoDataTypeError.
 
-    :param (str, Path) test_input: field, path
-    :param str expected: message
+    :param test_input: field, path
+    :param expected: message
     :returns: None
-    :rtype: None
     """
     with pytest.raises(GeoDataTypeError, match=expected):
         raise GeoDataTypeError(field=test_input[0],
@@ -229,26 +216,24 @@ def test_GeoDataTypeError(test_input,
 
 
 @pytest.mark.parametrize('test_input, expected', data_test_OutputDirNotFoundError)
-def test_OutputDirNotFoundError(test_input,
-                                expected):
+def test_OutputDirNotFoundError(test_input: Path,
+                                expected: str) -> None:
     """
     | Tests OutputDirNotFoundError.
 
-    :param Path test_input: path
-    :param str expected: message
+    :param test_input: path
+    :param expected: message
     :returns: None
-    :rtype: None
     """
     with pytest.raises(OutputDirNotFoundError, match=expected):
         raise OutputDirNotFoundError(path=test_input)
 
 
-def test_PrefixError():
+def test_PrefixError() -> None:
     """
     | Tests PrefixError.
 
     :returns: None
-    :rtype: None
     """
     expected = (
         r'Invalid prefix in the config!\n'
@@ -259,26 +244,24 @@ def test_PrefixError():
 
 
 @pytest.mark.parametrize('test_input, expected', data_test_SieveSizeError)
-def test_SieveSizeError(test_input,
-                        expected):
+def test_SieveSizeError(test_input: int,
+                        expected: str) -> None:
     """
     | Tests SieveSizeError.
 
-    :param int test_input: sieve_size
-    :param str expected: message
+    :param test_input: sieve_size
+    :param expected: message
     :returns: None
-    :rtype: None
     """
     with pytest.raises(SieveSizeError, match=expected):
         raise SieveSizeError(sieve_size=test_input)
 
 
-def test_TileSizeError():
+def test_TileSizeError() -> None:
     """
     | Tests TileSizeError.
 
     :returns: None
-    :rtype: None
     """
     tile_size = -1
 

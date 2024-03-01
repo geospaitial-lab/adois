@@ -1,16 +1,15 @@
-from pathlib import Path  # noqa: F401 (used for type hinting)
+from pathlib import Path
 
 
 class BoundingBoxError(Exception):
 
     def __init__(self,
-                 message='Invalid bounding_box in the config!'):
+                 message: str = 'Invalid bounding_box in the config!') -> None:
         """
         | Initializer method
 
-        :param str message: message
+        :param message: message
         :returns: None
-        :rtype: None
         """
         super().__init__(message)
 
@@ -18,13 +17,12 @@ class BoundingBoxError(Exception):
 class BoundingBoxLengthError(BoundingBoxError):
 
     def __init__(self,
-                 bounding_box):
+                 bounding_box: list[int]) -> None:
         """
         | Initializer method
 
-        :param list[int] bounding_box: bounding box (x_min, y_min, x_max, y_max)
+        :param bounding_box: bounding box (x_min, y_min, x_max, y_max)
         :returns: None
-        :rtype: None
         """
         message = (
             'Invalid bounding_box in the config!\n'
@@ -35,12 +33,11 @@ class BoundingBoxLengthError(BoundingBoxError):
 
 class BoundingBoxNotDefinedError(BoundingBoxError):
 
-    def __init__(self):
+    def __init__(self) -> None:
         """
         | Initializer method
 
         :returns: None
-        :rtype: None
         """
         message = 'Neither path_boundary nor bounding_box are defined in the config!'
         super().__init__(message)
@@ -49,13 +46,12 @@ class BoundingBoxNotDefinedError(BoundingBoxError):
 class BoundingBoxValueError(BoundingBoxError):
 
     def __init__(self,
-                 bounding_box):
+                 bounding_box: list[int]) -> None:
         """
         | Initializer method
 
-        :param list[int] bounding_box: bounding box (x_min, y_min, x_max, y_max)
+        :param bounding_box: bounding box (x_min, y_min, x_max, y_max)
         :returns: None
-        :rtype: None
         """
         message = (
             'Invalid bounding_box in the config!\n'
@@ -68,13 +64,12 @@ class BoundingBoxValueError(BoundingBoxError):
 class GeoDataError(Exception):
 
     def __init__(self,
-                 message='Invalid geo data in the config!'):
+                 message: str = 'Invalid geo data in the config!') -> None:
         """
         | Initializer method
 
-        :param str message: message
+        :param message: message
         :returns: None
-        :rtype: None
         """
         super().__init__(message)
 
@@ -82,15 +77,14 @@ class GeoDataError(Exception):
 class GeoDataEmptyError(GeoDataError):
 
     def __init__(self,
-                 field,
-                 path):
+                 field: str,
+                 path: Path) -> None:
         """
         | Initializer method
 
-        :param str field: field
-        :param Path path: path to the geo data
+        :param field: field
+        :param path: path to the geo data
         :returns: None
-        :rtype: None
         """
         message = (
             f'Invalid {field} in the config!\n'
@@ -102,15 +96,14 @@ class GeoDataEmptyError(GeoDataError):
 class GeoDataFormatError(GeoDataError):
 
     def __init__(self,
-                 field,
-                 path):
+                 field: str,
+                 path: Path) -> None:
         """
         | Initializer method
 
-        :param str field: field
-        :param Path path: path to the geo data
+        :param field: field
+        :param path: path to the geo data
         :returns: None
-        :rtype: None
         """
         message = (
             f'Invalid {field} in the config!\n'
@@ -122,15 +115,14 @@ class GeoDataFormatError(GeoDataError):
 class GeoDataGeometryError(GeoDataError):
 
     def __init__(self,
-                 field,
-                 path):
+                 field: str,
+                 path: Path) -> None:
         """
         | Initializer method
 
-        :param str field: field
-        :param Path path: path to the geo data
+        :param field: field
+        :param path: path to the geo data
         :returns: None
-        :rtype: None
         """
         message = (
             f'Invalid {field} in the config!\n'
@@ -142,17 +134,16 @@ class GeoDataGeometryError(GeoDataError):
 class GeoDataLoadingError(GeoDataError):
 
     def __init__(self,
-                 field,
-                 path,
-                 passed_exception):
+                 field: str,
+                 path: Path,
+                 passed_exception: Exception) -> None:
         """
         | Initializer method
 
-        :param str field: field
-        :param Path path: path to the geo data
-        :param Exception passed_exception: passed exception
+        :param field: field
+        :param path: path to the geo data
+        :param passed_exception: passed exception
         :returns: None
-        :rtype: None
         """
         message = (
             f'Invalid {field} in the config!\n'
@@ -165,15 +156,14 @@ class GeoDataLoadingError(GeoDataError):
 class GeoDataNotFoundError(GeoDataError):
 
     def __init__(self,
-                 field,
-                 path):
+                 field: str,
+                 path: Path) -> None:
         """
         | Initializer method
 
-        :param str field: field
-        :param Path path: path to the geo data
+        :param field: field
+        :param path: path to the geo data
         :returns: None
-        :rtype: None
         """
         message = (
             f'Invalid {field} in the config!\n'
@@ -185,15 +175,14 @@ class GeoDataNotFoundError(GeoDataError):
 class GeoDataTypeError(GeoDataError):
 
     def __init__(self,
-                 field,
-                 path):
+                 field: str,
+                 path: Path) -> None:
         """
         | Initializer method
 
-        :param str field: field
-        :param Path path: path to the geo data
+        :param field: field
+        :param path: path to the geo data
         :returns: None
-        :rtype: None
         """
         message = (
             f'Invalid {field} in the config!\n'
@@ -205,13 +194,12 @@ class GeoDataTypeError(GeoDataError):
 class OutputDirNotFoundError(Exception):
 
     def __init__(self,
-                 path):
+                 path: Path) -> None:
         """
         | Initializer method
 
-        :param Path path: path to the output directory
+        :param path: path to the output directory
         :returns: None
-        :rtype: None
         """
         message = (
             'Invalid path_output_dir in the config!\n'
@@ -222,12 +210,11 @@ class OutputDirNotFoundError(Exception):
 
 class PrefixError(Exception):
 
-    def __init__(self):
+    def __init__(self) -> None:
         """
         | Initializer method
 
         :returns: None
-        :rtype: None
         """
         message = (
             'Invalid prefix in the config!\n'
@@ -239,13 +226,12 @@ class PrefixError(Exception):
 class SieveSizeError(Exception):
 
     def __init__(self,
-                 sieve_size):
+                 sieve_size: int) -> None:
         """
         | Initializer method
 
-        :param int sieve_size: sieve size in square meters
+        :param sieve_size: sieve size in square meters
         :returns: None
-        :rtype: None
         """
         message = (
             'Invalid sieve_size in the config!\n'
@@ -257,13 +243,12 @@ class SieveSizeError(Exception):
 class TileSizeError(Exception):
 
     def __init__(self,
-                 tile_size):
+                 tile_size: int) -> None:
         """
         | Initializer method
 
-        :param int tile_size: tile size in meters
+        :param tile_size: tile size in meters
         :returns: None
-        :rtype: None
         """
         message = (
             'Invalid tile_size in the config!\n'
