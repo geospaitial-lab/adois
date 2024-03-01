@@ -47,7 +47,7 @@ class UInt8LinearScalingNormalization(PreprocessingStrategy):
     def preprocess(image: npt.NDArray[np.uint8]) -> npt.NDArray[np.float32]:
         """
         | Returns the preprocessed image.
-        | uint8 linear scaling normalization is used to scale the values from their natural range between 0 and 255
+        | uint8 linear scaling normalization is used to scale the values from their native range between 0 and 255
             into a standard range between 0 and 1.
 
         :param image: image
