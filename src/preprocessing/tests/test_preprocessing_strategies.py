@@ -1,16 +1,16 @@
 import numpy as np
 import pytest
+from numpy import typing as npt
 
 from src.preprocessing.preprocessing_strategies import Float32Casting, UInt8LinearScalingNormalization
 from .data.data_test_preprocessing_strategies import data_test_float32_casting_preprocess
 
 
-def test_float32_casting_init():
+def test_float32_casting_init() -> None:
     """
     | Tests __init__().
 
     :returns: None
-    :rtype: None
     """
     float32_casting = Float32Casting()
 
@@ -20,17 +20,16 @@ def test_float32_casting_init():
 
 
 @pytest.mark.parametrize('test_input, expected', data_test_float32_casting_preprocess)
-def test_float32_casting_preprocess(test_input,
-                                    expected,
-                                    float32_casting):
+def test_float32_casting_preprocess(test_input: npt.NDArray,
+                                    expected: npt.NDArray[np.float32],
+                                    float32_casting: Float32Casting) -> None:
     """
     | Tests preprocess().
 
-    :param np.ndarray test_input: image
-    :param np.ndarray[np.float32] expected: preprocessed image
-    :param Float32Casting float32_casting: float32 casting fixture
+    :param test_input: image
+    :param expected: preprocessed image
+    :param float32_casting: float32 casting fixture
     :returns: None
-    :rtype: None
     """
     image_preprocessed = float32_casting.preprocess(image=test_input)
 
@@ -40,12 +39,11 @@ def test_float32_casting_preprocess(test_input,
     np.testing.assert_array_equal(image_preprocessed, expected)
 
 
-def test_uint8_linear_scaling_normalization_init():
+def test_uint8_linear_scaling_normalization_init() -> None:
     """
     | Tests __init__().
 
     :returns: None
-    :rtype: None
     """
     uint8_linear_scaling_normalization = UInt8LinearScalingNormalization()
 
@@ -54,14 +52,13 @@ def test_uint8_linear_scaling_normalization_init():
     assert list(vars(uint8_linear_scaling_normalization).keys()) == attributes
 
 
-def test_uint8_linear_scaling_normalization_preprocess(uint8_linear_scaling_normalization):
+def test_uint8_linear_scaling_normalization_preprocess(
+        uint8_linear_scaling_normalization: UInt8LinearScalingNormalization) -> None:
     """
     | Tests preprocess().
 
-    :param UInt8LinearScalingNormalization uint8_linear_scaling_normalization: uint8 linear scaling normalization
-        fixture
+    :param uint8_linear_scaling_normalization: uint8 linear scaling normalization fixture
     :returns: None
-    :rtype: None
     """
     image = np.full(shape=(128, 128, 6),
                     fill_value=(0, 51, 102, 153, 204, 255),

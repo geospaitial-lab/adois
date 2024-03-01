@@ -1,4 +1,5 @@
 import numpy as np
+from numpy import typing as npt
 
 from .preprocessing_strategies import PreprocessingStrategy
 
@@ -6,13 +7,12 @@ from .preprocessing_strategies import PreprocessingStrategy
 class ImageBuilder:
 
     def __init__(self,
-                 preprocessing_strategies):
+                 preprocessing_strategies: list[PreprocessingStrategy]) -> None:
         """
         | Initializer method
 
-        :param list[PreprocessingStrategy] preprocessing_strategies: preprocessing strategies
+        :param preprocessing_strategies: preprocessing strategies
         :returns: None
-        :rtype: None
         """
         assert isinstance(preprocessing_strategies, list)
 
@@ -26,24 +26,22 @@ class ImageBuilder:
         self.preprocessing_strategies = preprocessing_strategies
 
     @property
-    def image_rgb(self):
+    def image_rgb(self) -> npt.NDArray[np.uint8] | None:
         """
         | Returns the rgb image.
 
         :returns: rgb image
-        :rtype: np.ndarray[np.uint8] or None
         """
         return self._image_rgb
 
     @image_rgb.setter
     def image_rgb(self,
-                  image_rgb):
+                  image_rgb: npt.NDArray[np.uint8] | None) -> None:
         """
         | Sets the rgb image.
 
-        :param np.ndarray[np.uint8] or None image_rgb: rgb image
+        :param image_rgb: rgb image
         :returns: None
-        :rtype: None
         """
         assert isinstance(image_rgb, np.ndarray) or image_rgb is None
 
@@ -55,24 +53,22 @@ class ImageBuilder:
         self._image_rgb = image_rgb
 
     @property
-    def image_nir(self):
+    def image_nir(self) -> npt.NDArray[np.uint8] | None:
         """
         | Returns the nir image.
 
         :returns: nir image
-        :rtype: np.ndarray[np.uint8] or None
         """
         return self._image_nir
 
     @image_nir.setter
     def image_nir(self,
-                  image_nir):
+                  image_nir: npt.NDArray[np.uint8] | None) -> None:
         """
         | Sets the nir image.
 
-        :param np.ndarray[np.uint8] or None image_nir: nir image
+        :param image_nir: nir image
         :returns: None
-        :rtype: None
         """
         assert isinstance(image_nir, np.ndarray) or image_nir is None
 
@@ -86,12 +82,11 @@ class ImageBuilder:
         else:
             self._image_nir = image_nir
 
-    def concatenate_images(self):
+    def concatenate_images(self) -> npt.NDArray[np.uint8]:
         """
         | Returns the concatenated image.
 
         :returns: concatenated image
-        :rtype: np.ndarray[np.uint8]
         """
         assert self.image_rgb is not None
         assert self.image_nir is not None
@@ -100,13 +95,12 @@ class ImageBuilder:
         return image
 
     def preprocess_image(self,
-                         image):
+                         image: npt.NDArray[np.uint8]) -> npt.NDArray:
         """
         | Returns the preprocessed image.
 
-        :param np.ndarray[np.uint8] image: image
+        :param image: image
         :returns: preprocessed image
-        :rtype: np.ndarray
         """
         assert isinstance(image, np.ndarray)
         assert image.dtype == np.uint8
@@ -117,13 +111,12 @@ class ImageBuilder:
         return image
 
     def build_image(self,
-                    reset=True):
+                    reset: bool = True) -> npt.NDArray:
         """
         | Returns the built image.
 
-        :param bool reset: if True, image_rgb and image_nir are set to None
+        :param reset: if True, image_rgb and image_nir are set to None
         :returns: built image
-        :rtype: np.ndarray
         """
         assert self.image_rgb is not None
         assert self.image_nir is not None
@@ -137,12 +130,11 @@ class ImageBuilder:
 
         return image
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """
         | Returns a representation of the object.
 
         :returns: representation
-        :rtype: str
         """
         representation = (
             f'{self.__class__.__name__}('

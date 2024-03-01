@@ -2,6 +2,7 @@ import inspect
 
 import numpy as np
 import pytest
+from numpy import typing as npt
 
 from src.preprocessing.image_builder import ImageBuilder
 from src.preprocessing.preprocessing_strategies import PreprocessingStrategy
@@ -15,15 +16,14 @@ from .data.data_test_image_builder import (
 
 
 @pytest.mark.parametrize('test_input', data_test_init)
-def test_init(test_input,
-              request):
+def test_init(test_input: list[PreprocessingStrategy],
+              request) -> None:
     """
     | Tests __init__().
 
-    :param list[PreprocessingStrategy] test_input: mocked preprocessing strategies fixtures
+    :param test_input: mocked preprocessing strategies fixtures
     :param request: pytest request
     :returns: None
-    :rtype: None
     """
     test_input = [request.getfixturevalue(fixture) for fixture in test_input]
 
@@ -44,15 +44,14 @@ def test_init(test_input,
 
 
 @pytest.mark.parametrize('test_input', data_test_getter_image_rgb)
-def test_getter_image_rgb(test_input,
-                          image_builder_without_preprocessing_strategies):
+def test_getter_image_rgb(test_input: npt.NDArray[np.uint8] | None,
+                          image_builder_without_preprocessing_strategies: ImageBuilder) -> None:
     """
     | Tests the getter method of image_rgb.
 
-    :param np.ndarray[np.uint8] or None test_input: rgb image
-    :param ImageBuilder image_builder_without_preprocessing_strategies: image builder fixture
+    :param test_input: rgb image
+    :param image_builder_without_preprocessing_strategies: image builder fixture
     :returns: None
-    :rtype: None
     """
     image_builder_without_preprocessing_strategies._image_rgb = test_input
 
@@ -70,17 +69,16 @@ def test_getter_image_rgb(test_input,
 
 
 @pytest.mark.parametrize('test_input, expected', data_test_setter_image_rgb)
-def test_setter_image_rgb(test_input,
-                          expected,
-                          image_builder_without_preprocessing_strategies):
+def test_setter_image_rgb(test_input: npt.NDArray[np.uint8] | None,
+                          expected: npt.NDArray[np.uint8] | None,
+                          image_builder_without_preprocessing_strategies: ImageBuilder) -> None:
     """
     | Tests the setter method of image_rgb.
 
-    :param np.ndarray[np.uint8] or None test_input: rgb image
-    :param np.ndarray[np.uint8] or None expected: rgb image
-    :param ImageBuilder image_builder_without_preprocessing_strategies: image builder fixture
+    :param test_input: rgb image
+    :param expected: rgb image
+    :param image_builder_without_preprocessing_strategies: image builder fixture
     :returns: None
-    :rtype: None
     """
     image_builder_without_preprocessing_strategies.image_rgb = test_input
 
@@ -98,15 +96,14 @@ def test_setter_image_rgb(test_input,
 
 
 @pytest.mark.parametrize('test_input', data_test_getter_image_nir)
-def test_getter_image_nir(test_input,
-                          image_builder_without_preprocessing_strategies):
+def test_getter_image_nir(test_input: npt.NDArray[np.uint8] | None,
+                          image_builder_without_preprocessing_strategies: ImageBuilder) -> None:
     """
     | Tests the getter method of image_nir.
 
-    :param np.ndarray[np.uint8] or None test_input: nir image
-    :param ImageBuilder image_builder_without_preprocessing_strategies: image builder fixture
+    :param test_input: nir image
+    :param image_builder_without_preprocessing_strategies: image builder fixture
     :returns: None
-    :rtype: None
     """
     image_builder_without_preprocessing_strategies._image_nir = test_input
 
@@ -124,17 +121,16 @@ def test_getter_image_nir(test_input,
 
 
 @pytest.mark.parametrize('test_input, expected', data_test_setter_image_nir)
-def test_setter_image_nir(test_input,
-                          expected,
-                          image_builder_without_preprocessing_strategies):
+def test_setter_image_nir(test_input: npt.NDArray[np.uint8] | None,
+                          expected: npt.NDArray[np.uint8] | None,
+                          image_builder_without_preprocessing_strategies: ImageBuilder) -> None:
     """
     | Tests the setter method of image_nir.
 
-    :param np.ndarray[np.uint8] or None test_input: nir image
-    :param np.ndarray[np.uint8] or None expected: nir image
-    :param ImageBuilder image_builder_without_preprocessing_strategies: image builder fixture
+    :param test_input: nir image
+    :param expected: nir image
+    :param image_builder_without_preprocessing_strategies: image builder fixture
     :returns: None
-    :rtype: None
     """
     image_builder_without_preprocessing_strategies.image_nir = test_input
 
@@ -161,13 +157,12 @@ def test_preprocess_image():
     pass
 
 
-def test_build_image_default(image_builder_without_preprocessing_strategies):
+def test_build_image_default(image_builder_without_preprocessing_strategies: ImageBuilder) -> None:
     """
     | Tests the default values of the parameters of build_image().
 
-    :param ImageBuilder image_builder_without_preprocessing_strategies: image builder fixture
+    :param image_builder_without_preprocessing_strategies: image builder fixture
     :returns: None
-    :rtype: None
     """
     signature = inspect.signature(image_builder_without_preprocessing_strategies.build_image)
     reset_default = signature.parameters['reset'].default
