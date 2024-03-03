@@ -150,9 +150,9 @@ class Postprocessor:
                 coordinates_processed = np.array([x_min, y_max], dtype=np.int32)
 
                 if np.any(np.all(coordinates == coordinates_processed, axis=1)):
-                    path_tile_processed = (self.path_tiles_processed_dir /
-                                           f'{x_min}_{y_max}' /
-                                           f'{x_min}_{y_max}.feather')
+                    path_tile_processed = (self.path_tiles_processed_dir
+                                           / f'{x_min}_{y_max}'
+                                           / f'{x_min}_{y_max}.feather')
 
                     if path_tile_processed.is_file():
                         tile_processed = gpd.read_feather(path_tile_processed)
