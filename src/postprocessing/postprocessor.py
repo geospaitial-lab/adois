@@ -158,7 +158,7 @@ class Postprocessor:
                         tile_processed = gpd.read_feather(path_tile_processed)
                         tiles_processed.append(tile_processed)
                     else:
-                        pass # TODO: log warning
+                        pass  # TODO: log warning
 
         tiles_processed_concatenated = gpd.GeoDataFrame(pd.concat(tiles_processed, ignore_index=True),
                                                         crs=f'EPSG:{self.epsg_code}')
