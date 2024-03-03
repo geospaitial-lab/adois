@@ -1,1 +1,1 @@
-from .postprocessor import *
+from .postprocessor import Postprocessor
