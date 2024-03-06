@@ -33,11 +33,6 @@ class Float32Casting(PreprocessingStrategy):
         return image.astype(np.float32)
 
     def __repr__(self) -> str:
-        """
-        | Returns a representation of the object.
-
-        :returns: representation
-        """
         return f'{self.__class__.__name__}()'
 
 
@@ -59,9 +54,4 @@ class UInt8LinearScalingNormalization(PreprocessingStrategy):
         return image.astype(np.float32) / 255.
 
     def __repr__(self) -> str:
-        """
-        | Returns a representation of the object.
-
-        :returns: representation
-        """
         return f'{self.__class__.__name__}()'

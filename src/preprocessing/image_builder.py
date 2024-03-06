@@ -9,10 +9,7 @@ class ImageBuilder:
     def __init__(self,
                  preprocessing_strategies: list[PreprocessingStrategy]) -> None:
         """
-        | Initializer method
-
         :param preprocessing_strategies: preprocessing strategies
-        :returns: None
         """
         assert isinstance(preprocessing_strategies, list)
 
@@ -41,7 +38,6 @@ class ImageBuilder:
         | Sets the rgb image.
 
         :param image_rgb: rgb image
-        :returns: None
         """
         assert isinstance(image_rgb, np.ndarray) or image_rgb is None
 
@@ -68,7 +64,6 @@ class ImageBuilder:
         | Sets the nir image.
 
         :param image_nir: nir image
-        :returns: None
         """
         assert isinstance(image_nir, np.ndarray) or image_nir is None
 
@@ -131,11 +126,6 @@ class ImageBuilder:
         return image
 
     def __repr__(self) -> str:
-        """
-        | Returns a representation of the object.
-
-        :returns: representation
-        """
         representation = (
             f'{self.__class__.__name__}('
             f'image_rgb_type={type(self.image_rgb).__name__}, '
