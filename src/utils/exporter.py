@@ -9,10 +9,7 @@ class Exporter:
     def __init__(self,
                  path_output_dir: Path) -> None:
         """
-        | Initializer method
-
         :param path_output_dir: path to the output directory
-        :returns: None
         """
         assert isinstance(path_output_dir, Path)
 
@@ -21,8 +18,6 @@ class Exporter:
     def create_output_dir(self) -> None:
         """
         | Creates the output directory.
-
-        :returns: None
         """
         self.path_output_dir.mkdir()
 
@@ -34,7 +29,6 @@ class Exporter:
 
         :param gdf: geodataframe
         :param relative_path: relative path
-        :returns: None
         """
         assert isinstance(gdf, gpd.GeoDataFrame)
 

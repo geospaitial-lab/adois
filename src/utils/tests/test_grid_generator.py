@@ -13,11 +13,6 @@ from .data.data_test_grid_generator import data_test_compute_coordinates
 
 
 def test_init() -> None:
-    """
-    | Tests __init__().
-
-    :returns: None
-    """
     bounding_box = (-128, -128, 128, 128)
     epsg_code = 25832
 
@@ -42,10 +37,7 @@ def test_init() -> None:
 
 def test_compute_coordinates_default(grid_generator: GridGenerator) -> None:
     """
-    | Tests the default values of the parameters of compute_coordinates().
-
     :param grid_generator: grid generator fixture
-    :returns: None
     """
     signature = inspect.signature(grid_generator.compute_coordinates)
     quantize_default = signature.parameters['quantize'].default
@@ -59,12 +51,9 @@ def test_compute_coordinates(test_input: tuple[int, bool],
                              expected: npt.NDArray[np.int32],
                              grid_generator: GridGenerator) -> None:
     """
-    | Tests compute_coordinates().
-
     :param test_input: tile_size, quantize
     :param expected: coordinates (x_min, y_min) of each tile
     :param grid_generator: grid generator fixture
-    :returns: None
     """
     coordinates = grid_generator.compute_coordinates(tile_size=test_input[0],
                                                      quantize=test_input[1])
@@ -78,10 +67,7 @@ def test_compute_coordinates(test_input: tuple[int, bool],
 
 def test_generate_polygons(grid_generator: GridGenerator) -> None:
     """
-    | Tests generate_polygons().
-
     :param grid_generator: grid generator fixture
-    :returns: None
     """
     coordinates = np.array([[-128, -128], [0, -128], [-128, 0], [0, 0]], dtype=np.int32)
     tile_size = 128
@@ -102,10 +88,7 @@ def test_generate_polygons(grid_generator: GridGenerator) -> None:
 
 def test_generate_grid_default(grid_generator: GridGenerator) -> None:
     """
-    | Tests the default values of the parameters of generate_grid().
-
     :param grid_generator: grid generator fixture
-    :returns: None
     """
     signature = inspect.signature(grid_generator.generate_grid)
     quantize_default = signature.parameters['quantize'].default
@@ -120,12 +103,9 @@ def test_generate_grid(mocked_generate_polygons: mock.MagicMock,
                        mocked_compute_coordinates: mock.MagicMock,
                        grid_generator: GridGenerator) -> None:
     """
-    | Tests generate_grid().
-
     :param mocked_generate_polygons: mocked generate_polygons method
     :param mocked_compute_coordinates: mocked compute_coordinates method
     :param grid_generator: grid generator fixture
-    :returns: None
     """
     tile_size = 128
     quantize = True
@@ -163,11 +143,7 @@ def test_generate_grid(mocked_generate_polygons: mock.MagicMock,
 @pytest.mark.integration
 def test_generate_grid_integration(grid_generator: GridGenerator) -> None:
     """
-    | Tests generate_grid().
-    | Integration test.
-
     :param grid_generator: grid generator fixture
-    :returns: None
     """
     tile_size = 128
     quantize = True

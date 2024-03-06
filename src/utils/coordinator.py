@@ -16,13 +16,10 @@ class Coordinator:
                  tile_size: int,
                  epsg_code: int) -> None:
         """
-        | Initializer method
-
         :param grid_generator: grid generator
         :param bounding_box: bounding box (x_min, y_min, x_max, y_max)
         :param tile_size: tile size in meters
         :param epsg_code: epsg code
-        :returns: None
         """
         assert isinstance(grid_generator, GridGenerator)
 
@@ -189,11 +186,6 @@ class Coordinator:
         return coordinates
 
     def __repr__(self) -> str:
-        """
-        | Returns a representation of the object.
-
-        :returns: representation
-        """
         representation = (
             f'{self.__class__.__name__}('
             f'grid_generator={self.grid_generator!r}, '

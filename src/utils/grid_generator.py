@@ -10,11 +10,8 @@ class GridGenerator:
                  bounding_box: tuple[int, int, int, int],
                  epsg_code: int) -> None:
         """
-        | Initializer method
-
         :param bounding_box: bounding box (x_min, y_min, x_max, y_max)
         :param epsg_code: epsg code
-        :returns: None
         """
         assert isinstance(bounding_box, tuple)
         assert len(bounding_box) == 4
@@ -62,7 +59,7 @@ class GridGenerator:
                           coordinates: npt.NDArray[np.int32],
                           tile_size: int) -> list[Polygon]:
         """
-        | Returns a polygon of each tile.
+        | Returns a polygon for each tile.
 
         :param coordinates: coordinates (x_min, y_min) of each tile
         :param tile_size: tile size in meters
@@ -110,11 +107,6 @@ class GridGenerator:
         return grid
 
     def __repr__(self) -> str:
-        """
-        | Returns a representation of the object.
-
-        :returns: representation
-        """
         representation = (
             f'{self.__class__.__name__}('
             f'x_min={self.x_min}, y_min={self.y_min}, x_max={self.x_max}, y_max={self.y_max}, '
