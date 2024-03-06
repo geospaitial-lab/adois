@@ -10,10 +10,7 @@ class Inference:
     def __init__(self,
                  model: ModelProtocol) -> None:
         """
-        | Initializer method
-
         :param model: model
-        :returns: None
         """
         self.model = model
 

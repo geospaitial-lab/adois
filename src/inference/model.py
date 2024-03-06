@@ -24,10 +24,7 @@ class ONNXModel:
     def __init__(self,
                  path: Path) -> None:
         """
-        | Initializer method
-
         :param path: path to the onnx model
-        :returns: None
         """
         assert isinstance(path, Path)
 
