@@ -11,11 +11,6 @@ from .data.data_test_exceptions import data_test_WMSEPSGCodeError, data_test_WMS
 
 
 def test_WMSError_default() -> None:
-    """
-    | Tests the default message of WMSError.
-
-    :returns: None
-    """
     expected = 'Invalid web map service in the config!'
 
     with pytest.raises(WMSError, match=expected):
@@ -23,11 +18,6 @@ def test_WMSError_default() -> None:
 
 
 def test_WMSError() -> None:
-    """
-    | Tests WMSError.
-
-    :returns: None
-    """
     message = 'Test message.'
 
     expected = 'Test message.'
@@ -37,11 +27,6 @@ def test_WMSError() -> None:
 
 
 def test_WMSConnectionError() -> None:
-    """
-    | Tests WMSConnectionError.
-
-    :returns: None
-    """
     url = 'https://invalid.wms.com'
     passed_exception = Exception('Test message.')
 
@@ -59,11 +44,8 @@ def test_WMSConnectionError() -> None:
 def test_WMSEPSGCodeError(test_input: tuple[int, list[int]],
                           expected: str) -> None:
     """
-    | Tests WMSEPSGCodeError.
-
     :param test_input: epsg_code, epsg_codes_valid
     :param expected: message
-    :returns: None
     """
     with pytest.raises(WMSEPSGCodeError, match=expected):
         raise WMSEPSGCodeError(epsg_code=test_input[0],
@@ -71,11 +53,6 @@ def test_WMSEPSGCodeError(test_input: tuple[int, list[int]],
 
 
 def test_WMSFetchingError() -> None:
-    """
-    | Tests WMSFetchingError.
-
-    :returns: None
-    """
     url = 'https://invalid.wms.com'
     passed_exception = Exception('Test message.')
 
@@ -92,11 +69,8 @@ def test_WMSFetchingError() -> None:
 def test_WMSLayerError(test_input: tuple[str, list[str]],
                        expected: str) -> None:
     """
-    | Tests WMSLayerError.
-
     :param test_input: layer, layers_valid
     :param expected: message
-    :returns: None
     """
     with pytest.raises(WMSLayerError, match=expected):
         raise WMSLayerError(layer=test_input[0],

@@ -53,10 +53,7 @@ class WebMapService:
     def __init__(self,
                  url: str) -> None:
         """
-        | Initializer method
-
         :param url: url
-        :returns: None
         :raises WMSConnectionError: if an exception is raised while connecting to the web map service
         """
         assert isinstance(url, str)

@@ -4,10 +4,7 @@ from src.data.web_map_service import WebMapServiceProtocol
 
 def test_init(mocked_web_map_service: WebMapServiceProtocol) -> None:
     """
-    | Tests __init__().
-
     :param mocked_web_map_service: mocked web map service fixture
-    :returns: None
     """
     layer = 'layer_test'
     epsg_code = 25832

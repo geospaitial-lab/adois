@@ -17,12 +17,9 @@ class RemoteSensingDataFetcher:
                  layer: str,
                  epsg_code: int) -> None:
         """
-        | Initializer method
-
         :param web_map_service: web map service
         :param layer: layer
         :param epsg_code: epsg code
-        :returns: None
         """
         assert isinstance(layer, str)
 

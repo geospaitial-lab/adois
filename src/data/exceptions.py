@@ -6,10 +6,7 @@ class WMSError(Exception):
     def __init__(self,
                  message: str = 'Invalid web map service in the config!') -> None:
         """
-        | Initializer method
-
         :param message: message
-        :returns: None
         """
         super().__init__(message)
 
@@ -20,11 +17,8 @@ class WMSConnectionError(WMSError):
                  url: str,
                  passed_exception: Exception) -> None:
         """
-        | Initializer method
-
         :param url: url
         :param passed_exception: passed exception
-        :returns: None
         """
         message = (
             'Invalid url in the config!\n'
@@ -40,11 +34,8 @@ class WMSEPSGCodeError(WMSError):
                  epsg_code: int,
                  epsg_codes_valid: list[int]) -> None:
         """
-        | Initializer method
-
         :param epsg_code: epsg code
         :param epsg_codes_valid: valid epsg codes
-        :returns: None
         """
         if len(epsg_codes_valid) == 1:
             epsg_codes_valid = epsg_codes_valid[0]
@@ -68,11 +59,8 @@ class WMSFetchingError(WMSError):
                  url: str,
                  passed_exception: Exception) -> None:
         """
-        | Initializer method
-
         :param url: url
         :param passed_exception: passed exception
-        :returns: None
         """
         message = (
             f'An exception is raised while fetching the image from the web map service ({url}).\n'
@@ -87,11 +75,8 @@ class WMSLayerError(WMSError):
                  layer: str,
                  layers_valid: list[str]) -> None:
         """
-        | Initializer method
-
         :param layer: layer
         :param layers_valid: valid layers
-        :returns: None
         """
         if len(layers_valid) == 1:
             layers_valid = layers_valid[0]
