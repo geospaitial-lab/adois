@@ -10,10 +10,7 @@ class ConfigParser:
     def __init__(self,
                  path: Path) -> None:
         """
-        | Initializer method
-
         :param path: path to the config
-        :returns: None
         """
         with open(path) as file:
             self.config = yaml.safe_load(file)

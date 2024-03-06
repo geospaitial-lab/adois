@@ -4,11 +4,6 @@ import argparse
 class ArgumentParser:
 
     def __init__(self) -> None:
-        """
-        | Initializer method
-
-        :returns: None
-        """
         description = 'adois - automatic detection of impervious surfaces'
         self.argument_parser = argparse.ArgumentParser(description=description)
 

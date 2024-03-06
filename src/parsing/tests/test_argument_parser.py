@@ -10,10 +10,7 @@ from .data.data_test_argument_parser import data_test_parse_integration, data_te
 @mock.patch('src.parsing.argument_parser.argparse.ArgumentParser')
 def test_init(mocked_argument_parser: mock.MagicMock) -> None:
     """
-    | Tests __init__().
-
     :param mocked_argument_parser: mocked argument parser
-    :returns: None
     """
     argument_parser = ArgumentParser()
 
@@ -40,11 +37,8 @@ def test_init(mocked_argument_parser: mock.MagicMock) -> None:
 def test_parse(mocked_parse: mock.MagicMock,
                argument_parser: ArgumentParser) -> None:
     """
-    | Tests parse().
-
     :param mocked_parse: mocked parse method
     :param argument_parser: argument parser fixture
-    :returns: None
     """
     args = ['path/to/config.yaml', '-d']
 
@@ -67,13 +61,9 @@ def test_parse_integration(test_input: list[str],
                            expected: argparse.Namespace,
                            argument_parser: ArgumentParser) -> None:
     """
-    | Tests parse().
-    | Integration test.
-
     :param test_input: args
     :param expected: parsed arguments
     :param argument_parser: argument parser fixture
-    :returns: None
     """
     args_parsed = argument_parser.parse(args=test_input)
 
@@ -89,14 +79,10 @@ def test_parse_SystemExit_integration(test_input: list[str],
                                       argument_parser: ArgumentParser,
                                       capsys) -> None:
     """
-    | Tests parse().
-    | Integration test.
-
     :param test_input: args
     :param expected: message
     :param argument_parser: argument parser fixture
     :param capsys: pytest capsys
-    :returns: None
     """
     with pytest.raises(SystemExit):
         argument_parser.parse(args=test_input)

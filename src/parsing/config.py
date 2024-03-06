@@ -43,8 +43,6 @@ class WMS(BaseModel):
     def validate_url(cls,
                      value: str) -> str:
         """
-        | Validates url.
-
         :param value: url
         :returns: validated url
         """
@@ -58,8 +56,6 @@ class WMS(BaseModel):
                        value: str,
                        values: ValidationInfo) -> str:
         """
-        | Validates layer.
-
         :param value: layer
         :param values: values
         :returns: validated layer
@@ -91,8 +87,6 @@ class Data(BaseModel):
                            value: int,
                            values: ValidationInfo) -> int:
         """
-        | Validates epsg_code.
-
         :param value: epsg_code
         :param values: values
         :returns: validated epsg_code
@@ -118,8 +112,6 @@ class Data(BaseModel):
     def validate_path_boundary(cls,
                                value: str | None) -> Path | None:
         """
-        | Validates path_boundary.
-
         :param value: path_boundary
         :returns: validated path_boundary
         :raises GeoDataEmptyError: if the geo data is empty
@@ -171,8 +163,6 @@ class Data(BaseModel):
                               value: list[int] | None,
                               values: ValidationInfo) -> tuple[int, int, int, int]:
         """
-        | Validates bounding_box.
-
         :param value: bounding_box
         :param values: values
         :returns: validated bounding_box
@@ -210,8 +200,6 @@ class Data(BaseModel):
     def validate_apply_padding(cls,
                                value: bool | None) -> bool:
         """
-        | Validates apply_padding.
-
         :param value: apply_padding
         :returns: validated apply_padding
         """
@@ -226,8 +214,6 @@ class Data(BaseModel):
     def validate_ignore_processed_tiles(cls,
                                         value: bool | None) -> bool:
         """
-        | Validates ignore_processed_tiles.
-
         :param value: ignore_processed_tiles
         :returns: validated ignore_processed_tiles
         """
@@ -247,8 +233,6 @@ class Postprocessing(BaseModel):
     def validate_sieve_size(cls,
                             value: int | None) -> int | None:
         """
-        | Validates sieve_size.
-
         :param value: sieve_size
         :returns: validated sieve_size
         :raises SieveSizeError: if sieve_size is not a number in the range of 0 to 10
@@ -270,8 +254,6 @@ class Postprocessing(BaseModel):
     def validate_simplify(cls,
                           value: bool | None) -> bool:
         """
-        | Validates simplify.
-
         :param value: simplify
         :returns: validated simplify
         """
@@ -291,8 +273,6 @@ class Aggregation(BaseModel):
     def validate_tile_size(cls,
                            value: int | list[int | None] | None) -> list[int]:
         """
-        | Validates tile_size.
-
         :param value: tile_size
         :returns: validated tile_size
         :raises TileSizeError: if tile_size is not a number greater than 0
@@ -323,8 +303,6 @@ class Aggregation(BaseModel):
     def validate_path_aggregation_areas(cls,
                                         value: str | list[str | None] | None) -> list[Path]:
         """
-        | Validates path_aggregation_areas.
-
         :param value: path_aggregation_areas
         :returns: validated path_aggregation_areas
         :raises GeoDataEmptyError: if the geo data is empty
@@ -389,8 +367,6 @@ class Export(BaseModel):
     def validate_path_output_dir(cls,
                                  value: str) -> Path:
         """
-        | Validates path_output_dir.
-
         :param value: path_output_dir
         :returns: validated path_output_dir
         :raises OutputDirNotFoundError: if the output directory does not exist
@@ -408,8 +384,6 @@ class Export(BaseModel):
     def validate_prefix(cls,
                         value: str) -> str:
         """
-        | Validates prefix.
-
         :param value: prefix
         :returns: validated prefix
         :raises PrefixError: if prefix contains only whitespaces or underscores
@@ -431,8 +405,6 @@ class Config(BaseModel):
     @model_validator(mode='after')
     def validate_tile_size(self) -> Self:
         """
-        | Validates tile_size.
-
         :returns: validated values
         """
         if not self.aggregation.tile_size:
