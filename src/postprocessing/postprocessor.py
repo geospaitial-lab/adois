@@ -22,11 +22,8 @@ class Postprocessor:
                  path_output_dir: Path,
                  epsg_code: int) -> None:
         """
-        | Initializer method
-
         :param path_output_dir: path to the output directory
         :param epsg_code: epsg code
-        :returns: None
         """
         assert isinstance(path_output_dir, Path)
 
@@ -76,7 +73,6 @@ class Postprocessor:
 
         :param features: features
         :param coordinates: coordinates (x_min, y_max)
-        :returns: None
         """
         assert isinstance(features, list)
 
