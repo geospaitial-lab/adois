@@ -60,7 +60,7 @@ class RemoteSensingDataDownloader:
         response = self.wms.getmap(layers=[self.wms_layer],
                                    srs=f'EPSG:{self.epsg_code}',
                                    bbox=bounding_box,
-                                   format='image/tiff',
+                                   format='image/png',
                                    size=(settings.IMAGE_SIZE + 2 * settings.BORDER_SIZE
                                          if self.clip_border else settings.IMAGE_SIZE,
                                          settings.IMAGE_SIZE + 2 * settings.BORDER_SIZE

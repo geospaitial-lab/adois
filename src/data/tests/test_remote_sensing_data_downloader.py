@@ -107,7 +107,7 @@ def test_get_response_no_clip_border(mocked_wms):
     mocked_wms_instance.getmap.assert_called_once_with(layers=['wms_layer'],
                                                        srs='EPSG:25832',
                                                        bbox=(0, 0, 256, 256),
-                                                       format='image/tiff',
+                                                       format='image/png',
                                                        size=(1280, 1280),
                                                        bgcolor='#000000')
 
@@ -135,7 +135,7 @@ def test_get_response_clip_border(mocked_wms):
     mocked_wms_instance.getmap.assert_called_once_with(layers=['wms_layer'],
                                                        srs='EPSG:25832',
                                                        bbox=(-64, -64, 320, 320),
-                                                       format='image/tiff',
+                                                       format='image/png',
                                                        size=(1920, 1920),
                                                        bgcolor='#000000')
 
