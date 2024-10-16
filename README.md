@@ -1,3 +1,7 @@
+> :loudspeaker: **This repository is no longer actively maintained**<br />
+> Have a look at [aviary](https://www.github.com/geospaitial-lab/aviary),
+> our new composable inference and postprocessing pipeline for remote sensing data.
+
 ![adois](data/images/adois_logo_light_mode.svg#gh-light-mode-only)
 ![adois](data/images/adois_logo_dark_mode.svg#gh-dark-mode-only)
 
