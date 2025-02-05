@@ -1,4 +1,5 @@
 enlighten==1.10.2
+fiona==1.9.6
 geopandas==0.11.1
 natsort==8.1.0
 numpy==1.23.1
