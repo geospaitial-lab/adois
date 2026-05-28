@@ -1,6 +1,6 @@
-> :loudspeaker: **This repository is no longer actively maintained**<br />
-> Have a look at [aviary](https://www.github.com/geospaitial-lab/aviary),
-> our new composable inference and postprocessing pipeline for remote sensing data.
+> :loudspeaker: **Neue Modelle verfügbar**<br />
+> Erkenne versiegelte Flächen, Gründächer und Solaranlagen deiner Kommune
+> mit dem [aviary Assistant](https://geospaitial-lab.github.io/aviary-assistant).
 
 ![adois](data/images/adois_logo_light_mode.svg#gh-light-mode-only)
 ![adois](data/images/adois_logo_dark_mode.svg#gh-dark-mode-only)
